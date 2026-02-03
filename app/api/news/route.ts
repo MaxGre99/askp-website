@@ -1,17 +1,17 @@
 import { prisma } from '@/shared/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/shared/lib/auth';
+// import { authOptions } from '@/shared/lib/auth';
 import { hasPermission } from '@/shared/lib/permissions';
 
-export async function GET() {
+export const GET = async () => {
 	const news = await prisma.news.findMany({
 		orderBy: { createdAt: 'desc' },
 	});
 
 	return new Response(JSON.stringify(news), { status: 200 });
-}
+};
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
 	const session = await getServerSession(authOptions);
 
 	if (!session || !hasPermission(session.user.role, 'news:create')) {
@@ -32,4 +32,4 @@ export async function POST(req: Request) {
 	});
 
 	return new Response(JSON.stringify(news), { status: 201 });
-}
+};

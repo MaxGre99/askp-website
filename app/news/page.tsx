@@ -28,11 +28,11 @@ const Page = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	/* ---------- query из URL ---------- */
+	// query из URL
 	const page = Number(searchParams.get('page') ?? 1);
 	const query = searchParams.get('query') ?? '';
 
-	/* ---------- локальное состояние инпута ---------- */
+	// локальное состояние инпута
 	const [draftQuery, setDraftQuery] = useState(query);
 
 	useEffect(() => {
@@ -41,26 +41,26 @@ const Page = () => {
 			.then((data) => setNews(data));
 	}, []);
 
-	/* ---------- гарантируем ?page=1 ---------- */
+	// гарантируем ?page=1
 	useEffect(() => {
 		if (!searchParams.has('page')) {
 			updateQuery({ page: 1 }, searchParams, router, 'replace');
 		}
 	}, [searchParams, router]);
 
-	/* ---------- гарантируем корректный query ------------ */
+	// гарантируем корректный query
 	useEffect(() => {
 		setDraftQuery(query);
 	}, [query]);
 
-	/* ---------- фильтрация ---------- */
+	// фильтрация
 	const filteredNews = useMemo(() => {
 		return news.filter((item) =>
 			item.title.toLowerCase().includes(query.toLowerCase()),
 		);
 	}, [news, query]);
 
-	/* ---------- пагинация ---------- */
+	// пагинация
 	const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE);
 
 	const paginatedNews = useMemo(() => {
@@ -68,7 +68,7 @@ const Page = () => {
 		return filteredNews.slice(start, start + ITEMS_PER_PAGE);
 	}, [filteredNews, page]);
 
-	/* ---------- handlers ---------- */
+	// хэндлеры
 	const applyFilter = () => {
 		updateQuery(
 			{
@@ -77,7 +77,7 @@ const Page = () => {
 			},
 			searchParams,
 			router,
-			'push', // ← КЛЮЧЕВО
+			'push', // КЛЮЧЕВО
 		);
 	};
 

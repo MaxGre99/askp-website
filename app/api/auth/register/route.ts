@@ -2,13 +2,13 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/shared/lib/prisma';
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
 	try {
 		const { email, password, firstName, lastName, photo } = await req.json();
 
 		if (!email || !password || !firstName || !lastName) {
 			return NextResponse.json(
-				{ message: 'Не заполнены обязательные поля!' },
+				{ error: 'Не заполнены обязательные поля!' },
 				{ status: 400 },
 			);
 		}
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 		const existingUser = await prisma.user.findUnique({ where: { email } });
 		if (existingUser) {
 			return NextResponse.json(
-				{ message: 'Пользователь уже существует' },
+				{ error: 'Пользователь уже существует' },
 				{ status: 409 },
 			);
 		}
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 				firstName,
 				lastName,
 				photo,
-				role: 'USER',
+				role: 'OWNER',
 			},
 			select: {
 				id: true,
@@ -47,8 +47,8 @@ export async function POST(req: Request) {
 		console.error('REGISTER ERROR:', error);
 		return NextResponse.json(
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			{ message: 'Ошибка регистрации', details: (error as any).message },
+			{ error: 'Ошибка регистрации', details: (error as any).message },
 			{ status: 500 },
 		);
 	}
-}
+};

@@ -1,5 +1,3 @@
-'use client';
-
 import ReactPaginate from 'react-paginate';
 import Button from '../Button/Button';
 

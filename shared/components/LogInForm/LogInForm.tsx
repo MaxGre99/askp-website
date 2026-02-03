@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useLogInMutation } from '@/shared/api/authApi';
+import { ApiError } from '@/shared/api/types/auth';
+import React, { useState } from 'react';
 
 const LogInForm = ({
 	setShowMenu,
@@ -9,40 +11,21 @@ const LogInForm = ({
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [rememberMe, setRememberMe] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string>('');
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const [logIn, { isLoading }] = useLogInMutation();
+
+	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			setLoading(true);
-			setError(null);
-
-			const res = await fetch('/api/auth/logIn', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email, password }),
-			});
-
-			const data = await res.json();
-
-			if (!res.ok || data.error) {
-				setError(data.message || 'Неверный email или пароль');
-				return;
-			}
-
-			setShowMenu(false);
-			setEmail('');
-			setPassword('');
-		} catch {
-			setError('Ошибка при входе');
-		} finally {
-			setLoading(false);
+			await logIn({ email, password, rememberMe }).unwrap();
+		} catch (e) {
+			setError((e as ApiError).data.error);
 		}
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className='flex flex-col gap-3'>
+		<form onSubmit={onSubmit} className='flex flex-col gap-3'>
 			<input
 				type='email'
 				placeholder='Email'
@@ -84,10 +67,10 @@ const LogInForm = ({
 
 			<button
 				type='submit'
-				disabled={loading}
+				disabled={isLoading}
 				className='bg-cyan-500 text-white py-2 rounded hover:bg-cyan-600 disabled:opacity-50'
 			>
-				{loading ? 'Входим…' : 'Войти'}
+				{isLoading ? 'Входим…' : 'Войти'}
 			</button>
 		</form>
 	);

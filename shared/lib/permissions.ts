@@ -23,6 +23,6 @@ const permissions: Record<UserRole, Permission[]> = {
 	USER: [],
 };
 
-export function hasPermission(userRole: UserRole, permission: Permission) {
+export const hasPermission = (userRole: UserRole, permission: Permission) => {
 	return permissions[userRole]?.includes(permission);
-}
+};

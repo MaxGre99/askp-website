@@ -1,4 +1,6 @@
-import RegisterForm from '@/shared/components/SignInForm/SignInForm';
+'use client';
+
+import RegisterForm from '@/shared/components/RegisterForm/RegisterForm';
 
 const Page = () => {
 	return <RegisterForm />;

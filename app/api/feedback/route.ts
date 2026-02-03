@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
 	try {
 		const body = await req.json();
 
@@ -52,4 +52,4 @@ ${message || '-'}
 		console.error(e);
 		return NextResponse.json({ error: 'Ошибка отправки' }, { status: 500 });
 	}
-}
+};

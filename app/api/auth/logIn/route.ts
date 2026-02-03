@@ -3,8 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '@/shared/lib/prisma';
 
-export async function POST(req: Request) {
-	const { email, password } = await req.json();
+export const POST = async (req: Request) => {
+	const { email, password, rememberMe } = await req.json();
+
 	if (!email || !password) {
 		return NextResponse.json(
 			{ error: 'Email и пароль обязательны' },
@@ -23,7 +24,9 @@ export async function POST(req: Request) {
 	if (!isValid)
 		return NextResponse.json({ error: 'Неверный пароль' }, { status: 401 });
 
-	// создаем JWT
+	// определяем срок жизни
+	const tokenExpirySeconds = rememberMe ? 60 * 60 * 24 * 7 : 60 * 60 * 24; // 1 неделя или 1 день
+
 	const token = jwt.sign(
 		{
 			id: user.id,
@@ -34,16 +37,15 @@ export async function POST(req: Request) {
 			role: user.role,
 		},
 		process.env.JWT_SECRET!,
-		{ expiresIn: '1d' },
+		{ expiresIn: tokenExpirySeconds },
 	);
 
-	// ставим в HttpOnly куку
 	const res = NextResponse.json({ ok: true });
 	res.cookies.set('token', token, {
 		httpOnly: true,
 		path: '/',
-		maxAge: 60 * 60 * 24, // 1 день
+		maxAge: tokenExpirySeconds,
 	});
 
 	return res;
-}
+};

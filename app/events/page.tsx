@@ -25,33 +25,33 @@ const Page = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	/* ---------- query из URL ---------- */
+	// query из URL
 	const page = Number(searchParams.get('page') ?? 1);
 	const query = searchParams.get('query') ?? '';
 
-	/* ---------- локальное состояние инпута ---------- */
+	// локальное состояние инпута
 	const [draftQuery, setDraftQuery] = useState(query);
 
-	/* ---------- гарантируем ?page=1 ---------- */
+	// гарантируем ?page=1
 	useEffect(() => {
 		if (!searchParams.has('page')) {
 			updateQuery({ page: 1 }, searchParams, router, 'replace');
 		}
 	}, [searchParams, router]);
 
-	/* ---------- гарантируем корректный query ------------ */
+	// гарантируем корректный query
 	useEffect(() => {
 		setDraftQuery(query);
 	}, [query]);
 
-	/* ---------- фильтрация ---------- */
+	// фильтрация
 	const filteredEvents = useMemo(() => {
 		return events.filter((item) =>
 			item.title.toLowerCase().includes(query.toLowerCase()),
 		);
 	}, [events, query]);
 
-	/* ---------- пагинация ---------- */
+	// пагинация
 	const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE);
 
 	const paginatedEvents = useMemo(() => {
@@ -59,7 +59,7 @@ const Page = () => {
 		return filteredEvents.slice(start, start + ITEMS_PER_PAGE);
 	}, [filteredEvents, page]);
 
-	/* ---------- handlers ---------- */
+	// хэндлеры
 	const applyFilter = () => {
 		updateQuery(
 			{
@@ -68,7 +68,7 @@ const Page = () => {
 			},
 			searchParams,
 			router,
-			'push', // ← КЛЮЧЕВО
+			'push', // КЛЮЧЕВО
 		);
 	};
 

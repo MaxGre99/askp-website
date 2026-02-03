@@ -1,5 +1,5 @@
-'use client';
-
+import { useRegisterMutation } from '@/shared/api/authApi';
+import { ApiError } from '@/shared/api/types/auth';
 import { useState } from 'react';
 
 const RegisterForm = () => {
@@ -8,34 +8,25 @@ const RegisterForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
+	const [error, setError] = useState<string>('');
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const [register, { isLoading }] = useRegisterMutation();
+
+	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setLoading(true);
-		setError(null);
-
-		const res = await fetch('/api/auth/signIn', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ email, password, firstName, lastName }),
-		});
-
-		setLoading(false);
-
-		if (!res.ok) {
-			const data = await res.json();
-			setError(data.message || 'Ошибка регистрации');
-			return;
+		try {
+			await register({
+				email,
+				password,
+				firstName,
+				lastName,
+			}).unwrap();
+			setSuccess(true);
+		} catch (e) {
+			setSuccess(false);
+			setError((e as ApiError).data.error);
 		}
-
-		setSuccess(true);
-		setEmail('');
-		setPassword('');
 	};
 
 	if (success) {
@@ -47,7 +38,7 @@ const RegisterForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className='flex flex-col gap-3 w-64'>
+		<form onSubmit={(e) => onSubmit(e)} className='flex flex-col gap-3 w-64'>
 			<input
 				type='email'
 				placeholder='Email'
@@ -98,10 +89,10 @@ const RegisterForm = () => {
 
 			<button
 				type='submit'
-				disabled={loading}
+				disabled={isLoading}
 				className='bg-cyan-500 text-white py-2 rounded disabled:opacity-50'
 			>
-				{loading ? 'Создаём…' : 'Зарегистрироваться'}
+				{isLoading ? 'Создаём…' : 'Зарегистрироваться'}
 			</button>
 		</form>
 	);
