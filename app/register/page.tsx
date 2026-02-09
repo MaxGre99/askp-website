@@ -1,9 +1,9 @@
 'use client';
 
-import RegisterForm from '@/shared/components/RegisterForm/RegisterForm';
+import SignUpFrom from '@/shared/components/SignUpForm/SignUpForm';
 
 const Page = () => {
-	return <RegisterForm />;
+	return <SignUpFrom />;
 };
 
 export default Page;

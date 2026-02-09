@@ -2,7 +2,7 @@
 
 // import { SessionProvider } from 'next-auth/react';
 import ClientI18nProvider from '@/shared/providers/I18nextProvider';
-import MeProvider from '@/shared/providers/MeProvider';
+import UserProvider from '@/shared/providers/UserProvider';
 import StoreProvider from '@/shared/store/providers';
 
 type Props = {
@@ -14,7 +14,7 @@ const Providers = ({ children }: Props) => {
 		// <SessionProvider>
 		<StoreProvider>
 			<ClientI18nProvider>
-				<MeProvider>{children}</MeProvider>
+				<UserProvider>{children}</UserProvider>
 			</ClientI18nProvider>
 		</StoreProvider>
 		// </SessionProvider>

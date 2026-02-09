@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { User, RegisterDto, LoginDto } from './types/auth';
+import type { SignUpDto, SignInDto } from './types/auth';
+import { User } from './types/user';
+import { userApi } from './userApi';
 
 export const authApi = createApi({
 	reducerPath: 'authApi',
@@ -7,48 +9,43 @@ export const authApi = createApi({
 		baseUrl: '/api',
 		credentials: 'include',
 	}),
-	tagTypes: ['Me'],
 	endpoints: (builder) => ({
-		me: builder.query<User, void>({
-			query: () => '/me',
-			providesTags: ['Me'],
-		}),
-
-		register: builder.mutation<User, RegisterDto>({
+		signUp: builder.mutation<User, SignUpDto>({
 			query: (body) => ({
-				url: '/auth/register',
+				url: '/auth/signUp',
 				method: 'POST',
 				body,
 			}),
 		}),
 
-		logIn: builder.mutation<{ ok: true }, LoginDto>({
+		signIn: builder.mutation<{ ok: true }, SignInDto>({
 			query: (body) => ({
-				url: '/auth/logIn',
+				url: '/auth/signIn',
 				method: 'POST',
 				body,
 			}),
-			invalidatesTags: ['Me'],
+			async onQueryStarted(_, { dispatch, queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					dispatch(userApi.util.invalidateTags(['Me']));
+				} catch {}
+			},
 		}),
 
-		logOut: builder.mutation<{ ok: true }, void>({
+		signOut: builder.mutation<{ ok: true }, void>({
 			query: () => ({
-				url: '/auth/logOut',
+				url: '/auth/signOut',
 				method: 'POST',
 			}),
 			async onQueryStarted(_, { dispatch, queryFulfilled }) {
 				try {
 					await queryFulfilled;
-					dispatch(authApi.util.resetApiState());
+					dispatch(userApi.util.resetApiState());
 				} catch {}
 			},
 		}),
 	}),
 });
 
-export const {
-	useMeQuery,
-	useRegisterMutation,
-	useLogInMutation,
-	useLogOutMutation,
-} = authApi;
+export const { useSignUpMutation, useSignInMutation, useSignOutMutation } =
+	authApi;

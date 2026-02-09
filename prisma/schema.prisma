@@ -13,7 +13,7 @@ model User {
 
   firstName String
   lastName  String
-  photo     String?
+  avatar     String?
 
   role      UserRole @default(USER)
 
