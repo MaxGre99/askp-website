@@ -3,7 +3,7 @@ import Link from 'next/link';
 interface NewsCard {
 	article: {
 		title: string;
-		article: string;
+		content: string;
 		slug: string;
 	};
 	type: string;
@@ -18,7 +18,7 @@ const NewsCard = ({ article, type }: NewsCard) => {
 					<h3 className='text-ellipsis max-w-full line-clamp-1'>
 						{article.title}
 					</h3>
-					<p className='line-clamp-3 font-inter'>{article.article}</p>
+					<p className='line-clamp-3 font-inter'>{article.content}</p>
 				</div>
 			</article>
 		</Link>

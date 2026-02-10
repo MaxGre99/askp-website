@@ -10,7 +10,7 @@ const Footer = () => {
 	const { t } = useTranslation();
 
 	return (
-		<div className='flex flex-col gap-3 p-5 rounded-2xl shadow-lg bg-white/20 backdrop-blur-2xl w-full max-w-[1440px] mx-auto items-center'>
+		<div className='flex flex-col gap-3 p-5 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto items-center'>
 			{/* Desktop menu */}
 			<div className='flex w-full'>
 				<div className='flex flex-col gap-2 w-[50%]'>

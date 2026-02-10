@@ -12,21 +12,42 @@ interface NavBtnProps {
 const NavBtn = ({ href, children, className }: NavBtnProps) => {
 	const pathname = usePathname();
 
-	const isActive = pathname === href || pathname.startsWith(href + '/');
-
-	const baseClasses =
-		'hover:bg-white/15 active:bg-white/20 transition-all duration-200 text-2xl text-white mx-auto font-bad-script w-full h-[140px] p-3 rounded-2xl flex items-center justify-center flex items-center justify-center text-center';
+	const isActive =
+		href === '/'
+			? pathname === '/'
+			: pathname === href || pathname.startsWith(href + '/');
 
 	return (
 		<Link
 			href={href}
 			className={clsx(
-				baseClasses,
-				isActive && 'bg-white/20 ring-1 ring-white/40',
+				'relative w-full h-[140px] p-3',
+				'flex items-center justify-center text-center',
+				'font-bad-script text-2xl rounded-2xl',
+				'text-white',
+				'group',
 				className,
 			)}
 		>
-			{children}
+			{/* базовый текст */}
+			<span>{children}</span>
+
+			{/* анимированный слой */}
+			<span
+				aria-hidden
+				className={clsx(
+					'absolute inset-0 flex items-center justify-center',
+					'text-transparent bg-clip-text [-webkit-background-clip:text]',
+					'bg-linear-to-r from-amber-500 to-amber-500',
+					'bg-no-repeat bg-left',
+					'bg-size-[0%_100%]',
+					'transition-[background-size] duration-300 ease-out',
+					'group-hover:bg-size-[100%_100%]',
+					isActive && 'bg-size-[100%_100%]',
+				)}
+			>
+				{children}
+			</span>
 		</Link>
 	);
 };

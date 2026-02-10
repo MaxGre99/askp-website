@@ -18,6 +18,15 @@ export const POST = async (req: Request) => {
 		const isValid = await bcrypt.compare(password, user.password);
 		if (!isValid) throw new ApiError('Неверный пароль', 401);
 
+		if (user.status !== 'ACTIVE') {
+			throw new ApiError(
+				user.status === 'PENDING'
+					? 'Аккаунт ещё не одобрен администратором'
+					: 'Аккаунт недоступен',
+				403,
+			);
+		}
+
 		const tokenExpirySeconds = rememberMe ? 60 * 60 * 24 * 7 : 60 * 60 * 24;
 
 		const token = jwt.sign(
@@ -26,7 +35,6 @@ export const POST = async (req: Request) => {
 				email: user.email,
 				firstName: user.firstName,
 				lastName: user.lastName,
-				avatar: user.avatar,
 				role: user.role,
 			},
 			process.env.JWT_SECRET!,

@@ -1,5 +1,5 @@
 import { useSignUpMutation } from '@/shared/api/authApi';
-import { ApiError } from '@/shared/api/types/auth';
+import { getApiErrorMessage } from '@/shared/utils/getApiErrorMessage';
 import { useState } from 'react';
 
 const SignUpForm = () => {
@@ -25,14 +25,15 @@ const SignUpForm = () => {
 			setSuccess(true);
 		} catch (e) {
 			setSuccess(false);
-			setError((e as ApiError).message);
+			setError(getApiErrorMessage(e));
 		}
 	};
 
 	if (success) {
 		return (
 			<p className='text-green-600 text-sm'>
-				Регистрация успешна. Теперь можно войти.
+				Заявка отправлена. Аккаунт станет активным после одобрения
+				администратора.
 			</p>
 		);
 	}

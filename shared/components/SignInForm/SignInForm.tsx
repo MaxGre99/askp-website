@@ -1,5 +1,5 @@
 import { useSignInMutation } from '@/shared/api/authApi';
-import { ApiError } from '@/shared/api/types/auth';
+import { getApiErrorMessage } from '@/shared/utils/getApiErrorMessage';
 import React, { useState } from 'react';
 
 const SignInForm = ({
@@ -20,8 +20,7 @@ const SignInForm = ({
 		try {
 			await signIn({ email, password, rememberMe }).unwrap();
 		} catch (e) {
-			console.log(e);
-			setError((e as ApiError).message);
+			setError(getApiErrorMessage(e));
 		}
 	};
 

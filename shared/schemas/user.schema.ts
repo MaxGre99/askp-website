@@ -9,8 +9,6 @@ const UserSchema = z.object({
 	firstName: z.string().min(1),
 	lastName: z.string().min(1),
 
-	avatar: z.url().nullable().optional(),
-
 	role: UserRoleSchema,
 });
 

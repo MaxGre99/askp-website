@@ -6,7 +6,7 @@ import { ApiError } from '@/shared/api/types/auth';
 
 export const POST = async (req: Request) => {
 	try {
-		const { email, password, firstName, lastName, avatar } = await req.json();
+		const { email, password, firstName, lastName } = await req.json();
 
 		if (!email || !password || !firstName || !lastName)
 			throw new ApiError('Не заполнены обязательные поля!', 400);
@@ -22,16 +22,15 @@ export const POST = async (req: Request) => {
 				password: hashedPassword,
 				firstName,
 				lastName,
-				avatar,
-				role: 'OWNER',
+				role: 'USER',
+				status: 'PENDING',
 			},
 			select: {
 				id: true,
 				email: true,
 				firstName: true,
 				lastName: true,
-				avatar: true,
-				role: true,
+				status: true,
 			},
 		});
 

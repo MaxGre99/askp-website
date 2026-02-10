@@ -3,14 +3,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import EventCard from '@/shared/components/EventCard/EventCard';
 import Pagination from '@/shared/components/Pagination/Pagination';
 import updateQuery from '@/shared/utils/updateQuery';
+import { useGetAllNewsQuery } from '@/shared/api/newsApi';
+import { useTranslation } from 'react-i18next';
+import EventCard from '@/shared/components/EventCard/EventCard';
 // import mockImg from '../../public/mockNews.webp';
 
 const ITEMS_PER_PAGE = 4;
 
 const Page = () => {
+	const { t } = useTranslation();
 	// const news = Array(21)
 	// 	.fill(null)
 	// 	.map((_, i) => ({
@@ -22,9 +25,8 @@ const Page = () => {
 	// 		slug: `neque-porro-${i + 1}`,
 	// 	}));
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const [news, setNews] = useState<any[]>([]);
-
+	// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// const [news, setNews] = useState<any[]>([]);
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -35,11 +37,13 @@ const Page = () => {
 	// локальное состояние инпута
 	const [draftQuery, setDraftQuery] = useState(query);
 
-	useEffect(() => {
-		fetch('/api/news')
-			.then((res) => res.json())
-			.then((data) => setNews(data));
-	}, []);
+	const { data: news } = useGetAllNewsQuery({ page, query });
+
+	// useEffect(() => {
+	// 	fetch('/api/news')
+	// 		.then((res) => res.json())
+	// 		.then((data) => setNews(data));
+	// }, []);
 
 	// гарантируем ?page=1
 	useEffect(() => {
@@ -55,8 +59,10 @@ const Page = () => {
 
 	// фильтрация
 	const filteredNews = useMemo(() => {
-		return news.filter((item) =>
-			item.title.toLowerCase().includes(query.toLowerCase()),
+		return (
+			news?.news.filter((item) =>
+				item.title.toLowerCase().includes(query.toLowerCase()),
+			) ?? []
 		);
 	}, [news, query]);
 
@@ -84,13 +90,15 @@ const Page = () => {
 	return (
 		<div className='flex flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-bad-script text-white text-3xl'>Новости</h1>
+				<h1 className='font-bad-script text-white text-3xl'>
+					{t('news.pageTitle')}
+				</h1>
 
 				<div className='flex gap-2 max-w-md w-full'>
 					<input
 						value={draftQuery}
 						onChange={(e) => setDraftQuery(e.target.value)}
-						placeholder='Поиск по заголовку'
+						placeholder={t('placeholders.titleFilter')}
 						className='input flex-1'
 					/>
 
@@ -98,14 +106,14 @@ const Page = () => {
 						onClick={applyFilter}
 						className='px-4 rounded-xl bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-400'
 					>
-						Найти
+						{t('buttons.find')}
 					</button>
 				</div>
 			</div>
 
 			<div className='flex flex-col gap-4'>
-				{paginatedNews.map((event, index) => (
-					<EventCard key={event.slug} index={index} event={event} type='news' />
+				{paginatedNews.map((news, index) => (
+					<EventCard event={news} key={news.slug} index={index} type='news' />
 				))}
 			</div>
 

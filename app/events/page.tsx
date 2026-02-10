@@ -7,18 +7,20 @@ import EventCard from '@/shared/components/EventCard/EventCard';
 import Pagination from '@/shared/components/Pagination/Pagination';
 import updateQuery from '@/shared/utils/updateQuery';
 import mockImg from '../../public/mockNews.webp';
+import { useTranslation } from 'react-i18next';
 
 const ITEMS_PER_PAGE = 4;
 
 const Page = () => {
+	const { t } = useTranslation();
 	const events = Array(21)
 		.fill(null)
 		.map((_, i) => ({
 			id: i + 1,
 			title: `Neque porro quisquam est ${i + 1}`,
-			article: 'Lorem ipsum dolor sit amet...',
+			content: 'Lorem ipsum dolor sit amet...',
 			img: mockImg,
-			date: '10.10.2010',
+			updatedAt: '10.10.2010',
 			slug: `neque-porro-${i + 1}`,
 		}));
 
@@ -75,13 +77,15 @@ const Page = () => {
 	return (
 		<div className='flex flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-bad-script text-white text-3xl'>События</h1>
+				<h1 className='font-bad-script text-white text-3xl'>
+					{t('events.pageTitle')}
+				</h1>
 
 				<div className='flex gap-2 max-w-md w-full'>
 					<input
 						value={draftQuery}
 						onChange={(e) => setDraftQuery(e.target.value)}
-						placeholder='Поиск по заголовку'
+						placeholder={t('placeholders.titleFilter')}
 						className='input flex-1'
 					/>
 
@@ -89,7 +93,7 @@ const Page = () => {
 						onClick={applyFilter}
 						className='px-4 rounded-xl bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-400'
 					>
-						Найти
+						{t('buttons.find')}
 					</button>
 				</div>
 			</div>

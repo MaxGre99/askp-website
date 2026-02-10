@@ -5,8 +5,8 @@ interface EventCardProps {
 	index: number;
 	event: {
 		title: string;
-		article: string;
-		date: string;
+		content: string;
+		updatedAt: string;
 		slug: string;
 	};
 	type: string;
@@ -14,6 +14,7 @@ interface EventCardProps {
 
 const EventCard = ({ index, event, type }: EventCardProps) => {
 	const isEven = index % 2 === 0;
+	const localDateTime = new Date(event.updatedAt).toLocaleString();
 
 	return (
 		<Link href={`/${type}/${event.slug}`}>
@@ -27,8 +28,8 @@ const EventCard = ({ index, event, type }: EventCardProps) => {
 
 				<div className='p-6 flex flex-col gap-2 flex-1'>
 					<h3 className='line-clamp-1 font-semibold text-lg'>{event.title}</h3>
-					<p className='line-clamp-5 text-sm'>{event.article}</p>
-					<span className='text-xs opacity-60'>{event.date}</span>
+					<p className='line-clamp-5 text-sm'>{event.content}</p>
+					<span className='text-xs opacity-60'>{localDateTime}</span>
 				</div>
 			</article>
 		</Link>

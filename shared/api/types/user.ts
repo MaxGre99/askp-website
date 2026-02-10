@@ -3,6 +3,5 @@ export type User = {
 	email: string;
 	firstName: string;
 	lastName: string;
-	avatar?: string | null;
 	role: 'OWNER' | 'ADMIN' | 'USER';
 };

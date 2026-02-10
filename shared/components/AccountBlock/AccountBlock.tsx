@@ -4,20 +4,26 @@ import { BiImageAdd } from 'react-icons/bi';
 import { TbSettings } from 'react-icons/tb';
 import { MdOutlineLogout } from 'react-icons/md';
 import Link from 'next/link';
+import { BsHouse } from 'react-icons/bs';
 
 import Button from '../Button/Button';
 import SignInForm from '../SignInForm/SignInForm';
 import { useSignOutMutation } from '@/shared/api/authApi';
-import { useUploadAvatarMutation } from '@/shared/api/uploadApi';
-import { useGetUserQuery, useUpdateAvatarMutation } from '@/shared/api/userApi';
+import {
+	useGetAvatarQuery,
+	useUploadAvatarMutation,
+} from '@/shared/api/avatarsApi';
+import { useGetUserQuery } from '@/shared/api/userApi';
 
 const AccountBlock = () => {
-	const [showMenu, setShowMenu] = useState(true);
+	const [showMenu, setShowMenu] = useState(false);
 
 	const { data: user } = useGetUserQuery();
 	const [signOut] = useSignOutMutation();
 	const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
-	const [updateAvatar] = useUpdateAvatarMutation();
+	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
+		skip: !user?.id,
+	});
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -34,8 +40,7 @@ const AccountBlock = () => {
 		formData.append('file', file);
 
 		try {
-			const { url } = await uploadAvatar(formData).unwrap();
-			await updateAvatar({ avatar: url }).unwrap();
+			await uploadAvatar(formData).unwrap();
 		} catch (e) {
 			console.error('Avatar update failed', e);
 		}
@@ -57,11 +62,11 @@ const AccountBlock = () => {
 			{showMenu && (
 				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-lg p-4 min-w-64 z-50'>
 					{user ? (
-						<div className='flex items-center gap-2'>
-							<div className='rounded-[50%] bg-gray-100 w-[64px] h-[64px] flex items-center justify-center border-black border overflow-hidden'>
-								{user.avatar ? (
+						<div className='flex items-center gap-6'>
+							<div className='rounded-[50%] bg-gray-100 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-black border overflow-hidden'>
+								{avatar?.url ? (
 									<img
-										src={user.avatar}
+										src={avatar?.url}
 										alt='avatar'
 										className='w-full h-full object-cover'
 									/>
@@ -90,20 +95,27 @@ const AccountBlock = () => {
 							</div>
 
 							<div className='flex flex-col gap-1 text-black'>
-								<p>{user.firstName}</p>
-								<p>{user.lastName}</p>
-								<p>{user.email}</p>
+								<p className='text-nowrap'>
+									{user.firstName} {user.lastName}
+								</p>
+								<Link
+									href={'/account'}
+									className='flex gap-1 items-center hover:underline'
+								>
+									<BsHouse />
+									<p>Личный кабинет</p>
+								</Link>
 							</div>
 
-							<div className='flex gap-1 items-center'>
+							<div className='flex gap-2 items-center self-start'>
 								<Link href='/account/settings'>
-									<Button className='w-fit! h-fit! text-black!'>
+									<Button className='w-fit! h-fit! text-black! p-0!'>
 										<TbSettings />
 									</Button>
 								</Link>
 
 								<Button
-									className='w-fit! h-fit! text-black!'
+									className='w-fit! h-fit! text-black! p-0!'
 									onClick={onSignOut}
 								>
 									<MdOutlineLogout />

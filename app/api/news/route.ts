@@ -1,35 +1,59 @@
+import { NextResponse } from 'next/server';
 import { prisma } from '@/shared/lib/prisma';
-import { getServerSession } from 'next-auth';
-// import { authOptions } from '@/shared/lib/auth';
-import { hasPermission } from '@/shared/lib/permissions';
+import slugify from '@/shared/lib/slugify';
+import { Prisma } from '@prisma/client';
 
-export const GET = async () => {
-	const news = await prisma.news.findMany({
-		orderBy: { createdAt: 'desc' },
-	});
+export const GET = async (req: Request) => {
+	try {
+		const url = new URL(req.url);
+		const query = url.searchParams.get('query') || '';
+		const page = Number(url.searchParams.get('page') ?? 1);
+		const pageSize = Number(url.searchParams.get('pageSize') ?? 4);
 
-	return new Response(JSON.stringify(news), { status: 200 });
+		const where: Prisma.NewsWhereInput = query
+			? { title: { contains: query, mode: 'insensitive' as Prisma.QueryMode } }
+			: {};
+
+		const total = await prisma.news.count({ where });
+		const news = await prisma.news.findMany({
+			where,
+			orderBy: { createdAt: 'desc' },
+			skip: (page - 1) * pageSize,
+			take: pageSize,
+		});
+
+		return NextResponse.json({ news, total });
+	} catch (err) {
+		console.error('GET_NEWS_ERROR:', err);
+		return NextResponse.json(
+			{ error: 'Failed to fetch news' },
+			{ status: 500 },
+		);
+	}
 };
 
 export const POST = async (req: Request) => {
-	const session = await getServerSession(authOptions);
+	try {
+		const { title, content, image, authorId, published } = await req.json();
+		const slug = slugify(title);
 
-	if (!session || !hasPermission(session.user.role, 'news:create')) {
-		return new Response('Forbidden', { status: 403 });
+		const news = await prisma.news.create({
+			data: {
+				title,
+				content,
+				image,
+				authorId,
+				published: published ?? true,
+				slug,
+			},
+		});
+
+		return NextResponse.json(news);
+	} catch (err) {
+		console.error('CREATE_NEWS_ERROR:', err);
+		return NextResponse.json(
+			{ error: 'Failed to create news' },
+			{ status: 500 },
+		);
 	}
-
-	const data = await req.json();
-
-	const news = await prisma.news.create({
-		data: {
-			title: data.title,
-			slug: data.slug,
-			content: data.content,
-			image: data.image ?? null,
-			published: data.published ?? true,
-			authorId: session.user.id,
-		},
-	});
-
-	return new Response(JSON.stringify(news), { status: 201 });
 };

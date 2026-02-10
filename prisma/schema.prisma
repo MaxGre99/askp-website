@@ -7,18 +7,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
+  id            String     @id @default(uuid())
+  email         String     @unique
+  password      String
+  firstName     String
+  lastName      String
+  role          UserRole   @default(USER)
+  status        UserStatus @default(PENDING)
+  approvedAt    DateTime?
+  approvedBy    String?
+  approver      User?      @relation("UserApprovals", fields: [approvedBy], references: [id])
+  approvedUsers User[]     @relation("UserApprovals")
 
-  firstName String
-  lastName  String
-  avatar     String?
-
-  role      UserRole @default(USER)
-
-  news      News[]
-  events    Event[]
+  news   News[]
+  events Event[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -30,16 +32,23 @@ enum UserRole {
   USER
 }
 
+enum UserStatus {
+  PENDING // зарегистрировался, ждёт одобрения
+  ACTIVE // одобрен
+  REJECTED // отклонён
+  BLOCKED // заблокирован позже
+}
+
 model News {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   title     String
-  slug      String   @unique
+  slug      String  @unique
   content   String
   image     String?
-  published Boolean  @default(true)
+  published Boolean @default(true)
 
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -51,13 +60,12 @@ model Event {
   slug        String   @unique
   description String
   image       String?
-
   eventDate   DateTime
   published   Boolean  @default(true)
 
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

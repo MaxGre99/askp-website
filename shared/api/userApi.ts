@@ -13,18 +13,7 @@ export const userApi = createApi({
 			query: () => '/me',
 			providesTags: ['Me'],
 		}),
-		updateAvatar: builder.mutation<
-			{ user: { avatar: string } },
-			{ avatar: string }
-		>({
-			query: (body) => ({
-				url: '/me/avatar',
-				method: 'PATCH',
-				body,
-			}),
-			invalidatesTags: ['Me'],
-		}),
 	}),
 });
 
-export const { useGetUserQuery, useUpdateAvatarMutation } = userApi;
+export const { useGetUserQuery } = userApi;
