@@ -6,7 +6,7 @@ const Sidebar = () => {
 	const { t } = useTranslation();
 
 	return (
-		<nav className='w-[300px] bg-white rounded-2xl px-6 py-8 min-h-[calc(100svh-368px)]'>
+		<nav className='min-w-[300px] flex-1 bg-white rounded-2xl px-6 py-8'>
 			<ul className='flex flex-col gap-2'>
 				{sidebarTitles.map((title) => (
 					<li key={title}>

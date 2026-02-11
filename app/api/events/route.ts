@@ -11,7 +11,7 @@ export const GET = async () => {
 	} catch (err) {
 		console.error('GET_EVENTS_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to fetch events' },
+			{ error: 'failed_to_fetch_events' },
 			{ status: 500 },
 		);
 	}
@@ -39,7 +39,7 @@ export const POST = async (req: Request) => {
 	} catch (err) {
 		console.error('CREATE_EVENT_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to create event' },
+			{ error: 'failed_to_create_event' },
 			{ status: 500 },
 		);
 	}

@@ -4,44 +4,36 @@ interface FormFieldProps<Values extends object = object> {
 	name: keyof Values;
 	label: string;
 	type?: string;
-	placeholder?: string;
 	as?: 'input' | 'textarea';
+	placeholder?: string;
 	required?: boolean;
-	highlightOnError?: string;
 }
 
-const FormField = <Values extends object = object>({
+const FormField = <Values extends object>({
 	name,
 	label,
 	type = 'text',
-	placeholder,
 	as = 'input',
+	placeholder,
 	required,
-	highlightOnError,
 }: FormFieldProps<Values>) => {
-	const { errors, touched, submitCount } = useFormikContext<Values>();
+	const { errors, touched } = useFormikContext<Values>();
 
-	const hasFieldError = touched[name] && errors[name];
-	const hasExtraError =
-		highlightOnError &&
-		submitCount > 0 &&
-		errors[highlightOnError as keyof Values];
+	const hasError = touched[name] && errors[name];
 
 	return (
 		<div className='flex flex-col gap-1'>
-			<label className='text-md text-black ml-1'>
+			<label className='text-sm font-medium text-gray-700'>
 				{label}
 				{required && <span className='text-red-500'>*</span>}
 			</label>
 
 			<Field
-				as={as}
 				name={name}
 				type={type}
+				as={as}
 				placeholder={placeholder}
-				className={`input ${
-					hasFieldError || hasExtraError ? 'ring-2 ring-red-400' : ''
-				}`}
+				className={`input ${hasError ? 'ring-2 ring-red-400' : ''}`}
 			/>
 
 			<ErrorMessage name={name as string} component='p' className='error' />

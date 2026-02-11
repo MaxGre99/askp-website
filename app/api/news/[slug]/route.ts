@@ -17,7 +17,7 @@ export const GET = async (
 	} catch (err) {
 		console.error('GET_NEWS_BY_SLUG_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to fetch news' },
+			{ error: 'failed_to_fetch_news' },
 			{ status: 500 },
 		);
 	}
@@ -38,7 +38,7 @@ export const PATCH = async (
 	} catch (err) {
 		console.error('UPDATE_NEWS_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to update news' },
+			{ error: 'failed_to_update_news' },
 			{ status: 500 },
 		);
 	}
@@ -59,7 +59,7 @@ export const DELETE = async (
 	} catch (err) {
 		console.error('DELETE_NEWS_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to delete news' },
+			{ error: 'failed_to_delete_news' },
 			{ status: 500 },
 		);
 	}

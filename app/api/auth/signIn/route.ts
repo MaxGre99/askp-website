@@ -10,19 +10,17 @@ export const POST = async (req: Request) => {
 		const { email, password, rememberMe } = await req.json();
 
 		if (!email || !password)
-			throw new ApiError('Email и пароль обязательны', 400);
+			throw new ApiError('email_and_password_are_required', 400);
 
 		const user = await prisma.user.findUnique({ where: { email } });
-		if (!user) throw new ApiError('Пользователь не найден', 401);
+		if (!user) throw new ApiError('user_not_found', 401);
 
 		const isValid = await bcrypt.compare(password, user.password);
-		if (!isValid) throw new ApiError('Неверный пароль', 401);
+		if (!isValid) throw new ApiError('wrong_password', 401);
 
 		if (user.status !== 'ACTIVE') {
 			throw new ApiError(
-				user.status === 'PENDING'
-					? 'Аккаунт ещё не одобрен администратором'
-					: 'Аккаунт недоступен',
+				user.status === 'PENDING' ? 'not_approved' : 'blocked',
 				403,
 			);
 		}
@@ -56,13 +54,10 @@ export const POST = async (req: Request) => {
 		if (err instanceof ApiError)
 			return NextResponse.json({ error: err.message }, { status: err.status });
 		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json(
-				{ error: 'Ошибка базы данных' },
-				{ status: 500 },
-			);
+			return NextResponse.json({ error: 'database_error' }, { status: 500 });
 
 		return NextResponse.json(
-			{ error: 'Внутренняя ошибка сервера' },
+			{ error: 'internal_server_error' },
 			{ status: 500 },
 		);
 	}

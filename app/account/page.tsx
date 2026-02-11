@@ -6,34 +6,40 @@ import {
 	useRejectUserMutation,
 } from '@/shared/api/applicationsApi';
 import Sidebar from '@/shared/components/Sidebar/Sidebar';
+import { useTranslation } from 'react-i18next';
 
 const Page = () => {
+	const { t } = useTranslation();
 	const { data, isLoading } = useGetPendingUsersQuery();
 	const [approveUser] = useApproveUserMutation();
 	const [rejectUser] = useRejectUserMutation();
 
 	return (
-		<div className='flex w-full h-full'>
+		<div className='flex flex-1 gap-2 w-full '>
 			<Sidebar />
 
 			<div className='p-6 w-full'>
-				<h1 className='text-xl font-semibold mb-4'>Заявки на регистрацию</h1>
+				<h1 className='text-xl font-semibold mb-4'>
+					{t('sidebar.registerApplications')}
+				</h1>
 
-				{isLoading && <p>Загрузка…</p>}
+				{isLoading && <p>{t('notifications.loading')}</p>}
 
 				{!isLoading && (!data || data.length === 0) && (
-					<p className='text-gray-500'>Нет заявок</p>
+					<p className='text-gray-500'>
+						{t('account.registerApplications.noApplications')}
+					</p>
 				)}
 
 				{data && data.length > 0 && (
 					<table className='w-full border'>
 						<thead>
 							<tr className='bg-gray-100'>
-								<th className='border px-2 py-1'>Email</th>
-								<th className='border px-2 py-1'>Имя</th>
-								<th className='border px-2 py-1'>Фамилия</th>
-								<th className='border px-2 py-1'>Дата</th>
-								<th className='border px-2 py-1'>Действия</th>
+								<th className='border px-2 py-1'>{t('labels.email')}</th>
+								<th className='border px-2 py-1'>{t('labels.firstName')}</th>
+								<th className='border px-2 py-1'>{t('labels.lastName')}</th>
+								<th className='border px-2 py-1'>{t('labels.date')}</th>
+								<th className='border px-2 py-1'>{t('labels.actions')}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -50,13 +56,13 @@ const Page = () => {
 											onClick={() => approveUser(u.id)}
 											className='bg-green-500 text-white px-2 py-1 rounded'
 										>
-											Принять
+											{t('buttons.approve')}
 										</button>
 										<button
 											onClick={() => rejectUser(u.id)}
 											className='bg-red-500 text-white px-2 py-1 rounded'
 										>
-											Отклонить
+											{t('buttons.reject')}
 										</button>
 									</td>
 								</tr>

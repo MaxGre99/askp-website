@@ -1,6 +1,7 @@
 import { Formik, Form, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import FormField from '../FormField/FormField';
+import { useTranslation } from 'react-i18next';
 
 // Тип для значений формы (initialValues)
 interface FormValues {
@@ -12,56 +13,59 @@ interface FormValues {
 	message?: string;
 }
 
-// Расширенный тип для ошибок (включая кастомную 'contacts')
-interface ExtendedErrors extends Yup.InferType<typeof contactSchema> {
-	contacts?: string;
-}
-
-// Схема валидации (Yup выведет типы ошибок на основе FormValues, плюс кастомная 'contacts')
-const contactSchema = Yup.object({
-	name: Yup.string().required('Введите имя'),
-	phone: Yup.string(),
-	email: Yup.string().email('Некорректный email'),
-	telegram: Yup.string(),
-	whatsapp: Yup.string(),
-	message: Yup.string(),
-}).test(
-	'one-contact-required',
-	'Укажите хотя бы один способ связи',
-	function (values) {
-		// values типизируется автоматически как InferType схемы (все поля optional кроме name)
-		const { phone, email, telegram, whatsapp } = values;
-
-		if (phone || email || telegram || whatsapp) {
-			return true;
-		}
-
-		return this.createError({
-			path: 'contacts',
-			message: 'Укажите хотя бы один способ связи',
-		});
-	},
-);
-
-// Интерфейс для пропсов компонента ContactError
-interface ContactErrorProps {
-	className?: string; // Опциональный, для передачи дополнительных классов
-}
-
-// Компонент для отображения ошибки
-const ContactError = ({ className = '' }: ContactErrorProps) => {
-	// Типизируем контекст на основе FormValues
-	const { errors: formikErrors, submitCount } = useFormikContext<FormValues>();
-
-	// Расширяем тип ошибок для доступа к 'contacts'
-	const errors = formikErrors as unknown as ExtendedErrors;
-
-	return submitCount > 0 && errors.contacts ? (
-		<p className={`error text-center ${className}`}>{errors.contacts}</p>
-	) : null;
-};
-
 const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
+	const { t } = useTranslation();
+
+	// Схема валидации (Yup выведет типы ошибок на основе FormValues, плюс кастомная 'contacts')
+	const contactSchema = Yup.object({
+		name: Yup.string().required(t('validationErrors.required.firstName')),
+		phone: Yup.string(),
+		email: Yup.string().email(t('validationErrors.invalid.email')),
+		telegram: Yup.string(),
+		whatsapp: Yup.string(),
+		message: Yup.string(),
+	}).test(
+		'one-contact-required',
+		t('validationErrors.required.contact'),
+		function (values) {
+			// values типизируется автоматически как InferType схемы (все поля optional кроме name)
+			const { phone, email, telegram, whatsapp } = values;
+
+			if (phone || email || telegram || whatsapp) {
+				return true;
+			}
+
+			return this.createError({
+				path: 'contacts',
+				message: t('validationErrors.required.contact'),
+			});
+		},
+	);
+
+	// Расширенный тип для ошибок (включая кастомную 'contacts')
+	interface ExtendedErrors extends Yup.InferType<typeof contactSchema> {
+		contacts?: string;
+	}
+
+	// Интерфейс для пропсов компонента ContactError
+	interface ContactErrorProps {
+		className?: string; // Опциональный, для передачи дополнительных классов
+	}
+
+	// Компонент для отображения ошибки
+	const ContactError = ({ className = '' }: ContactErrorProps) => {
+		// Типизируем контекст на основе FormValues
+		const { errors: formikErrors, submitCount } =
+			useFormikContext<FormValues>();
+
+		// Расширяем тип ошибок для доступа к 'contacts'
+		const errors = formikErrors as unknown as ExtendedErrors;
+
+		return submitCount > 0 && errors.contacts ? (
+			<p className={`error text-center ${className}`}>{errors.contacts}</p>
+		) : null;
+	};
+
 	return (
 		<Formik<FormValues> // Типизируем Formik для лучшей безопасности
 			initialValues={{
@@ -84,61 +88,61 @@ const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
 
 				if (res.ok) {
 					resetForm();
-					alert('Заявка отправлена!');
+					alert(t('notifications.applicationSent'));
 				} else {
-					alert('Ошибка отправки');
+					alert(t('notifications.applicationError'));
 				}
 			}}
 		>
-			<Form className='flex flex-col w-1/2 rounded-3xl backdrop-blur-2xl bg-white/60 p-6'>
+			<Form className='flex flex-col w-1/2 rounded-3xl backdrop-blur-2xl bg-white/80 p-6'>
 				<FormField
 					name='name'
-					label='Имя'
-					placeholder='Введите ваше имя'
+					label={t('labels.firstName')}
+					placeholder={t('placeholders.firstName')}
 					required
 				/>
 				<div className='grid grid-cols-2 gap-4 mt-3'>
 					<FormField
 						name='phone'
-						label='Телефон'
+						label={t('labels.phone')}
 						type='tel'
-						placeholder='+7 (___) ___-__-__'
-						highlightOnError='contacts'
+						placeholder={t('placeholders.phone')}
+						// highlightOnError='contacts'
 					/>
 					<FormField
 						name='email'
-						label='Email'
+						label={t('labels.email')}
 						type='email'
-						placeholder='example@mail.com'
-						highlightOnError='contacts'
+						placeholder={t('placeholders.phone')}
+						// highlightOnError='contacts'
 					/>
 					<FormField
 						name='telegram'
-						label='Telegram'
-						placeholder='@username'
-						highlightOnError='contacts'
+						label={t('labels.telegram')}
+						placeholder={t('placeholders.telegram')}
+						// highlightOnError='contacts'
 					/>
 					<FormField
 						name='whatsapp'
-						label='WhatsApp'
-						placeholder='+7 (___) ___-__-__'
-						highlightOnError='contacts'
+						label={t('labels.whatsapp')}
+						placeholder={t('placeholders.whatsapp')}
+						// highlightOnError='contacts'
 					/>
 				</div>
 				<ContactError className='mt-2' />
 				<div className='mt-3'>
 					<FormField
 						name='message'
-						label='Описание проблемы'
+						label={t('labels.problemDescription')}
 						as='textarea'
-						placeholder='Опишите вашу ситуацию (необязательно)'
+						placeholder={t('placeholders.problemDescription')}
 					/>
 				</div>
 				<button
 					type='submit'
 					className='bg-blue-500 text-white py-3 rounded-2xl font-bad-script text-2xl mt-3 hover:bg-blue-600 active:bg-blue-400'
 				>
-					Отправить
+					{t('buttons.send')}
 				</button>
 			</Form>
 		</Formik>

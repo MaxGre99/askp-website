@@ -88,7 +88,7 @@ const Page = () => {
 	};
 
 	return (
-		<div className='flex flex-col gap-6'>
+		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
 				<h1 className='font-bad-script text-white text-3xl'>
 					{t('news.pageTitle')}

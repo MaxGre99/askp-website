@@ -27,7 +27,7 @@ export const GET = async (
 	} catch (err) {
 		console.error('GET_AVATAR_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to get avatar' },
+			{ error: 'failed_to_get_avatar' },
 			{ status: 500 },
 		);
 	}
@@ -52,7 +52,7 @@ export const DELETE = async (
 	} catch (err) {
 		console.error('DELETE_AVATAR_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to delete avatar' },
+			{ error: 'failed_to_delete_avatar' },
 			{ status: 500 },
 		);
 	}

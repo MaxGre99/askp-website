@@ -12,12 +12,9 @@ export const POST = async () => {
 		if (err instanceof ApiError)
 			return NextResponse.json({ error: err.message }, { status: err.status });
 		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json(
-				{ error: 'Ошибка базы данных' },
-				{ status: 500 },
-			);
+			return NextResponse.json({ error: 'database_error' }, { status: 500 });
 		return NextResponse.json(
-			{ error: 'Внутренняя ошибка сервера' },
+			{ error: 'internal_server_error' },
 			{ status: 500 },
 		);
 	}

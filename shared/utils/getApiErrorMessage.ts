@@ -5,5 +5,5 @@ export const getApiErrorMessage = (err: unknown): string => {
 			return (err.data as any).error;
 		if ('message' in err) return (err as any).message;
 	}
-	return 'Неизвестная ошибка';
+	return 'unknown_error';
 };

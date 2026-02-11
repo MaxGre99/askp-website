@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest) => {
 			await req.json();
 
 		if (!type || !name || !(phone || email || telegram || whatsapp))
-			throw new ApiError('Некорректные данные формы', 400);
+			throw new ApiError('incorrect_form_data', 400);
 
 		const transporter = nodemailer.createTransport({
 			host: process.env.SMTP_HOST,
@@ -42,6 +42,6 @@ ${message || '-'}
 		console.error('FEEDBACK_ERROR:', err);
 		if (err instanceof ApiError)
 			return NextResponse.json({ error: err.message }, { status: err.status });
-		return NextResponse.json({ error: 'Ошибка отправки' }, { status: 500 });
+		return NextResponse.json({ error: 'sending_form_error' }, { status: 500 });
 	}
 };

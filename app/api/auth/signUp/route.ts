@@ -9,10 +9,10 @@ export const POST = async (req: Request) => {
 		const { email, password, firstName, lastName } = await req.json();
 
 		if (!email || !password || !firstName || !lastName)
-			throw new ApiError('Не заполнены обязательные поля!', 400);
+			throw new ApiError('required_fields', 400);
 
 		const existingUser = await prisma.user.findUnique({ where: { email } });
-		if (existingUser) throw new ApiError('Пользователь уже существует', 409);
+		if (existingUser) throw new ApiError('already_exists', 409);
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -40,12 +40,9 @@ export const POST = async (req: Request) => {
 		if (err instanceof ApiError)
 			return NextResponse.json({ error: err.message }, { status: err.status });
 		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json(
-				{ error: 'Ошибка базы данных' },
-				{ status: 500 },
-			);
+			return NextResponse.json({ error: 'database_error' }, { status: 500 });
 		return NextResponse.json(
-			{ error: 'Внутренняя ошибка сервера' },
+			{ error: 'internal_server_error' },
 			{ status: 500 },
 		);
 	}

@@ -37,7 +37,7 @@ const Home = () => {
 
 	return (
 		<>
-			<section className='flex flex-col gap-3'>
+			<section className='flex flex-col gap-3 w-full'>
 				<h1 className='font-bad-script text-white'>{t('news.homeTitle')}:</h1>
 				<Swiper
 					modules={[Pagination, Autoplay]}
@@ -92,7 +92,7 @@ const Home = () => {
 					</NavBtn>
 				</div>
 			</section>
-			<section className='text-white flex flex-col gap-5 items-center'>
+			<section className='text-white flex flex-col gap-5 items-center w-full'>
 				<h1 className='font-bad-script'>{t('feedbackForm.title')}</h1>
 				<div className='relative flex bg-white/20 rounded-full w-fit'>
 					{/* Анимированный индикатор */}

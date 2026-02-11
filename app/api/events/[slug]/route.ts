@@ -17,7 +17,7 @@ export const GET = async (
 	} catch (err) {
 		console.error('GET_EVENT_BY_ID_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to fetch event' },
+			{ error: 'failed_to_fetch_event' },
 			{ status: 500 },
 		);
 	}
@@ -41,7 +41,7 @@ export const PATCH = async (
 	} catch (err) {
 		console.error('UPDATE_EVENT_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to update event' },
+			{ error: 'failed_to_update_event' },
 			{ status: 500 },
 		);
 	}
@@ -62,7 +62,7 @@ export const DELETE = async (
 	} catch (err) {
 		console.error('DELETE_EVENT_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to delete event' },
+			{ error: 'failed_to_delete_event' },
 			{ status: 500 },
 		);
 	}

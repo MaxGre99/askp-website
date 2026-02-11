@@ -14,8 +14,10 @@ import {
 	useUploadAvatarMutation,
 } from '@/shared/api/avatarsApi';
 import { useGetUserQuery } from '@/shared/api/userApi';
+import { useTranslation } from 'react-i18next';
 
 const AccountBlock = () => {
+	const { t } = useTranslation();
 	const [showMenu, setShowMenu] = useState(false);
 
 	const { data: user } = useGetUserQuery();
@@ -103,7 +105,7 @@ const AccountBlock = () => {
 									className='flex gap-1 items-center hover:underline'
 								>
 									<BsHouse />
-									<p>Личный кабинет</p>
+									<p>{t('account.title')}</p>
 								</Link>
 							</div>
 

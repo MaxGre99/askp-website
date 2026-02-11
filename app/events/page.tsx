@@ -75,7 +75,7 @@ const Page = () => {
 	};
 
 	return (
-		<div className='flex flex-col gap-6'>
+		<div className='flex flex-col flex-1 w-full gap-6'>
 			<div className='flex justify-between items-center gap-3'>
 				<h1 className='font-bad-script text-white text-3xl'>
 					{t('events.pageTitle')}

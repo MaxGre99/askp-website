@@ -26,7 +26,7 @@ export const GET = async (req: Request) => {
 	} catch (err) {
 		console.error('GET_NEWS_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to fetch news' },
+			{ error: 'failed_to_fetch_news_list' },
 			{ status: 500 },
 		);
 	}
@@ -52,7 +52,7 @@ export const POST = async (req: Request) => {
 	} catch (err) {
 		console.error('CREATE_NEWS_ERROR:', err);
 		return NextResponse.json(
-			{ error: 'Failed to create news' },
+			{ error: 'failed_to_create_news' },
 			{ status: 500 },
 		);
 	}

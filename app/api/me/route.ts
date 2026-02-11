@@ -10,14 +10,14 @@ export const GET = async () => {
 	try {
 		const cookieStore = await cookies();
 		const token = cookieStore.get('askp-token')?.value;
-		if (!token) throw new ApiError('Не авторизован', 401);
+		if (!token) throw new ApiError('unauthorized', 401);
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let payload: any;
 		try {
 			payload = jwt.verify(token, process.env.JWT_SECRET!);
 		} catch {
-			throw new ApiError('Неверный токен', 401);
+			throw new ApiError('invalid_token', 401);
 		}
 
 		const userFromDb = await prisma.user.findUnique({
@@ -30,7 +30,7 @@ export const GET = async () => {
 				role: true,
 			},
 		});
-		if (!userFromDb) throw new ApiError('Пользователь не найден', 404);
+		if (!userFromDb) throw new ApiError('user_not_found', 404);
 
 		const user = UserSchema.parse(userFromDb);
 
@@ -40,12 +40,9 @@ export const GET = async () => {
 		if (err instanceof ApiError)
 			return NextResponse.json({ error: err.message }, { status: err.status });
 		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json(
-				{ error: 'Ошибка базы данных' },
-				{ status: 500 },
-			);
+			return NextResponse.json({ error: 'database_error' }, { status: 500 });
 		return NextResponse.json(
-			{ error: 'Внутренняя ошибка сервера' },
+			{ error: 'internal_server_error' },
 			{ status: 500 },
 		);
 	}
