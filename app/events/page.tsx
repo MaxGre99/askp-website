@@ -8,6 +8,7 @@ import Pagination from '@/shared/components/Pagination/Pagination';
 import updateQuery from '@/shared/utils/updateQuery';
 import mockImg from '../../public/mockNews.webp';
 import { useTranslation } from 'react-i18next';
+import BaseButton from '@/shared/components/BaseButton/BaseButton';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -89,12 +90,7 @@ const Page = () => {
 						className='input flex-1'
 					/>
 
-					<button
-						onClick={applyFilter}
-						className='px-4 rounded-xl bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-400'
-					>
-						{t('buttons.find')}
-					</button>
+					<BaseButton onClick={applyFilter}>{t('buttons.find')}</BaseButton>
 				</div>
 			</div>
 

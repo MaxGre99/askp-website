@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import clsx from 'clsx';
+import Image from 'next/image';
 
 interface EventCardProps {
 	index: number;
@@ -24,7 +25,13 @@ const EventCard = ({ index, event, type }: EventCardProps) => {
 					isEven ? 'flex-row' : 'flex-row-reverse',
 				)}
 			>
-				<img src='/mockNews.webp' className='w-[260px] object-cover' />
+				<Image
+					src='/mockNews.webp'
+					alt='event-cover'
+					width={260}
+					height={100}
+					className='object-cover'
+				/>
 
 				<div className='p-6 flex flex-col gap-2 flex-1'>
 					<h3 className='line-clamp-1 font-semibold text-lg'>{event.title}</h3>

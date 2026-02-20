@@ -1,12 +1,11 @@
 import { useRef, useState } from 'react';
 import { FaRegBell, FaRegUser } from 'react-icons/fa';
 import { BiImageAdd } from 'react-icons/bi';
-import { TbSettings } from 'react-icons/tb';
 import { MdOutlineLogout } from 'react-icons/md';
 import Link from 'next/link';
 import { BsHouse } from 'react-icons/bs';
 
-import Button from '../Button/Button';
+import TransparentButton from '../TransparentButton/TransparentButton';
 import SignInForm from '../SignInForm/SignInForm';
 import { useSignOutMutation } from '@/shared/api/authApi';
 import {
@@ -15,6 +14,7 @@ import {
 } from '@/shared/api/avatarsApi';
 import { useGetUserQuery } from '@/shared/api/userApi';
 import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
 
 const AccountBlock = () => {
 	const { t } = useTranslation();
@@ -50,24 +50,24 @@ const AccountBlock = () => {
 
 	return (
 		<div className='flex relative'>
-			<Button className='hover:bg-transparent! hover:text-amber-400'>
+			<TransparentButton className='hover:bg-transparent! hover:text-amber-400'>
 				<FaRegBell />
-			</Button>
+			</TransparentButton>
 
-			<Button
+			<TransparentButton
 				className='hover:bg-transparent! hover:text-cyan-300'
 				onClick={handleShowMenu}
 			>
 				<FaRegUser />
-			</Button>
+			</TransparentButton>
 
 			{showMenu && (
-				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-lg p-4 min-w-64 z-50'>
+				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 min-w-64 z-50'>
 					{user ? (
 						<div className='flex items-center gap-6'>
 							<div className='rounded-[50%] bg-gray-100 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-black border overflow-hidden'>
 								{avatar?.url ? (
-									<img
+									<Image
 										src={avatar?.url}
 										alt='avatar'
 										className='w-full h-full object-cover'
@@ -85,13 +85,13 @@ const AccountBlock = () => {
 											}}
 										/>
 
-										<Button
+										<TransparentButton
 											className='w-fit! h-fit! text-black!'
 											disabled={isLoading}
 											onClick={() => fileInputRef.current?.click()}
 										>
 											<BiImageAdd />
-										</Button>
+										</TransparentButton>
 									</>
 								)}
 							</div>
@@ -110,18 +110,12 @@ const AccountBlock = () => {
 							</div>
 
 							<div className='flex gap-2 items-center self-start'>
-								<Link href='/account/settings'>
-									<Button className='w-fit! h-fit! text-black! p-0!'>
-										<TbSettings />
-									</Button>
-								</Link>
-
-								<Button
+								<TransparentButton
 									className='w-fit! h-fit! text-black! p-0!'
 									onClick={onSignOut}
 								>
 									<MdOutlineLogout />
-								</Button>
+								</TransparentButton>
 							</div>
 						</div>
 					) : (

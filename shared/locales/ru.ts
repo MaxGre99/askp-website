@@ -50,6 +50,7 @@ const ru = {
 			telegram: 'Telegram',
 			whatsapp: 'WhatsApp',
 			problemDescription: 'Описание проблемы',
+			rememberMe: 'Запомнить меня',
 		},
 		placeholders: {
 			titleFilter: 'Поиск по заголовку',

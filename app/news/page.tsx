@@ -8,25 +8,12 @@ import updateQuery from '@/shared/utils/updateQuery';
 import { useGetAllNewsQuery } from '@/shared/api/newsApi';
 import { useTranslation } from 'react-i18next';
 import EventCard from '@/shared/components/EventCard/EventCard';
-// import mockImg from '../../public/mockNews.webp';
+import BaseButton from '@/shared/components/BaseButton/BaseButton';
 
 const ITEMS_PER_PAGE = 4;
 
 const Page = () => {
 	const { t } = useTranslation();
-	// const news = Array(21)
-	// 	.fill(null)
-	// 	.map((_, i) => ({
-	// 		id: i + 1,
-	// 		title: `Neque porro quisquam est ${i + 1}`,
-	// 		article: 'Lorem ipsum dolor sit amet...',
-	// 		img: mockImg,
-	// 		date: '10.10.2010',
-	// 		slug: `neque-porro-${i + 1}`,
-	// 	}));
-
-	// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-	// const [news, setNews] = useState<any[]>([]);
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -38,12 +25,6 @@ const Page = () => {
 	const [draftQuery, setDraftQuery] = useState(query);
 
 	const { data: news } = useGetAllNewsQuery({ page, query });
-
-	// useEffect(() => {
-	// 	fetch('/api/news')
-	// 		.then((res) => res.json())
-	// 		.then((data) => setNews(data));
-	// }, []);
 
 	// гарантируем ?page=1
 	useEffect(() => {
@@ -102,12 +83,7 @@ const Page = () => {
 						className='input flex-1'
 					/>
 
-					<button
-						onClick={applyFilter}
-						className='px-4 rounded-xl bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-400'
-					>
-						{t('buttons.find')}
-					</button>
+					<BaseButton onClick={applyFilter}>{t('buttons.find')}</BaseButton>
 				</div>
 			</div>
 

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import FormField from '../FormField/FormField';
 import { useTranslation } from 'react-i18next';
+import BaseButton from '../BaseButton/BaseButton';
 
 const SignUpForm = () => {
 	const { t } = useTranslation();
@@ -61,8 +62,8 @@ const SignUpForm = () => {
 				className='
 				flex flex-col gap-4
 				w-full max-w-lg
-				bg-white/70 backdrop-blur-xl
-				p-6 rounded-3xl shadow-lg
+				bg-white/80 backdrop-blur-2xl
+				p-6 rounded-2xl shadow-lg
 			'
 			>
 				<h2 className='text-2xl font-semibold text-center'>Регистрация</h2>
@@ -103,20 +104,9 @@ const SignUpForm = () => {
 					<p className='text-sm text-red-500 text-center'>{apiError}</p>
 				)}
 
-				<button
-					type='submit'
-					disabled={isLoading}
-					className='
-						bg-cyan-500 text-white
-						py-3 rounded-2xl font-medium
-						transition
-						hover:bg-cyan-600
-						active:bg-cyan-400
-						disabled:opacity-50
-					'
-				>
+				<BaseButton type='submit' disabled={isLoading}>
 					{isLoading ? t('notifications.creating') : t('buttons.signUp')}
-				</button>
+				</BaseButton>
 			</Form>
 		</Formik>
 	);

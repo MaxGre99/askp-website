@@ -68,7 +68,7 @@
 
 @layer components {
 	.input {
-		@apply w-full flex items-center rounded-xl p-2 bg-white text-black outline-none placeholder:text-gray-400;
+		@apply w-full flex items-center rounded-2xl p-2 bg-white text-black outline-none placeholder:text-gray-400 border border-gray-400;
 	}
 
 	.error {

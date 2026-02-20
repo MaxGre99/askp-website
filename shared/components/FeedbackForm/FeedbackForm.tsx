@@ -2,6 +2,7 @@ import { Formik, Form, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import FormField from '../FormField/FormField';
 import { useTranslation } from 'react-i18next';
+import BaseButton from '../BaseButton/BaseButton';
 
 // Тип для значений формы (initialValues)
 interface FormValues {
@@ -16,7 +17,6 @@ interface FormValues {
 const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
 	const { t } = useTranslation();
 
-	// Схема валидации (Yup выведет типы ошибок на основе FormValues, плюс кастомная 'contacts')
 	const contactSchema = Yup.object({
 		name: Yup.string().required(t('validationErrors.required.firstName')),
 		phone: Yup.string(),
@@ -28,7 +28,6 @@ const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
 		'one-contact-required',
 		t('validationErrors.required.contact'),
 		function (values) {
-			// values типизируется автоматически как InferType схемы (все поля optional кроме name)
 			const { phone, email, telegram, whatsapp } = values;
 
 			if (phone || email || telegram || whatsapp) {
@@ -67,7 +66,7 @@ const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
 	};
 
 	return (
-		<Formik<FormValues> // Типизируем Formik для лучшей безопасности
+		<Formik<FormValues>
 			initialValues={{
 				name: '',
 				phone: '',
@@ -94,7 +93,7 @@ const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
 				}
 			}}
 		>
-			<Form className='flex flex-col w-1/2 rounded-3xl backdrop-blur-2xl bg-white/80 p-6'>
+			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-white/80 p-6'>
 				<FormField
 					name='name'
 					label={t('labels.firstName')}
@@ -138,12 +137,9 @@ const FeedbackForm = ({ type }: { type: 'cooperation' | 'consultation' }) => {
 						placeholder={t('placeholders.problemDescription')}
 					/>
 				</div>
-				<button
-					type='submit'
-					className='bg-blue-500 text-white py-3 rounded-2xl font-bad-script text-2xl mt-3 hover:bg-blue-600 active:bg-blue-400'
-				>
+				<BaseButton type='submit' className='font-bad-script text-2xl mt-5'>
 					{t('buttons.send')}
-				</button>
+				</BaseButton>
 			</Form>
 		</Formik>
 	);

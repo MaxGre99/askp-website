@@ -6,6 +6,8 @@ import { navbarList } from './consts';
 import NavBtn from '../NavBtn/NavBtn';
 import AuthBlock from '../AccountBlock/AccountBlock';
 import routes from '@/shared/config/routes';
+import TransparentButton from '../TransparentButton/TransparentButton';
+import Image from 'next/image';
 
 const Navbar = () => {
 	const { t } = useTranslation();
@@ -14,7 +16,7 @@ const Navbar = () => {
 	return (
 		<nav className='flex flex-col w-full max-w-[1440px] mx-auto gap-3 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl'>
 			<div className='flex items-center justify-between xl:m-0 xl:mx-3 m-3'>
-				<img src='/favicon.png' alt='logo' className='h-[120px]' />
+				<Image src='/favicon.png' alt='logo' width={120} height={120} />
 
 				{/* Desktop */}
 				<ul className='hidden xl:flex flex-1 ml-10 h-full'>
@@ -31,7 +33,7 @@ const Navbar = () => {
 				</ul>
 
 				{/* Burger */}
-				<button
+				<TransparentButton
 					className='xl:hidden text-white text-3xl px-4'
 					onClick={() => setOpen((v) => !v)}
 					aria-label='Toggle menu'
@@ -39,7 +41,7 @@ const Navbar = () => {
 					aria-controls='mobile-menu'
 				>
 					☰
-				</button>
+				</TransparentButton>
 			</div>
 
 			{/* Mobile */}

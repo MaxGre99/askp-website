@@ -12,7 +12,7 @@ import EventCard from '@/shared/components/EventCard/EventCard';
 import NewsCard from '@/shared/components/NewsCard/NewsCard';
 import { useState } from 'react';
 import FeedbackForm from '@/shared/components/FeedbackForm/FeedbackForm';
-import Button from '@/shared/components/Button/Button';
+import TransparentButton from '@/shared/components/TransparentButton/TransparentButton';
 import NavBtn from '@/shared/components/NavBtn/NavBtn';
 import { useTranslation } from 'react-i18next';
 
@@ -48,7 +48,7 @@ const Home = () => {
 					className='w-full px-5!'
 					// pagination={{
 					// 	type: 'bullets',
-					// 	// clickable: true,
+					// 	clickable: true,
 					// }}
 					freeMode
 					speed={10000} // ← скорость движения (чем больше — тем плавнее)
@@ -101,21 +101,21 @@ const Home = () => {
 							${type === 'cooperation' ? 'translate-x-0' : 'translate-x-full'}`}
 					/>
 
-					<Button
+					<TransparentButton
 						type='button'
 						onClick={() => setType('cooperation')}
 						className='relative z-10 px-6 py-3 text-white font-medium w-1/2! h-fit! font-inter text-lg hover:bg-transparent!'
 					>
 						{t('feedbackForm.buttons.cooperation')}
-					</Button>
+					</TransparentButton>
 
-					<Button
+					<TransparentButton
 						type='button'
 						onClick={() => setType('consultation')}
 						className='relative z-10 px-6 py-3 text-white font-medium w-1/2 h-fit! font-inter text-lg hover:bg-transparent!'
 					>
 						{t('feedbackForm.buttons.consultation')}
-					</Button>
+					</TransparentButton>
 				</div>
 				<FeedbackForm type={type} />
 			</section>

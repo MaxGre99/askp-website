@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import React from 'react';
 
 interface NavBtnProps {
 	href: string;
