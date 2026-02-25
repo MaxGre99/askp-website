@@ -15,7 +15,9 @@ export default function AccountLayout({
 	return (
 		<div className='flex flex-1 gap-2 w-full'>
 			<Sidebar />
-			<div className='p-6 w-full'>{children}</div>
+			<div className='flex flex-1 max-w-[calc(100%-308px)] bg-white rounded-2xl px-6 py-8'>
+				{children}
+			</div>
 		</div>
 	);
 }

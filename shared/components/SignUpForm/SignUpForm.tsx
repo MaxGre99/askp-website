@@ -32,7 +32,7 @@ const SignUpForm = () => {
 
 	if (success) {
 		return (
-			<p className='text-green-600 text-sm text-center'>
+			<p className='text-white text-lg text-center'>
 				{t('notifications.registerApplication')}
 			</p>
 		);
@@ -101,7 +101,7 @@ const SignUpForm = () => {
 				</div>
 
 				{apiError && (
-					<p className='text-sm text-red-500 text-center'>{apiError}</p>
+					<p className='error text-center'>{t(`backendErrors.${apiError}`)}</p>
 				)}
 
 				<BaseButton type='submit' disabled={isLoading}>

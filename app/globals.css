@@ -38,6 +38,7 @@
 	/* Глобальный scrollbar страницы */
 	html::-webkit-scrollbar {
 		width: 8px;
+		height: 8px;
 	}
 
 	html::-webkit-scrollbar-track {
@@ -52,15 +53,16 @@
 	/* Внутренние scrollbar’ы всех элементов кроме html */
 	body *::-webkit-scrollbar {
 		width: 8px;
+		height: 8px;
 	}
 
 	body *::-webkit-scrollbar-track {
 		background: transparent;
-		margin: 8px 0 2px 0;
+		margin: 8px 8px 0px 8px;
 	}
 
 	body *::-webkit-scrollbar-thumb {
-		background: white;
+		background: #2b7fff !important;
 		border-radius: 999px;
 		border: 3px solid transparent;
 	}

@@ -72,7 +72,7 @@ const SignInForm = ({
 						{t('labels.rememberMe')}
 					</label>
 
-					{status && <p className='error'>{status}</p>}
+					{status && <p className='error'>{t(`backendErrors.${status}`)}</p>}
 
 					<BaseButton type='submit' disabled={isSubmitting}>
 						{isSubmitting ? 'Входим…' : t('buttons.signIn')}

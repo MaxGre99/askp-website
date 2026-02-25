@@ -8,7 +8,7 @@ const Sidebar = () => {
 	const { t } = useTranslation();
 
 	return (
-		<nav className='min-w-fit flex-1 bg-white rounded-2xl px-6 py-8'>
+		<nav className='min-w-fit max-w-[300px] bg-white rounded-2xl px-6 py-8'>
 			<ul className='flex flex-col gap-2'>
 				{sidebarButtons.map(({ title, icon: Icon }) => (
 					<li key={title}>

@@ -1,71 +1,57 @@
 'use client';
 
-import {
-	useApproveUserMutation,
-	useGetPendingUsersQuery,
-	useRejectUserMutation,
-} from '@/shared/api/applicationsApi';
 import { useTranslation } from 'react-i18next';
+import { ApplicationsTable } from '@/widgets/applications-table/ui/applications-table/applications-table';
+import { ApplicationsTableRow } from '@/entities/application/ui/applications-table-row/applications-table-row';
+import { BlockedApplicationActions } from '@/features/manage-application-status/ui/blocked-application-actions';
+import { PendingApplicationActions } from '@/features/manage-application-status/ui/pending-application-actions';
+import {
+	useGetBlockedApplicationsQuery,
+	useGetPendingApplicationsQuery,
+} from '@/entities/application/api/applicationsApi';
 
 const Page = () => {
 	const { t } = useTranslation();
-	const { data, isLoading } = useGetPendingUsersQuery();
-	const [approveUser] = useApproveUserMutation();
-	const [rejectUser] = useRejectUserMutation();
+	const { data: pendingApplications, isLoading: loadingPendingApplications } =
+		useGetPendingApplicationsQuery();
+	const { data: blockedApplications, isLoading: loadingBlockedApplications } =
+		useGetBlockedApplicationsQuery();
 
 	return (
-		<div className='p-6 w-full'>
+		<div className='max-w-full'>
 			<h1 className='text-xl font-semibold mb-4'>
-				{t('sidebar.registerApplications')}
+				{t('account.registerApplications.pending.title')}
 			</h1>
+			<div className='w-full space-y-8'>
+				<ApplicationsTable
+					data={pendingApplications}
+					loading={loadingPendingApplications}
+					emptyText={t('account.registerApplications.pending.empty')}
+					renderRow={(u) => (
+						<ApplicationsTableRow
+							key={u.id}
+							user={u}
+							actions={<PendingApplicationActions id={u.id} />}
+						/>
+					)}
+				/>
 
-			{isLoading && <p>{t('notifications.loading')}</p>}
-
-			{!isLoading && (!data || data.length === 0) && (
-				<p className='text-gray-500'>
-					{t('account.registerApplications.noApplications')}
-				</p>
-			)}
-
-			{data && data.length > 0 && (
-				<table className='w-full border'>
-					<thead>
-						<tr className='bg-gray-100'>
-							<th className='border px-2 py-1'>{t('labels.email')}</th>
-							<th className='border px-2 py-1'>{t('labels.firstName')}</th>
-							<th className='border px-2 py-1'>{t('labels.lastName')}</th>
-							<th className='border px-2 py-1'>{t('labels.date')}</th>
-							<th className='border px-2 py-1'>{t('labels.actions')}</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data.map((u) => (
-							<tr key={u.id}>
-								<td className='border px-2 py-1'>{u.email}</td>
-								<td className='border px-2 py-1'>{u.firstName}</td>
-								<td className='border px-2 py-1'>{u.lastName}</td>
-								<td className='border px-2 py-1'>
-									{new Date(u.createdAt).toLocaleDateString()}
-								</td>
-								<td className='border px-2 py-1 flex gap-2'>
-									<button
-										onClick={() => approveUser(u.id)}
-										className='bg-green-500 text-white px-2 py-1 rounded'
-									>
-										{t('buttons.approve')}
-									</button>
-									<button
-										onClick={() => rejectUser(u.id)}
-										className='bg-red-500 text-white px-2 py-1 rounded'
-									>
-										{t('buttons.reject')}
-									</button>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			)}
+				<h1 className='text-xl font-semibold mb-4'>
+					{t('account.registerApplications.blocked.title')}
+				</h1>
+				<ApplicationsTable
+					data={blockedApplications}
+					loading={loadingBlockedApplications}
+					emptyText={t('account.registerApplications.blocked.empty')}
+					renderRow={(u) => (
+						<ApplicationsTableRow
+							key={u.id}
+							user={u}
+							actions={<BlockedApplicationActions id={u.id} />}
+						/>
+					)}
+				/>
+			</div>
 		</div>
 		// </div>
 	);

@@ -4,7 +4,7 @@ import { avatarsApi } from '../api/avatarsApi';
 import { userApi } from '../api/userApi';
 import { newsApi } from '../api/newsApi';
 import { eventsApi } from '../api/eventsApi';
-import { applicationsApi } from '../api/applicationsApi';
+import { applicationsApi } from '../../entities/application/api/applicationsApi';
 
 const rootReducer = combineReducers({
 	[authApi.reducerPath]: authApi.reducer,

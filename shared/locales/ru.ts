@@ -36,7 +36,14 @@ const ru = {
 		account: {
 			title: 'Личный кабинет',
 			registerApplications: {
-				noApplications: 'Нет заявок',
+				pending: {
+					title: 'Активные заявки на регистрацию',
+					empty: 'Нет активных заявок',
+				},
+				blocked: {
+					title: 'Заблокированные заявки на регистрацию',
+					empty: 'Нет заблокированных заявок',
+				},
 			},
 		},
 		labels: {
@@ -68,8 +75,9 @@ const ru = {
 			find: 'Найти',
 			showAll: 'Смотреть все',
 			approve: 'Принять',
-			reject: 'Отколнить',
+			reject: 'Отклонить',
 			block: 'Заблокировать',
+			unblock: 'Заблокировать',
 			send: 'Отправить',
 			signIn: 'Войти',
 			signUp: 'Зарегистрироваться',
