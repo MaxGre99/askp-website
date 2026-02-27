@@ -1,23 +1,21 @@
 'use client';
 
-import { useGetUserQuery } from '@/shared/api/userApi';
-import Sidebar from '@/shared/components/Sidebar/Sidebar';
+import { useGetUserQuery } from '@/entities/users';
+import { AccountSidebar } from '@/widgets/account-sidebar';
 import { redirect } from 'next/navigation';
 
-export default function AccountLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 	const { data: user, isLoading } = useGetUserQuery();
 	if (!isLoading && !user) redirect('/');
 
 	return (
 		<div className='flex flex-1 gap-2 w-full'>
-			<Sidebar />
+			<AccountSidebar />
 			<div className='flex flex-1 max-w-[calc(100%-308px)] bg-white rounded-2xl px-6 py-8'>
 				{children}
 			</div>
 		</div>
 	);
-}
+};
+
+export default AccountLayout;

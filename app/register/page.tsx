@@ -1,9 +1,9 @@
 'use client';
 
-import SignUpFrom from '@/shared/components/SignUpForm/SignUpForm';
+import { SignUpForm } from '@/widgets/sign-up-form';
 
 const Page = () => {
-	return <SignUpFrom />;
+	return <SignUpForm />;
 };
 
 export default Page;

@@ -3,7 +3,7 @@ import {
 	useBlockApplicationMutation,
 	useRejectApplicationMutation,
 	useUnblockApplicationMutation,
-} from '@/entities/application/api/applicationsApi';
+} from '@/entities/applications';
 
 export const useApplicationActions = () => {
 	const [approve] = useApproveApplicationMutation();

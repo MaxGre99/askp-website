@@ -5,7 +5,7 @@ const ru = {
 			applicationSent: 'Заявка отправлена!',
 			applicationError: 'Ошибка отправки',
 			entering: 'Входим...',
-			registerApplication:
+			applicationSuccess:
 				'Заявка отправлена. Аккаунт станет активным после одобрения администратора.',
 			creating: 'Создание...',
 		},
@@ -23,7 +23,7 @@ const ru = {
 			profile: 'Профиль',
 			news: 'Новости',
 			events: 'События',
-			registerApplications: 'Заявки на регистрацию',
+			applications: 'Заявки на регистрацию',
 		},
 		news: {
 			homeTitle: 'Наши новости',
@@ -35,7 +35,7 @@ const ru = {
 		},
 		account: {
 			title: 'Личный кабинет',
-			registerApplications: {
+			applications: {
 				pending: {
 					title: 'Активные заявки на регистрацию',
 					empty: 'Нет активных заявок',

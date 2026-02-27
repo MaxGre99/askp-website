@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { s3 } from '@/shared/lib/s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { ApiError } from '@/shared/api/types/auth';
 import jwt from 'jsonwebtoken';
+import { ApiError } from '@/shared/api';
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 МБ
 const ALLOWED_EXTS = ['png', 'jpg', 'jpeg'];

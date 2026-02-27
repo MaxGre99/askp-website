@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { prisma } from '@/shared/lib/prisma';
 import { cookies } from 'next/headers';
-import UserSchema from '@/shared/schemas/user.schema';
 import { Prisma } from '@prisma/client';
-import { ApiError } from '@/shared/api/types/auth';
+import { UserSchema } from '@/shared/schemas';
+import { ApiError } from '@/shared/api';
 
 export const GET = async () => {
 	try {

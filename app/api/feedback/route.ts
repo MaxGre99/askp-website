@@ -1,4 +1,4 @@
-import { ApiError } from '@/shared/api/types/auth';
+import { ApiError } from '@/shared/api';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 

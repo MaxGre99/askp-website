@@ -1,13 +1,31 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/shared/lib/prisma';
 import slugify from '@/shared/lib/slugify';
+import { Prisma } from '@prisma/client';
 
-export const GET = async () => {
+export const GET = async (req: Request) => {
 	try {
+		const url = new URL(req.url);
+		const query = url.searchParams.get('query') || '';
+		const page = Math.max(1, Number(url.searchParams.get('page') ?? 1));
+		const pageSize = Math.min(
+			50,
+			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
+		);
+
+		const where: Prisma.EventWhereInput = query
+			? { title: { contains: query, mode: 'insensitive' as Prisma.QueryMode } }
+			: {};
+
+		const total = await prisma.event.count({ where });
 		const events = await prisma.event.findMany({
-			orderBy: { eventDate: 'desc' },
+			where,
+			orderBy: { createdAt: 'desc' },
+			skip: (page - 1) * pageSize,
+			take: pageSize,
 		});
-		return NextResponse.json(events);
+
+		return NextResponse.json({ events, total });
 	} catch (err) {
 		console.error('GET_EVENTS_ERROR:', err);
 		return NextResponse.json(
@@ -19,8 +37,8 @@ export const GET = async () => {
 
 export const POST = async (req: Request) => {
 	try {
-		const body = await req.json();
-		const { title, description, image, authorId, eventDate, published } = body;
+		const { title, description, image, authorId, eventDate, published } =
+			await req.json();
 		const slug = slugify(title);
 
 		const event = await prisma.event.create({

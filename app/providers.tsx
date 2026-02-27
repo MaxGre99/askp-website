@@ -1,18 +1,18 @@
 'use client';
 
+import { ClientI18nProvider, StoreProvider } from '@/shared/providers';
+import { store } from './store';
+import { UserProvider } from '@/entities/users';
 // import { SessionProvider } from 'next-auth/react';
-import ClientI18nProvider from '@/shared/providers/I18nextProvider';
-import UserProvider from '@/shared/providers/UserProvider';
-import StoreProvider from '@/shared/store/providers';
 
 type Props = {
 	children: React.ReactNode;
 };
 
-const Providers = ({ children }: Props) => {
+export const Providers = ({ children }: Props) => {
 	return (
 		// <SessionProvider>
-		<StoreProvider>
+		<StoreProvider store={store}>
 			<ClientI18nProvider>
 				<UserProvider>{children}</UserProvider>
 			</ClientI18nProvider>
@@ -20,5 +20,3 @@ const Providers = ({ children }: Props) => {
 		// </SessionProvider>
 	);
 };
-
-export default Providers;
