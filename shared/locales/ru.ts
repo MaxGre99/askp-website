@@ -81,6 +81,7 @@ const ru = {
 			send: 'Отправить',
 			signIn: 'Войти',
 			signUp: 'Зарегистрироваться',
+			addAvatar: 'Добавить фото',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',

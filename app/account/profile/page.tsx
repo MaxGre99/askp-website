@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import Select from 'react-select';
@@ -13,6 +13,14 @@ import {
 
 // Quill динамически, чтобы не было SSR ошибок
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+import {
+	Avatar,
+	useGetAvatarQuery,
+	useUploadAvatarMutation,
+} from '@/entities/avatars';
+import { useGetUserQuery } from '@/entities/users';
+import { BaseButton } from '@/shared/ui/BaseButton';
+
 import 'react-quill-new/dist/quill.snow.css';
 
 const genderOptions = [
@@ -35,20 +43,15 @@ const languageOptions = [
 ];
 
 export default function ProfilePage() {
-	const { data: profile, isLoading } = useGetProfileQuery();
+	const { data: profile, isLoading: loadingProfile } = useGetProfileQuery();
+
+	const { data: user } = useGetUserQuery();
+	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
+		skip: !user?.id,
+	});
 	const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
 
 	const [form, setForm] = useState<Partial<Profile>>({});
-
-	useEffect(() => {
-		const handleInitForm = async () => {
-			if (profile) setForm(profile);
-		};
-
-		handleInitForm();
-	}, [profile]);
-
-	if (isLoading) return <div>Загрузка профиля...</div>;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleChange = (field: keyof Profile, value: any) => {
@@ -65,81 +68,130 @@ export default function ProfilePage() {
 		}
 	};
 
+	const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
+	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const onSelectFile = async (file: File) => {
+		const formData = new FormData();
+		formData.append('file', file);
+
+		try {
+			await uploadAvatar(formData).unwrap();
+		} catch (e) {
+			console.error('Upload failed', e);
+		}
+	};
+
+	useEffect(() => {
+		const handleInitForm = async () => {
+			if (profile) setForm(profile);
+		};
+
+		handleInitForm();
+	}, [profile]);
+
+	if (loadingProfile) return <div>Загрузка профиля...</div>;
+
 	return (
-		<div className='max-w-2xl mx-auto p-4 space-y-4'>
-			<h1 className='text-2xl font-bold'>Профиль</h1>
+		<div className='w-full flex flex-col items-stretch justify-start gap-6'>
+			{/* <h1 className='text-xl font-semibold mb-4'>
+				{t('account.applications.pending.title')}
+			</h1> */}
 
-			<div className='grid grid-cols-2 gap-4'>
-				<input
-					placeholder='Имя'
-					value={form.firstName ?? ''}
-					onChange={(e) => handleChange('firstName', e.target.value)}
-					className='border p-2'
-				/>
-				<input
-					placeholder='Фамилия'
-					value={form.lastName ?? ''}
-					onChange={(e) => handleChange('lastName', e.target.value)}
-					className='border p-2'
-				/>
-				<input
-					placeholder='Отчество'
-					value={form.middleName ?? ''}
-					onChange={(e) => handleChange('middleName', e.target.value)}
-					className='border p-2'
-				/>
-				<input
-					placeholder='Отображать как'
-					value={form.displayName ?? ''}
-					onChange={(e) => handleChange('displayName', e.target.value)}
-					className='border p-2'
-				/>
+			<div className='flex flex-row gap-6 items-start justify-between'>
+				<div className='flex flex-col justify-start gap-6'>
+					<div className='rounded-md bg-gray-100 min-w-[256px] min-h-[384px] w-[256px] h-[384px] flex items-center justify-center border-gray-400 border overflow-hidden'>
+						<Avatar src={avatar?.url} />
+					</div>
+					<BaseButton
+						disabled={isLoading}
+						onClick={() => fileInputRef.current?.click()}
+					>
+						<input
+							ref={fileInputRef}
+							type='file'
+							accept='image/*'
+							className='hidden'
+							onChange={(e) => {
+								const file = e.target.files?.[0];
+								if (file) onSelectFile(file);
+							}}
+						/>
+						+ Добавить фото
+					</BaseButton>
+				</div>
+				<div className='flex flex-1 flex-col items-stretch justify-between w-full h-full'>
+					<input
+						placeholder='Имя'
+						value={form.firstName ?? ''}
+						onChange={(e) => handleChange('firstName', e.target.value)}
+						className='border p-2'
+					/>
+					<input
+						placeholder='Фамилия'
+						value={form.lastName ?? ''}
+						onChange={(e) => handleChange('lastName', e.target.value)}
+						className='border p-2'
+					/>
+					<input
+						placeholder='Отчество'
+						value={form.middleName ?? ''}
+						onChange={(e) => handleChange('middleName', e.target.value)}
+						className='border p-2'
+					/>
+					<input
+						placeholder='Отображать как'
+						value={form.displayName ?? ''}
+						onChange={(e) => handleChange('displayName', e.target.value)}
+						className='border p-2'
+					/>
+
+					<Select
+						placeholder='Пол'
+						options={genderOptions}
+						value={
+							genderOptions.find((opt) => opt.value === form.gender) || null
+						}
+						onChange={(opt) => handleChange('gender', opt?.value)}
+					/>
+					<Select
+						placeholder='Семейное положение'
+						options={maritalOptions}
+						value={
+							maritalOptions.find((opt) => opt.value === form.maritalStatus) ||
+							null
+						}
+						onChange={(opt) => handleChange('maritalStatus', opt?.value)}
+					/>
+					<Select
+						placeholder='Языки'
+						options={languageOptions}
+						isMulti
+						value={languageOptions.filter((opt) =>
+							(form.languages ?? []).includes(opt.value),
+						)}
+						onChange={(opts) =>
+							handleChange(
+								'languages',
+								opts.map((o) => o.value),
+							)
+						}
+					/>
+					<input
+						type='date'
+						placeholder='Дата рождения'
+						value={
+							form.birthDate
+								? new Date(form.birthDate).toISOString().split('T')[0]
+								: ''
+						}
+						onChange={(e) => handleChange('birthDate', e.target.value)}
+						className='border p-2'
+					/>
+				</div>
 			</div>
 
-			<div className='grid grid-cols-2 gap-4'>
-				<Select
-					placeholder='Пол'
-					options={genderOptions}
-					value={genderOptions.find((opt) => opt.value === form.gender) || null}
-					onChange={(opt) => handleChange('gender', opt?.value)}
-				/>
-				<Select
-					placeholder='Семейное положение'
-					options={maritalOptions}
-					value={
-						maritalOptions.find((opt) => opt.value === form.maritalStatus) ||
-						null
-					}
-					onChange={(opt) => handleChange('maritalStatus', opt?.value)}
-				/>
-				<Select
-					placeholder='Языки'
-					options={languageOptions}
-					isMulti
-					value={languageOptions.filter((opt) =>
-						(form.languages ?? []).includes(opt.value),
-					)}
-					onChange={(opts) =>
-						handleChange(
-							'languages',
-							opts.map((o) => o.value),
-						)
-					}
-				/>
-				<input
-					type='date'
-					placeholder='Дата рождения'
-					value={
-						form.birthDate
-							? new Date(form.birthDate).toISOString().split('T')[0]
-							: ''
-					}
-					onChange={(e) => handleChange('birthDate', e.target.value)}
-					className='border p-2'
-				/>
-			</div>
-
-			<div className='space-y-2'>
+			<div className='flex flex-col items-start justify-start gap-2'>
 				<label className='font-semibold'>Коротко о себе</label>
 				<textarea
 					value={form.shortBio ?? ''}
@@ -149,12 +201,13 @@ export default function ProfilePage() {
 				/>
 			</div>
 
-			<div className='space-y-2'>
+			<div>
 				<label className='font-semibold'>Подробно о себе</label>
 				<ReactQuill
 					theme='snow'
 					value={form.fullBio ?? ''}
 					onChange={(value) => handleChange('fullBio', value)}
+					className='mt-2'
 				/>
 			</div>
 

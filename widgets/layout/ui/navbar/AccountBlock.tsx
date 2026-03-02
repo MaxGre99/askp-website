@@ -1,14 +1,12 @@
-import { useRef, useState } from 'react';
-import Image from 'next/image';
+import { useState } from 'react';
 import Link from 'next/link';
 
 import { useTranslation } from 'react-i18next';
-import { BiImageAdd } from 'react-icons/bi';
 import { BsHouse } from 'react-icons/bs';
 import { FaRegBell, FaRegUser } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
-import { useGetAvatarQuery, useUploadAvatarMutation } from '@/entities/avatars';
+import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
 import { useGetUserQuery, useSignOutMutation } from '@/entities/users';
 import { TransparentButton } from '@/shared/ui/TransparentButton';
 
@@ -20,12 +18,9 @@ export const AccountBlock = () => {
 
 	const { data: user } = useGetUserQuery();
 	const [signOut] = useSignOutMutation();
-	const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
 	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
 		skip: !user?.id,
 	});
-
-	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const onSignOut = async () => {
 		await signOut();
@@ -33,17 +28,6 @@ export const AccountBlock = () => {
 
 	const handleShowMenu = () => {
 		setShowMenu((prev) => !prev);
-	};
-
-	const onSelectAvatar = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-
-		try {
-			await uploadAvatar(formData).unwrap();
-		} catch (e) {
-			console.error('Avatar update failed', e);
-		}
 	};
 
 	return (
@@ -63,35 +47,8 @@ export const AccountBlock = () => {
 				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 min-w-64 z-50'>
 					{user ? (
 						<div className='flex items-center gap-6'>
-							<div className='rounded-[50%] bg-gray-100 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-black border overflow-hidden'>
-								{avatar?.url ? (
-									<Image
-										src={avatar?.url}
-										alt='avatar'
-										className='w-full h-full object-cover'
-									/>
-								) : (
-									<>
-										<input
-											ref={fileInputRef}
-											type='file'
-											accept='image/*'
-											className='hidden'
-											onChange={(e) => {
-												const file = e.target.files?.[0];
-												if (file) onSelectAvatar(file);
-											}}
-										/>
-
-										<TransparentButton
-											className='w-fit! h-fit! text-black!'
-											disabled={isLoading}
-											onClick={() => fileInputRef.current?.click()}
-										>
-											<BiImageAdd />
-										</TransparentButton>
-									</>
-								)}
+							<div className='rounded-[50%] bg-gray-100 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-gray-400 border overflow-hidden'>
+								<Avatar src={avatar?.url} size={48} />
 							</div>
 
 							<div className='flex flex-col gap-1 text-black'>

@@ -1,2 +1,2 @@
 export * from './api/avatarsApi';
-export { PreviewAvatar } from './ui/PreviewAvatar';
+export { Avatar } from './ui/Avatar';

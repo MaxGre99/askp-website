@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import sharp from 'sharp';
 
 import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
@@ -22,11 +23,17 @@ export const POST = async (req: Request) => {
 		if (!ALLOWED_EXTS.includes(ext))
 			throw new ApiError('invalid_file_type', 400);
 
-		const buffer = Buffer.from(await file.arrayBuffer());
-		if (buffer.byteLength > MAX_FILE_SIZE)
+		const originalBuffer = Buffer.from(await file.arrayBuffer());
+
+		if (originalBuffer.byteLength > MAX_FILE_SIZE)
 			throw new ApiError('file_too_large', 400);
 
-		const fileName = `${authUser.id}.${ext}`;
+		const pngBuffer = await sharp(originalBuffer)
+			.resize(512, 512, { fit: 'cover' })
+			.png()
+			.toBuffer();
+
+		const fileName = `${authUser.id}.png`;
 		const bucket = 'avatars';
 
 		// --- Загружаем в MinIO ---
@@ -35,8 +42,8 @@ export const POST = async (req: Request) => {
 				new PutObjectCommand({
 					Bucket: bucket,
 					Key: fileName,
-					Body: buffer,
-					ContentType: file.type || `image/${ext}`,
+					Body: pngBuffer,
+					ContentType: 'image/png',
 				}),
 			);
 		} catch (e) {
