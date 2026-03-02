@@ -1,17 +1,39 @@
 import { NextResponse } from 'next/server';
+
+import { Prisma } from '@prisma/client';
+
+import { ApiError } from '@/shared/api';
+import { getAuthUser } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (
-	_: Request,
+	_req: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) => {
-	const { id } = await params;
-	await prisma.user.update({
-		where: { id },
-		data: {
-			status: 'BLOCKED',
-		},
-	});
+	try {
+		const { id: userId } = await params;
 
-	return NextResponse.json({ ok: true });
+		// проверяем, что это ADMIN или OWNER
+		await getAuthUser('ADMIN');
+
+		await prisma.user.update({
+			where: { id: userId },
+			data: { status: 'BLOCKED' },
+		});
+
+		return NextResponse.json({ ok: true });
+	} catch (err: unknown) {
+		console.error('BLOCK_USER_ERROR:', err);
+
+		if (err instanceof ApiError)
+			return NextResponse.json({ error: err.message }, { status: err.status });
+
+		if (err instanceof Prisma.PrismaClientKnownRequestError)
+			return NextResponse.json({ error: 'database_error' }, { status: 500 });
+
+		return NextResponse.json(
+			{ error: 'internal_server_error' },
+			{ status: 500 },
+		);
+	}
 };

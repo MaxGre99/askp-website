@@ -1,9 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from '@/shared/api';
 
-export const applicationsApi = createApi({
-	reducerPath: 'applicationsApi',
-	baseQuery: fetchBaseQuery({ baseUrl: '/api/admin/applications' }),
-	tagTypes: ['Applications'],
+export const applicationsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getPendingApplications: builder.query<
 			{
@@ -15,7 +12,7 @@ export const applicationsApi = createApi({
 			}[],
 			void
 		>({
-			query: () => '/pending',
+			query: () => '/admin/applications/pending',
 			providesTags: ['Applications'],
 		}),
 
@@ -29,13 +26,13 @@ export const applicationsApi = createApi({
 			}[],
 			void
 		>({
-			query: () => '/blocked',
+			query: () => '/admin/applications/blocked',
 			providesTags: ['Applications'],
 		}),
 
 		approveApplication: builder.mutation<void, string>({
 			query: (id) => ({
-				url: `/${id}/approve`,
+				url: `/admin/applications/${id}/approve`,
 				method: 'POST',
 			}),
 			invalidatesTags: ['Applications'],
@@ -43,21 +40,21 @@ export const applicationsApi = createApi({
 
 		rejectApplication: builder.mutation<void, string>({
 			query: (id) => ({
-				url: `/${id}/reject`,
+				url: `/admin/applications/${id}/reject`,
 				method: 'POST',
 			}),
 			invalidatesTags: ['Applications'],
 		}),
 		blockApplication: builder.mutation<void, string>({
 			query: (id) => ({
-				url: `/${id}/block`,
+				url: `/admin/applications/${id}/block`,
 				method: 'POST',
 			}),
 			invalidatesTags: ['Applications'],
 		}),
 		unblockApplication: builder.mutation<void, string>({
 			query: (id) => ({
-				url: `/${id}/unblock`,
+				url: `/admin/applications/${id}/unblock`,
 				method: 'POST',
 			}),
 			invalidatesTags: ['Applications'],

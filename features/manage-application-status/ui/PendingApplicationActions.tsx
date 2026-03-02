@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { useApplicationActions } from '../model/use-application-actions';
+
 import { APPLICATION_ACTIONS, ApplicationAction } from '@/shared/config';
+
+import { useApplicationActions } from '../model/use-application-actions';
 
 export const PendingApplicationActions = ({ id }: { id: string }) => {
 	const { t } = useTranslation();

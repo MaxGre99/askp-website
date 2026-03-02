@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
+
+import { Prisma } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { prisma } from '@/shared/lib/prisma';
-import { Prisma } from '@prisma/client';
+
 import { ApiError } from '@/shared/api';
+import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
 	try {

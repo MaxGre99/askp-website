@@ -1,4 +1,5 @@
 import ReactPaginate from 'react-paginate';
+
 import { TransparentButton } from '../TransparentButton';
 
 interface PaginationProps {

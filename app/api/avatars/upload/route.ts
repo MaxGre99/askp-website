@@ -1,31 +1,17 @@
 import { NextResponse } from 'next/server';
-import { s3 } from '@/shared/lib/s3';
+
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import jwt from 'jsonwebtoken';
+
 import { ApiError } from '@/shared/api';
+import { getAuthUser } from '@/shared/lib/auth';
+import { s3 } from '@/shared/lib/s3';
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 МБ
 const ALLOWED_EXTS = ['png', 'jpg', 'jpeg'];
 
 export const POST = async (req: Request) => {
 	try {
-		// --- JWT проверка ---
-		const cookie = req.headers.get('cookie');
-		if (!cookie) throw new ApiError('unauthorized', 401);
-
-		const match = cookie.match(/token=([^;]+)/);
-		if (!match) throw new ApiError('unauthorized', 401);
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		let payload: any;
-		try {
-			payload = jwt.verify(match[1], process.env.JWT_SECRET!);
-		} catch {
-			throw new ApiError('invalid_token', 401);
-		}
-
-		const userId = payload.id;
-		if (!userId) throw new ApiError('unauthorized', 401);
+		const authUser = await getAuthUser();
 
 		// --- Получаем файл ---
 		const formData = await req.formData();
@@ -40,7 +26,7 @@ export const POST = async (req: Request) => {
 		if (buffer.byteLength > MAX_FILE_SIZE)
 			throw new ApiError('file_too_large', 400);
 
-		const fileName = `${userId}.${ext}`;
+		const fileName = `${authUser.id}.${ext}`;
 		const bucket = 'avatars';
 
 		// --- Загружаем в MinIO ---

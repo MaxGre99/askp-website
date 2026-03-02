@@ -1,6 +1,7 @@
-import { Formik, Form, useFormikContext } from 'formik';
-import * as Yup from 'yup';
+import { Form, Formik, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+
 import { BaseButton } from '@/shared/ui/BaseButton';
 import { FormField } from '@/shared/ui/FormField';
 

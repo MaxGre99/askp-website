@@ -6,6 +6,8 @@ datasource db {
   provider = "postgresql"
 }
 
+// АУТЕНТИФИКАЦИЯ 
+
 model User {
   id            String     @id @default(uuid())
   email         String     @unique
@@ -21,6 +23,7 @@ model User {
 
   news   News[]
   events Event[]
+  profile Profile?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,6 +42,8 @@ enum UserStatus {
   BLOCKED // заблокирован позже
 }
 
+// НОВОСТИ
+
 model News {
   id        String  @id @default(uuid())
   title     String
@@ -54,6 +59,8 @@ model News {
   updatedAt DateTime @updatedAt
 }
 
+// СОБЫТИЯ
+
 model Event {
   id          String   @id @default(uuid())
   title       String
@@ -65,6 +72,43 @@ model Event {
 
   authorId String
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ПРОФИЛЬ
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+}
+
+model Profile {
+  userId String @id
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Основные данные
+  firstName      String?
+  lastName       String?
+  middleName     String?
+  displayName    String?
+  gender         Gender?
+  languages      String[]        // Postgres поддерживает массивы
+  maritalStatus  MaritalStatus?
+  birthDate      DateTime?
+
+  // О себе
+  shortBio       String?
+  fullBio        String?         // HTML из Quill
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

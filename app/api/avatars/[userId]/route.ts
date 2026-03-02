@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
-import { s3 } from '@/shared/lib/s3';
+
 import { DeleteObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
+
+import { s3 } from '@/shared/lib/s3';
 
 const bucket = 'avatars';
 

@@ -1,8 +1,8 @@
-import { Event } from '@/entities/events';
+import { EventType } from '@/entities/events';
 import { EventCard } from '@/shared/ui/EventCard';
 
 type Props = {
-	items: Event[];
+	items: EventType[];
 };
 
 export const EventsList = ({ items }: Props) => {

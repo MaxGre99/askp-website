@@ -1,9 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from '@/shared/api';
 
-export const avatarsApi = createApi({
-	reducerPath: 'avatarsApi',
-	baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-	tagTypes: ['Avatar'],
+export const avatarsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		uploadAvatar: builder.mutation<{ url: string }, FormData>({
 			query: (formData) => ({

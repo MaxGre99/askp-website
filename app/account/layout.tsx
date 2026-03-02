@@ -1,8 +1,9 @@
 'use client';
 
+import { redirect } from 'next/navigation';
+
 import { useGetUserQuery } from '@/entities/users';
 import { AccountSidebar } from '@/widgets/account-sidebar';
-import { redirect } from 'next/navigation';
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 	const { data: user, isLoading } = useGetUserQuery();

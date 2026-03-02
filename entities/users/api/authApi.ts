@@ -1,13 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { SignInDto, SignUpDto } from '../model/authTypes';
 import { User, userApi } from '@/entities/users';
+import { baseApi } from '@/shared/api';
 
-export const authApi = createApi({
-	reducerPath: 'authApi',
-	baseQuery: fetchBaseQuery({
-		baseUrl: '/api',
-		credentials: 'include',
-	}),
+import { SignInDto, SignUpDto } from '../model/authTypes';
+
+export const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		signUp: builder.mutation<User, SignUpDto>({
 			query: (body) => ({

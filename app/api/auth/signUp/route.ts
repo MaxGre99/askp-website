@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { prisma } from '@/shared/lib/prisma';
+
 import { Prisma } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
 import { ApiError } from '@/shared/api';
+import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
 	try {

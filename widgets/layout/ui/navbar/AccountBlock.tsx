@@ -1,15 +1,17 @@
 import { useRef, useState } from 'react';
-import { FaRegBell, FaRegUser } from 'react-icons/fa';
-import { BiImageAdd } from 'react-icons/bi';
-import { MdOutlineLogout } from 'react-icons/md';
+import Image from 'next/image';
 import Link from 'next/link';
-import { BsHouse } from 'react-icons/bs';
 
 import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
-import { useGetAvatarQuery, useUploadAvatarMutation } from '@/shared/api';
+import { BiImageAdd } from 'react-icons/bi';
+import { BsHouse } from 'react-icons/bs';
+import { FaRegBell, FaRegUser } from 'react-icons/fa';
+import { MdOutlineLogout } from 'react-icons/md';
+
+import { useGetAvatarQuery, useUploadAvatarMutation } from '@/entities/avatars';
 import { useGetUserQuery, useSignOutMutation } from '@/entities/users';
 import { TransparentButton } from '@/shared/ui/TransparentButton';
+
 import { SignInForm } from './SignInForm';
 
 export const AccountBlock = () => {

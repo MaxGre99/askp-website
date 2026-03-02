@@ -1,14 +1,17 @@
 'use client';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
-import 'swiper/css';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { NewsCard, NewsType } from '@/entities/news';
+
 import 'swiper/css/pagination';
-import { News, NewsCard } from '@/entities/news';
+
+import 'swiper/css';
 
 type Props = {
-	items: News[];
+	items: NewsType[];
 };
 
 export const HomeSlider = ({ items }: Props) => {

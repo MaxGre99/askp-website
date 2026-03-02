@@ -1,13 +1,14 @@
-import { Form, Formik } from 'formik';
 import { useState } from 'react';
 
-import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { FormField } from '@/shared/ui/FormField';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import * as Yup from 'yup';
+
+import { useSignUpMutation } from '@/entities/users';
 import { getApiErrorMessage } from '@/shared/api';
 import { SignUpFormValues } from '@/shared/schemas';
-import { useSignUpMutation } from '@/entities/users';
+import { BaseButton } from '@/shared/ui/BaseButton';
+import { FormField } from '@/shared/ui/FormField';
 
 export const SignUpForm = () => {
 	const { t } = useTranslation();

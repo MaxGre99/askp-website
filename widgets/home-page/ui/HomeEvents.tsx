@@ -1,12 +1,13 @@
 'use client';
 
-import { Event } from '@/entities/events';
-import { EventCard } from '@/shared/ui/EventCard';
-import { NavButton } from '@/shared/ui/NavButton';
 import { useTranslation } from 'react-i18next';
 
+import { EventType } from '@/entities/events';
+import { EventCard } from '@/shared/ui/EventCard';
+import { NavButton } from '@/shared/ui/NavButton';
+
 type Props = {
-	items: Event[];
+	items: EventType[];
 };
 
 export const HomeEvents = ({ items }: Props) => {

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
+
 import {
 	ApplicationsTableRow,
 	useGetBlockedApplicationsQuery,
@@ -10,7 +12,6 @@ import {
 	PendingApplicationActions,
 } from '@/features/manage-application-status';
 import { ApplicationsTable } from '@/widgets/applications-table';
-import { useTranslation } from 'react-i18next';
 
 const Page = () => {
 	const { t } = useTranslation();

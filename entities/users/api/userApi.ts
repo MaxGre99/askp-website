@@ -1,13 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from '@/shared/api';
+
 import { User } from '../model/userTypes';
 
-export const userApi = createApi({
-	reducerPath: 'userApi',
-	baseQuery: fetchBaseQuery({
-		baseUrl: '/api',
-		credentials: 'include',
-	}),
-	tagTypes: ['Me'],
+export const userApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getUser: builder.query<User, void>({
 			query: () => '/me',

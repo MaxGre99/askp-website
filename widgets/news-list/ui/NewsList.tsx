@@ -1,8 +1,8 @@
-import { News } from '@/entities/news';
+import { NewsType } from '@/entities/news';
 import { EventCard } from '@/shared/ui/EventCard';
 
 type Props = {
-	items: News[];
+	items: NewsType[];
 };
 
 export const NewsList = ({ items }: Props) => {

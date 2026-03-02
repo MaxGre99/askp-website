@@ -1,9 +1,11 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { FaPhone, FaEnvelope } from 'react-icons/fa6';
-import { NavButton } from '../../../../shared/ui/NavButton';
+import { FaEnvelope,FaPhone } from 'react-icons/fa6';
+
 import { ROUTES } from '@/shared/config';
+
+import { NavButton } from '../../../../shared/ui/NavButton';
 import { footerButtonsList } from '../../config/footer-buttons-list';
 
 export const Footer = () => {

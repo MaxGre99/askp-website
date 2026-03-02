@@ -1,41 +1,31 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/shared/lib/prisma';
-import jwt from 'jsonwebtoken';
+
 import { ApiError } from '@/shared/api';
+import { getAuthUser } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (
 	req: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) => {
 	try {
-		const { id } = await params;
+		const { id: userId } = await params;
 
-		// --- JWT проверка ---
-		const cookie = req.headers.get('cookie');
-		if (!cookie) throw new ApiError('unauthorized', 401);
+		const authAdmin = await getAuthUser();
 
-		const match = cookie.match(/token=([^;]+)/);
-		if (!match) throw new ApiError('unauthorized', 401);
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		let payload: any;
-		try {
-			payload = jwt.verify(match[1], process.env.JWT_SECRET!);
-		} catch {
-			throw new ApiError('invalid_token', 401);
-		}
-
-		const userId = payload.id;
-		if (!userId) throw new ApiError('unauthorized', 401);
-
-		await prisma.user.update({
-			where: { id },
-			data: {
-				status: 'ACTIVE',
-				approvedBy: userId,
-				approvedAt: new Date(),
-			},
-		});
+		await prisma.$transaction([
+			prisma.user.update({
+				where: { id: userId },
+				data: {
+					status: 'ACTIVE',
+					approvedAt: new Date(),
+					approvedBy: authAdmin.id,
+				},
+			}),
+			prisma.profile.create({
+				data: { userId },
+			}),
+		]);
 
 		return NextResponse.json({ ok: true });
 	} catch (err: unknown) {

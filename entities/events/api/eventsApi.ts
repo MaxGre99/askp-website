@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Event } from '../model/types';
+import { baseApi } from '@/shared/api';
 
-export const eventsApi = createApi({
-	reducerPath: 'eventsApi',
-	baseQuery: fetchBaseQuery({ baseUrl: '/api/events' }),
-	tagTypes: ['Event'],
+import { EventType } from '../model/types';
+
+export const eventsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllEvents: builder.query<
-			{ events: Event[]; total: number },
+			{ events: EventType[]; total: number },
 			{ page: number; query?: string; pageSize?: number }
 		>({
 			query: ({ page, query, pageSize = 4 }) => {
@@ -15,41 +13,41 @@ export const eventsApi = createApi({
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
-				return `/?${params.toString()}`;
+				return `/events?${params.toString()}`;
 			},
-			providesTags: ['Event'],
+			providesTags: ['Events'],
 		}),
-		getEvent: builder.query<Event, string>({
+		getEvent: builder.query<EventType, string>({
 			query: (slug) => `/${slug}`,
-			providesTags: (result, error, slug) => [{ type: 'Event', id: slug }],
+			providesTags: (result, error, slug) => [{ type: 'Events', id: slug }],
 		}),
-		createEvent: builder.mutation<Event, Partial<Event>>({
+		createEvent: builder.mutation<EventType, Partial<EventType>>({
 			query: (body) => ({
-				url: '/',
+				url: '/events',
 				method: 'POST',
 				body,
 			}),
-			invalidatesTags: ['Event'],
+			invalidatesTags: ['Events'],
 		}),
 		updateEvent: builder.mutation<
-			Event,
-			{ slug: string; body: Partial<Event> }
+			EventType,
+			{ slug: string; body: Partial<EventType> }
 		>({
 			query: ({ slug, body }) => ({
-				url: `/${slug}`,
+				url: `/events/${slug}`,
 				method: 'PATCH',
 				body,
 			}),
 			invalidatesTags: (result, error, { slug }) => [
-				{ type: 'Event', id: slug },
+				{ type: 'Events', id: slug },
 			],
 		}),
 		deleteEvent: builder.mutation<{ ok: boolean }, string>({
 			query: (slug) => ({
-				url: `/${slug}`,
+				url: `/events/${slug}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: ['Event'],
+			invalidatesTags: ['Events'],
 		}),
 	}),
 });

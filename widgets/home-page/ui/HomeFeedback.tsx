@@ -1,8 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+
 import { TransparentButton } from '@/shared/ui/TransparentButton';
+
 import { FeedbackForm } from './FeedbackForm';
 
 export const HomeFeedback = () => {

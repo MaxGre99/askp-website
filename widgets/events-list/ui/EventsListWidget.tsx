@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { Pagination } from '@/shared/ui/Pagination';
+
 import { useEventsList } from '../model/use-events-list';
+
 import { EventsList } from './EventsList';
 
 export const EventsListWidget = () => {

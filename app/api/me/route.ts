@@ -1,27 +1,18 @@
 import { NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-import { prisma } from '@/shared/lib/prisma';
-import { cookies } from 'next/headers';
+
 import { Prisma } from '@prisma/client';
-import { UserSchema } from '@/shared/schemas';
+
 import { ApiError } from '@/shared/api';
+import { getAuthUser } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
+import { UserSchema } from '@/shared/schemas';
 
 export const GET = async () => {
 	try {
-		const cookieStore = await cookies();
-		const token = cookieStore.get('askp-token')?.value;
-		if (!token) throw new ApiError('unauthorized', 401);
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		let payload: any;
-		try {
-			payload = jwt.verify(token, process.env.JWT_SECRET!);
-		} catch {
-			throw new ApiError('invalid_token', 401);
-		}
+		const authUser = await getAuthUser();
 
 		const userFromDb = await prisma.user.findUnique({
-			where: { id: payload.id },
+			where: { id: authUser.id },
 			select: {
 				id: true,
 				email: true,

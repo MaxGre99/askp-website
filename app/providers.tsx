@@ -1,8 +1,9 @@
 'use client';
 
-import { ClientI18nProvider, StoreProvider } from '@/shared/providers';
-import { store } from './store';
 import { UserProvider } from '@/entities/users';
+import { ClientI18nProvider, StoreProvider } from '@/shared/providers';
+
+import { store } from './store';
 // import { SessionProvider } from 'next-auth/react';
 
 type Props = {

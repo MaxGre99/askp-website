@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import { Bad_Script, Inter } from 'next/font/google';
+
+import { Footer, Navbar } from '@/widgets/layout';
+
+import { Providers } from './providers';
+
 import './globals.css';
 import 'swiper/css';
-
-import { Bad_Script, Inter } from 'next/font/google';
-import { Providers } from './providers';
-import { Footer, Navbar } from '@/widgets/layout';
 
 const badScript = Bad_Script({
 	weight: '400',

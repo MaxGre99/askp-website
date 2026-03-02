@@ -1,6 +1,8 @@
-import { ApiError } from '@/shared/api';
 import { NextRequest, NextResponse } from 'next/server';
+
 import nodemailer from 'nodemailer';
+
+import { ApiError } from '@/shared/api';
 
 export const POST = async (req: NextRequest) => {
 	try {

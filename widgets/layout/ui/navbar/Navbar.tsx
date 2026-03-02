@@ -1,12 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { navbarButtonsList } from '../../config/navbar-buttons-list';
 import Image from 'next/image';
+
+import { useTranslation } from 'react-i18next';
+
+import { ROUTES } from '@/shared/config';
+
 import { NavButton } from '../../../../shared/ui/NavButton';
 import { TransparentButton } from '../../../../shared/ui/TransparentButton';
-import { ROUTES } from '@/shared/config';
+import { navbarButtonsList } from '../../config/navbar-buttons-list';
+
 import { AccountBlock } from './AccountBlock';
 
 export const Navbar = () => {

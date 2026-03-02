@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { Pagination } from '@/shared/ui/Pagination';
+
 import { useNewsList } from '../model/use-news-list';
+
 import { NewsList } from './NewsList';
 
 export const NewsListWidget = () => {

@@ -1,10 +1,10 @@
+import { IconType } from 'react-icons';
 import {
 	RiUserFollowFill,
-	RiUserUnfollowFill,
 	RiUserForbidFill,
 	RiUserReceived2Fill,
+	RiUserUnfollowFill,
 } from 'react-icons/ri';
-import { IconType } from 'react-icons';
 
 export type ApplicationAction = 'approve' | 'reject' | 'block' | 'unblock';
 

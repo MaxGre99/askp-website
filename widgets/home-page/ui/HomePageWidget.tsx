@@ -1,10 +1,11 @@
 'use client';
 
-import { useGetAllNewsQuery } from '@/entities/news';
 import { useGetAllEventsQuery } from '@/entities/events';
-import { HomeSlider } from './HomeSlider';
+import { useGetAllNewsQuery } from '@/entities/news';
+
 import { HomeEvents } from './HomeEvents';
 import { HomeFeedback } from './HomeFeedback';
+import { HomeSlider } from './HomeSlider';
 
 export const HomePageWidget = () => {
 	const { data: newsData } = useGetAllNewsQuery({ page: 1, pageSize: 10 });

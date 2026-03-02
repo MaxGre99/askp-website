@@ -1,32 +1,17 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { avatarsApi } from '../shared/api';
-import { newsApi } from '@/entities/news';
-import { eventsApi } from '@/entities/events';
-import { applicationsApi } from '@/entities/applications';
-import { authApi, userApi } from '@/entities/users';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
+import { baseApi } from '@/shared/api';
+
 const rootReducer = combineReducers({
-	[authApi.reducerPath]: authApi.reducer,
-	[userApi.reducerPath]: userApi.reducer,
-	[avatarsApi.reducerPath]: avatarsApi.reducer,
-	[newsApi.reducerPath]: newsApi.reducer,
-	[eventsApi.reducerPath]: eventsApi.reducer,
-	[applicationsApi.reducerPath]: applicationsApi.reducer,
+	[baseApi.reducerPath]: baseApi.reducer,
 });
 
-export const /* setupStore = () => {
-	return */ store = configureStore({
-		reducer: rootReducer,
-		middleware: (getDefaultMiddleware) =>
-			getDefaultMiddleware()
-				.concat(authApi.middleware)
-				.concat(userApi.middleware)
-				.concat(avatarsApi.middleware)
-				.concat(newsApi.middleware)
-				.concat(eventsApi.middleware)
-				.concat(applicationsApi.middleware),
-	});
+export const store = configureStore({
+	reducer: rootReducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(baseApi.middleware),
+});
 // };
 
 export type RootState = ReturnType<typeof rootReducer>;

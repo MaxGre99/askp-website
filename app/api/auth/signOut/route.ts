@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
+
 import { Prisma } from '@prisma/client';
+
 import { ApiError } from '@/shared/api';
 
 export const POST = async () => {

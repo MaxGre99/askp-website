@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import { updateQuery } from '@/shared/routing';
 
 const DEFAULT_PAGE_SIZE = 4;
