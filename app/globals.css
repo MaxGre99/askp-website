@@ -28,12 +28,6 @@
 		font-weight: 600;
 	}
 
-	/* Firefox */
-	/* * {
-		scrollbar-width: thin;
-		scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
-	} */
-
 	/* Chrome / Edge / Safari */
 	/* Глобальный scrollbar страницы */
 	html::-webkit-scrollbar {
