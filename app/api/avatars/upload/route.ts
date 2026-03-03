@@ -7,9 +7,6 @@ import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { s3 } from '@/shared/lib/s3';
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 МБ
-const ALLOWED_EXTS = ['png', 'jpg', 'jpeg'];
-
 export const POST = async (req: Request) => {
 	try {
 		const authUser = await getAuthUser();
@@ -19,21 +16,34 @@ export const POST = async (req: Request) => {
 		const file = formData.get('file') as File | null;
 		if (!file) throw new ApiError('file_not_provided', 400);
 
-		const ext = (file.name.split('.').pop() || '').toLowerCase();
-		if (!ALLOWED_EXTS.includes(ext))
-			throw new ApiError('invalid_file_type', 400);
+		if (!file.type.startsWith('image/'))
+			throw new ApiError('invalid_mime_type', 400);
 
 		const originalBuffer = Buffer.from(await file.arrayBuffer());
 
-		if (originalBuffer.byteLength > MAX_FILE_SIZE)
+		const metadata = await sharp(originalBuffer).metadata();
+
+		if (!metadata.format) {
+			throw new ApiError('invalid_image', 400);
+		}
+
+		if (
+			metadata.width &&
+			metadata.height &&
+			metadata.width * metadata.height > 25_000_000
+		) {
+			throw new ApiError('image_too_large', 400);
+		}
+
+		if (originalBuffer.byteLength > 3 * 1024 * 1024)
 			throw new ApiError('file_too_large', 400);
 
-		const pngBuffer = await sharp(originalBuffer)
+		const processedBuffer = await sharp(originalBuffer)
 			.resize(512, 512, { fit: 'cover' })
-			.png()
+			.webp({ quality: 100 })
 			.toBuffer();
 
-		const fileName = `${authUser.id}.png`;
+		const fileName = `${authUser.id}.webp`;
 		const bucket = 'avatars';
 
 		// --- Загружаем в MinIO ---
@@ -42,8 +52,9 @@ export const POST = async (req: Request) => {
 				new PutObjectCommand({
 					Bucket: bucket,
 					Key: fileName,
-					Body: pngBuffer,
-					ContentType: 'image/png',
+					Body: processedBuffer,
+					ContentType: 'image/webp',
+					CacheControl: 'public, max-age=31536000, immutable',
 				}),
 			);
 		} catch (e) {

@@ -8,6 +8,7 @@ const ru = {
 			applicationSuccess:
 				'Заявка отправлена. Аккаунт станет активным после одобрения администратора.',
 			creating: 'Создание...',
+			empty: 'Тут пока ничего нет :(',
 		},
 		navbar: {
 			home: 'Главная',
@@ -32,6 +33,9 @@ const ru = {
 		events: {
 			homeTitle: 'Будущие события',
 			pageTitle: 'События',
+		},
+		profiles: {
+			homeTitle: 'Наши специалисты',
 		},
 		account: {
 			title: 'Личный кабинет',
@@ -119,7 +123,9 @@ const ru = {
 			unauthorized: 'Неавторизован',
 			invalid_token: 'Неверный токен',
 			file_not_provided: 'Файл не передан',
-			invalid_file_type: 'Неверный формат файла',
+			invalid_mime_type: 'Неверный тип файла',
+			invalid_image: 'Неверный формат изображения',
+			image_too_large: 'Изображение слишком большое',
 			file_too_large: 'Файл слишком большой',
 			upload_failed: 'Ошибка загрузки аватарки',
 			failed_to_fetch_event: 'Ошибка получения события',
@@ -134,6 +140,7 @@ const ru = {
 			failed_to_delete_news: 'Ошибка удаления новости',
 			failed_to_fetch_news_list: 'Ошибка получения списка новостей',
 			failed_to_create_news: 'Ошибка создания новости',
+			failed_to_fetch_profiles: 'Ошибка получения профилей',
 		},
 	},
 };

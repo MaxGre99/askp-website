@@ -13,7 +13,7 @@ interface NewsCard {
 export const NewsCard = ({ article, type }: NewsCard) => {
 	return (
 		<Link href={`/${type}/${article.slug}`}>
-			<article className='bg-white/70 flex flex-col gap-1 rounded-2xl'>
+			<article className='bg-white/70 backdrop-blur-2xl flex flex-col gap-1 rounded-2xl'>
 				<Image
 					src={'/mockNews.webp'}
 					alt='news-cover'

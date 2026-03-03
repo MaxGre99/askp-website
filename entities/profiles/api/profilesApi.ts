@@ -8,6 +8,10 @@ export const profileApi = baseApi.injectEndpoints({
 			query: () => '/profile',
 			providesTags: ['Profiles'],
 		}),
+		getProfiles: builder.query<Profile[], void>({
+			query: () => '/profiles',
+			providesTags: ['Profiles'],
+		}),
 		updateProfile: builder.mutation<Profile, Partial<Profile>>({
 			query: (body) => ({
 				url: '/profile',
@@ -19,4 +23,8 @@ export const profileApi = baseApi.injectEndpoints({
 	}),
 });
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi;
+export const {
+	useGetProfileQuery,
+	useGetProfilesQuery,
+	useUpdateProfileMutation,
+} = profileApi;

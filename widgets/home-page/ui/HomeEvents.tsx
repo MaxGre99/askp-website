@@ -14,7 +14,7 @@ export const HomeEvents = ({ items }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<section className='flex flex-col gap-3 w-full'>
+		<section className='flex flex-col gap-5 w-full'>
 			<h1 className='font-bad-script text-white'>{t('events.homeTitle')}:</h1>
 			<div className='flex flex-col gap-3'>
 				{items.length > 0 ? (
@@ -29,14 +29,18 @@ export const HomeEvents = ({ items }: Props) => {
 						);
 					})
 				) : (
-					<p>Тут пока пусто... :(</p>
+					<p className='font-bad-script text-white text-3xl'>
+						{t('notifications.empty')}
+					</p>
 				)}
 			</div>
-			<div className='flex justify-end mr-6 mt-1 text-white text-2xl font-bad-script'>
-				<NavButton className='w-fit! h-fit mx-0!' href='/events'>
-					{t('buttons.showAll')}
-				</NavButton>
-			</div>
+			{items.length > 0 && (
+				<div className='flex justify-end mr-6 text-white text-2xl font-bad-script'>
+					<NavButton className='w-fit! h-fit mx-0! p-0!' href='/events'>
+						{t('buttons.showAll')}
+					</NavButton>
+				</div>
+			)}
 		</section>
 	);
 };

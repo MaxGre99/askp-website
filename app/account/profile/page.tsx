@@ -18,7 +18,7 @@ import {
 	useGetAvatarQuery,
 	useUploadAvatarMutation,
 } from '@/entities/avatars';
-import { useGetUserQuery } from '@/entities/users';
+import { AvatarEditorModal } from '@/features/avatar-editor-modal';
 import { BaseButton } from '@/shared/ui/BaseButton';
 
 import 'react-quill-new/dist/quill.snow.css';
@@ -45,13 +45,17 @@ const languageOptions = [
 export default function ProfilePage() {
 	const { data: profile, isLoading: loadingProfile } = useGetProfileQuery();
 
-	const { data: user } = useGetUserQuery();
-	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
-		skip: !user?.id,
+	const { data: avatar } = useGetAvatarQuery(profile?.userId as string, {
+		skip: !profile?.userId,
 	});
 	const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
+	const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
 
 	const [form, setForm] = useState<Partial<Profile>>({});
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [isEditorOpen, setIsEditorOpen] = useState(false);
+
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleChange = (field: keyof Profile, value: any) => {
@@ -68,17 +72,45 @@ export default function ProfilePage() {
 		}
 	};
 
-	const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
-	const fileInputRef = useRef<HTMLInputElement>(null);
+	const MAX_SIZE = 3 * 1024 * 1024;
 
-	const onSelectFile = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
+	const onSelectFile = (file: File) => {
+		if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+			alert('Разрешены только JPG, PNG и WebP');
+			return;
+		}
 
+		if (file.size > MAX_SIZE) {
+			alert('Максимальный размер 3MB');
+			return;
+		}
+
+		setSelectedFile(file);
+		setIsEditorOpen(true);
+	};
+
+	const handleSaveCroppedImage = async (croppedBlob: Blob) => {
 		try {
+			// Создаем FormData и добавляем обрезанное изображение
+			const formData = new FormData();
+
+			// Конвертируем Blob в File с правильным именем
+			const croppedFile = new File([croppedBlob], 'avatar.png', {
+				type: 'image/png',
+			});
+			formData.append('file', croppedFile);
+
+			// Загружаем на сервер
 			await uploadAvatar(formData).unwrap();
+
+			// Закрываем модалку и очищаем выбранный файл
+			setIsEditorOpen(false);
+			setSelectedFile(null);
+
+			// Аватарка обновится автоматически через RTK Query
 		} catch (e) {
 			console.error('Upload failed', e);
+			alert('Ошибка при загрузке аватара');
 		}
 	};
 
@@ -94,13 +126,24 @@ export default function ProfilePage() {
 
 	return (
 		<div className='w-full flex flex-col items-stretch justify-start gap-6'>
-			{/* <h1 className='text-xl font-semibold mb-4'>
-				{t('account.applications.pending.title')}
-			</h1> */}
+			{/* Модальное окно редактора */}
+			<AvatarEditorModal
+				isOpen={isEditorOpen}
+				onClose={() => {
+					setIsEditorOpen(false);
+					setSelectedFile(null);
+					// Сбрасываем input, чтобы можно было выбрать тот же файл снова
+					if (fileInputRef.current) {
+						fileInputRef.current.value = '';
+					}
+				}}
+				image={selectedFile}
+				onSave={handleSaveCroppedImage}
+			/>
 
-			<div className='flex flex-row gap-6 items-start justify-between'>
+			<div className='flex flex-row gap-6 items-center justify-between'>
 				<div className='flex flex-col justify-start gap-6'>
-					<div className='rounded-md bg-gray-100 min-w-[256px] min-h-[384px] w-[256px] h-[384px] flex items-center justify-center border-gray-400 border overflow-hidden'>
+					<div className='rounded-md bg-gray-100 min-w-[256px] min-h-[256px] w-[256px] h-[256px] flex items-center justify-center border-gray-400 border overflow-hidden'>
 						<Avatar src={avatar?.url} />
 					</div>
 					<BaseButton
@@ -110,7 +153,7 @@ export default function ProfilePage() {
 						<input
 							ref={fileInputRef}
 							type='file'
-							accept='image/*'
+							accept='image/jpeg,image/png,image/webp'
 							className='hidden'
 							onChange={(e) => {
 								const file = e.target.files?.[0];
@@ -120,7 +163,7 @@ export default function ProfilePage() {
 						+ Добавить фото
 					</BaseButton>
 				</div>
-				<div className='flex flex-1 flex-col items-stretch justify-between w-full h-full'>
+				<div className='flex flex-1 flex-col items-stretch justify-between w-full h-full gap-2'>
 					<input
 						placeholder='Имя'
 						value={form.firstName ?? ''}
@@ -214,7 +257,7 @@ export default function ProfilePage() {
 			<button
 				disabled={isUpdating}
 				onClick={handleSubmit}
-				className='bg-blue-500 text-white px-4 py-2 rounded'
+				className='bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'
 			>
 				{isUpdating ? 'Сохраняем...' : 'Сохранить'}
 			</button>

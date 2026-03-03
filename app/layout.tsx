@@ -41,6 +41,8 @@ export default function RootLayout({
 				className={`${badScript.variable} ${inter.variable} antialiased min-w-full min-h-[100svh] mx-auto flex flex-col gap-3`}
 			>
 				<Providers>
+					<div id='modal-root' />
+
 					<header className='z-5'>
 						<Navbar />
 					</header>

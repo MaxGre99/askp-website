@@ -28,6 +28,7 @@
     "nodemailer": "^7.0.12",
     "pg": "^8.17.2",
     "react": "19.2.3",
+    "react-avatar-editor": "^14.0.0",
     "react-dom": "19.2.3",
     "react-i18next": "^16.5.0",
     "react-icons": "^5.5.0",

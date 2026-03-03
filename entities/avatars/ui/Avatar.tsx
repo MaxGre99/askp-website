@@ -5,10 +5,10 @@ import { MdOutlineNoPhotography } from 'react-icons/md';
 interface AvatarProps {
 	src?: string | null;
 	size?: number;
-	// className?: string;
+	className?: string;
 }
 
-export const Avatar = ({ src, size = 64 /* , className */ }: AvatarProps) => {
+export const Avatar = ({ src, size = 64, className }: AvatarProps) => {
 	return (
 		<>
 			{src ? (
@@ -23,7 +23,7 @@ export const Avatar = ({ src, size = 64 /* , className */ }: AvatarProps) => {
 					// eslint-disable-next-line react-hooks/purity
 					src={`${src}?t=${Date.now()}`}
 					alt='avatar'
-					className='w-full h-full object-fill'
+					className={`w-full h-full object-fill ${className}`}
 				/>
 			) : (
 				<MdOutlineNoPhotography size={size / 2} color='gray' />
