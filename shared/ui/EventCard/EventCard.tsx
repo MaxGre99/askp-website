@@ -13,9 +13,15 @@ interface EventCardProps {
 		slug: string;
 	};
 	type: string;
+	accentColor?: 'blue' | 'white';
 }
 
-export const EventCard = ({ index, event, type }: EventCardProps) => {
+export const EventCard = ({
+	index,
+	event,
+	type,
+	accentColor,
+}: EventCardProps) => {
 	const isEven = index % 2 === 0;
 	const localDateTime = new Date(event.updatedAt).toLocaleString();
 
@@ -25,6 +31,7 @@ export const EventCard = ({ index, event, type }: EventCardProps) => {
 				className={clsx(
 					'bg-white/70 rounded-2xl overflow-hidden transition hover:scale-[1.01] flex gap-2',
 					isEven ? 'flex-row' : 'flex-row-reverse',
+					accentColor === 'blue' ? 'border-2 border-blue-300' : '',
 				)}
 			>
 				<Image

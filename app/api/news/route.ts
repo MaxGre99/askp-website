@@ -9,17 +9,25 @@ export const GET = async (req: Request) => {
 	try {
 		const url = new URL(req.url);
 		const query = url.searchParams.get('query') || '';
+		const authorId = url.searchParams.get('authorId');
 		const page = Math.max(1, Number(url.searchParams.get('page') ?? 1));
 		const pageSize = Math.min(
 			50,
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
 		);
 
-		const where: Prisma.NewsWhereInput = query
-			? { title: { contains: query, mode: 'insensitive' as Prisma.QueryMode } }
-			: {};
+		const where: Prisma.NewsWhereInput = {
+			...(query && {
+				title: {
+					contains: query,
+					mode: 'insensitive',
+				},
+			}),
+			...(authorId && { authorId }),
+		};
 
 		const total = await prisma.news.count({ where });
+
 		const news = await prisma.news.findMany({
 			where,
 			orderBy: { createdAt: 'desc' },

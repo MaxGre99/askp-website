@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Profile } from '@/entities/profiles';
 import { ProfileCard } from '@/entities/profiles/ui/ProfileCard';
@@ -17,16 +19,29 @@ const HomeSpecialists = ({ items }: Props) => {
 		<section className='flex flex-col gap-5 w-full'>
 			<h1 className='font-bad-script text-white'>{t('profiles.homeTitle')}:</h1>
 			{items.length > 0 ? (
-				<div className='w-full flex flex-1 items-center justify-around'>
-					{x3.map((profile, index) => {
+				<Swiper
+					modules={[Pagination, Autoplay]}
+					direction='horizontal'
+					loop
+					slidesPerView={5}
+					spaceBetween={150}
+					className='w-full px-5'
+					freeMode
+					speed={10000}
+					autoplay={{
+						delay: 0,
+						disableOnInteraction: false,
+						pauseOnMouseEnter: true,
+					}}
+				>
+					{x3.map((profile) => {
 						return (
-							<ProfileCard
-								key={`${profile.userId}-${index}`}
-								profile={profile}
-							/>
+							<SwiperSlide key={profile.userId}>
+								<ProfileCard key={profile.userId} profile={profile} />
+							</SwiperSlide>
 						);
 					})}
-				</div>
+				</Swiper>
 			) : (
 				<p className='font-bad-script text-white text-3xl'>
 					{t('notifications.empty')}

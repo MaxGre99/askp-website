@@ -38,22 +38,24 @@ export default function RootLayout({
 	return (
 		<html lang='ru'>
 			<body
-				className={`${badScript.variable} ${inter.variable} antialiased min-w-full min-h-[100svh] mx-auto flex flex-col gap-3`}
+				className={`${badScript.variable} ${inter.variable} antialiased min-w-full min-h-[100svh] mx-auto`}
 			>
 				<Providers>
 					<div id='modal-root' />
 
-					<header className='z-5'>
-						<Navbar />
-					</header>
+					<div className='flex flex-col gap-3 min-h-[100svh]'>
+						<header className='z-5'>
+							<Navbar />
+						</header>
 
-					<main className='flex flex-1 flex-col items-center justify-center gap-5 p-5 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto'>
-						{children}
-					</main>
+						<main className='flex flex-1 flex-col items-center justify-center gap-5 p-5 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto'>
+							{children}
+						</main>
 
-					<footer>
-						<Footer />
-					</footer>
+						<footer>
+							<Footer />
+						</footer>
+					</div>
 				</Providers>
 			</body>
 		</html>

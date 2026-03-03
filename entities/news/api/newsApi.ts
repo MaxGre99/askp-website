@@ -42,6 +42,19 @@ export const newsApi = baseApi.injectEndpoints({
 			query: (slug) => ({ url: `/news/${slug}`, method: 'DELETE' }),
 			invalidatesTags: ['News'],
 		}),
+		getMyNews: builder.query<
+			{ news: NewsType[]; total: number },
+			{ page: number; query?: string; pageSize?: number }
+		>({
+			query: ({ page, query, pageSize = 4 }) => {
+				const params = new URLSearchParams();
+				params.set('page', String(page));
+				params.set('pageSize', String(pageSize));
+				if (query) params.set('query', query);
+				return `me/news?${params.toString()}`;
+			},
+			providesTags: ['MyNews'],
+		}),
 	}),
 });
 
@@ -51,4 +64,5 @@ export const {
 	useCreateNewsMutation,
 	useUpdateNewsMutation,
 	useDeleteNewsMutation,
+	useGetMyNewsQuery,
 } = newsApi;

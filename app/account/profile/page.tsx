@@ -341,9 +341,13 @@ export default function ProfilePage() {
 									) : (
 										<div key={label}>
 											<strong>{t(`labels.${label}`)}:</strong>{' '}
-											{t(
-												`labels.${profile?.[label as keyof typeof profile]}`,
-											) || '—'}
+											{label === 'languages'
+												? (profile?.[label as keyof typeof profile] as string[])
+														?.map((lang) => t(`labels.${lang}`))
+														.join(', ')
+												: t(
+														`labels.${profile?.[label as keyof typeof profile]}`,
+													) || '—'}
 										</div>
 									),
 								)}

@@ -6,6 +6,14 @@ export const baseApi = createApi({
 		baseUrl: '/api',
 		credentials: 'include', // важно для httpOnly cookie
 	}),
-	tagTypes: ['Profiles', 'Applications', 'Events', 'News', 'Me', 'Avatar'],
+	tagTypes: [
+		'Profiles',
+		'Applications',
+		'Events',
+		'News',
+		'Me',
+		'Avatar',
+		'MyNews',
+	],
 	endpoints: () => ({}),
 });

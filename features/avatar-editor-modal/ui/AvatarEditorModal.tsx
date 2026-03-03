@@ -76,7 +76,7 @@ export const AvatarEditorModal = ({
 
 	return createPortal(
 		<div className='fixed inset-0 bg-blue-500/60 backdrop-blur-2xl flex items-center justify-center z-50'>
-			<div className='bg-white rounded-2xl p-6 min-w-[50svw] w-fit max-h-[95svh] overflow-auto'>
+			<div className='bg-white rounded-2xl p-6 min-w-[51svw] w-fit max-h-[95svh] overflow-auto'>
 				<h2 className='text-xl font-semibold mb-3'>Редактировать аватар</h2>
 
 				<div className='flex flex-col items-start gap-3'>

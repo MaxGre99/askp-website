@@ -20,7 +20,7 @@ export const Navbar = () => {
 	return (
 		<nav className='flex flex-col w-full max-w-[1440px] mx-auto gap-3 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl'>
 			<div className='flex items-center justify-between xl:m-0 xl:mx-3 m-3'>
-				<Image src='/favicon.png' alt='logo' width={120} height={120} />
+				<Image src='/logo.svg' alt='logo' width={120} height={120} />
 
 				{/* Desktop */}
 				<ul className='hidden xl:flex flex-1 ml-10 h-full'>

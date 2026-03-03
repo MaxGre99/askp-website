@@ -6,12 +6,14 @@ interface PaginationProps {
 	currentPage: number;
 	totalPages: number;
 	onPageChange: (page: number) => void;
+	accentColor?: 'blue' | 'white';
 }
 
 export const Pagination = ({
 	currentPage,
 	totalPages,
 	onPageChange,
+	accentColor,
 }: PaginationProps) => {
 	return (
 		<>
@@ -30,14 +32,14 @@ export const Pagination = ({
 				breakLabel={
 					<TransparentButton className='h-fit font-inter'>…</TransparentButton>
 				}
-				containerClassName='flex justify-center items-center gap-3 mt-6'
+				containerClassName={`flex justify-center items-center gap-3 mt-6 ${accentColor === 'blue' ? 'bg-blue-400! w-fit self-center p-2 rounded-2xl' : ''}`}
 				pageClassName=''
 				pageLinkClassName=''
 				activeClassName=''
 				renderOnZeroPageCount={null}
 				pageLabelBuilder={(page) => (
 					<TransparentButton
-						className='h-fit font-inter'
+						className={`h-fit font-inter`}
 						isActive={page === currentPage}
 					>
 						{page}
