@@ -1,14 +1,11 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import clsx from 'clsx';
 
 import { Profile } from '@/entities/profiles';
 import { FormField } from '@/shared/ui/FormField';
-import { FormikQuillField } from '@/shared/ui/FormikQuillField';
-
-const ReactQuill = dynamic(() => import('react-quill-new'), {
-	ssr: false,
-});
+import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
+import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 interface Props {
 	profile?: Profile;
@@ -18,32 +15,27 @@ interface Props {
 export const ProfileBioSection = ({ profile, isEditing }: Props) => {
 	return (
 		<>
-			<div className='flex flex-col gap-2'>
+			<div className='flex flex-col gap-2 w-full'>
 				<label className='font-bold'>Коротко о себе:</label>
 				{isEditing ? (
 					<FormField<Profile>
 						name='shortBio'
 						as='textarea'
-						className='w-full min-h-[90px]'
+						className='min-h-[90px]'
 					/>
 				) : (
 					<div>{profile?.shortBio || '—'}</div>
 				)}
 			</div>
 
-			{isEditing ? (
-				<FormikQuillField name='fullBio' label='Подробно о себе' />
-			) : (
-				<div>
-					<label className='font-bold'>Подробно о себе:</label>
-					<ReactQuill
-						theme='snow'
-						value={profile?.fullBio || ''}
-						readOnly
-						modules={{ toolbar: false }}
-					/>
-				</div>
-			)}
+			<div className={clsx('flex flex-col w-full')}>
+				<label className='font-bold mb-2'>Подробно о себе:</label>
+				{isEditing ? (
+					<FormikTipTapField name='fullBio' />
+				) : (
+					<TipTapReadOnly content={profile?.fullBio || ''} />
+				)}
+			</div>
 		</>
 	);
 };

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Bad_Script, Inter, Oswald } from 'next/font/google';
+import { Inter, Oswald } from 'next/font/google';
 
 import { Footer, Navbar } from '@/widgets/layout';
 
@@ -9,12 +9,6 @@ import { Providers } from './providers';
 
 import './globals.css';
 import 'swiper/css';
-import 'react-quill-new/dist/quill.snow.css';
-
-// const badScript = Bad_Script({
-// 	weight: '400',
-// 	variable: '--font-bad-script',
-// });
 
 const oswald = Oswald({
 	weight: ['400', '500', '600', '700'],

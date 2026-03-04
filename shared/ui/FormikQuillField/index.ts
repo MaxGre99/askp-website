@@ -1,1 +1,0 @@
-export { FormikQuillField } from './FormikQuillField';

@@ -1,0 +1,1 @@
+export { FormikTipTapField } from './FormikTipTapField';

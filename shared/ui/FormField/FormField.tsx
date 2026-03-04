@@ -25,7 +25,7 @@ export const FormField = <Values extends object>({
 	const fieldValue = values[name];
 
 	return (
-		<div className={`flex flex-col gap-1 ${className}`}>
+		<div className={`flex flex-col gap-1`}>
 			{label && (
 				<label className='text-sm font-medium text-gray-700'>
 					{label}
@@ -34,7 +34,6 @@ export const FormField = <Values extends object>({
 			)}
 
 			{type === 'date' ? (
-				// Для date используем обычный input с обработкой
 				<input
 					type='date'
 					name={name as string}

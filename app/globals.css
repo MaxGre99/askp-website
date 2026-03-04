@@ -1,9 +1,6 @@
 @import 'tailwindcss';
 
 @layer utilities {
-	/* .font-bad-script {
-		font-family: var(--font-bad-script);
-	} */
 	.font-oswald {
 		font-family: var(--font-oswald);
 	}
@@ -101,4 +98,82 @@ body {
 	background: url('/background.jpg') no-repeat 50% 0;
 	background-attachment: fixed;
 	background-size: cover;
+}
+
+.ProseMirror {
+	padding: 12px !important;
+	border: 1px solid #d1d5dc;
+}
+
+.ProseMirror ul {
+	list-style-type: disc;
+	padding-left: 1.5rem;
+}
+.ProseMirror ol {
+	list-style-type: decimal;
+	padding-left: 1.5rem;
+}
+.ProseMirror li {
+	margin: 0.25rem 0;
+}
+
+/* Обёртка картинки */
+[data-resize-wrapper] {
+	position: relative;
+	display: inline-block;
+}
+
+/* Все ручки */
+[data-resize-handle] {
+	width: 12px;
+	height: 12px;
+	background: #3b82f6;
+	border: 2px solid white;
+	border-radius: 2px;
+	position: absolute;
+	z-index: 10;
+	opacity: 0;
+	transition: opacity 0.15s;
+}
+
+/* Показывать только когда картинка выбрана */
+.ProseMirror-selectednode [data-resize-handle] {
+	opacity: 1;
+}
+
+/* Курсоры по углам */
+[data-resize-handle='top-left'] {
+	cursor: nwse-resize;
+	transform: translate(-50%, -50%);
+}
+[data-resize-handle='top-right'] {
+	cursor: nesw-resize;
+	transform: translate(50%, -50%);
+}
+[data-resize-handle='bottom-left'] {
+	cursor: nesw-resize;
+	transform: translate(-50%, 50%);
+}
+[data-resize-handle='bottom-right'] {
+	cursor: nwse-resize;
+	transform: translate(50%, 50%);
+}
+
+/* Ссылки */
+.ProseMirror a {
+	color: #3b82f6;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.ProseMirror a:hover {
+	color: #1d4ed8;
+}
+
+/* Blockquote */
+.ProseMirror blockquote {
+	border-left: 4px solid #d1d5db;
+	margin: 0.75rem 0;
+	padding: 0.5rem 0 0.5rem 1rem;
+	color: #6b7280;
+	font-style: italic;
 }

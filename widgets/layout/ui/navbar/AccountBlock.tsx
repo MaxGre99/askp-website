@@ -14,7 +14,7 @@ import { TransparentButton } from '@/shared/ui/TransparentButton';
 import { SignInForm } from './SignInForm';
 
 export const AccountBlock = () => {
-	const pathname = usePathname(); // отслеживаем текущий путь
+	const pathname = usePathname();
 	const { t } = useTranslation();
 	const [showMenu, setShowMenu] = useState(false);
 
