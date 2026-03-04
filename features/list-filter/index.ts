@@ -1,2 +1,2 @@
-export { useListFilter } from './model/use-list-filter';
+export { useListFilter } from './model/useListFilter';
 export { ListFilter } from './ui/ListFilter';

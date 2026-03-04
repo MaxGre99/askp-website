@@ -11,7 +11,7 @@ export const TransparentButton = ({
 	...props
 }: ButtonProps) => {
 	const baseClasses =
-		'flex items-center justify-center hover:bg-white/15 hover:cursor-pointer active:bg-white/20 transition-all duration-200 text-2xl text-white mx-auto font-bad-script w-full h-[140px] p-3 rounded-2xl';
+		'flex items-center justify-center hover:bg-white/15 hover:cursor-pointer active:bg-white/20 transition-all duration-200 text-2xl text-white mx-auto font-oswald w-full h-[140px] p-3 rounded-2xl';
 
 	return (
 		<button

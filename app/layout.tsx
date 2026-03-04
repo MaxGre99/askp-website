@@ -1,16 +1,25 @@
 import type { Metadata } from 'next';
-import { Bad_Script, Inter } from 'next/font/google';
+import { Bad_Script, Inter, Oswald } from 'next/font/google';
 
 import { Footer, Navbar } from '@/widgets/layout';
+
+import 'swiper/css/pagination';
 
 import { Providers } from './providers';
 
 import './globals.css';
 import 'swiper/css';
+import 'react-quill-new/dist/quill.snow.css';
 
-const badScript = Bad_Script({
-	weight: '400',
-	variable: '--font-bad-script',
+// const badScript = Bad_Script({
+// 	weight: '400',
+// 	variable: '--font-bad-script',
+// });
+
+const oswald = Oswald({
+	weight: ['400', '500', '600', '700'],
+	variable: '--font-oswald',
+	display: 'swap',
 });
 
 const inter = Inter({
@@ -30,15 +39,11 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html lang='ru'>
 			<body
-				className={`${badScript.variable} ${inter.variable} antialiased min-w-full min-h-[100svh] mx-auto`}
+				className={`${oswald.variable} ${inter.variable} antialiased min-w-full min-h-[100svh] mx-auto`}
 			>
 				<Providers>
 					<div id='modal-root' />
@@ -60,4 +65,6 @@ export default function RootLayout({
 			</body>
 		</html>
 	);
-}
+};
+
+export default RootLayout;

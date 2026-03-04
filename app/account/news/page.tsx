@@ -3,11 +3,10 @@
 import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
+import { NewsList, useMyNewsList } from '@/features/news-list';
 import { Pagination } from '@/shared/ui/Pagination';
-import { useMyNewsList } from '@/widgets/news-list/model/use-my-news-list';
-import { NewsList } from '@/widgets/news-list/ui/NewsList';
 
-export default function Page() {
+const Page = () => {
 	const { t } = useTranslation();
 
 	const {
@@ -28,7 +27,7 @@ export default function Page() {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-bad-script text-white text-3xl'>
+				<h1 className='font-oswald text-white text-3xl'>
 					{t('news.pageTitle')}
 				</h1>
 
@@ -57,4 +56,6 @@ export default function Page() {
 			)}
 		</div>
 	);
-}
+};
+
+export default Page;

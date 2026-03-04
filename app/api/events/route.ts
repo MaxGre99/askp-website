@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 
 import { prisma } from '@/shared/lib/prisma';
-import slugify from '@/shared/lib/slugify';
+import { slugify } from '@/shared/lib/slugify';
 
 export const GET = async (req: Request) => {
 	try {

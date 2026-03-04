@@ -117,8 +117,8 @@ const ru = {
 		},
 		validationErrors: {
 			required: {
-				firstName: 'Введите имя',
-				lastName: 'Введите фамилию',
+				firstName: 'Имя обязательно',
+				lastName: 'Фамилия обязательна',
 				contact: 'Укажите хотя бы один способ связи',
 				email: 'Email обязателен',
 				password: 'Пароль обязателен',

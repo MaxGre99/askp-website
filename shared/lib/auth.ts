@@ -11,7 +11,7 @@ interface JwtPayload {
 	role: UserRole;
 }
 
-export async function getAuthUser(requiredRole?: UserRole) {
+export const getAuthUser = async (requiredRole?: UserRole) => {
 	const cookieStore = await cookies();
 	const token = cookieStore.get('askp-token')?.value;
 
@@ -38,4 +38,4 @@ export async function getAuthUser(requiredRole?: UserRole) {
 		throw new ApiError('forbidden', 403);
 
 	return user;
-}
+};

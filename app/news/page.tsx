@@ -1,7 +1,7 @@
-import { NewsListWidget } from '@/widgets/news-list';
+import { NewsPage } from '@/widgets/news';
 
 const Page = () => {
-	return <NewsListWidget />;
+	return <NewsPage />;
 };
 
 export default Page;

@@ -23,7 +23,7 @@ export const NavButton = ({ href, children, className }: NavButtonProps) => {
 			className={clsx(
 				'relative w-full h-[140px] p-3',
 				'flex items-center justify-center text-center',
-				'font-bad-script text-2xl rounded-2xl',
+				'font-oswald text-2xl rounded-2xl',
 				'text-white',
 				'group',
 				className,

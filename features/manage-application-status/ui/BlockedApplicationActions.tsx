@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
-import { APPLICATION_ACTIONS } from '@/shared/config';
-
-import { useApplicationActions } from '../model/use-application-actions';
+import { APPLICATION_ACTIONS } from '../model/actions-config';
+import { useApplicationActions } from '../model/useApplicationActions';
 
 export const BlockedApplicationActions = ({ id }: { id: string }) => {
 	const { t } = useTranslation();

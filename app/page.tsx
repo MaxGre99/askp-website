@@ -1,5 +1,7 @@
-import { HomePageWidget } from '@/widgets/home-page';
+import { HomePage } from '@/widgets/home';
 
-export default function Page() {
-	return <HomePageWidget />;
-}
+const Page = () => {
+	return <HomePage />;
+};
+
+export default Page;

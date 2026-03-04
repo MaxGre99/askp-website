@@ -1,7 +1,7 @@
-import { EventsListWidget } from '@/widgets/events-list';
+import { EventsPage } from '@/widgets/events';
 
 const Page = () => {
-	return <EventsListWidget />;
+	return <EventsPage />;
 };
 
 export default Page;

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 import { BsHouse } from 'react-icons/bs';
@@ -13,6 +14,7 @@ import { TransparentButton } from '@/shared/ui/TransparentButton';
 import { SignInForm } from './SignInForm';
 
 export const AccountBlock = () => {
+	const pathname = usePathname(); // отслеживаем текущий путь
 	const { t } = useTranslation();
 	const [showMenu, setShowMenu] = useState(false);
 
@@ -29,6 +31,11 @@ export const AccountBlock = () => {
 	const handleShowMenu = () => {
 		setShowMenu((prev) => !prev);
 	};
+
+	useEffect(() => {
+		const timer = setTimeout(() => setShowMenu(false), 0);
+		return () => clearTimeout(timer);
+	}, [pathname]);
 
 	return (
 		<div className='flex relative'>

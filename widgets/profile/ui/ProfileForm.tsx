@@ -1,0 +1,41 @@
+'use client';
+
+import { Formik } from 'formik';
+import { Form } from 'formik';
+
+import { useProfileForm } from '../model/useProfileForm';
+
+import { ProfileActions } from './ProfileActions';
+import { ProfileBioSection } from './ProfileBioSection';
+import { ProfileMainBlock } from './ProfileMainBlock';
+
+export const ProfileForm = () => {
+	const {
+		profile,
+		initialValues,
+		schema,
+		isEditing,
+		setIsEditing,
+		handleSubmit,
+		loading,
+	} = useProfileForm();
+
+	if (loading) return <div>Загрузка профиля...</div>;
+
+	return (
+		<Formik
+			initialValues={initialValues}
+			validationSchema={schema}
+			enableReinitialize
+			onSubmit={handleSubmit}
+		>
+			<Form className='flex flex-col gap-6'>
+				<ProfileMainBlock profile={profile} isEditing={isEditing} />
+
+				<ProfileBioSection profile={profile} isEditing={isEditing} />
+
+				<ProfileActions isEditing={isEditing} setIsEditing={setIsEditing} />
+			</Form>
+		</Formik>
+	);
+};
