@@ -3,11 +3,13 @@
 import { redirect } from 'next/navigation';
 
 import { useGetUserQuery } from '@/entities/users';
+import { useRedirectForbidden } from '@/shared/routing/useRedirectForbidden';
 import { AccountSidebar } from '@/widgets/account-sidebar';
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 	const { data: user, isLoading } = useGetUserQuery();
 	if (!isLoading && !user) redirect('/');
+	useRedirectForbidden();
 
 	return (
 		<div className='flex flex-1 gap-2 w-full'>

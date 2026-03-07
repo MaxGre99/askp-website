@@ -12,20 +12,22 @@ export const PendingApplicationActions = ({ id }: { id: string }) => {
 
 	return (
 		<div className='flex gap-2'>
-			{(['approve', 'reject', 'block'] as ApplicationAction[]).map((type) => {
-				const { icon: Icon, color } = APPLICATION_ACTIONS[type];
+			{(['approve', 'reject', 'block', 'setAdmin'] as ApplicationAction[]).map(
+				(type) => {
+					const { icon: Icon, color } = APPLICATION_ACTIONS[type];
 
-				return (
-					<button
-						key={type}
-						title={t(`buttons.${type}`)}
-						onClick={() => actions[type](id)}
-						className={`h-9 w-9 flex items-center justify-center rounded-lg text-white transition-colors ${color}`}
-					>
-						<Icon size={18} />
-					</button>
-				);
-			})}
+					return (
+						<button
+							key={type}
+							title={t(`buttons.${type}`)}
+							onClick={() => actions[type](id)}
+							className={`h-9 w-9 flex items-center justify-center rounded-lg text-white transition-colors ${color}`}
+						>
+							<Icon size={18} />
+						</button>
+					);
+				},
+			)}
 		</div>
 	);
 };

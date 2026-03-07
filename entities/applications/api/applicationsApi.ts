@@ -59,6 +59,13 @@ export const applicationsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ['Applications'],
 		}),
+		setAdminApplication: builder.mutation<void, string>({
+			query: (id) => ({
+				url: `/admin/applications/${id}/set-admin`,
+				method: 'POST',
+			}),
+			invalidatesTags: ['Applications'],
+		}),
 	}),
 });
 
@@ -69,4 +76,5 @@ export const {
 	useRejectApplicationMutation,
 	useBlockApplicationMutation,
 	useUnblockApplicationMutation,
+	useSetAdminApplicationMutation,
 } = applicationsApi;

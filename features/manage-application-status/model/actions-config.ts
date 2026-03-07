@@ -3,10 +3,16 @@ import {
 	RiUserFollowFill,
 	RiUserForbidFill,
 	RiUserReceived2Fill,
+	RiUserStarFill,
 	RiUserUnfollowFill,
 } from 'react-icons/ri';
 
-export type ApplicationAction = 'approve' | 'reject' | 'block' | 'unblock';
+export type ApplicationAction =
+	| 'approve'
+	| 'reject'
+	| 'block'
+	| 'unblock'
+	| 'setAdmin';
 
 export const APPLICATION_ACTIONS: Record<
 	ApplicationAction,
@@ -21,5 +27,9 @@ export const APPLICATION_ACTIONS: Record<
 	unblock: {
 		icon: RiUserReceived2Fill,
 		color: 'bg-blue-500 hover:bg-blue-600',
+	},
+	setAdmin: {
+		icon: RiUserStarFill,
+		color: 'bg-fuchsia-500 hover:bg-fuchsia-600',
 	},
 };

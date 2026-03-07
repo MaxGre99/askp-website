@@ -9,7 +9,7 @@ type Props = {
 	className?: string;
 };
 
-export const SidebarButtton = ({ href, children, className }: Props) => {
+export const SidebarButton = ({ href, children, className }: Props) => {
 	const pathname = usePathname();
 
 	const isActive =

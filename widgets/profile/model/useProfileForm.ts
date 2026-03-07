@@ -6,6 +6,7 @@ import {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
 } from '@/entities/profiles';
+import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatDateForInput } from '@/shared/lib/formatDateForInput';
 
 import { editProfileSchema } from './schema';
@@ -42,6 +43,22 @@ export const useProfileForm = () => {
 		};
 
 		await updateProfile(submitValues).unwrap();
+
+		// Удаляем изображения, которые пропали из редактора
+		const oldUrls = extractImageUrls(initialValues.fullBio ?? '');
+		const newUrls = extractImageUrls(values.fullBio ?? '');
+		const removedUrls = oldUrls.filter((url) => !newUrls.includes(url));
+
+		await Promise.allSettled(
+			removedUrls.map((url) =>
+				fetch('/api/profile-bio-images/delete', {
+					method: 'DELETE',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ url }),
+				}),
+			),
+		);
+
 		setIsEditing(false);
 	};
 
