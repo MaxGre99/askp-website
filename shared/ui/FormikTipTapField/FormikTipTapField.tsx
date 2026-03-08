@@ -9,6 +9,23 @@ import Youtube from '@tiptap/extension-youtube';
 import { type Editor, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useField } from 'formik';
+import {
+	FaAlignCenter,
+	FaAlignJustify,
+	FaAlignLeft,
+	FaAlignRight,
+	FaBold,
+	FaCode,
+	FaHeading,
+	FaItalic,
+	FaListOl,
+	FaListUl,
+	FaQuoteLeft,
+	FaRegImage,
+	FaRemoveFormat,
+	FaStrikethrough,
+	FaUnderline,
+} from 'react-icons/fa';
 
 // ─── Toolbar ────────────────────────────────────────────────────────────────
 
@@ -77,7 +94,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 					active={editor.isActive('heading', { level })}
 					title={`Заголовок ${level}`}
 				>
-					H{level}
+					<FaHeading className='inline'/><strong>{level}</strong>
 				</ToolbarButton>
 			))}
 
@@ -89,28 +106,28 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 				active={editor.isActive('bold')}
 				title='Жирный'
 			>
-				<strong>B</strong>
+				<FaBold />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleItalic().run()}
 				active={editor.isActive('italic')}
 				title='Курсив'
 			>
-				<em>I</em>
+				<FaItalic />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleUnderline?.().run()}
 				active={editor.isActive('underline')}
 				title='Подчёркнутый'
 			>
-				<span className='underline'>U</span>
+				<FaUnderline />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleStrike().run()}
 				active={editor.isActive('strike')}
 				title='Зачёркнутый'
 			>
-				<span className='line-through'>S</span>
+				<FaStrikethrough />
 			</ToolbarButton>
 
 			<div className='w-px bg-gray-300 mx-1' />
@@ -121,14 +138,14 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 				active={editor.isActive('blockquote')}
 				title='Цитата'
 			>
-				❝
+				<FaQuoteLeft />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleCodeBlock().run()}
 				active={editor.isActive('codeBlock')}
 				title='Блок кода'
 			>
-				{'</>'}
+				<FaCode />
 			</ToolbarButton>
 
 			<div className='w-px bg-gray-300 mx-1' />
@@ -139,14 +156,14 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 				active={editor.isActive('orderedList')}
 				title='Нумерованный список'
 			>
-				1.
+				<FaListOl />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleBulletList().run()}
 				active={editor.isActive('bulletList')}
 				title='Маркированный список'
 			>
-				•
+				<FaListUl />
 			</ToolbarButton>
 
 			<div className='w-px bg-gray-300 mx-1' />
@@ -166,7 +183,14 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 						}[align]
 					}
 				>
-					{{ left: '⬅', center: '↔', right: '➡', justify: '☰' }[align]}
+					{
+						{
+							left: <FaAlignLeft />,
+							center: <FaAlignCenter />,
+							right: <FaAlignRight />,
+							justify: <FaAlignJustify />,
+						}[align]
+					}
 				</ToolbarButton>
 			))}
 
@@ -174,7 +198,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 
 			{/* Медиа */}
 			<ToolbarButton onClick={addImage} title='Изображение'>
-				🖼
+				<FaRegImage />
 			</ToolbarButton>
 
 			<div className='w-px bg-gray-300 mx-1' />
@@ -186,7 +210,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 				}
 				title='Очистить форматирование'
 			>
-				✕
+				<FaRemoveFormat />
 			</ToolbarButton>
 		</div>
 	);

@@ -11,6 +11,9 @@ import { formatDateForInput } from '@/shared/lib/formatDateForInput';
 
 import { editProfileSchema } from './schema';
 
+const MINIO_PUBLIC_URL =
+	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
+
 export const useProfileForm = () => {
 	const { t } = useTranslation();
 	const { data: profile, isLoading } = useGetProfileQuery();
@@ -47,7 +50,9 @@ export const useProfileForm = () => {
 		// Удаляем изображения, которые пропали из редактора
 		const oldUrls = extractImageUrls(initialValues.fullBio ?? '');
 		const newUrls = extractImageUrls(values.fullBio ?? '');
-		const removedUrls = oldUrls.filter((url) => !newUrls.includes(url));
+		const removedUrls = oldUrls.filter(
+			(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+		);
 
 		await Promise.allSettled(
 			removedUrls.map((url) =>
