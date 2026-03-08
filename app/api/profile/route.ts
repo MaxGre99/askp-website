@@ -44,6 +44,7 @@ export const PUT = async (req: Request) => {
 				middleName: body.middleName ?? null,
 				displayName: body.displayName ?? null,
 				gender: body.gender ?? null,
+				city: body.city ?? null,
 				languages: body.languages ?? [],
 				maritalStatus: body.maritalStatus ?? null,
 				birthDate: body.birthDate ? new Date(body.birthDate) : null,

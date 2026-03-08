@@ -56,6 +56,7 @@ const ru = {
 			middleName: 'Отчество',
 			displayName: 'Отображаемое имя',
 			birthDate: 'Дата рождения',
+			city: 'Город',
 			gender: 'Пол',
 			maritalStatus: 'Семейное положение',
 			languages: 'Знание языков',

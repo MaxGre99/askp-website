@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { useDeleteProfileBioImageMutation } from '@/entities/profile-bio-images';
 import {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
@@ -18,6 +19,7 @@ export const useProfileForm = () => {
 	const { t } = useTranslation();
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
+	const [deleteProfileBioImage] = useDeleteProfileBioImageMutation();
 
 	const [isEditing, setIsEditing] = useState(false);
 
@@ -29,6 +31,7 @@ export const useProfileForm = () => {
 		middleName: profile?.middleName ?? '',
 		displayName: profile?.displayName ?? '',
 		gender: profile?.gender ?? null,
+		city: profile?.city ?? '',
 		maritalStatus: profile?.maritalStatus ?? null,
 		languages: profile?.languages ?? [],
 		birthDate: formatDateForInput(profile?.birthDate),
@@ -55,13 +58,7 @@ export const useProfileForm = () => {
 		);
 
 		await Promise.allSettled(
-			removedUrls.map((url) =>
-				fetch('/api/profile-bio-images/delete', {
-					method: 'DELETE',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ url }),
-				}),
-			),
+			removedUrls.map((url) => deleteProfileBioImage(url)),
 		);
 
 		setIsEditing(false);

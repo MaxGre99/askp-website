@@ -4,7 +4,7 @@ import { getAuthUser } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async (req: Request) => {
-	const authUser = await getAuthUser();
+	const authUser = await getAuthUser('ADMIN');
 
 	try {
 		const url = new URL(req.url);

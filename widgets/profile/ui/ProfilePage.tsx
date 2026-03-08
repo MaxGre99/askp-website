@@ -1,6 +1,6 @@
 'use client';
 
-import { ProfileForm } from "./ProfileForm";
+import { ProfileForm } from './ProfileForm';
 
 export const ProfilePage = () => {
 	return (

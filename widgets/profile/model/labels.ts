@@ -4,6 +4,7 @@ export const PROFILE_MAIN_LABELS = [
 	'middleName',
 	'displayName',
 	'birthDate',
+	'city',
 ] as const;
 
 export const PROFILE_SIDE_LABELS = [

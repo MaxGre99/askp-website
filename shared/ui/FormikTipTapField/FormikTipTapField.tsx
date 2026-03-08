@@ -3,7 +3,6 @@
 import { useCallback, useEffect } from 'react';
 
 import Image from '@tiptap/extension-image';
-// import Image from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import Youtube from '@tiptap/extension-youtube';
 import { type Editor, EditorContent, useEditor } from '@tiptap/react';
@@ -27,7 +26,9 @@ import {
 	FaUnderline,
 } from 'react-icons/fa';
 
-// ─── Toolbar ────────────────────────────────────────────────────────────────
+import { useUploadProfileBioImageMutation } from '@/entities/profile-bio-images';
+
+// Toolbar
 
 const ToolbarButton = ({
 	onClick,
@@ -58,6 +59,8 @@ const ToolbarButton = ({
 );
 
 const MenuBar = ({ editor }: { editor: Editor | null }) => {
+	const [uploadProfileBioImage] = useUploadProfileBioImageMutation();
+
 	const addImage = useCallback(() => {
 		const input = document.createElement('input');
 		input.setAttribute('type', 'file');
@@ -71,16 +74,12 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 			const formData = new FormData();
 			formData.append('file', file);
 
-			const res = await fetch('/api/profile-bio-images/upload', {
-				method: 'POST',
-				body: formData,
-			});
-			const data = await res.json();
-			if (!data.url) return;
+			const { url } = await uploadProfileBioImage(formData).unwrap();
+			if (!url) return;
 
-			editor?.chain().focus().setImage({ src: data.url }).run();
+			editor?.chain().focus().setImage({ src: url }).run();
 		};
-	}, [editor]);
+	}, [editor, uploadProfileBioImage]);
 
 	if (!editor) return null;
 
@@ -94,7 +93,8 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 					active={editor.isActive('heading', { level })}
 					title={`Заголовок ${level}`}
 				>
-					<FaHeading className='inline'/><strong>{level}</strong>
+					<FaHeading className='inline' />
+					<strong>{level}</strong>
 				</ToolbarButton>
 			))}
 

@@ -102,6 +102,7 @@ model Profile {
   middleName     String?
   displayName    String?
   gender         Gender?
+  city           String?
   languages      String[]        // Postgres поддерживает массивы
   maritalStatus  MaritalStatus?
   birthDate      DateTime?

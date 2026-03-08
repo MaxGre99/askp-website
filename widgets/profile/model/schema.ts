@@ -7,6 +7,7 @@ export const editProfileSchema = (t: TFunction) =>
 		lastName: Yup.string().required(t('validationErrors.required.lastName')),
 		middleName: Yup.string().nullable(),
 		displayName: Yup.string().nullable(),
+		city: Yup.string().nullable(),
 		gender: Yup.string().oneOf(['MALE', 'FEMALE', 'OTHER']).nullable(),
 		maritalStatus: Yup.string()
 			.oneOf(['SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED'])

@@ -7,6 +7,7 @@ export interface Profile {
 	lastName: string | null;
 	middleName: string | null;
 	displayName: string | null;
+	city: string | null;
 	gender: Gender | null;
 	languages: string[];
 	maritalStatus: MaritalStatus | null;

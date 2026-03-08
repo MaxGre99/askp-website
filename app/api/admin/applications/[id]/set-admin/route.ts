@@ -11,7 +11,7 @@ export const POST = async (
 	try {
 		const { id: userId } = await params;
 
-		const authAdmin = await getAuthUser();
+		const authAdmin = await getAuthUser('ADMIN');
 
 		await prisma.$transaction([
 			prisma.user.update({
