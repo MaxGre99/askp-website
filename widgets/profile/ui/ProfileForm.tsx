@@ -7,6 +7,7 @@ import { useProfileForm } from '../model/useProfileForm';
 
 import { ProfileActions } from './ProfileActions';
 import { ProfileBioSection } from './ProfileBioSection';
+import { ProfileContactsBlock } from './ProfileContactsBlock';
 import { ProfileMainBlock } from './ProfileMainBlock';
 
 export const ProfileForm = () => {
@@ -33,6 +34,8 @@ export const ProfileForm = () => {
 				<ProfileMainBlock profile={profile} isEditing={isEditing} />
 
 				<ProfileBioSection profile={profile} isEditing={isEditing} />
+
+				<ProfileContactsBlock profile={profile} isEditing={isEditing} />
 
 				<ProfileActions isEditing={isEditing} setIsEditing={setIsEditing} />
 			</Form>

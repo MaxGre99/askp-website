@@ -50,6 +50,12 @@ export const PUT = async (req: Request) => {
 				birthDate: body.birthDate ? new Date(body.birthDate) : null,
 				shortBio: body.shortBio ?? null,
 				fullBio: body.fullBio ?? null,
+				phone: body.phone ?? null,
+				telegramUser: body.telegramUser ?? null,
+				telegramChannel: body.telegramChannel ?? null,
+				vkUrl: body.vkUrl ?? null,
+				website: body.website ?? null,
+				phoneRefs: body.phoneRefs ?? null,
 			},
 		});
 

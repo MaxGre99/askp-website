@@ -37,6 +37,12 @@ export const useProfileForm = () => {
 		birthDate: formatDateForInput(profile?.birthDate),
 		shortBio: profile?.shortBio ?? '',
 		fullBio: profile?.fullBio ?? '',
+		phone: profile?.phone ?? '',
+		telegramUser: profile?.telegramUser ?? '',
+		telegramChannel: profile?.telegramChannel ?? '',
+		vkUrl: profile?.vkUrl ?? '',
+		website: profile?.website ?? '',
+		phoneRefs: profile?.phoneRefs ?? [],
 	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

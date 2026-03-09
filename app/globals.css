@@ -98,6 +98,7 @@ body {
 	background: url('/background.jpg') no-repeat 50% 0;
 	background-attachment: fixed;
 	background-size: cover;
+	font-family: 'Inter', sans-serif;
 }
 
 .ProseMirror {

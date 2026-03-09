@@ -12,3 +12,11 @@ export const PROFILE_SIDE_LABELS = [
 	'maritalStatus',
 	'languages',
 ] as const;
+
+export const PROFILE_CONTACT_LABELS = [
+	'phone',
+	'telegramUser',
+	'telegramChannel',
+	'vkUrl',
+	'website',
+];

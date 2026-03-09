@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
-import { BsHouse } from 'react-icons/bs';
-import { FaRegBell, FaRegUser } from 'react-icons/fa';
+import { FaHouseUser, FaRegBell, FaRegUser } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
@@ -66,7 +65,7 @@ export const AccountBlock = () => {
 									href={'/account'}
 									className='flex gap-1 items-center hover:underline'
 								>
-									<BsHouse />
+									<FaHouseUser />
 									<p>{t('account.title')}</p>
 								</Link>
 							</div>

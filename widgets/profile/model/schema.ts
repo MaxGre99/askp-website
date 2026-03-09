@@ -16,4 +16,10 @@ export const editProfileSchema = (t: TFunction) =>
 		birthDate: Yup.date().nullable(),
 		shortBio: Yup.string().max(500).nullable(),
 		fullBio: Yup.string().nullable(),
+		phone: Yup.string().nullable(),
+		telegramUser: Yup.string().nullable(),
+		telegramChannel: Yup.string().nullable(),
+		vkUrl: Yup.string().nullable(),
+		website: Yup.string().nullable(),
+		phoneRefs: Yup.array().of(Yup.string()).nullable(),
 	});

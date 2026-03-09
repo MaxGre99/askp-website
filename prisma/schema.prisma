@@ -92,6 +92,12 @@ enum MaritalStatus {
   WIDOWED
 }
 
+enum PhoneRefs {
+  CALL
+  WHATSAPP
+  TELEGRAM
+}
+
 model Profile {
   userId String @id
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -110,6 +116,14 @@ model Profile {
   // О себе
   shortBio       String?
   fullBio        String?         // HTML из Quill
+
+  // Контакты
+  phone          String?
+  telegramUser   String?
+  telegramChannel String?
+  vkUrl          String?
+  website        String?
+  phoneRefs      PhoneRefs[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
