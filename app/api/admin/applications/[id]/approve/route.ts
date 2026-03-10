@@ -5,7 +5,7 @@ import { getAuthUser } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (
-	req: Request,
+	_req: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) => {
 	try {

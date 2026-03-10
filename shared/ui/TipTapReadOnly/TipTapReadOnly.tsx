@@ -13,7 +13,7 @@ export const TipTapReadOnly = ({
 	noBorder,
 }: {
 	content: string;
-	noBorder: boolean;
+	noBorder?: boolean;
 }) => {
 	const editor = useEditor({
 		extensions: [

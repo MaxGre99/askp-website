@@ -1,5 +1,5 @@
 import { EventType } from '@/entities/events';
-import { EventCard } from '@/shared/ui/EventCard';
+import { WideCard } from '@/shared/ui/WideCard';
 
 type Props = {
 	items: EventType[];
@@ -9,7 +9,7 @@ export const EventsList = ({ items }: Props) => {
 	return (
 		<div className='flex flex-col gap-4'>
 			{items.map((item, index) => (
-				<EventCard key={item.slug} event={item} index={index} type='event' />
+				<WideCard key={item.slug} item={item} index={index} />
 			))}
 		</div>
 	);

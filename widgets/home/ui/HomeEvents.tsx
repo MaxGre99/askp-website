@@ -3,8 +3,8 @@
 import { useTranslation } from 'react-i18next';
 
 import { EventType } from '@/entities/events';
-import { EventCard } from '@/shared/ui/EventCard';
 import { NavButton } from '@/shared/ui/NavButton';
+import { WideCard } from '@/shared/ui/WideCard';
 
 type Props = {
 	items: EventType[];
@@ -19,14 +19,7 @@ export const HomeEvents = ({ items }: Props) => {
 			<div className='flex flex-col gap-3'>
 				{items.length > 0 ? (
 					items.slice(0, 4).map((event, index) => {
-						return (
-							<EventCard
-								key={event.slug}
-								index={index}
-								event={event}
-								type='events'
-							/>
-						);
+						return <WideCard key={event.slug} index={index} item={event} />;
 					})
 				) : (
 					<p className='font-oswald text-white text-3xl'>

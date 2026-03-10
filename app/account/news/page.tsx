@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
+import { useDeleteNewsMutation } from '@/entities/news';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { NewsList, useMyNewsList } from '@/features/news-list';
 import { BaseButton } from '@/shared/ui/BaseButton';
@@ -28,6 +29,8 @@ const Page = () => {
 
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
 
+	const [deleteNews] = useDeleteNewsMutation();
+
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
@@ -50,7 +53,12 @@ const Page = () => {
 
 			{!isLoading && data && (
 				<>
-					<NewsList items={data.news} accentColor='blue' />
+					<NewsList
+						items={data.news}
+						accentColor='blue'
+						showAdminActions
+						onDelete={deleteNews}
+					/>
 
 					<Pagination
 						currentPage={page}

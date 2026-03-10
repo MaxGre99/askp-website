@@ -1,0 +1,60 @@
+import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
+
+import { useCreateNewsMutation } from '@/entities/news';
+import { useDeleteNewsImageMutation } from '@/entities/news-images';
+import { getApiErrorMessage } from '@/shared/api';
+import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+
+import { createNewsSchema } from './schema';
+
+const MINIO_PUBLIC_URL =
+	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
+
+export const useCreateNewsForm = () => {
+	const { t } = useTranslation();
+	const router = useRouter();
+	const [createNews] = useCreateNewsMutation();
+	const [deleteNewsImage] = useDeleteNewsImageMutation();
+
+	// Накапливаем все загруженные в контент URL за сессию
+	const uploadedContentUrls = useRef<Set<string>>(new Set());
+
+	const schema = createNewsSchema(t);
+
+	const initialValues = {
+		title: '',
+		content: '',
+		image: '',
+		published: true,
+	};
+
+	// Вызывается из формы при каждой загрузке картинки в контент
+	const trackUploadedUrl = (url: string) => {
+		uploadedContentUrls.current.add(url);
+	};
+
+	const handleSubmit = async (values: typeof initialValues) => {
+		try {
+			const news = await createNews({
+				...values,
+				image: values.image || undefined,
+			}).unwrap();
+
+			// Удаляем картинки из контента, которые загрузили но не использовали
+			const usedUrls = extractImageUrls(values.content);
+			const orphanedUrls = [...uploadedContentUrls.current].filter(
+				(url) => !usedUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+			);
+			await Promise.allSettled(orphanedUrls.map((url) => deleteNewsImage(url)));
+
+			router.push(`/news/${news.slug}`);
+		} catch (err) {
+			console.log('slug error:', getApiErrorMessage(err));
+		}
+	};
+
+	return { initialValues, schema, handleSubmit, trackUploadedUrl };
+};

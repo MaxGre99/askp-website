@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { useGetNewsQuery } from '@/entities/news';
@@ -15,18 +15,20 @@ const Page = () => {
 		return <div></div>;
 	}
 	return (
-		<div className='flex flex-col gap-2 w-full justify-start items-center min-h-[1000px] bg-white rounded-2xl'>
+		<div className='flex flex-1 flex-col w-full justify-start items-center bg-white rounded-2xl'>
 			{data?.image && (
 				<img
 					src={data.image}
 					alt='news-cover'
-					className='rounded-2xl w-full h-[400px]'
-					width={500}
-					height={100}
+					className='rounded-2xl w-full h-[720px]'
+					// width={500}
+					// height={100}
 				/>
 			)}
-			<h3 className='text-3xl text-center'>{data?.title}</h3>
-			<TipTapReadOnly content={data?.content ?? ''} noBorder/>
+			<div className='flex flex-col gap-6 p-6 flex-1 w-full'>
+				<h3 className='text-3xl text-center'>{data?.title}</h3>
+				<TipTapReadOnly content={data?.content ?? ''} noBorder />
+			</div>
 		</div>
 	);
 };

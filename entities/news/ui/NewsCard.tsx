@@ -1,31 +1,40 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 
+import { MdImageNotSupported } from 'react-icons/md';
+
+import { stripHtml } from '@/shared/lib/stripHtml';
+
+import { NewsType } from '../model/types';
+
 interface NewsCard {
-	article: {
-		title: string;
-		content: string;
-		slug: string;
-	};
+	news: NewsType;
 	type: string;
 }
 
-export const NewsCard = ({ article, type }: NewsCard) => {
+export const NewsCard = ({ news, type }: NewsCard) => {
+	console.log(news.content);
 	return (
-		<Link href={`/${type}/${article.slug}`}>
+		<Link href={`/${type}/${news.slug}`}>
 			<article className='bg-white/70 backdrop-blur-2xl flex flex-col gap-1 rounded-2xl'>
-				<Image
-					src={'/mockNews.webp'}
-					alt='news-cover'
-					className='rounded-2xl w-full'
-					width={500}
-					height={100}
-				/>
+				{news?.image ? (
+					<img
+						src={news?.image}
+						alt='news-cover'
+						className='rounded-2xl w-full max-h-[232px] min-h-[232px] min-w-[425px]'
+						// width={500}
+						// height={100}
+					/>
+				) : (
+					<div className='rounded-2xl w-full max-h-[232px] min-h-[232px] min-w-[425px] flex items-center justify-center border border-gray-400'>
+						<MdImageNotSupported size={96} />
+					</div>
+				)}
 				<div className='p-3 flex flex-col gap-1 justify-start items-start font-inter'>
 					<h3 className='text-ellipsis max-w-full line-clamp-1'>
-						{article.title}
+						{news.title}
 					</h3>
-					<p className='line-clamp-3 font-inter'>{article.content}</p>
+					<p className='line-clamp-3 font-inter'>{stripHtml(news.content)}</p>
 				</div>
 			</article>
 		</Link>

@@ -4,7 +4,7 @@ import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
 export const GET = async (
-	req: Request,
+	_req: Request,
 	{
 		params,
 	}: {
@@ -49,7 +49,7 @@ export const PATCH = async (
 };
 
 export const DELETE = async (
-	req: Request,
+	_req: Request,
 	{
 		params,
 	}: {

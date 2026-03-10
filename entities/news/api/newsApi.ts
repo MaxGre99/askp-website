@@ -19,11 +19,14 @@ export const newsApi = baseApi.injectEndpoints({
 		}),
 		getNews: builder.query<NewsType, string>({
 			query: (slug) => `/news/${slug}`,
-			providesTags: (result, error, slug) => [{ type: 'News', id: slug }],
+			providesTags: (result, error, slug) => [
+				{ type: 'News', id: slug },
+				{ type: 'MyNews', id: slug },
+			],
 		}),
 		createNews: builder.mutation<NewsType, Partial<NewsType>>({
 			query: (body) => ({ url: '/news', method: 'POST', body }),
-			invalidatesTags: ['News'],
+			invalidatesTags: ['News', 'MyNews'],
 		}),
 		updateNews: builder.mutation<
 			NewsType,
@@ -36,11 +39,12 @@ export const newsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: (result, error, { slug }) => [
 				{ type: 'News', id: slug },
+				{ type: 'MyNews', id: slug },
 			],
 		}),
 		deleteNews: builder.mutation<{ ok: boolean }, string>({
 			query: (slug) => ({ url: `/news/${slug}`, method: 'DELETE' }),
-			invalidatesTags: ['News'],
+			invalidatesTags: ['News', 'MyNews'],
 		}),
 		getMyNews: builder.query<
 			{ news: NewsType[]; total: number },

@@ -1,4 +1,4 @@
-import { CreateNewsForm } from '@/features/create-news';
+import { CreateNewsForm } from '@/features/news-form';
 
 export const AddNewsPage = () => {
 	return (

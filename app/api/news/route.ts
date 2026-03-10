@@ -66,6 +66,15 @@ export const POST = async (req: Request) => {
 
 		return NextResponse.json(news);
 	} catch (err) {
+		if (
+			err instanceof Prisma.PrismaClientKnownRequestError &&
+			err.code === 'P2002'
+		) {
+			return NextResponse.json(
+				{ error: 'slug_already_exists' },
+				{ status: 409 },
+			);
+		}
 		console.error('CREATE_NEWS_ERROR:', err);
 		return NextResponse.json(
 			{ error: 'failed_to_create_news' },

@@ -181,6 +181,7 @@ const ru = {
 			url_not_provided: 'URL не передан',
 			invalid_url: 'Неверный URL',
 			forbidden: 'Недостаточно прав',
+			slug_already_exists: 'Название темы должно быть уникальным',
 		},
 	},
 };

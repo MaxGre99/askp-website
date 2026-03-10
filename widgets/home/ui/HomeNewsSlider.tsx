@@ -34,9 +34,9 @@ export const HomeNewsSlider = ({ items }: Props) => {
 						pauseOnMouseEnter: true,
 					}}
 				>
-					{items.map((article) => (
-						<SwiperSlide key={article.slug}>
-							<NewsCard article={article} type='news' />
+					{items.map((news) => (
+						<SwiperSlide key={news.slug}>
+							<NewsCard news={news} type='news' />
 						</SwiperSlide>
 					))}
 				</Swiper>

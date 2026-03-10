@@ -9,7 +9,7 @@ import { s3 } from '@/shared/lib/s3';
 const bucket = 'avatars';
 
 export const GET = async (
-	req: Request,
+	_req: Request,
 	{ params }: { params: Promise<{ userId: string }> },
 ) => {
 	try {

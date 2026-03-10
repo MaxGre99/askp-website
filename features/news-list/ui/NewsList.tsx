@@ -1,21 +1,29 @@
 import { NewsType } from '@/entities/news';
-import { EventCard } from '@/shared/ui/EventCard';
+import { WideCard } from '@/shared/ui/WideCard';
 
 type Props = {
 	items: NewsType[];
 	accentColor?: 'blue' | 'white';
+	showAdminActions?: boolean;
+	onDelete?: (slug: string) => void;
 };
 
-export const NewsList = ({ items, accentColor }: Props) => {
+export const NewsList = ({
+	items,
+	accentColor,
+	showAdminActions,
+	onDelete,
+}: Props) => {
 	return (
 		<div className='flex flex-col gap-4'>
 			{items.map((item, index) => (
-				<EventCard
+				<WideCard
 					key={item.slug}
-					event={item}
+					item={item}
 					index={index}
-					type='news'
 					accentColor={accentColor}
+					showAdminActions={showAdminActions}
+					onDelete={onDelete}
 				/>
 			))}
 		</div>
