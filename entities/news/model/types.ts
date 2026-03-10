@@ -9,3 +9,10 @@ export type NewsType = {
 	createdAt: string;
 	updatedAt: string;
 };
+
+export interface CreateNewsDto {
+	title: string;
+	content: string;
+	image?: string;
+	published: boolean;
+}

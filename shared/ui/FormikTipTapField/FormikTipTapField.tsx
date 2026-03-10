@@ -26,9 +26,7 @@ import {
 	FaUnderline,
 } from 'react-icons/fa';
 
-import { useUploadProfileBioImageMutation } from '@/entities/profile-bio-images';
-
-// Toolbar
+// Тулбар (кнопка и меню)
 
 const ToolbarButton = ({
 	onClick,
@@ -58,9 +56,13 @@ const ToolbarButton = ({
 	</button>
 );
 
-const MenuBar = ({ editor }: { editor: Editor | null }) => {
-	const [uploadProfileBioImage] = useUploadProfileBioImageMutation();
-
+const MenuBar = ({
+	editor,
+	onUploadImage,
+}: {
+	editor: Editor | null;
+	onUploadImage: (file: File) => Promise<string>;
+}) => {
 	const addImage = useCallback(() => {
 		const input = document.createElement('input');
 		input.setAttribute('type', 'file');
@@ -70,16 +72,10 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 		input.onchange = async () => {
 			const file = input.files?.[0];
 			if (!file) return;
-
-			const formData = new FormData();
-			formData.append('file', file);
-
-			const { url } = await uploadProfileBioImage(formData).unwrap();
-			if (!url) return;
-
+			const url = await onUploadImage(file);
 			editor?.chain().focus().setImage({ src: url }).run();
 		};
-	}, [editor, uploadProfileBioImage]);
+	}, [editor, onUploadImage]);
 
 	if (!editor) return null;
 
@@ -216,9 +212,15 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 	);
 };
 
-// ─── Основной компонент ──────────────────────────────────────────────────────
+// Основной компонент
 
-export const FormikTipTapField = ({ name }: { name: string }) => {
+export const FormikTipTapField = ({
+	name,
+	onUploadImage,
+}: {
+	name: string;
+	onUploadImage: (file: File) => Promise<string>;
+}) => {
 	const [field, , helpers] = useField(name);
 
 	const editor = useEditor({
@@ -252,7 +254,7 @@ export const FormikTipTapField = ({ name }: { name: string }) => {
 
 	return (
 		<>
-			<MenuBar editor={editor} />
+			<MenuBar editor={editor} onUploadImage={onUploadImage} />
 			<EditorContent editor={editor} />
 		</>
 	);

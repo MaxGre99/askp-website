@@ -13,7 +13,7 @@ import { formatDateForInput } from '@/shared/lib/formatDateForInput';
 import { editProfileSchema } from './schema';
 
 const MINIO_PUBLIC_URL =
-	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
+	process.env.MINIO_PUBLIC_URL ?? 'http://localhost:9000';
 
 export const useProfileForm = () => {
 	const { t } = useTranslation();

@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 
+import { useUploadProfileBioImageMutation } from '@/entities/profile-bio-images';
 import { Profile } from '@/entities/profiles';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
@@ -13,6 +14,15 @@ interface Props {
 }
 
 export const ProfileBioSection = ({ profile, isEditing }: Props) => {
+	const [uploadProfileBioImage] = useUploadProfileBioImageMutation();
+
+	const handleUploadProfileBioImage = async (file: File) => {
+		const formData = new FormData();
+		formData.append('file', file);
+		const { url } = await uploadProfileBioImage(formData).unwrap();
+		return url;
+	};
+
 	return (
 		<>
 			<div className='flex flex-col gap-2 w-full'>
@@ -31,7 +41,10 @@ export const ProfileBioSection = ({ profile, isEditing }: Props) => {
 			<div className={clsx('flex flex-col w-full')}>
 				<label className='font-bold mb-2'>Подробно о себе:</label>
 				{isEditing ? (
-					<FormikTipTapField name='fullBio' />
+					<FormikTipTapField
+						name='fullBio'
+						onUploadImage={handleUploadProfileBioImage}
+					/>
 				) : (
 					<TipTapReadOnly content={profile?.fullBio || ''} />
 				)}

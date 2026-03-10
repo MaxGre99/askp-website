@@ -39,7 +39,7 @@ export const FormField = <Values extends object>({
 					name={name as string}
 					value={(fieldValue as string) || ''}
 					onChange={(e) => setFieldValue(name as string, e.target.value)}
-					className={`input ${hasError ? 'ring-2 ring-red-400' : ''}`}
+					className={`input ${hasError ? 'ring-2 ring-red-400 border-transparent' : ''}`}
 					placeholder={placeholder}
 				/>
 			) : (
@@ -48,7 +48,7 @@ export const FormField = <Values extends object>({
 					type={type}
 					as={as}
 					placeholder={placeholder}
-					className={`input ${hasError ? 'ring-2 ring-red-400' : ''} ${className}`}
+					className={`input ${hasError ? 'ring-2 ring-red-400 border-transparent' : ''} ${className ? className : ''}`}
 				/>
 			)}
 

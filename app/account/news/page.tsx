@@ -1,9 +1,13 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useTranslation } from 'react-i18next';
+import { FaPlus } from 'react-icons/fa';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { NewsList, useMyNewsList } from '@/features/news-list';
+import { BaseButton } from '@/shared/ui/BaseButton';
 import { Pagination } from '@/shared/ui/Pagination';
 
 const Page = () => {
@@ -27,9 +31,11 @@ const Page = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-oswald text-white text-3xl'>
-					{t('news.pageTitle')}
-				</h1>
+				<Link href={'/account/news/add'}>
+					<BaseButton>
+						<FaPlus /> {t('buttons.addNews')}
+					</BaseButton>
+				</Link>
 
 				<ListFilter
 					value={draftQuery}

@@ -8,7 +8,13 @@ import Youtube from '@tiptap/extension-youtube';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
-export const TipTapReadOnly = ({ content }: { content: string }) => {
+export const TipTapReadOnly = ({
+	content,
+	noBorder,
+}: {
+	content: string;
+	noBorder: boolean;
+}) => {
 	const editor = useEditor({
 		extensions: [
 			StarterKit.configure({
@@ -33,5 +39,10 @@ export const TipTapReadOnly = ({ content }: { content: string }) => {
 		editor.commands.setContent(content || '');
 	}, [content, editor]);
 
-	return <EditorContent editor={editor} />;
+	return (
+		<EditorContent
+			editor={editor}
+			className={`${noBorder ? 'noBorder' : ''}`}
+		/>
+	);
 };

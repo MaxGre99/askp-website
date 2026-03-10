@@ -14,7 +14,6 @@ export const baseApi = createApi({
 		'Me',
 		'Avatar',
 		'MyNews',
-		'ProfileBioImages',
 	],
 	endpoints: () => ({}),
 });

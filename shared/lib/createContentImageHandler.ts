@@ -1,0 +1,56 @@
+import { NextResponse } from 'next/server';
+
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import sharp from 'sharp';
+
+import { ApiError } from '@/shared/api';
+import { getAuthUser } from '@/shared/lib/auth';
+import { s3 } from '@/shared/lib/s3';
+
+export const createContentImageHandler = (bucket: string) => {
+	return async (req: Request) => {
+		try {
+			const user = await getAuthUser();
+			const formData = await req.formData();
+			const file = formData.get('file') as File | null;
+			if (!file) throw new ApiError('file_not_provided', 400);
+			if (!file.type.startsWith('image/'))
+				throw new ApiError('invalid_mime_type', 400);
+
+			const buffer = Buffer.from(await file.arrayBuffer());
+			if (buffer.byteLength > 5 * 1024 * 1024)
+				throw new ApiError('file_too_large', 400);
+
+			const processed = await sharp(buffer)
+				.resize(1024, 1024, { fit: 'inside' })
+				.webp({ quality: 90 })
+				.toBuffer();
+
+			const fileName = `${user.id}/${Date.now()}-${file.name}.webp`;
+
+			await s3.send(
+				new PutObjectCommand({
+					Bucket: bucket,
+					Key: fileName,
+					Body: processed,
+					ContentType: 'image/webp',
+					CacheControl: 'public, max-age=31536000, immutable',
+				}),
+			);
+
+			return NextResponse.json({
+				url: `${process.env.MINIO_PUBLIC_URL}/${bucket}/${fileName}`,
+			});
+		} catch (err) {
+			if (err instanceof ApiError)
+				return NextResponse.json(
+					{ error: err.message },
+					{ status: err.status },
+				);
+			return NextResponse.json(
+				{ error: 'internal_server_error' },
+				{ status: 500 },
+			);
+		}
+	};
+};

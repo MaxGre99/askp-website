@@ -4,7 +4,7 @@ export const avatarsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		uploadAvatar: builder.mutation<{ url: string }, FormData>({
 			query: (formData) => ({
-				url: '/avatars/upload',
+				url: '/avatars',
 				method: 'POST',
 				body: formData,
 			}),

@@ -120,6 +120,7 @@ const ru = {
 			telegramChannel: 'Группа в Telegram',
 			vkUrl: 'Профиль в ВК',
 			website: 'Личный сайт',
+			addNews: 'Добавить новость',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',
@@ -135,6 +136,8 @@ const ru = {
 				contact: 'Укажите хотя бы один способ связи',
 				email: 'Email обязателен',
 				password: 'Пароль обязателен',
+				title: 'Заголовок обязателен',
+				content: 'Новость обязана иметь тело',
 			},
 			invalid: {
 				email: 'Некорретный email',
