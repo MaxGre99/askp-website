@@ -15,6 +15,8 @@ export const baseApi = createApi({
 		'Avatar',
 		'MyNews',
 		'MyEvents',
+		'Articles',
+		'MyArticles',
 	],
 	endpoints: () => ({}),
 });

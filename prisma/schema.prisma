@@ -21,12 +21,13 @@ model User {
   approver      User?      @relation("UserApprovals", fields: [approvedBy], references: [id])
   approvedUsers User[]     @relation("UserApprovals")
 
-  news   News[]
-  events Event[]
-  profile Profile?
+  news          News[]
+  events        Event[]
+  articles      Article[]
+  profile       Profile?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 enum UserRole {
@@ -52,8 +53,8 @@ model News {
   image     String?
   published Boolean @default(true)
 
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,11 +71,28 @@ model Event {
   eventDate   DateTime
   published   Boolean  @default(true)
 
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// СТАТЬИ
+
+model Article {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  content     String
+  image       String?
+  published   Boolean  @default(true)
+
+  authorId    String
+  author      User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // ПРОФИЛЬ
@@ -99,32 +117,32 @@ enum PhoneRefs {
 }
 
 model Profile {
-  userId String @id
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String @id
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Основные данные
-  firstName      String?
-  lastName       String?
-  middleName     String?
-  displayName    String?
-  gender         Gender?
-  city           String?
-  languages      String[]        // Postgres поддерживает массивы
-  maritalStatus  MaritalStatus?
-  birthDate      DateTime?
+  firstName       String?
+  lastName        String?
+  middleName      String?
+  displayName     String?
+  gender          Gender?
+  city            String?
+  languages       String[]        // Postgres поддерживает массивы
+  maritalStatus   MaritalStatus?
+  birthDate       DateTime?
 
   // О себе
-  shortBio       String?
-  fullBio        String?         // HTML из Quill
+  shortBio        String?
+  fullBio         String?         // HTML из Quill
 
   // Контакты
-  phone          String?
-  telegramUser   String?
+  phone           String?
+  telegramUser    String?
   telegramChannel String?
-  vkUrl          String?
-  website        String?
-  phoneRefs      PhoneRefs[]
+  vkUrl           String?
+  website         String?
+  phoneRefs       PhoneRefs[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

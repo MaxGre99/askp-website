@@ -190,6 +190,12 @@ const ru = {
 			slug_already_exists: 'Название темы должно быть уникальным',
 			failed_to_fetch_user_news: 'Ошибка получения новостей пользователя',
 			failed_to_fetch_user_events: 'Ошибка получения событий пользователя',
+			failed_to_fetch_articles: 'Ошибка получения статей',
+			failed_to_create_article: 'Ошибка создания статьи',
+			failed_to_fetch_article: 'Ошибка получения статьи',
+			failed_to_update_article: 'Ошибка обновления статьи',
+			failed_to_delete_article: 'Ошибка удаления статьи',
+			failed_to_fetch_user_articles: 'Ошибка получения статей пользователя',
 		},
 	},
 };
