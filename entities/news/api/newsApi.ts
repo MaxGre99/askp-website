@@ -38,6 +38,8 @@ export const newsApi = baseApi.injectEndpoints({
 				body,
 			}),
 			invalidatesTags: (result, error, { slug }) => [
+				'News',
+				'MyNews',
 				{ type: 'News', id: slug },
 				{ type: 'MyNews', id: slug },
 			],

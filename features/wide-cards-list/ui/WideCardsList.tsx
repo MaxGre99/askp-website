@@ -16,7 +16,7 @@ export const WideCardsList = ({
 	onDelete,
 }: Props) => {
 	return (
-		<div className='flex flex-col gap-4'>
+		<div className='flex flex-1 flex-col gap-4'>
 			{items.map((item, index) => (
 				<WideCard
 					key={item.slug}

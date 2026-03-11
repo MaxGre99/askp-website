@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { Prisma } from '@prisma/client';
 
+import { getAuthUser } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
@@ -38,8 +39,10 @@ export const GET = async (req: Request) => {
 };
 
 export const POST = async (req: Request) => {
+	const authUser = await getAuthUser('ADMIN');
+
 	try {
-		const { title, description, image, authorId, eventDate, published } =
+		const { title, description, image, eventDate, published } =
 			await req.json();
 		const slug = slugify(title);
 
@@ -48,7 +51,7 @@ export const POST = async (req: Request) => {
 				title,
 				description,
 				image,
-				authorId,
+				authorId: authUser.id,
 				eventDate: new Date(eventDate),
 				published: published ?? true,
 				slug,

@@ -45,7 +45,7 @@ export const CreateNewsForm = () => {
 			validationSchema={schema}
 			onSubmit={handleSubmit}
 		>
-			{({ values, setFieldValue, isSubmitting, errors }) => (
+			{({ values, setFieldValue, isSubmitting /* , errors */ }) => (
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
@@ -84,7 +84,7 @@ export const CreateNewsForm = () => {
 					>
 						{isSubmitting ? 'Сохранение...' : 'Создать новость'}
 					</button>
-					{errors && <p>{Object.values(errors)}</p>}
+					{/* {errors && <p>{Object.values(errors)}</p>} */}
 				</Form>
 			)}
 		</Formik>

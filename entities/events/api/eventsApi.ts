@@ -18,7 +18,7 @@ export const eventsApi = baseApi.injectEndpoints({
 			providesTags: ['Events'],
 		}),
 		getEvent: builder.query<EventType, string>({
-			query: (slug) => `/${slug}`,
+			query: (slug) => `/events/${slug}`,
 			providesTags: (result, error, slug) => [
 				{ type: 'Events', id: slug },
 				{ type: 'MyEvents', id: slug },
@@ -42,6 +42,8 @@ export const eventsApi = baseApi.injectEndpoints({
 				body,
 			}),
 			invalidatesTags: (result, error, { slug }) => [
+				'Events',
+				'MyEvents',
 				{ type: 'Events', id: slug },
 				{ type: 'MyEvents', id: slug },
 			],

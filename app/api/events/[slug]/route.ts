@@ -35,6 +35,7 @@ export const PATCH = async (
 			where: { slug },
 			data: {
 				...body,
+				eventDate: body.eventDate ? new Date(body.eventDate) : undefined, // ← добавить
 				slug: body.title ? slugify(body.title) : undefined,
 			},
 		});

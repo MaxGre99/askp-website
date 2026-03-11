@@ -25,10 +25,18 @@ export const WideCard = ({
 	onDelete,
 }: WideCardProps) => {
 	const isEven = index % 2 === 0;
-	const localDateTime = new Date(item.updatedAt).toLocaleString();
+	const type = 'content' in item ? 'news' : 'events';
 	const text =
 		'content' in item ? stripHtml(item.content) : stripHtml(item.description);
-	const type = 'content' in item ? 'news' : 'events';
+	const localDateTime = new Date(
+		'eventDate' in item ? item.eventDate : item.updatedAt,
+	).toLocaleString('ru-RU', {
+		year: 'numeric',
+		month: 'numeric',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+	});
 
 	return (
 		<div className='flex flex-col gap-1'>

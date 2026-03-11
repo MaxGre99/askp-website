@@ -1,4 +1,4 @@
-import { EditNewsForm } from '@/features/news-form/ui/EditNewsForm';
+import { EditNewsForm } from '@/features/news-form';
 
 export const EditNewsPage = () => {
 	return (

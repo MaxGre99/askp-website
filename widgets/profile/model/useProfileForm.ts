@@ -9,6 +9,7 @@ import {
 } from '@/entities/profiles';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatDateForInput } from '@/shared/lib/formatDateForInput';
+import { localDateToISO } from '@/shared/lib/localDateToISO';
 
 import { editProfileSchema } from './schema';
 
@@ -49,9 +50,7 @@ export const useProfileForm = () => {
 	const handleSubmit = async (values: any) => {
 		const submitValues = {
 			...values,
-			birthDate: values.birthDate
-				? new Date(values.birthDate).toISOString()
-				: null,
+			birthDate: values.birthDate ? localDateToISO(values.birthDate) : null,
 		};
 
 		await updateProfile(submitValues).unwrap();

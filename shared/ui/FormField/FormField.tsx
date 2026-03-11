@@ -19,10 +19,11 @@ export const FormField = <Values extends object>({
 	required,
 	className,
 }: FormFieldProps<Values>) => {
-	const { errors, touched, values, setFieldValue } = useFormikContext<Values>();
+	const { errors, touched /* , values, setFieldValue */ } =
+		useFormikContext<Values>();
 
 	const hasError = touched[name] && errors[name];
-	const fieldValue = values[name];
+	// const fieldValue = values[name];
 
 	return (
 		<div className={`flex flex-col gap-1`}>
@@ -33,7 +34,7 @@ export const FormField = <Values extends object>({
 				</label>
 			)}
 
-			{type === 'date' ? (
+			{/* {type === 'date' ? (
 				<input
 					type='date'
 					name={name as string}
@@ -42,15 +43,15 @@ export const FormField = <Values extends object>({
 					className={`input ${hasError ? 'ring-2 ring-red-400 border-transparent' : ''}`}
 					placeholder={placeholder}
 				/>
-			) : (
-				<Field
-					name={name}
-					type={type}
-					as={as}
-					placeholder={placeholder}
-					className={`input ${hasError ? 'ring-2 ring-red-400 border-transparent' : ''} ${className ? className : ''}`}
-				/>
-			)}
+			) : ( */}
+			<Field
+				name={name}
+				type={type}
+				as={as}
+				placeholder={placeholder}
+				className={`input ${hasError ? 'ring-2 ring-red-400 border-transparent' : ''} ${className ? className : ''}`}
+			/>
+			{/* )} */}
 
 			<ErrorMessage name={name as string} component='p' className='error' />
 		</div>
