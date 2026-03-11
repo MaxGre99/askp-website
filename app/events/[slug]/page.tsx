@@ -1,5 +1,7 @@
+import { EventSlugPage } from '@/widgets/event-slug';
+
 const Page = () => {
-	return <div>123123</div>;
+	return <EventSlugPage />;
 };
 
 export default Page;

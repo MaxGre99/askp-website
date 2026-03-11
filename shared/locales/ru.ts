@@ -2,13 +2,15 @@ const ru = {
 	translation: {
 		notifications: {
 			loading: 'Загрузка...',
-			applicationSent: 'Заявка отправлена!',
-			applicationError: 'Ошибка отправки',
+			feedbackSent: 'Обратная связь отправлена',
+			sendingError: 'Ошибка отправки',
 			entering: 'Входим...',
 			applicationSuccess:
 				'Заявка отправлена. Аккаунт станет активным после одобрения администратора.',
 			creating: 'Создание...',
 			empty: 'Тут пока ничего нет :(',
+			signedUpToEvent: 'Вы успешно зарегистрированы на событие',
+			signingError: 'Ошибка регистрации',
 		},
 		navbar: {
 			home: 'Главная',
@@ -33,6 +35,7 @@ const ru = {
 		events: {
 			homeTitle: 'Будущие события',
 			pageTitle: 'События',
+			signUpForm: 'Зарегистрироваться на событие',
 		},
 		profiles: {
 			homeTitle: 'Наши специалисты',

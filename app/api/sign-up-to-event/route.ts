@@ -6,10 +6,10 @@ import { ApiError } from '@/shared/api';
 
 export const POST = async (req: NextRequest) => {
 	try {
-		const { type, name, phone, email, telegram, whatsapp, message } =
+		const { eventName, name, phone, email, telegram, whatsapp } =
 			await req.json();
 
-		if (!type || !name || !(phone || email || telegram || whatsapp))
+		if (!eventName || !name || !(phone || email || telegram || whatsapp))
 			throw new ApiError('incorrect_form_data', 400);
 
 		const transporter = nodemailer.createTransport({
@@ -20,9 +20,7 @@ export const POST = async (req: NextRequest) => {
 		});
 
 		const mailText = `
-Новая заявка обратной связи
-
-Тема: ${type === 'cooperation' ? 'Сотрудничество' : 'Консультация'}
+Новая регистрация на событие "${eventName}"
 
 Имя: ${name}
 
@@ -31,21 +29,18 @@ export const POST = async (req: NextRequest) => {
 Email: ${email || '-'}
 Telegram: ${telegram || '-'}
 WhatsApp: ${whatsapp || '-'}
-
-Сообщение:
-${message || '-'}
 `;
 
 		await transporter.sendMail({
-			from: `Форма обратной связи; <${process.env.SMTP_USER}>`,
+			from: `Форма регистрации на событие "${eventName}"; <${process.env.SMTP_USER}>`,
 			to: process.env.FEEDBACK_EMAIL,
-			subject: 'Новая заявка обратной связи',
+			subject: `Новая регистрация на событие "${eventName}"`,
 			text: mailText,
 		});
 
 		return NextResponse.json({ success: true });
 	} catch (err: unknown) {
-		console.error('FEEDBACK_ERROR:', err);
+		console.error('SIGN_UP_TO_EVENT_ERROR:', err);
 		if (err instanceof ApiError)
 			return NextResponse.json({ error: err.message }, { status: err.status });
 		return NextResponse.json({ error: 'sending_form_error' }, { status: 500 });

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { toast } from 'react-toastify';
+
 import { useGetAvatarQuery, useUploadAvatarMutation } from '@/entities/avatars';
 
 const MAX_SIZE = 3 * 1024 * 1024;
@@ -17,12 +19,12 @@ export const useAvatarUpload = (userId?: string) => {
 
 	const onSelectFile = async (file: File) => {
 		if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-			alert('Разрешены только JPG, PNG и WebP');
+			toast('Разрешены только JPG, PNG и WebP', { type: 'warning' });
 			return;
 		}
 
 		if (file.size > MAX_SIZE) {
-			alert('Максимальный размер 3MB');
+			toast('Максимальный размер 3MB', { type: 'warning' });
 			return;
 		}
 
@@ -33,7 +35,7 @@ export const useAvatarUpload = (userId?: string) => {
 			setSelectedFile(null);
 		} catch (e) {
 			console.error(e);
-			alert('Ошибка загрузки аватара');
+			toast('Ошибка загрузки аватара', { type: 'error' });
 		}
 	};
 

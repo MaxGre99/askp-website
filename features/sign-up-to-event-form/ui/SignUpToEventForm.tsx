@@ -13,14 +13,9 @@ interface FormValues {
 	email?: string;
 	telegram?: string;
 	whatsapp?: string;
-	message?: string;
 }
 
-export const FeedbackForm = ({
-	type,
-}: {
-	type: 'cooperation' | 'consultation';
-}) => {
+export const SignUpToEventForm = ({ eventName }: { eventName: string }) => {
 	const { t } = useTranslation();
 
 	const contactSchema = Yup.object({
@@ -29,7 +24,6 @@ export const FeedbackForm = ({
 		email: Yup.string().email(t('validationErrors.invalid.email')),
 		telegram: Yup.string(),
 		whatsapp: Yup.string(),
-		message: Yup.string(),
 	}).test(
 		'one-contact-required',
 		t('validationErrors.required.contact'),
@@ -79,27 +73,26 @@ export const FeedbackForm = ({
 				email: '',
 				telegram: '',
 				whatsapp: '',
-				message: '',
 			}}
 			validationSchema={contactSchema}
 			onSubmit={async (values, { resetForm }) => {
-				const res = await fetch('/api/feedback', {
+				const res = await fetch('/api/sign-up-to-event', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ type, ...values }),
+					body: JSON.stringify({ eventName, ...values }),
 				});
 
 				if (res.ok) {
 					resetForm();
-					toast(t('notifications.feedbackSent'), { type: 'success' });
+					toast(t('notifications.signedUpToEvent'), { type: 'success' });
 				} else {
-					toast(t('notifications.sendingError'), { type: 'error' });
+					toast(t('notifications.signingError'), { type: 'error' });
 				}
 			}}
 		>
-			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-white/80 p-6'>
+			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-blue-100/60 p-6'>
 				<FormField
 					name='name'
 					label={t('labels.firstName')}
@@ -135,14 +128,6 @@ export const FeedbackForm = ({
 					/>
 				</div>
 				<ContactError className='mt-2' />
-				<div className='mt-3'>
-					<FormField
-						name='message'
-						label={t('labels.problemDescription')}
-						as='textarea'
-						placeholder={t('placeholders.problemDescription')}
-					/>
-				</div>
 				<BaseButton type='submit' className='font-oswald text-2xl mt-5'>
 					{t('buttons.send')}
 				</BaseButton>
