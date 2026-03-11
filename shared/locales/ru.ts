@@ -121,6 +121,7 @@ const ru = {
 			vkUrl: 'Профиль в ВК',
 			website: 'Личный сайт',
 			addNews: 'Добавить новость',
+			addEvent: 'Добавить событие',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',
@@ -182,6 +183,8 @@ const ru = {
 			invalid_url: 'Неверный URL',
 			forbidden: 'Недостаточно прав',
 			slug_already_exists: 'Название темы должно быть уникальным',
+			failed_to_fetch_user_news: 'Ошибка получения новостей пользователя',
+			failed_to_fetch_user_events: 'Ошибка получения событий пользователя',
 		},
 	},
 };

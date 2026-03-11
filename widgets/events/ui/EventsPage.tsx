@@ -3,11 +3,8 @@
 import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
+import { useAllEventsList, WideCardsList } from '@/features/wide-cards-list';
 import { Pagination } from '@/shared/ui/Pagination';
-
-import { useEventsList } from '../model/useEventsList';
-
-import { EventsList } from './EventsList';
 
 export const EventsPage = () => {
 	const { t } = useTranslation();
@@ -23,7 +20,7 @@ export const EventsPage = () => {
 		changePageSize,
 	} = useListFilter();
 
-	const { data, isLoading } = useEventsList(page, query, pageSize);
+	const { data, isLoading } = useAllEventsList(page, query, pageSize);
 
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
 
@@ -47,7 +44,7 @@ export const EventsPage = () => {
 
 			{!isLoading && data && (
 				<>
-					<EventsList items={data.events} />
+					<WideCardsList items={data.events} />
 
 					<Pagination
 						currentPage={page}

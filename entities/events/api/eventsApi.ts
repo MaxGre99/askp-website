@@ -19,7 +19,10 @@ export const eventsApi = baseApi.injectEndpoints({
 		}),
 		getEvent: builder.query<EventType, string>({
 			query: (slug) => `/${slug}`,
-			providesTags: (result, error, slug) => [{ type: 'Events', id: slug }],
+			providesTags: (result, error, slug) => [
+				{ type: 'Events', id: slug },
+				{ type: 'MyEvents', id: slug },
+			],
 		}),
 		createEvent: builder.mutation<EventType, Partial<EventType>>({
 			query: (body) => ({
@@ -27,7 +30,7 @@ export const eventsApi = baseApi.injectEndpoints({
 				method: 'POST',
 				body,
 			}),
-			invalidatesTags: ['Events'],
+			invalidatesTags: ['Events', 'MyEvents'],
 		}),
 		updateEvent: builder.mutation<
 			EventType,
@@ -40,6 +43,7 @@ export const eventsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: (result, error, { slug }) => [
 				{ type: 'Events', id: slug },
+				{ type: 'MyEvents', id: slug },
 			],
 		}),
 		deleteEvent: builder.mutation<{ ok: boolean }, string>({
@@ -47,7 +51,20 @@ export const eventsApi = baseApi.injectEndpoints({
 				url: `/events/${slug}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: ['Events'],
+			invalidatesTags: ['Events', 'MyEvents'],
+		}),
+		getMyEvents: builder.query<
+			{ events: EventType[]; total: number },
+			{ page: number; query?: string; pageSize?: number }
+		>({
+			query: ({ page, query, pageSize = 4 }) => {
+				const params = new URLSearchParams();
+				params.set('page', String(page));
+				params.set('pageSize', String(pageSize));
+				if (query) params.set('query', query);
+				return `me/events?${params.toString()}`;
+			},
+			providesTags: ['MyEvents'],
 		}),
 	}),
 });
@@ -58,4 +75,5 @@ export const {
 	useCreateEventMutation,
 	useUpdateEventMutation,
 	useDeleteEventMutation,
+	useGetMyEventsQuery,
 } = eventsApi;

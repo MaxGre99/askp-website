@@ -42,7 +42,7 @@ export const WideCard = ({
 				>
 					<div
 						className={clsx(
-							'flex rounded h-full w-[256px] shrink-0',
+							'flex rounded h-full w-[320px] shrink-0',
 							!item?.image &&
 								'items-center justify-center border border-gray-200',
 						)}
@@ -51,7 +51,7 @@ export const WideCard = ({
 							<img
 								src={item.image}
 								alt='card-cover'
-								className='object-cover rounded w-full h-full'
+								className='object-fill rounded w-full h-full'
 							/>
 						) : (
 							<MdImageNotSupported size={48} />

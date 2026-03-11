@@ -3,7 +3,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
-import { NewsList, useAllNewsList } from '@/features/news-list';
+import { useAllNewsList, WideCardsList } from '@/features/wide-cards-list';
 import { Pagination } from '@/shared/ui/Pagination';
 
 export const NewsPage = () => {
@@ -44,7 +44,7 @@ export const NewsPage = () => {
 
 			{!isLoading && data && (
 				<>
-					<NewsList items={data.news} />
+					<WideCardsList items={data.news} />
 
 					<Pagination
 						currentPage={page}
