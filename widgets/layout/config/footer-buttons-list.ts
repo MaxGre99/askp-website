@@ -1,1 +1,1 @@
-export const footerButtonsList = ['contacts', 'politics'];
+export const footerButtonsList = ['about', 'contacts', 'politics'];

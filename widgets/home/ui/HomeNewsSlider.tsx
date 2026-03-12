@@ -47,7 +47,7 @@ export const HomeNewsSlider = ({ items }: Props) => {
 			)}
 			{items.length > 0 && (
 				<div className='flex justify-end mr-6 text-white text-2xl font-oswald'>
-					<NavButton className='w-fit! h-fit mx-0! p-0!' href='/news'>
+					<NavButton className='w-fit! h-fit mx-0!' href='/news'>
 						{t('buttons.showAll')}
 					</NavButton>
 				</div>

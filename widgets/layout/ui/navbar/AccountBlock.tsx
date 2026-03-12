@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
-import { FaHouseUser, FaRegBell, FaRegUser } from 'react-icons/fa';
+import { FaHouseUser, /* FaRegBell, */ FaRegUser } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
@@ -38,10 +38,9 @@ export const AccountBlock = () => {
 
 	return (
 		<div className='flex relative'>
-			<TransparentButton className='hover:bg-transparent! hover:text-amber-400'>
+			{/* <TransparentButton className='hover:bg-transparent! hover:text-amber-400'>
 				<FaRegBell />
-			</TransparentButton>
-
+			</TransparentButton> */}
 			<TransparentButton
 				className='hover:bg-transparent! hover:text-cyan-300'
 				onClick={handleShowMenu}

@@ -1,8 +1,10 @@
 export const navbarButtonsList = [
-	'home',
+	// 'home',
 	'news',
 	'events',
+	'articles',
+	'specialists',
+	'store',
 	'register',
-	'about',
 	'help',
 ];

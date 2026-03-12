@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { FaEnvelope,FaPhone } from 'react-icons/fa6';
+import { FaEnvelope, FaPhone } from 'react-icons/fa6';
 
 import { ROUTES } from '@/shared/config';
 
@@ -13,19 +13,17 @@ export const Footer = () => {
 
 	return (
 		<div className='flex flex-col gap-3 p-5 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto items-center'>
-			<div className='flex w-full'>
-				<div className='flex flex-col gap-2 w-[50%]'>
+			<div className='flex w-full items-center p-3'>
+				<ul className='flex flex-row gap-2 justify-evenly flex-1 items-center'>
 					{footerButtonsList.map((title) => (
-						<NavButton
-							key={title}
-							href={ROUTES[title as keyof typeof ROUTES]}
-							className='h-[50px]!'
-						>
-							{t(`navbar.${title}`)}
-						</NavButton>
+						<li key={title} className='flex mx-auto items-center'>
+							<NavButton href={ROUTES[title as keyof typeof ROUTES]}>
+								{t(`navbar.${title}`)}
+							</NavButton>
+						</li>
 					))}
-				</div>
-				<div className='flex flex-col w-[50%] items-center justify-center gap-2'>
+				</ul>
+				<div className='flex flex-col items-center justify-center gap-2 w-[33%]'>
 					<div className='flex items-center gap-3 text-2xl text-white hover:text-cyan-300 active:text-cyan-200'>
 						<FaPhone />
 						<a href='tel:+15555555555'>+15555555555</a>

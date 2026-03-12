@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useTranslation } from 'react-i18next';
 
@@ -20,12 +21,14 @@ export const Navbar = () => {
 	return (
 		<nav className='flex flex-col w-full max-w-[1440px] mx-auto gap-3 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl'>
 			<div className='flex items-center justify-between xl:m-0 xl:mx-3 m-3'>
-				<Image src='/logo.svg' alt='logo' width={120} height={120} />
+				<Link href='/'>
+					<Image src='/logo.svg' alt='logo' width={120} height={120} />
+				</Link>
 
 				{/* Desktop */}
 				<ul className='hidden xl:flex flex-1 ml-10 h-full'>
 					{navbarButtonsList.map((title) => (
-						<li key={title} className='flex mx-auto'>
+						<li key={title} className='flex mx-auto items-center'>
 							<NavButton href={ROUTES[title as keyof typeof ROUTES]}>
 								{t(`navbar.${title}`)}
 							</NavButton>
