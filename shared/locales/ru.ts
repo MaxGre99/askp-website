@@ -26,6 +26,7 @@ const ru = {
 			profile: 'Профиль',
 			news: 'Новости',
 			events: 'События',
+			articles: 'Статьи',
 			applications: 'Заявки на регистрацию',
 		},
 		news: {
@@ -36,6 +37,10 @@ const ru = {
 			homeTitle: 'Будущие события',
 			pageTitle: 'События',
 			signUpForm: 'Зарегистрироваться на событие',
+		},
+		articles: {
+			homeTitle: 'Будущие события',
+			pageTitle: 'Статьи',
 		},
 		profiles: {
 			homeTitle: 'Наши специалисты',
@@ -125,6 +130,7 @@ const ru = {
 			website: 'Личный сайт',
 			addNews: 'Добавить новость',
 			addEvent: 'Добавить событие',
+			addArticle: 'Добавить статью',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',

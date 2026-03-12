@@ -5,13 +5,15 @@ import clsx from 'clsx';
 import { FaPencilRuler, FaRegTrashAlt } from 'react-icons/fa';
 import { MdImageNotSupported } from 'react-icons/md';
 
+import { Article } from '@/entities/articles';
 import { EventType } from '@/entities/events';
 import { NewsType } from '@/entities/news';
+import { getAuthorName } from '@/shared/lib/getAuthorName';
 import { stripHtml } from '@/shared/lib/stripHtml';
 
 interface WideCardProps {
 	index: number;
-	item: EventType | NewsType;
+	item: EventType | NewsType | Article;
 	accentColor?: 'blue' | 'white';
 	showAdminActions?: boolean;
 	onDelete?: (slug: string) => void;
@@ -25,7 +27,8 @@ export const WideCard = ({
 	onDelete,
 }: WideCardProps) => {
 	const isEven = index % 2 === 0;
-	const type = 'content' in item ? 'news' : 'events';
+	const type =
+		'author' in item ? 'articles' : 'content' in item ? 'news' : 'events';
 	const text =
 		'content' in item ? stripHtml(item.content) : stripHtml(item.description);
 	const localDateTime = new Date(
@@ -70,6 +73,11 @@ export const WideCard = ({
 						<h3 className='line-clamp-1 font-semibold text-lg'>{item.title}</h3>
 						<p className='line-clamp-4 text-sm flex-1 min-h-0'>{text}</p>
 						<span className='text-xs opacity-60 shrink-0'>{localDateTime}</span>
+						{'author' in item && (
+							<span className='text-xs opacity-60 shrink-0'>
+								{getAuthorName(item.author)}
+							</span>
+						)}
 					</div>
 				</article>
 			</Link>

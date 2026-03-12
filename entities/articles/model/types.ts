@@ -1,3 +1,5 @@
+import { AuthorWithProfile } from '@/shared/lib/getAuthorName';
+
 export type Article = {
 	id: string;
 	title: string;
@@ -6,7 +8,7 @@ export type Article = {
 	image?: string;
 	published: boolean;
 	authorId: string;
-	author: string;
+	author: AuthorWithProfile;
 	createdAt: string;
 	updatedAt: string;
 };

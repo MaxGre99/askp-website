@@ -1,5 +1,6 @@
+import { FaCalendarDay } from 'react-icons/fa';
 import { FaNewspaper, FaUser, FaUserClock } from 'react-icons/fa6';
-import { MdEventNote } from 'react-icons/md';
+import { PiArticleMediumBold } from 'react-icons/pi';
 
 export const accountSidebarItems = [
 	{
@@ -14,7 +15,12 @@ export const accountSidebarItems = [
 	},
 	{
 		title: 'events',
-		icon: MdEventNote,
+		icon: FaCalendarDay,
+		access: ['OWNER', 'ADMIN'],
+	},
+	{
+		title: 'articles',
+		icon: PiArticleMediumBold,
 		access: ['OWNER', 'ADMIN'],
 	},
 	{

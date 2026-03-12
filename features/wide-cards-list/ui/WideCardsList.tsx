@@ -1,9 +1,10 @@
+import { Article } from '@/entities/articles';
 import { EventType } from '@/entities/events';
 import { NewsType } from '@/entities/news';
 import { WideCard } from '@/shared/ui/WideCard';
 
 type Props = {
-	items: NewsType[] | EventType[];
+	items: NewsType[] | EventType[] | Article[];
 	accentColor?: 'blue' | 'white';
 	showAdminActions?: boolean;
 	onDelete?: (slug: string) => void;

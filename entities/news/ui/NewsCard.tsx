@@ -16,7 +16,7 @@ export const NewsCard = ({ news, type }: NewsCard) => {
 	console.log(news.content);
 	return (
 		<Link href={`/${type}/${news.slug}`}>
-			<article className='bg-white/70 backdrop-blur-2xl flex flex-col gap-1 rounded-2xl'>
+			<article className='bg-white/70 backdrop-blur-2xl flex flex-col gap-1 rounded-2xl min-h-[368px]'>
 				{news?.image ? (
 					<img
 						src={news?.image}
