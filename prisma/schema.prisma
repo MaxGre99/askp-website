@@ -121,6 +121,7 @@ model Profile {
   user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Основные данные
+  avatarUrl       String?
   firstName       String?
   lastName        String?
   middleName      String?

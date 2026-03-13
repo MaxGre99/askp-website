@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 
-import {
-	/* DeleteObjectCommand, */ HeadObjectCommand,
-} from '@aws-sdk/client-s3';
+/* import {
+	DeleteObjectCommand, HeadObjectCommand,
+} from '@aws-sdk/client-s3'; */
+import { prisma } from '@/shared/lib/prisma';
+// import { s3 } from '@/shared/lib/s3';
 
-import { s3 } from '@/shared/lib/s3';
-
-const bucket = 'avatars';
+// const bucket = 'avatars';
 
 export const GET = async (
 	_req: Request,
@@ -17,12 +17,13 @@ export const GET = async (
 		// const exts = ['png', 'jpg', 'jpeg'];
 
 		// for (const ext of exts) {
-		const key = `${userId}.webp`;
+		// const key = `${userId}.webp`;
 		try {
-			await s3.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));
-			return NextResponse.json({
-				url: `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/${key}`,
+			const profile = await prisma.profile.findUnique({
+				where: { userId },
+				select: { avatarUrl: true },
 			});
+			return NextResponse.json({ url: profile?.avatarUrl ?? null });
 		} catch {}
 		// }
 

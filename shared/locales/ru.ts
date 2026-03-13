@@ -45,8 +45,9 @@ const ru = {
 			homeTitle: 'Будущие события',
 			pageTitle: 'Статьи',
 		},
-		profiles: {
+		specialists: {
 			homeTitle: 'Наши специалисты',
+			pageTitle: 'Специалисты',
 		},
 		account: {
 			title: 'Личный кабинет',
@@ -115,6 +116,7 @@ const ru = {
 		buttons: {
 			find: 'Найти',
 			showAll: 'Смотреть все',
+			lookAll: 'Смотреть всех',
 			approve: 'Принять',
 			reject: 'Отклонить',
 			block: 'Заблокировать',
@@ -205,6 +207,7 @@ const ru = {
 			failed_to_update_article: 'Ошибка обновления статьи',
 			failed_to_delete_article: 'Ошибка удаления статьи',
 			failed_to_fetch_user_articles: 'Ошибка получения статей пользователя',
+			failed_to_fetch_profile: 'Ошибка получения профиля',
 		},
 	},
 };

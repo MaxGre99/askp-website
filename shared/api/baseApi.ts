@@ -12,11 +12,11 @@ export const baseApi = createApi({
 		'Events',
 		'News',
 		'Me',
-		'Avatar',
 		'MyNews',
 		'MyEvents',
 		'Articles',
 		'MyArticles',
+		'MyProfile',
 	],
 	endpoints: () => ({}),
 });

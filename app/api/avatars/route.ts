@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { Prisma } from '@prisma/client';
 import sharp from 'sharp';
 
 import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
 import { s3 } from '@/shared/lib/s3';
 
 export const POST = async (req: Request) => {
@@ -63,6 +65,29 @@ export const POST = async (req: Request) => {
 		}
 
 		const url = `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/${fileName}`;
+
+		try {
+			await prisma.profile.upsert({
+				where: { userId: authUser.id },
+				update: { avatarUrl: url },
+				create: { userId: authUser.id, avatarUrl: url },
+			});
+		} catch (err) {
+			console.error('UPLOAD_AVATAR_URL_ERROR:', err);
+			if (err instanceof ApiError) {
+				return NextResponse.json(
+					{ error: err.message },
+					{ status: err.status },
+				);
+			}
+			if (err instanceof Prisma.PrismaClientKnownRequestError)
+				return NextResponse.json({ error: 'database_error' }, { status: 500 });
+			return NextResponse.json(
+				{ error: 'internal_server_error' },
+				{ status: 500 },
+			);
+		}
+
 		return NextResponse.json({ url });
 	} catch (err: unknown) {
 		console.error('UPLOAD_AVATAR_ERROR:', err);

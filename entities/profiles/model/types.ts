@@ -4,6 +4,7 @@ export type PhoneRefs = 'CALL' | 'WHATSAPP' | 'TELEGRAM';
 
 export interface Profile {
 	userId: string;
+	avatarUrl: string | null;
 	firstName: string | null;
 	lastName: string | null;
 	middleName: string | null;

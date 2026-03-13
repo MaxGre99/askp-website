@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useDeleteProfileBioImageMutation } from '@/entities/profile-bio-images';
 import {
-	useGetProfileQuery,
+	useGetMyProfileQuery,
 	useUpdateProfileMutation,
 } from '@/entities/profiles';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
@@ -15,7 +15,7 @@ import { editProfileSchema } from './schema';
 
 export const useProfileForm = () => {
 	const { t } = useTranslation();
-	const { data: profile, isLoading } = useGetProfileQuery();
+	const { data: profile, isLoading } = useGetMyProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
 	const [deleteProfileBioImage] = useDeleteProfileBioImageMutation();
 

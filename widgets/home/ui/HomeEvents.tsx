@@ -29,7 +29,7 @@ export const HomeEvents = ({ items }: Props) => {
 			</div>
 			{items.length > 0 && (
 				<div className='flex justify-end mr-6 text-white text-2xl font-oswald'>
-					<NavButton className='w-fit! h-fit mx-0! p-0!' href='/events'>
+					<NavButton className='w-fit! h-fit mx-0!' href='/events'>
 						{t('buttons.showAll')}
 					</NavButton>
 				</div>

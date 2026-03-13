@@ -8,18 +8,18 @@ export const avatarsApi = baseApi.injectEndpoints({
 				method: 'POST',
 				body: formData,
 			}),
-			invalidatesTags: ['Avatar'],
+			invalidatesTags: ['Profiles', 'MyProfile'],
 		}),
 		getAvatar: builder.query<{ url: string | null }, string>({
 			query: (userId) => `/avatars/${userId}`,
-			providesTags: ['Avatar'],
+			providesTags: ['Profiles', 'MyProfile'],
 		}),
 		deleteAvatar: builder.mutation<{ ok: boolean }, string>({
 			query: (userId) => ({
 				url: `/avatars/${userId}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: ['Avatar'],
+			invalidatesTags: ['Profiles', 'MyProfile'],
 		}),
 	}),
 });
