@@ -10,9 +10,6 @@ import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 
 import { createEventSchema } from './schema';
 
-const MINIO_PUBLIC_URL =
-	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
-
 export const useCreateEventForm = () => {
 	const { t } = useTranslation();
 	const router = useRouter();
@@ -47,7 +44,9 @@ export const useCreateEventForm = () => {
 			// Удаляем картинки из контента, которые загрузили но не использовали
 			const usedUrls = extractImageUrls(values.description);
 			const orphanedUrls = [...uploadedContentUrls.current].filter(
-				(url) => !usedUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+				(url) =>
+					!usedUrls.includes(url) &&
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
 			);
 			await Promise.allSettled(
 				orphanedUrls.map((url) => deleteEventImage(url)),

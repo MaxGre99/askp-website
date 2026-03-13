@@ -21,7 +21,7 @@ export const GET = async (
 		try {
 			await s3.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));
 			return NextResponse.json({
-				url: `${process.env.MINIO_PUBLIC_URL}/${bucket}/${key}`,
+				url: `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/${key}`,
 			});
 		} catch {}
 		// }

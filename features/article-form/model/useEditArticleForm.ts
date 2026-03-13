@@ -12,8 +12,7 @@ import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 
 import { createArticleSchema } from './schema';
 
-const MINIO_PUBLIC_URL =
-	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
+const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 
 export const useEditArticleForm = () => {
 	const { t } = useTranslation();
@@ -50,12 +49,12 @@ export const useEditArticleForm = () => {
 			const oldUrls = extractImageUrls(article?.content ?? '');
 			const newUrls = extractImageUrls(values.content);
 			const removedUrls = oldUrls.filter(
-				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);
 
 			// Удаляем сиротские из текущей сессии редактирования
 			const orphanedUrls = [...uploadedContentUrls.current].filter(
-				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);
 
 			await Promise.allSettled(

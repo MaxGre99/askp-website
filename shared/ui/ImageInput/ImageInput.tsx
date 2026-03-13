@@ -11,8 +11,7 @@ interface Props {
 	onDelete?: (url: string) => Promise<void>;
 }
 
-const MINIO_PUBLIC_URL =
-	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
+const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 
 export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 	const [field, , helpers] = useField(name);

@@ -39,7 +39,7 @@ export const createContentImageHandler = (bucket: string) => {
 			);
 
 			return NextResponse.json({
-				url: `${process.env.MINIO_PUBLIC_URL}/${bucket}/${fileName}`,
+				url: `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/${fileName}`,
 			});
 		} catch (err) {
 			if (err instanceof ApiError)

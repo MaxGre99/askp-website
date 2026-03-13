@@ -10,8 +10,7 @@ import { formatForDatetimeLocal } from '@/shared/lib/formatForDatetimeLocal';
 
 import { createEventSchema } from './schema';
 
-const MINIO_PUBLIC_URL =
-	process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? 'http://localhost:9000';
+const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 
 export const useEditEventForm = () => {
 	const { t } = useTranslation();
@@ -49,12 +48,12 @@ export const useEditEventForm = () => {
 			const oldUrls = extractImageUrls(event?.description ?? '');
 			const newUrls = extractImageUrls(values.description);
 			const removedUrls = oldUrls.filter(
-				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);
 
 			// Удаляем сиротские из текущей сессии редактирования
 			const orphanedUrls = [...uploadedContentUrls.current].filter(
-				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);
 
 			await Promise.allSettled(

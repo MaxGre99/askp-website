@@ -13,9 +13,6 @@ import { localDateToISO } from '@/shared/lib/localDateToISO';
 
 import { editProfileSchema } from './schema';
 
-const MINIO_PUBLIC_URL =
-	process.env.MINIO_PUBLIC_URL ?? 'http://localhost:9000';
-
 export const useProfileForm = () => {
 	const { t } = useTranslation();
 	const { data: profile, isLoading } = useGetProfileQuery();
@@ -59,7 +56,9 @@ export const useProfileForm = () => {
 		const oldUrls = extractImageUrls(initialValues.fullBio ?? '');
 		const newUrls = extractImageUrls(values.fullBio ?? '');
 		const removedUrls = oldUrls.filter(
-			(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL),
+			(url) =>
+				!newUrls.includes(url) &&
+				url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
 		);
 
 		await Promise.allSettled(

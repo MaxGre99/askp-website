@@ -48,6 +48,7 @@ export const PATCH = async (
 			where: { slug },
 			data: {
 				...body,
+				image: body.image ?? null,
 				slug: body.title ? slugify(body.title) : undefined,
 			},
 		});

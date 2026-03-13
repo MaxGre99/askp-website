@@ -7,9 +7,6 @@ import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
-const MINIO_PUBLIC_URL =
-	process.env.MINIO_PUBLIC_URL ?? 'http://localhost:9000';
-
 export const GET = async (
 	_req: Request,
 	{
@@ -40,7 +37,11 @@ export const PATCH = async (
 		const body = await req.json();
 		const updated = await prisma.news.update({
 			where: { slug },
-			data: { ...body, slug: body.title ? slugify(body.title) : undefined },
+			data: {
+				...body,
+				image: body.image ?? null,
+				slug: body.title ? slugify(body.title) : undefined,
+			},
 		});
 		return NextResponse.json(updated);
 	} catch (err) {
@@ -80,7 +81,9 @@ export const DELETE = async (
 		const contentImageUrls = extractImageUrls(news.content);
 		await Promise.allSettled(
 			contentImageUrls
-				.filter((url) => url.startsWith(MINIO_PUBLIC_URL))
+				.filter((url) =>
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+				)
 				.map((url) => deleteS3File(url, 'news-images')),
 		);
 

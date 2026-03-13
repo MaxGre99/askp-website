@@ -62,7 +62,7 @@ export const POST = async (req: Request) => {
 			throw new ApiError('upload_failed', 500);
 		}
 
-		const url = `${process.env.MINIO_PUBLIC_URL}/${bucket}/${fileName}`;
+		const url = `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/${fileName}`;
 		return NextResponse.json({ url });
 	} catch (err: unknown) {
 		console.error('UPLOAD_AVATAR_ERROR:', err);

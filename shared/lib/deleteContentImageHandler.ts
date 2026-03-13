@@ -4,9 +4,6 @@ import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { deleteS3File } from '@/shared/lib/deleteS3File';
 
-const MINIO_PUBLIC_URL =
-	process.env.MINIO_PUBLIC_URL ?? 'http://localhost:9000';
-
 export const deleteContentImageHandler = (bucket: string) => {
 	return async (req: Request) => {
 		try {
@@ -16,7 +13,7 @@ export const deleteContentImageHandler = (bucket: string) => {
 			if (!url || typeof url !== 'string')
 				throw new ApiError('url_not_provided', 400);
 
-			const prefix = `${MINIO_PUBLIC_URL}/${bucket}/`;
+			const prefix = `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/`;
 			if (!url.startsWith(prefix)) throw new ApiError('invalid_url', 400);
 
 			const key = url.slice(prefix.length);
