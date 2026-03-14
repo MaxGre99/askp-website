@@ -16,17 +16,17 @@ export const NewsCard = ({ news, type }: NewsCard) => {
 	console.log(news.content);
 	return (
 		<Link href={`/${type}/${news.slug}`}>
-			<article className='bg-white/70 backdrop-blur-2xl flex flex-col gap-1 rounded-2xl min-h-[368px]'>
+			<article className='bg-white/70 backdrop-blur-2xl flex flex-col gap-1 rounded-2xl min-h-[368px] min-w-[425px] transition hover:scale-[1.01]'>
 				{news?.image ? (
 					<img
 						src={news?.image}
 						alt='news-cover'
-						className='rounded-2xl w-full max-h-[232px] min-h-[232px] min-w-[425px]'
+						className='rounded-2xl w-full max-h-[232px] min-h-[232px] min-w-full'
 						// width={500}
 						// height={100}
 					/>
 				) : (
-					<div className='rounded-2xl w-full max-h-[232px] min-h-[232px] min-w-[425px] flex items-center justify-center border border-gray-400'>
+					<div className='rounded-2xl w-full max-h-[232px] min-h-[232px] min-w-full flex items-center justify-center border border-gray-400'>
 						<MdImageNotSupported size={96} />
 					</div>
 				)}

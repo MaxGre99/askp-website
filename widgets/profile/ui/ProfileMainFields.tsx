@@ -10,14 +10,23 @@ import { PROFILE_MAIN_LABELS } from '../model/labels';
 interface Props {
 	profile?: Profile;
 	isEditing: boolean;
+	observer?: boolean;
 }
 
-export const ProfileMainFields = ({ profile, isEditing }: Props) => {
+export const ProfileMainFields = ({ profile, isEditing, observer }: Props) => {
 	const { t } = useTranslation();
+	const labels = observer
+		? PROFILE_MAIN_LABELS.filter(
+				(label) =>
+					label !== 'firstName' &&
+					label !== 'lastName' &&
+					label !== 'middleName',
+			)
+		: PROFILE_MAIN_LABELS;
 
 	return (
 		<>
-			{PROFILE_MAIN_LABELS.map((label) =>
+			{labels.map((label) =>
 				isEditing ? (
 					<FormField<Profile>
 						key={label}
@@ -29,7 +38,12 @@ export const ProfileMainFields = ({ profile, isEditing }: Props) => {
 					/>
 				) : (
 					<div key={label}>
-						<strong>{t(`labels.${label}`)}:</strong>{' '}
+						<strong>
+							{t(
+								`labels.${observer && label === 'displayName' ? 'firstName' : label}`,
+							)}
+							:
+						</strong>{' '}
 						{label === 'birthDate'
 							? profile?.birthDate
 								? new Date(profile.birthDate).toLocaleDateString('ru-RU')

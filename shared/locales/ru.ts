@@ -63,6 +63,7 @@ const ru = {
 			},
 		},
 		labels: {
+			// allNames: 'ФИО',
 			firstName: 'Имя',
 			lastName: 'Фамилия',
 			middleName: 'Отчество',

@@ -2,7 +2,6 @@
 
 import { useField } from 'formik';
 import { useTranslation } from 'react-i18next';
-import {} from 'react-icons/fa';
 
 import { Profile } from '@/entities/profiles';
 import { FormField } from '@/shared/ui/FormField';

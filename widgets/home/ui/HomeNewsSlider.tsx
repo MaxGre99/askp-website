@@ -47,7 +47,7 @@ export const HomeNewsSlider = ({ items }: Props) => {
 					}}
 				>
 					{slides.map((news, i) => (
-						<SwiperSlide key={`${news.slug}-${i}`}>
+						<SwiperSlide key={`${news.slug}-${i}`} className='p-1'>
 							<NewsCard news={news} type='news' />
 						</SwiperSlide>
 					))}

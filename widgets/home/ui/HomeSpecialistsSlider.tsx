@@ -46,7 +46,7 @@ export const HomeSpecialistsSlider = ({ items }: Props) => {
 					}}
 				>
 					{slides.map((profile, i) => (
-						<SwiperSlide key={`${profile.userId}-${i}`}>
+						<SwiperSlide key={`${profile.userId}-${i}`} className='p-1'>
 							<ProfileCard profile={profile} />
 						</SwiperSlide>
 					))}
