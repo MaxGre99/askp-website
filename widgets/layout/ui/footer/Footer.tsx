@@ -26,11 +26,15 @@ export const Footer = () => {
 				<div className='flex flex-col items-center justify-center gap-2 w-[33%]'>
 					<div className='flex items-center gap-3 text-2xl text-white hover:text-cyan-300 active:text-cyan-200'>
 						<FaPhone />
-						<a href='tel:+15555555555'>+15555555555</a>
+						<a href={`tel:${process.env.NEXT_PUBLIC_CONTACT_PHONE}`}>
+							{process.env.NEXT_PUBLIC_CONTACT_PHONE}
+						</a>
 					</div>
 					<div className='flex items-center gap-3 text-2xl text-white hover:text-cyan-300 active:text-cyan-200'>
 						<FaEnvelope />
-						<a href='mailto:someone@example.com'>someone@example.com</a>
+						<a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_PHONE}`}>
+							{process.env.NEXT_PUBLIC_CONTACT_EMAIL}
+						</a>
 					</div>
 				</div>
 			</div>
