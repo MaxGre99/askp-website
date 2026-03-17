@@ -4,7 +4,10 @@ import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { useGetNewsQuery, useUpdateNewsMutation } from '@/entities/news';
-import { useDeleteNewsImageMutation } from '@/entities/news-images';
+import {
+	useDeleteNewsCoverMutation,
+	useDeleteNewsImageMutation,
+} from '@/entities/news-images';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 
 import { createNewsSchema } from './schema';
@@ -19,6 +22,7 @@ export const useEditNewsForm = () => {
 	const { data: news, isLoading } = useGetNewsQuery(slug as string);
 	const [updateNews] = useUpdateNewsMutation();
 	const [deleteNewsImage] = useDeleteNewsImageMutation();
+	const [deleteNewsCover] = useDeleteNewsCoverMutation();
 
 	const uploadedContentUrls = useRef<Set<string>>(new Set());
 
@@ -37,6 +41,16 @@ export const useEditNewsForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const oldImage = news?.image;
+			const newImage = values.image || null;
+			if (
+				oldImage &&
+				oldImage !== newImage &&
+				oldImage.startsWith(MINIO_PUBLIC_URL!)
+			) {
+				await deleteNewsCover(oldImage).unwrap().catch(console.error);
+			}
+
 			const updated = await updateNews({
 				slug: slug as string,
 				body: { ...values, image: values.image || undefined },

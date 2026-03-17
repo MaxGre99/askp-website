@@ -23,7 +23,7 @@ const ru = {
 			about: 'О нас',
 			contacts: 'Контакты',
 			politics: 'Политика конфиденциальности',
-			help: 'Помощь проекту',
+			donate: 'Помощь проекту',
 		},
 		sidebar: {
 			profile: 'Профиль',
@@ -137,6 +137,7 @@ const ru = {
 			addNews: 'Добавить новость',
 			addEvent: 'Добавить событие',
 			addArticle: 'Добавить статью',
+			addDonater: 'Добавить мецената',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',
@@ -154,8 +155,9 @@ const ru = {
 				password: 'Пароль обязателен',
 				title: 'Заголовок обязателен',
 				content: 'Новость обязана иметь тело',
-				description: 'Описание события обязательно',
+				description: 'Описание обязательно',
 				eventDate: 'Дата события обязательна',
+				name: 'Название обязательно',
 			},
 			invalid: {
 				email: 'Некорретный email',
@@ -209,6 +211,12 @@ const ru = {
 			failed_to_delete_article: 'Ошибка удаления статьи',
 			failed_to_fetch_user_articles: 'Ошибка получения статей пользователя',
 			failed_to_fetch_profile: 'Ошибка получения профиля',
+			failed_to_fetch_donaters: 'Ошибка получения меценатов',
+			failed_to_create_donater: 'Ошибка создания мецената',
+			failed_to_fetch_donater: 'Ошибка получения мецената',
+			failed_to_update_donater: 'Ошибка обновления данных мецената',
+			failed_to_delete_donater: 'Ошибка удаления мецената',
+			not_found: 'Информация не найдена',
 		},
 	},
 };

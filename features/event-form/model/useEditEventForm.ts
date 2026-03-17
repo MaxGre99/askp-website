@@ -3,7 +3,10 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
-import { useDeleteEventImageMutation } from '@/entities/event-images';
+import {
+	useDeleteEventCoverMutation,
+	useDeleteEventImageMutation,
+} from '@/entities/event-images';
 import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatForDatetimeLocal } from '@/shared/lib/formatForDatetimeLocal';
@@ -20,6 +23,7 @@ export const useEditEventForm = () => {
 	const { data: event, isLoading } = useGetEventQuery(slug as string);
 	const [updateEvent] = useUpdateEventMutation();
 	const [deleteEventImage] = useDeleteEventImageMutation();
+	const [deleteEventCover] = useDeleteEventCoverMutation();
 
 	const uploadedContentUrls = useRef<Set<string>>(new Set());
 
@@ -39,6 +43,16 @@ export const useEditEventForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const oldImage = event?.image;
+			const newImage = values.image || null;
+			if (
+				oldImage &&
+				oldImage !== newImage &&
+				oldImage.startsWith(MINIO_PUBLIC_URL!)
+			) {
+				await deleteEventCover(oldImage).unwrap().catch(console.error);
+			}
+
 			const updated = await updateEvent({
 				slug: slug as string,
 				body: { ...values, image: values.image || undefined },

@@ -7,7 +7,7 @@ export const ROUTES = {
 	specialists: '/specialists',
 	store: '/store',
 	about: '/about',
-	help: '/help',
+	donate: '/donate',
 	contacts: '/contacts',
 	politics: '/politics',
 };

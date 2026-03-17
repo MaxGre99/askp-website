@@ -7,7 +7,7 @@ const en = {
 		about: 'About',
 		contacts: 'Contacs',
 		politics: 'Confidental politics',
-		help: 'Help our project',
+		donate: 'Help our project',
 	},
 };
 

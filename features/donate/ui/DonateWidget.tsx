@@ -24,7 +24,7 @@ export const DonateWidget = () => {
 	};
 
 	return (
-		<div className='flex flex-col gap-4 p-6 bg-white rounded-2xl max-w-sm'>
+		<div className='flex flex-col gap-4 p-6 bg-white rounded-2xl max-w-sm border border-gray-300'>
 			<h3 className='font-bold text-lg'>Поддержать проект</h3>
 			<div className='flex gap-2 flex-wrap'>
 				{AMOUNTS.map((a) => (

@@ -1,15 +1,15 @@
 'use client';
 
-import { redirect } from 'next/navigation';
+import { ReactNode } from 'react';
 
-import { useGetUserQuery } from '@/entities/users';
-import { useRedirectForbidden } from '@/shared/routing/useRedirectForbidden';
+import { useAccountGuard } from '@/shared/routing/useAccountGuard';
 import { AccountSidebar } from '@/widgets/account-sidebar';
 
-const AccountLayout = ({ children }: { children: React.ReactNode }) => {
-	const { data: user, isLoading } = useGetUserQuery();
-	if (!isLoading && !user) redirect('/');
-	useRedirectForbidden();
+const AccountLayout = ({ children }: { children: ReactNode }) => {
+	const { isForbidden, isUnauthorized, isLoading } = useAccountGuard();
+
+	// Не рендерим ничего пока проверяем или если нет доступа
+	if (isLoading || isForbidden || isUnauthorized) return null;
 
 	return (
 		<div className='flex flex-1 gap-2 w-full'>

@@ -3,7 +3,10 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
-import { useDeleteArticleImageMutation } from '@/entities/article-images';
+import {
+	useDeleteArticleCoverMutation,
+	useDeleteArticleImageMutation,
+} from '@/entities/article-images';
 import {
 	useGetArticleQuery,
 	useUpdateArticleMutation,
@@ -22,6 +25,7 @@ export const useEditArticleForm = () => {
 	const { data: article, isLoading } = useGetArticleQuery(slug as string);
 	const [updateArticle] = useUpdateArticleMutation();
 	const [deleteArticleImage] = useDeleteArticleImageMutation();
+	const [deleteArticleCover] = useDeleteArticleCoverMutation();
 
 	const uploadedContentUrls = useRef<Set<string>>(new Set());
 
@@ -40,6 +44,16 @@ export const useEditArticleForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const oldImage = article?.image;
+			const newImage = values.image || null;
+			if (
+				oldImage &&
+				oldImage !== newImage &&
+				oldImage.startsWith(MINIO_PUBLIC_URL!)
+			) {
+				await deleteArticleCover(oldImage).unwrap().catch(console.error);
+			}
+
 			const updated = await updateArticle({
 				slug: slug as string,
 				body: { ...values, image: values.image || undefined },
