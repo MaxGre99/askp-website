@@ -10,6 +10,7 @@ import {
 import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatForDatetimeLocal } from '@/shared/lib/formatForDatetimeLocal';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createEventSchema } from './schema';
 
@@ -43,8 +44,10 @@ export const useEditEventForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const trimmed = trimStrings(values);
+
 			const oldImage = event?.image;
-			const newImage = values.image || null;
+			const newImage = trimmed.image || null;
 			if (
 				oldImage &&
 				oldImage !== newImage &&
@@ -55,12 +58,12 @@ export const useEditEventForm = () => {
 
 			const updated = await updateEvent({
 				slug: slug as string,
-				body: { ...values, image: values.image || undefined },
+				body: { ...trimmed, image: trimmed.image || undefined },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали
 			const oldUrls = extractImageUrls(event?.description ?? '');
-			const newUrls = extractImageUrls(values.description);
+			const newUrls = extractImageUrls(trimmed.description);
 			const removedUrls = oldUrls.filter(
 				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);

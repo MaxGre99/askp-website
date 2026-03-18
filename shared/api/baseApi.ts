@@ -18,6 +18,7 @@ export const baseApi = createApi({
 		'MyArticles',
 		'MyProfile',
 		'Donaters',
+		'Products',
 	],
 	endpoints: () => ({}),
 });

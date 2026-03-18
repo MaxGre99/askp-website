@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useCreateDonaterMutation } from '@/entities/donaters';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 export const useCreateDonaterForm = () => {
 	const { t } = useTranslation();
@@ -21,7 +22,10 @@ export const useCreateDonaterForm = () => {
 	const initialValues = { name: '', description: '', image: '' };
 
 	const handleSubmit = async (values: typeof initialValues) => {
-		await createDonater({ ...values, image: values.image || null }).unwrap();
+		const trimmed = trimStrings(values);
+
+		await createDonater({ ...trimmed, image: trimmed.image || null }).unwrap();
+
 		router.push('/donate');
 	};
 

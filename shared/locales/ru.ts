@@ -19,7 +19,7 @@ const ru = {
 			articles: 'Статьи',
 			specialists: 'Специалисты',
 			register: 'Регистрация в членство',
-			store: 'Магазин',
+			shop: 'Магазин',
 			about: 'О нас',
 			contacts: 'Контакты',
 			privacy: 'Политика конфиденциальности',
@@ -140,6 +140,7 @@ const ru = {
 			addEvent: 'Добавить событие',
 			addArticle: 'Добавить статью',
 			addDonater: 'Добавить мецената',
+			addProduct: 'Добавить товар',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',

@@ -10,6 +10,7 @@ import {
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatDateForInput } from '@/shared/lib/formatDateForInput';
 import { localDateToISO } from '@/shared/lib/localDateToISO';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { editProfileSchema } from './schema';
 
@@ -45,9 +46,10 @@ export const useProfileForm = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleSubmit = async (values: any) => {
+		const trimmed = trimStrings(values);
 		const submitValues = {
-			...values,
-			birthDate: values.birthDate ? localDateToISO(values.birthDate) : null,
+			...trimmed,
+			birthDate: trimmed.birthDate ? localDateToISO(trimmed.birthDate) : null,
 		};
 
 		await updateProfile(submitValues).unwrap();

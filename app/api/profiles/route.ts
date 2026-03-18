@@ -14,14 +14,22 @@ export const GET = async (req: Request) => {
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
 		);
 
+		const base = {
+			AND: [
+				{ avatarUrl: { not: null } },
+				{ displayName: { not: null } },
+				{ displayName: { not: '' } },
+				{ shortBio: { not: null } },
+				{ shortBio: { not: '' } },
+				{ city: { not: null } },
+				{ city: { not: '' } },
+			],
+		};
+
 		const where: Prisma.ProfileWhereInput = {
-			// Только анкеты с заполненными ключевыми полями
-			avatarUrl: { not: null },
-			displayName: { not: null },
-			city: { not: null },
-			shortBio: { not: null },
+			...base,
 			...(query && {
-				displayName: { contains: query, mode: 'insensitive' },
+				displayName: { contains: query.trim(), mode: 'insensitive' },
 			}),
 		};
 

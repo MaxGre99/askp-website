@@ -4,7 +4,7 @@ export const navbarButtonsList = [
 	'events',
 	'articles',
 	'specialists',
-	'store',
+	'shop',
 	'register',
 	'donate',
 ];

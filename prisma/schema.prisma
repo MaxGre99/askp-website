@@ -156,3 +156,42 @@ model Donater {
   description String
   image       String?
 }
+
+// ЗАКАЗЫ И ТОВАРЫ
+
+model Product {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  name        String
+  description String
+  contentLink String   // ссылка на курс — только серверная сторона!
+  price       Int      // в рублях
+  images      String[] // массив URL для слайдера
+  published   Boolean  @default(false)
+
+  orders      Order[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  orderNumber   String      @unique
+  email         String
+  fullName      String
+  phone         String?
+  productId     String
+  product       Product     @relation(fields: [productId], references: [id])
+  status        OrderStatus @default(PENDING)
+  amount        Int
+  paidAt        DateTime?
+  createdAt     DateTime    @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMING
+  PAID
+  CANCELLED
+}

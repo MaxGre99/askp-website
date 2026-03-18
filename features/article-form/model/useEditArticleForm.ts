@@ -12,6 +12,7 @@ import {
 	useUpdateArticleMutation,
 } from '@/entities/articles';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createArticleSchema } from './schema';
 
@@ -44,8 +45,10 @@ export const useEditArticleForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const trimmed = trimStrings(values);
+
 			const oldImage = article?.image;
-			const newImage = values.image || null;
+			const newImage = trimmed.image || null;
 			if (
 				oldImage &&
 				oldImage !== newImage &&
@@ -56,12 +59,12 @@ export const useEditArticleForm = () => {
 
 			const updated = await updateArticle({
 				slug: slug as string,
-				body: { ...values, image: values.image || undefined },
+				body: { ...trimmed, image: trimmed.image || undefined },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали
 			const oldUrls = extractImageUrls(article?.content ?? '');
-			const newUrls = extractImageUrls(values.content);
+			const newUrls = extractImageUrls(trimmed.content);
 			const removedUrls = oldUrls.filter(
 				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);

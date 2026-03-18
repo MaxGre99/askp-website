@@ -7,6 +7,7 @@ import { useDeleteEventImageMutation } from '@/entities/event-images';
 import { useCreateEventMutation } from '@/entities/events';
 import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createEventSchema } from './schema';
 
@@ -36,13 +37,15 @@ export const useCreateEventForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const trimmed = trimStrings(values);
+
 			const event = await createEvent({
-				...values,
-				image: values.image || undefined,
+				...trimmed,
+				image: trimmed.image || undefined,
 			}).unwrap();
 
 			// Удаляем картинки из контента, которые загрузили но не использовали
-			const usedUrls = extractImageUrls(values.description);
+			const usedUrls = extractImageUrls(trimmed.description);
 			const orphanedUrls = [...uploadedContentUrls.current].filter(
 				(url) =>
 					!usedUrls.includes(url) &&

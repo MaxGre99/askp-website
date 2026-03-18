@@ -5,7 +5,7 @@ export const ROUTES = {
 	articles: '/articles',
 	register: '/register',
 	specialists: '/specialists',
-	store: '/store',
+	shop: '/shop',
 	about: '/about',
 	donate: '/donate',
 	contacts: '/contacts',

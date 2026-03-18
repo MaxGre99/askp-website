@@ -9,6 +9,7 @@ import {
 	useDeleteNewsImageMutation,
 } from '@/entities/news-images';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createNewsSchema } from './schema';
 
@@ -41,8 +42,10 @@ export const useEditNewsForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const trimmed = trimStrings(values);
+
 			const oldImage = news?.image;
-			const newImage = values.image || null;
+			const newImage = trimmed.image || null;
 			if (
 				oldImage &&
 				oldImage !== newImage &&
@@ -53,12 +56,12 @@ export const useEditNewsForm = () => {
 
 			const updated = await updateNews({
 				slug: slug as string,
-				body: { ...values, image: values.image || undefined },
+				body: { ...trimmed, image: trimmed.image || undefined },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали
 			const oldUrls = extractImageUrls(news?.content ?? '');
-			const newUrls = extractImageUrls(values.content);
+			const newUrls = extractImageUrls(trimmed.content);
 			const removedUrls = oldUrls.filter(
 				(url) => !newUrls.includes(url) && url.startsWith(MINIO_PUBLIC_URL!),
 			);

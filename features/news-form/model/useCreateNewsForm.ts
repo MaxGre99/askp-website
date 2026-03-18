@@ -7,6 +7,7 @@ import { useCreateNewsMutation } from '@/entities/news';
 import { useDeleteNewsImageMutation } from '@/entities/news-images';
 import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createNewsSchema } from './schema';
 
@@ -35,13 +36,15 @@ export const useCreateNewsForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const trimmed = trimStrings(values);
+
 			const news = await createNews({
-				...values,
-				image: values.image || undefined,
+				...trimmed,
+				image: trimmed.image || undefined,
 			}).unwrap();
 
 			// Удаляем картинки из контента, которые загрузили но не использовали
-			const usedUrls = extractImageUrls(values.content);
+			const usedUrls = extractImageUrls(trimmed.content);
 			const orphanedUrls = [...uploadedContentUrls.current].filter(
 				(url) =>
 					!usedUrls.includes(url) &&

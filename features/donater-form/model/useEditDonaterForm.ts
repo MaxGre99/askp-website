@@ -8,6 +8,7 @@ import {
 	useGetDonaterQuery,
 	useUpdateDonaterMutation,
 } from '@/entities/donaters';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 export const useEditDonaterForm = () => {
 	const { t } = useTranslation();
@@ -32,8 +33,10 @@ export const useEditDonaterForm = () => {
 	};
 
 	const handleSubmit = async (values: typeof initialValues) => {
+		const trimmed = trimStrings(values);
+
 		const oldImage = donater?.image;
-		const newImage = values.image || null;
+		const newImage = trimmed.image || null;
 
 		if (
 			oldImage &&
@@ -45,7 +48,7 @@ export const useEditDonaterForm = () => {
 
 		await updateDonater({
 			id: id as string,
-			body: { ...values, image: newImage },
+			body: { ...trimmed, image: newImage },
 		}).unwrap();
 
 		router.push('/donate');

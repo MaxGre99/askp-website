@@ -7,6 +7,7 @@ import { useDeleteArticleImageMutation } from '@/entities/article-images';
 import { useCreateArticleMutation } from '@/entities/articles';
 import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createArticleSchema } from './schema';
 
@@ -35,13 +36,15 @@ export const useCreateArticleForm = () => {
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		try {
+			const trimmed = trimStrings(values);
+
 			const article = await createArticle({
-				...values,
-				image: values.image || undefined,
+				...trimmed,
+				image: trimmed.image || undefined,
 			}).unwrap();
 
 			// Удаляем картинки из контента, которые загрузили но не использовали
-			const usedUrls = extractImageUrls(values.content);
+			const usedUrls = extractImageUrls(trimmed.content);
 			const orphanedUrls = [...uploadedContentUrls.current].filter(
 				(url) =>
 					!usedUrls.includes(url) &&
