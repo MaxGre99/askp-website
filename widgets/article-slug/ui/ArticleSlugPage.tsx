@@ -9,7 +9,7 @@ export const ArticleSlugPage = () => {
 	const { slug } = useParams();
 
 	const { data, isLoading } = useGetArticleQuery((slug as string)!);
-	console.log(data);
+
 	if (isLoading) {
 		return <div></div>;
 	}

@@ -46,23 +46,23 @@ export const WideCard = ({
 			<Link href={`/${type}/${item.slug}`}>
 				<article
 					className={clsx(
-						'bg-white/70 rounded-2xl overflow-hidden transition hover:scale-[1.01] flex gap-2 h-[192px]',
+						'bg-white rounded-2xl overflow-hidden transition hover:scale-[1.01] flex gap-2 h-[192px]',
 						isEven ? 'flex-row' : 'flex-row-reverse',
 						accentColor === 'blue' ? 'border-2 border-blue-300' : '',
 					)}
 				>
 					<div
 						className={clsx(
-							'flex rounded h-full w-[320px] shrink-0',
-							!item?.image &&
-								'items-center justify-center border border-gray-200',
+							'flex rounded-2xl h-full w-[320px] border-gray-200',
+							!item?.image && 'items-center justify-center',
+							isEven ? 'border-r' : 'border-l',
 						)}
 					>
 						{item?.image ? (
 							<img
 								src={item.image}
 								alt='card-cover'
-								className='object-fill rounded w-full h-full'
+								className='object-fill rounded-2xl w-full h-full'
 							/>
 						) : (
 							<MdImageNotSupported size={48} />
@@ -72,9 +72,11 @@ export const WideCard = ({
 					<div className='p-6 flex flex-col gap-2 flex-1 min-h-0 overflow-hidden'>
 						<h3 className='line-clamp-1 font-semibold text-lg'>{item.title}</h3>
 						<p className='line-clamp-4 text-sm flex-1 min-h-0'>{text}</p>
-						<span className='text-xs opacity-60 shrink-0'>{localDateTime}</span>
+						<span className='text-xs shrink-0 text-gray-600'>
+							{localDateTime}
+						</span>
 						{'author' in item && (
-							<span className='text-xs opacity-60 shrink-0'>
+							<span className='text-xs shrink-0 text-gray-600'>
 								{getAuthorName(item.author)}
 							</span>
 						)}

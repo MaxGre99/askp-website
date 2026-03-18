@@ -9,5 +9,7 @@ export const ROUTES = {
 	about: '/about',
 	donate: '/donate',
 	contacts: '/contacts',
-	politics: '/politics',
+	privacy: '/privacy',
+	agreement: '/agreement',
+	cookies: '/cookies',
 };

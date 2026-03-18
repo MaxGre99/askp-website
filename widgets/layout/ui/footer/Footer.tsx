@@ -16,7 +16,10 @@ export const Footer = () => {
 			<div className='flex w-full items-center p-3'>
 				<ul className='flex flex-row gap-2 justify-evenly flex-1 items-center'>
 					{footerButtonsList.map((title) => (
-						<li key={title} className='flex mx-auto items-center'>
+						<li
+							key={title}
+							className='flex mx-auto items-center justify-center'
+						>
 							<NavButton href={ROUTES[title as keyof typeof ROUTES]}>
 								{t(`navbar.${title}`)}
 							</NavButton>

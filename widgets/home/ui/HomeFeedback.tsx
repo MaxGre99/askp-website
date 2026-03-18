@@ -16,7 +16,7 @@ export const HomeFeedback = () => {
 
 	return (
 		<section className='text-white flex flex-col gap-5 items-center w-full'>
-			<h1 className='font-oswald'>{t('feedbackForm.title')}</h1>
+			<h1 className='font-oswald font-light'>{t('feedbackForm.title')}</h1>
 			<div className='relative flex bg-white/20 rounded-full w-fit'>
 				{/* Анимированный индикатор */}
 				<div

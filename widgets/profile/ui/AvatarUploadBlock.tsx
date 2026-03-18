@@ -20,7 +20,7 @@ export const AvatarUploadBlock = ({
 
 	return (
 		<div className='flex flex-col gap-6'>
-			<div className='rounded-md bg-gray-100 w-[256px] h-[256px] flex items-center justify-center border border-gray-400 overflow-hidden'>
+			<div className='rounded-md bg-gray-50 w-[256px] h-[256px] flex items-center justify-center border border-gray-200 overflow-hidden'>
 				<Avatar src={avatar?.url} />
 			</div>
 

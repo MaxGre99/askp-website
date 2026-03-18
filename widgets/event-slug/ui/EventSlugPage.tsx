@@ -14,10 +14,11 @@ export const EventSlugPage = () => {
 	const { slug } = useParams();
 
 	const { data, isLoading } = useGetEventQuery((slug as string)!);
-	console.log(data);
+
 	if (isLoading) {
 		return <div></div>;
 	}
+
 	return (
 		<div className='flex flex-1 flex-col w-full justify-start items-center bg-white rounded-2xl'>
 			{data?.image && (

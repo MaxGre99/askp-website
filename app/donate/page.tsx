@@ -14,7 +14,7 @@ const Page = () => {
 	const { t } = useTranslation();
 	const { data, isLoading } = useGetAllDonatersQuery();
 	const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
-	const showAdminActions = !isLoadingUser && user?.role !== 'USER';
+	const showAdminActions = !isLoadingUser && user && user?.role !== 'USER';
 
 	return (
 		<div className='flex flex-col flex-1 w-full bg-white rounded-2xl items-center justify-start p-6 gap-6'>

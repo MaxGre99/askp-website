@@ -40,6 +40,7 @@ const eslintConfig = defineConfig([
 				},
 			],
 			'simple-import-sort/exports': 'error',
+			'react-hooks/set-state-in-effect': 'off',
 		},
 	},
 

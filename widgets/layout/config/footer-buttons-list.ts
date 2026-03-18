@@ -1,1 +1,6 @@
-export const footerButtonsList = ['about', 'contacts', 'politics'];
+export const footerButtonsList = [
+	'about',
+	/* 'contacts', */ 'privacy',
+	'agreement',
+	'cookies',
+];

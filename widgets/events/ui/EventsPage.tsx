@@ -27,7 +27,7 @@ export const EventsPage = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-oswald text-white text-3xl'>
+				<h1 className='font-oswald text-white font-light'>
 					{t('events.pageTitle')}
 				</h1>
 
@@ -42,7 +42,7 @@ export const EventsPage = () => {
 				/>
 			</div>
 
-			{!isLoading && data && (
+			{!isLoading && data && data.events.length > 0 ? (
 				<>
 					<WideCardsList items={data.events} />
 
@@ -52,6 +52,10 @@ export const EventsPage = () => {
 						onPageChange={changePage}
 					/>
 				</>
+			) : (
+				<p className='font-oswald flex flex-1 w-full items-center justify-center mb-6 text-white text-3xl'>
+					{t('notifications.empty')}
+				</p>
 			)}
 		</div>
 	);

@@ -6,7 +6,9 @@ const en = {
 		register: 'How to register as a party member',
 		about: 'About',
 		contacts: 'Contacs',
-		politics: 'Confidental politics',
+		privacy: 'Privacy policy',
+		agreement: '',
+		cookies: 'Cookies policy',
 		donate: 'Help our project',
 	},
 };

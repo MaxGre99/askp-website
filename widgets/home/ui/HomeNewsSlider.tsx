@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { NewsCard, NewsType } from '@/entities/news';
@@ -28,41 +28,42 @@ export const HomeNewsSlider = ({ items }: Props) => {
 
 	return (
 		<section className='flex flex-col gap-5 w-full'>
-			<h1 className='font-oswald text-white'>{t('news.homeTitle')}:</h1>
+			<h1 className='font-oswald text-white font-light'>
+				{t('news.homeTitle')}:
+			</h1>
 
 			{items.length > 0 ? (
-				<Swiper
-					modules={[Pagination, Autoplay]}
-					direction='horizontal'
-					loop
-					slidesPerView={SLIDES_PER_VIEW}
-					spaceBetween={20}
-					className='w-full px-5'
-					freeMode
-					speed={10000}
-					autoplay={{
-						delay: 0,
-						disableOnInteraction: false,
-						pauseOnMouseEnter: true,
-					}}
-				>
-					{slides.map((news, i) => (
-						<SwiperSlide key={`${news.slug}-${i}`} className='p-1'>
-							<NewsCard news={news} type='news' />
-						</SwiperSlide>
-					))}
-				</Swiper>
+				<>
+					<Swiper
+						modules={[Autoplay]}
+						direction='horizontal'
+						loop
+						slidesPerView={SLIDES_PER_VIEW}
+						spaceBetween={20}
+						className='w-full px-5'
+						freeMode
+						speed={10000}
+						autoplay={{
+							delay: 0,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						}}
+					>
+						{slides.map((news, i) => (
+							<SwiperSlide key={`${news.slug}-${i}`} className='p-1'>
+								<NewsCard news={news} type='news' />
+							</SwiperSlide>
+						))}
+					</Swiper>
+
+					<div className='flex justify-end'>
+						<NavButton href='/news'>{t('buttons.showAll')}</NavButton>
+					</div>
+				</>
 			) : (
 				<p className='font-oswald text-white text-3xl'>
 					{t('notifications.empty')}
 				</p>
-			)}
-			{items.length > 0 && (
-				<div className='flex justify-end mr-6 text-white text-2xl font-oswald'>
-					<NavButton className='w-fit! h-fit mx-0!' href='/news'>
-						{t('buttons.showAll')}
-					</NavButton>
-				</div>
 			)}
 		</section>
 	);

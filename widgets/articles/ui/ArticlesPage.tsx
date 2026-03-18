@@ -27,7 +27,7 @@ export const ArticlesPage = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-oswald text-white text-3xl'>
+				<h1 className='font-oswald text-white font-light'>
 					{t('articles.pageTitle')}
 				</h1>
 
@@ -42,7 +42,7 @@ export const ArticlesPage = () => {
 				/>
 			</div>
 
-			{!isLoading && data && (
+			{!isLoading && data && data.articles.length > 0 ? (
 				<>
 					<WideCardsList items={data.articles} />
 
@@ -52,6 +52,10 @@ export const ArticlesPage = () => {
 						onPageChange={changePage}
 					/>
 				</>
+			) : (
+				<p className='font-oswald flex flex-1 w-full items-center justify-center mb-6 text-white text-3xl'>
+					{t('notifications.empty')}
+				</p>
 			)}
 		</div>
 	);

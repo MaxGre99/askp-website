@@ -9,7 +9,7 @@ export const NewsSlugPage = () => {
 	const { slug } = useParams();
 
 	const { data, isLoading } = useGetNewsQuery((slug as string)!);
-	console.log(data);
+
 	if (isLoading) {
 		return <div></div>;
 	}

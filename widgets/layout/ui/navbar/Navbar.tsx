@@ -28,7 +28,10 @@ export const Navbar = () => {
 				{/* Desktop */}
 				<ul className='hidden xl:flex flex-1 ml-10 h-full'>
 					{navbarButtonsList.map((title) => (
-						<li key={title} className='flex mx-auto items-center'>
+						<li
+							key={title}
+							className='flex mx-auto items-center justify-center'
+						>
 							<NavButton href={ROUTES[title as keyof typeof ROUTES]}>
 								{t(`navbar.${title}`)}
 							</NavButton>

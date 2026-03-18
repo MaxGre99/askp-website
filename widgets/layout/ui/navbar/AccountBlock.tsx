@@ -32,8 +32,7 @@ export const AccountBlock = () => {
 	};
 
 	useEffect(() => {
-		const timer = setTimeout(() => setShowMenu(false), 0);
-		return () => clearTimeout(timer);
+		setShowMenu(false);
 	}, [pathname]);
 
 	return (
@@ -52,7 +51,7 @@ export const AccountBlock = () => {
 				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 min-w-64 z-50'>
 					{user ? (
 						<div className='flex items-center gap-6'>
-							<div className='rounded-[50%] bg-gray-100 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-gray-400 border overflow-hidden'>
+							<div className='rounded-[50%] bg-gray-50 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-gray-200 border overflow-hidden'>
 								<Avatar src={avatar?.url} size={48} />
 							</div>
 

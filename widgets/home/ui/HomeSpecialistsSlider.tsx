@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Profile } from '@/entities/profiles';
@@ -28,41 +28,41 @@ export const HomeSpecialistsSlider = ({ items }: Props) => {
 
 	return (
 		<section className='flex flex-col gap-5 w-full'>
-			<h1 className='font-oswald text-white'>{t('specialists.homeTitle')}:</h1>
+			<h1 className='font-oswald text-white font-light'>
+				{t('specialists.homeTitle')}:
+			</h1>
 			{items.length > 0 ? (
-				<Swiper
-					modules={[Pagination, Autoplay]}
-					direction='horizontal'
-					loop
-					slidesPerView={SLIDES_PER_VIEW}
-					spaceBetween={200}
-					className='w-full px-5'
-					freeMode
-					speed={10000}
-					autoplay={{
-						delay: 0,
-						disableOnInteraction: false,
-						pauseOnMouseEnter: true,
-					}}
-				>
-					{slides.map((profile, i) => (
-						<SwiperSlide key={`${profile.userId}-${i}`} className='p-1'>
-							<ProfileCard profile={profile} />
-						</SwiperSlide>
-					))}
-				</Swiper>
+				<>
+					<Swiper
+						modules={[Autoplay]}
+						direction='horizontal'
+						loop
+						slidesPerView={SLIDES_PER_VIEW}
+						spaceBetween={200}
+						className='w-full px-5'
+						freeMode
+						speed={10000}
+						autoplay={{
+							delay: 0,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						}}
+					>
+						{slides.map((profile, i) => (
+							<SwiperSlide key={`${profile.userId}-${i}`} className='p-1'>
+								<ProfileCard profile={profile} />
+							</SwiperSlide>
+						))}
+					</Swiper>
+
+					<div className='flex justify-end'>
+						<NavButton href='/specialists'>{t('buttons.lookAll')}</NavButton>
+					</div>
+				</>
 			) : (
 				<p className='font-oswald text-white text-3xl'>
 					{t('notifications.empty')}
 				</p>
-			)}
-
-			{items.length > 0 && (
-				<div className='flex justify-end mr-6 text-white text-2xl font-oswald'>
-					<NavButton className='w-fit! h-fit mx-0!' href='/specialists'>
-						{t('buttons.lookAll')}
-					</NavButton>
-				</div>
 			)}
 		</section>
 	);

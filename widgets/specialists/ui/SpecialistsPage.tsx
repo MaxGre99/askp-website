@@ -29,7 +29,7 @@ export const SpecialistsPage = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<h1 className='font-oswald text-white text-3xl'>
+				<h1 className='font-oswald text-white font-light'>
 					{t('specialists.pageTitle')}
 				</h1>
 
@@ -44,19 +44,13 @@ export const SpecialistsPage = () => {
 				/>
 			</div>
 
-			{!isLoading && data && (
+			{!isLoading && data && data.profiles.length > 0 ? (
 				<>
-					{data.profiles.length > 0 ? (
-						<div className='flex flex-1 w-full flex-wrap gap-8 justify-center'>
-							{data.profiles.map((profile) => (
-								<ProfileCard key={profile.userId} profile={profile} />
-							))}
-						</div>
-					) : (
-						<p className='font-oswald text-white text-3xl'>
-							{t('notifications.empty')}
-						</p>
-					)}
+					<div className='flex flex-1 w-full flex-wrap gap-8 justify-center'>
+						{data.profiles.map((profile) => (
+							<ProfileCard key={profile.userId} profile={profile} />
+						))}
+					</div>
 
 					<Pagination
 						currentPage={page}
@@ -64,6 +58,10 @@ export const SpecialistsPage = () => {
 						onPageChange={changePage}
 					/>
 				</>
+			) : (
+				<p className='font-oswald flex flex-1 w-full items-center justify-center mb-6 text-white text-3xl'>
+					{t('notifications.empty')}
+				</p>
 			)}
 		</div>
 	);
