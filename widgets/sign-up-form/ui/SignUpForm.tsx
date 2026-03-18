@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { useSignUpMutation } from '@/entities/users';
 import { getApiErrorMessage } from '@/shared/api';
 import { SignUpFormValues } from '@/shared/schemas';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 
 export const SignUpForm = () => {
@@ -105,9 +105,9 @@ export const SignUpForm = () => {
 					<p className='error text-center'>{t(`backendErrors.${apiError}`)}</p>
 				)}
 
-				<BaseButton type='submit' disabled={isLoading}>
+				<Button type='submit' disabled={isLoading}>
 					{isLoading ? t('notifications.creating') : t('buttons.signUp')}
-				</BaseButton>
+				</Button>
 			</Form>
 		</Formik>
 	);

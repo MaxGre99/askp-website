@@ -1,14 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { DonatersCard, useGetAllDonatersQuery } from '@/entities/donaters';
 import { useGetUserQuery } from '@/entities/users';
 import { DonateWidget } from '@/features/donate';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 
 const Page = () => {
 	const { t } = useTranslation();
@@ -20,11 +18,9 @@ const Page = () => {
 		<div className='flex flex-col flex-1 w-full bg-white rounded-2xl items-center justify-start p-6 gap-6'>
 			{showAdminActions && (
 				<div className='flex self-end'>
-					<Link href={'/donate/add'}>
-						<BaseButton>
-							<FaPlus /> {t('buttons.addDonater')}
-						</BaseButton>
-					</Link>
+					<Button href={'/donate/add'}>
+						<FaPlus /> {t('buttons.addDonater')}
+					</Button>
 				</div>
 			)}
 			<div className='flex flex-col flex-1 gap-6 items-center justify-center'>

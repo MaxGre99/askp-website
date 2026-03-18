@@ -29,11 +29,11 @@ export const NewsCard = ({ news, type }: NewsCard) => {
 						<MdImageNotSupported size={96} />
 					</div>
 				)}
-				<div className='p-3 flex flex-col gap-1 justify-start items-start font-inter'>
+				<div className='p-3 flex flex-col gap-1 justify-start items-start'>
 					<h3 className='text-ellipsis max-w-full line-clamp-1'>
 						{news.title}
 					</h3>
-					<p className='line-clamp-3 font-inter'>{stripHtml(news.content)}</p>
+					<p className='line-clamp-3'>{stripHtml(news.content)}</p>
 				</div>
 			</article>
 		</Link>

@@ -1,14 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { useDeleteNewsMutation } from '@/entities/news';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { useMyNewsList, WideCardsList } from '@/features/wide-cards-list';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 import { Pagination } from '@/shared/ui/Pagination';
 
 export const MyNewsPage = () => {
@@ -34,11 +32,9 @@ export const MyNewsPage = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<Link href={'/account/news/add'}>
-					<BaseButton>
-						<FaPlus /> {t('buttons.addNews')}
-					</BaseButton>
-				</Link>
+				<Button href={'/account/news/add'}>
+					<FaPlus /> {t('buttons.addNews')}
+				</Button>
 
 				<ListFilter
 					value={draftQuery}

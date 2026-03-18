@@ -1,4 +1,4 @@
-import { BaseButton } from "@/shared/ui/BaseButton";
+import { Button } from '@/shared/ui/Button';
 
 type Props = {
 	value: string;
@@ -29,7 +29,7 @@ export const ListFilter = ({
 					placeholder={placeholder}
 					className='input flex-1'
 				/>
-				<BaseButton onClick={onSubmit}>{buttonText}</BaseButton>
+				<Button onClick={onSubmit}>{buttonText}</Button>
 			</div>
 
 			<select

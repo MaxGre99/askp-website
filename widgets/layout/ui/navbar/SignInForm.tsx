@@ -1,10 +1,10 @@
-import { Form,Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useSignInMutation } from '@/entities/users';
 import { getApiErrorMessage } from '@/shared/api';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 
 interface FormValues {
@@ -75,9 +75,9 @@ export const SignInForm = ({
 
 					{status && <p className='error'>{t(`backendErrors.${status}`)}</p>}
 
-					<BaseButton type='submit' disabled={isSubmitting}>
+					<Button type='submit' disabled={isSubmitting}>
 						{isSubmitting ? 'Входим…' : t('buttons.signIn')}
-					</BaseButton>
+					</Button>
 				</Form>
 			)}
 		</Formik>

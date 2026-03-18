@@ -6,7 +6,7 @@ import AvatarEditor from 'react-avatar-editor';
 import { createPortal } from 'react-dom';
 import { BiRotateRight, BiZoomIn, BiZoomOut } from 'react-icons/bi';
 
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 
 interface AvatarEditorModalProps {
 	isOpen: boolean;
@@ -174,8 +174,8 @@ export const AvatarEditorModal = ({
 							</div>
 							{/* Кнопки действий */}
 							<div className='flex flex-col gap-3 justify-end'>
-								<BaseButton onClick={handleSave}>Сохранить</BaseButton>
-								<BaseButton onClick={onClose}>Отмена</BaseButton>
+								<Button onClick={handleSave}>Сохранить</Button>
+								<Button onClick={onClose}>Отмена</Button>
 							</div>
 						</div>
 					)}

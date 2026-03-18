@@ -1,6 +1,6 @@
 import ReactPaginate from 'react-paginate';
 
-import { TransparentButton } from '../TransparentButton';
+import { Button } from '../Button';
 
 interface PaginationProps {
 	currentPage: number;
@@ -24,13 +24,19 @@ export const Pagination = ({
 				pageRangeDisplayed={3}
 				marginPagesDisplayed={3}
 				previousLabel={
-					<TransparentButton className='h-fit'>{'<'}</TransparentButton>
+					<Button variant='ghost' className='h-fit'>
+						{'<'}
+					</Button>
 				}
 				nextLabel={
-					<TransparentButton className='h-fit'>{'>'}</TransparentButton>
+					<Button variant='ghost' className='h-fit'>
+						{'>'}
+					</Button>
 				}
 				breakLabel={
-					<TransparentButton className='h-fit font-inter'>…</TransparentButton>
+					<Button variant='ghost' className='h-fit'>
+						…
+					</Button>
 				}
 				containerClassName={`flex justify-center items-center gap-3 mt-6 ${accentColor === 'blue' ? 'bg-blue-400! w-fit self-center p-2 rounded-2xl' : ''}`}
 				pageClassName=''
@@ -38,12 +44,13 @@ export const Pagination = ({
 				activeClassName=''
 				renderOnZeroPageCount={null}
 				pageLabelBuilder={(page) => (
-					<TransparentButton
-						className={`h-fit font-inter`}
+					<Button
+						variant='ghost'
+						className='h-fit'
 						isActive={page === currentPage}
 					>
 						{page}
-					</TransparentButton>
+					</Button>
 				)}
 			/>
 		</>

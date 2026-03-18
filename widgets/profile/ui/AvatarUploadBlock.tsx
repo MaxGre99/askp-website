@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 
 import { Avatar } from '@/entities/avatars';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 
 import { useAvatarUpload } from '../model/useAvatarUpload';
 
@@ -24,7 +24,7 @@ export const AvatarUploadBlock = ({
 				<Avatar src={avatar?.url} />
 			</div>
 
-			<BaseButton
+			<Button
 				disabled={isUploading}
 				onClick={() => fileInputRef.current?.click()}
 			>
@@ -39,7 +39,7 @@ export const AvatarUploadBlock = ({
 					}}
 				/>
 				+ Добавить фото
-			</BaseButton>
+			</Button>
 		</div>
 	);
 };

@@ -1,14 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { useDeleteArticleMutation } from '@/entities/articles';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { useMyArticlesList, WideCardsList } from '@/features/wide-cards-list';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 import { Pagination } from '@/shared/ui/Pagination';
 
 export const MyArticlesPage = () => {
@@ -34,11 +32,9 @@ export const MyArticlesPage = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<Link href={'/account/articles/add'}>
-					<BaseButton>
-						<FaPlus /> {t('buttons.addArticle')}
-					</BaseButton>
-				</Link>
+				<Button href={'/account/articles/add'}>
+					<FaPlus /> {t('buttons.addArticle')}
+				</Button>
 
 				<ListFilter
 					value={draftQuery}

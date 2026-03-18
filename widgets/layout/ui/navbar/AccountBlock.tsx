@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { FaHouseUser, /* FaRegBell, */ FaRegUser } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
 import { useGetUserQuery, useSignOutMutation } from '@/entities/users';
-import { TransparentButton } from '@/shared/ui/TransparentButton';
+import { Button } from '@/shared/ui/Button';
 
 import { SignInForm } from './SignInForm';
 
@@ -37,15 +38,19 @@ export const AccountBlock = () => {
 
 	return (
 		<div className='flex relative'>
-			{/* <TransparentButton className='hover:bg-transparent! hover:text-amber-400'>
+			{/* <Button className='hover:bg-transparent! hover:text-amber-400' variant='ghost'>
 				<FaRegBell />
-			</TransparentButton> */}
-			<TransparentButton
-				className='hover:bg-transparent! hover:text-cyan-300'
+			</Button> */}
+			<Button
+				className={clsx(
+					'hover:text-cyan-300 active:text-cyan-200',
+					showMenu && 'text-cyan-300!',
+				)}
+				variant='ghost'
 				onClick={handleShowMenu}
 			>
-				<FaRegUser />
-			</TransparentButton>
+				<FaRegUser size={24} />
+			</Button>
 
 			{showMenu && (
 				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 min-w-64 z-50'>
@@ -69,12 +74,13 @@ export const AccountBlock = () => {
 							</div>
 
 							<div className='flex gap-2 items-center self-start'>
-								<TransparentButton
+								<Button
 									className='w-fit! h-fit! text-black! p-0!'
 									onClick={onSignOut}
+									variant='ghost'
 								>
 									<MdOutlineLogout />
-								</TransparentButton>
+								</Button>
 							</div>
 						</div>
 					) : (

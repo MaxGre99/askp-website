@@ -1,14 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { useDeleteEventMutation } from '@/entities/events';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { useMyEventsList, WideCardsList } from '@/features/wide-cards-list';
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 import { Pagination } from '@/shared/ui/Pagination';
 
 export const MyEventsPage = () => {
@@ -34,11 +32,9 @@ export const MyEventsPage = () => {
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
-				<Link href={'/account/events/add'}>
-					<BaseButton>
-						<FaPlus /> {t('buttons.addEvent')}
-					</BaseButton>
-				</Link>
+				<Button href={'/account/events/add'}>
+					<FaPlus /> {t('buttons.addEvent')}
+				</Button>
 
 				<ListFilter
 					value={draftQuery}

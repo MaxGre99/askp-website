@@ -2,7 +2,7 @@
 
 import { useFormikContext } from 'formik';
 
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 
 interface Props {
 	isEditing: boolean;
@@ -17,7 +17,7 @@ export const ProfileActions = ({ isEditing, setIsEditing }: Props) => {
 		<div className='flex justify-end gap-3'>
 			{isEditing ? (
 				<>
-					<BaseButton
+					<Button
 						type='button'
 						onClick={() => {
 							resetForm();
@@ -26,16 +26,16 @@ export const ProfileActions = ({ isEditing, setIsEditing }: Props) => {
 						disabled={isSubmitting}
 					>
 						Отмена
-					</BaseButton>
+					</Button>
 
-					<BaseButton type='submit' disabled={isSubmitting || !dirty}>
+					<Button type='submit' disabled={isSubmitting || !dirty}>
 						{isSubmitting ? 'Сохраняем...' : 'Сохранить'}
-					</BaseButton>
+					</Button>
 				</>
 			) : (
-				<BaseButton type='button' onClick={() => setIsEditing(true)}>
+				<Button type='button' onClick={() => setIsEditing(true)}>
 					Редактировать профиль
-				</BaseButton>
+				</Button>
 			)}
 		</div>
 	);

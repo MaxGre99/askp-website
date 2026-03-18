@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
-import { BaseButton } from '@/shared/ui/BaseButton';
+import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 
 // Тип для значений формы (initialValues)
@@ -128,9 +128,9 @@ export const SignUpToEventForm = ({ eventName }: { eventName: string }) => {
 					/>
 				</div>
 				<ContactError className='mt-2' />
-				<BaseButton type='submit' className='font-oswald text-2xl mt-5'>
+				<Button type='submit' className='mt-5'>
 					{t('buttons.send')}
-				</BaseButton>
+				</Button>
 			</Form>
 		</Formik>
 	);

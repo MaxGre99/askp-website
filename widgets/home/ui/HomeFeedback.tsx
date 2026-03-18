@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { TransparentButton } from '@/shared/ui/TransparentButton';
+import { Button } from '@/shared/ui/Button';
 
 import { FeedbackForm } from './FeedbackForm';
 
@@ -24,21 +24,21 @@ export const HomeFeedback = () => {
 							${type === 'cooperation' ? 'translate-x-0' : 'translate-x-full'}`}
 				/>
 
-				<TransparentButton
-					type='button'
+				<Button
 					onClick={() => setType('cooperation')}
 					className='relative z-10 px-6 py-3 text-white font-medium w-1/2! h-fit! font-inter text-lg hover:bg-transparent!'
+					variant='ghost'
 				>
 					{t('feedbackForm.buttons.cooperation')}
-				</TransparentButton>
+				</Button>
 
-				<TransparentButton
-					type='button'
+				<Button
 					onClick={() => setType('consultation')}
 					className='relative z-10 px-6 py-3 text-white font-medium w-1/2 h-fit! font-inter text-lg hover:bg-transparent!'
+					variant='ghost'
 				>
 					{t('feedbackForm.buttons.consultation')}
-				</TransparentButton>
+				</Button>
 			</div>
 			<FeedbackForm type={type} />
 		</section>
