@@ -1,11 +1,15 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
+// import { MdImageNotSupported } from 'react-icons/md';
 import { ProductCard, useGetAllProductsQuery } from '@/entities/products';
+import { useGetUserQuery } from '@/entities/users';
 import { ListFilter, useListFilter } from '@/features/list-filter';
-import { Button } from '@/shared/ui/Button';
+// import { Button } from '@/shared/ui/Button';
 import { Pagination } from '@/shared/ui/Pagination';
 
 export const ShopPage = () => {
@@ -22,30 +26,45 @@ export const ShopPage = () => {
 	} = useListFilter();
 	const { data, isLoading } = useGetAllProductsQuery({ page, query, pageSize });
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
+	const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
+
+	const isAdmin = !isLoadingUser && user && user.role !== 'USER';
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
 				<h1 className='font-oswald text-white font-light'>Магазин</h1>
-				<div className='flex gap-3 items-center'>
-					<ListFilter
-						value={draftQuery}
-						onChange={setDraftQuery}
-						onSubmit={applyFilter}
-						placeholder='Поиск по названию...'
-						buttonText='Найти'
-						pageSize={pageSize}
-						onPageSizeChange={changePageSize}
-					/>
-					<Button href={'/shop/add'} className='shrink-0'>
+				{/* <div className='flex gap-3 items-center'> */}
+				<ListFilter
+					value={draftQuery}
+					onChange={setDraftQuery}
+					onSubmit={applyFilter}
+					placeholder={t('placeholders.productNameFilter')}
+					buttonText={t('buttons.find')}
+					pageSize={pageSize}
+					onPageSizeChange={changePageSize}
+				/>
+				{/* <Button href={'/shop/add'} variant='white' className='shrink-0'>
 						<FaPlus /> {t('buttons.addProduct')}
 					</Button>
-				</div>
+				</div> */}
 			</div>
 
 			{!isLoading && data && data.products.length > 0 ? (
 				<>
-					<div className='flex flex-wrap gap-6'>
+					<div className='flex flex-1 w-full flex-wrap gap-6 items-center'>
+						{isAdmin && (
+							<Link href='/account/shop/add'>
+								<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[320px] h-[368px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
+									<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
+										<FaPlus size={32} />
+										<span className='font-oswald text-2xl tracking-wide'>
+											Добавить товар
+										</span>
+									</div>
+								</article>
+							</Link>
+						)}
 						{data.products.map((product) => (
 							<ProductCard key={product.id} product={product} />
 						))}
@@ -56,6 +75,17 @@ export const ShopPage = () => {
 						onPageChange={changePage}
 					/>
 				</>
+			) : isAdmin ? (
+				<Link href='/account/shop/add'>
+					<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[320px] h-[368px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
+						<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
+							<FaPlus size={32} />
+							<span className='font-oswald text-2xl tracking-wide'>
+								Добавить товар
+							</span>
+						</div>
+					</article>
+				</Link>
 			) : (
 				<p className='font-oswald flex flex-1 w-full items-center justify-center text-white text-3xl'>
 					{t('notifications.empty')}

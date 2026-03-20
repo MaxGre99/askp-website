@@ -1,3 +1,5 @@
+import { FaSearch } from 'react-icons/fa';
+
 import { Button } from '@/shared/ui/Button';
 
 type Props = {
@@ -29,7 +31,10 @@ export const ListFilter = ({
 					placeholder={placeholder}
 					className='input flex-1'
 				/>
-				<Button onClick={onSubmit}>{buttonText}</Button>
+				<Button variant='white' onClick={onSubmit}>
+					<FaSearch />
+					{buttonText}
+				</Button>
 			</div>
 
 			<select

@@ -37,7 +37,7 @@ export const SpecialistsPage = () => {
 					value={draftQuery}
 					onChange={setDraftQuery}
 					onSubmit={applyFilter}
-					placeholder={t('placeholders.titleFilter')}
+					placeholder={t('placeholders.displayNameFilter')}
 					buttonText={t('buttons.find')}
 					pageSize={pageSize}
 					onPageSizeChange={changePageSize}
@@ -46,7 +46,7 @@ export const SpecialistsPage = () => {
 
 			{!isLoading && data && data.profiles.length > 0 ? (
 				<>
-					<div className='flex flex-1 w-full flex-wrap gap-8 justify-center'>
+					<div className='flex flex-1 w-full flex-wrap gap-8 justify-center items-center'>
 						{data.profiles.map((profile) => (
 							<ProfileCard key={profile.userId} profile={profile} />
 						))}

@@ -106,6 +106,8 @@ const ru = {
 		},
 		placeholders: {
 			titleFilter: 'Поиск по заголовку',
+			displayNameFilter: 'Поиск по имени',
+			productNameFilter: 'Поиск по названию',
 			firstName: 'Введите ваше имя',
 			lastName: 'Введите вашу фамилию',
 			password: 'Введите пароль',
@@ -117,7 +119,7 @@ const ru = {
 			problemDescription: 'Опишите вашу ситуацию (необязательно)',
 		},
 		buttons: {
-			find: 'Найти',
+			find: 'Поиск',
 			showAll: 'Смотреть все',
 			lookAll: 'Смотреть всех',
 			approve: 'Принять',

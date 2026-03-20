@@ -14,7 +14,7 @@ export const HomeEvents = ({ items }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<section className='flex flex-col gap-5 w-full'>
+		<section className='flex flex-col gap-4 w-full'>
 			<h1 className='font-oswald text-white font-light'>
 				{t('events.homeTitle')}:
 			</h1>

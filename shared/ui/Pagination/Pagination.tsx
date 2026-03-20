@@ -38,7 +38,7 @@ export const Pagination = ({
 						…
 					</Button>
 				}
-				containerClassName={`flex justify-center items-center gap-3 mt-6 ${accentColor === 'blue' ? 'bg-blue-400! w-fit self-center p-2 rounded-2xl' : ''}`}
+				containerClassName={`flex justify-center items-center gap-3 ${accentColor === 'blue' ? 'bg-blue-400! w-fit self-center p-2 rounded-2xl' : ''}`}
 				pageClassName=''
 				pageLinkClassName=''
 				activeClassName=''

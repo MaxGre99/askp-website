@@ -64,14 +64,14 @@ export default function ProductPage() {
 											prevEl: '.product-prev',
 										}}
 										pagination={{ clickable: true }}
-										className='w-full aspect-[4/3]'
+										className='w-full aspect-video'
 									>
 										{product.images.map((img, i) => (
 											<SwiperSlide key={i}>
 												<img
 													src={img}
 													alt={`${product.name} — фото ${i + 1}`}
-													className='w-full h-full object-cover'
+													className='w-full h-full object-fill'
 												/>
 											</SwiperSlide>
 										))}
