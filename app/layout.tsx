@@ -52,7 +52,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 							<Navbar />
 						</header>
 
-						<main className='flex flex-1 flex-col items-center justify-center gap-5 p-5 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto'>
+						<main className='flex flex-1 flex-col items-center justify-center gap-6 p-6 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto'>
 							{children}
 						</main>
 

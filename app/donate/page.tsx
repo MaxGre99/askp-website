@@ -15,15 +15,15 @@ const Page = () => {
 	const showAdminActions = !isLoadingUser && user && user?.role !== 'USER';
 
 	return (
-		<div className='flex flex-col flex-1 w-full bg-white rounded-2xl items-center justify-start p-6 gap-6'>
+		<>
 			{showAdminActions && (
 				<div className='flex self-end'>
-					<Button href={'/donate/add'}>
+					<Button href={'/donate/add'} variant='white'>
 						<FaPlus /> {t('buttons.addDonater')}
 					</Button>
 				</div>
 			)}
-			<div className='flex flex-col flex-1 gap-6 items-center justify-center'>
+			<div className='flex flex-col flex-1 gap-6 items-center justify-center w-full'>
 				{isLoading ? (
 					<div>Загрузка...</div>
 				) : data?.donaters.length ? (
@@ -35,7 +35,7 @@ const Page = () => {
 						/>
 					))
 				) : (
-					<div className='flex flex-col items-center gap-2'>
+					<div className='flex flex-col items-center gap-2 text-white'>
 						<h1>Пока никто не поддержал проект...</h1>
 						<h2>Но вы можете стать первым!</h2>
 					</div>
@@ -43,7 +43,7 @@ const Page = () => {
 
 				<DonateWidget />
 			</div>
-		</div>
+		</>
 	);
 };
 

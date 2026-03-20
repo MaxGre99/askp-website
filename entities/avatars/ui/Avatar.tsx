@@ -23,10 +23,10 @@ export const Avatar = ({ src, size = 64, className }: AvatarProps) => {
 					// eslint-disable-next-line react-hooks/purity
 					src={`${src}?t=${Date.now()}`}
 					alt='avatar'
-					className={`w-full h-full object-fill ${className}`}
+					className={`w-full h-full object-contain ${className}`}
 				/>
 			) : (
-				<MdOutlineNoPhotography size={size / 2} color='gray' />
+				<MdOutlineNoPhotography size={size} color='gray' />
 			)}
 		</>
 	);

@@ -97,7 +97,7 @@ export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 					<img
 						src={field.value}
 						alt='preview'
-						className='w-full h-[350px] object-fill rounded-lg'
+						className='w-full object-fill rounded-lg'
 					/>
 					<button
 						type='button'
