@@ -1,3 +1,5 @@
+import { EmailLink } from '@/shared/ui/EmailLink';
+
 const Page = () => {
 	const cookiesData = [
 		{
@@ -127,13 +129,7 @@ const Page = () => {
 			<section className='flex flex-col gap-2'>
 				<h3>Контакты</h3>
 				<p className='text-gray-700'>
-					По вопросам обработки данных:{' '}
-					<a
-						href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_PHONE}`}
-						className='text-blue-500 hover:text-blue-700 active:text-blue-700'
-					>
-						{process.env.NEXT_PUBLIC_CONTACT_EMAIL}
-					</a>
+					По вопросам обработки данных: <EmailLink />
 				</p>
 			</section>
 		</div>

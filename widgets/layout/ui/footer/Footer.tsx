@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FaEnvelope, FaPhone } from 'react-icons/fa6';
 
 import { ROUTES } from '@/shared/config';
+import { EmailLink } from '@/shared/ui/EmailLink';
 
 import { NavButton } from '../../../../shared/ui/NavButton';
 import { footerButtonsList } from '../../config/footer-buttons-list';
@@ -35,9 +36,7 @@ export const Footer = () => {
 					</div>
 					<div className='flex items-center gap-3 text-2xl text-white hover:text-cyan-300 active:text-cyan-200'>
 						<FaEnvelope />
-						<a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_PHONE}`}>
-							{process.env.NEXT_PUBLIC_CONTACT_EMAIL}
-						</a>
+						<EmailLink className='text-white hover:text-cyan-300 active:text-cyan-200' />
 					</div>
 				</div>
 			</div>
