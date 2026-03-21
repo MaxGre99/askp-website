@@ -14,7 +14,7 @@ export const UsersTable = ({ data, loading, emptyText, renderRow }: Props) => {
 
 	if (loading) {
 		return (
-			<div className='rounded-2xl border p-6 text-gray-500 animate-pulse'>
+			<div className='flex flex-1 w-full items-center justify-center rounded-2xl border text-gray-500 animate-pulse'>
 				{t('notifications.loading')}
 			</div>
 		);
@@ -22,12 +22,14 @@ export const UsersTable = ({ data, loading, emptyText, renderRow }: Props) => {
 
 	if (!data || data.length === 0) {
 		return (
-			<div className='rounded-2xl border p-6 text-gray-400'>{emptyText}</div>
+			<div className='flex flex-1 w-full items-center justify-center rounded-2xl border text-gray-700 text-2xl'>
+				{emptyText}
+			</div>
 		);
 	}
 
 	return (
-		<div className='rounded-2xl border overflow-auto max-w-full'>
+		<div className='rounded-2xl border overflow-auto'>
 			<table className='w-full text-sm'>
 				<thead className='bg-gray-50 text-gray-600'>
 					<tr>

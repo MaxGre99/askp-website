@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
@@ -88,7 +89,12 @@ export const ContentList = ({ type, mode, withAuthor }: Props) => {
 				</>
 			) : (
 				!isLoading && (
-					<p className='font-oswald flex flex-1 w-full items-center justify-center text-white text-3xl'>
+					<p
+						className={clsx(
+							'font-oswald flex flex-1 w-full items-center justify-center text-3xl',
+							mode === 'my' || isAccountPage ? 'text-gray-700' : 'text-white',
+						)}
+					>
 						{t('notifications.empty')}
 					</p>
 				)

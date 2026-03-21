@@ -79,7 +79,7 @@ export const AccountBlock = () => {
 									onClick={onSignOut}
 									variant='ghost'
 								>
-									<MdOutlineLogout size={2}/>
+									<MdOutlineLogout size={20} />
 								</Button>
 							</div>
 						</div>

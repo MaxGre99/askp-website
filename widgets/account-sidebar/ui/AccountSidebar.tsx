@@ -12,7 +12,7 @@ export const AccountSidebar = () => {
 	const groups = Object.values(accountSidebarConfig);
 
 	return (
-		<nav className='min-w-[300px] w-[300px] bg-white rounded-2xl px-6 py-8'>
+		<nav className='min-w-[300px] w-[300px] bg-white rounded-2xl p-6'>
 			<ul className='flex flex-col gap-2'>
 				{groups.map((group, groupIndex) => {
 					const visibleItems = group.filter(({ access }) =>
