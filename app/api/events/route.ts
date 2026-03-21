@@ -21,11 +21,25 @@ export const GET = async (req: Request) => {
 			: {};
 
 		const total = await prisma.event.count({ where });
+
+		const withAuthor = url.searchParams.get('withAuthor') === 'true';
+
 		const events = await prisma.event.findMany({
 			where,
 			orderBy: { createdAt: 'desc' },
 			skip: (page - 1) * pageSize,
 			take: pageSize,
+			...(withAuthor && {
+				include: {
+					author: {
+						select: {
+							firstName: true,
+							lastName: true,
+							profile: { select: { displayName: true } },
+						},
+					},
+				},
+			}),
 		});
 
 		return NextResponse.json({ events, total });

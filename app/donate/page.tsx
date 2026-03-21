@@ -4,19 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { DonatersCard, useGetAllDonatersQuery } from '@/entities/donaters';
-import { useGetUserQuery } from '@/entities/users';
+import { useGetMeQuery } from '@/entities/users';
 import { DonateWidget } from '@/features/donate';
 import { Button } from '@/shared/ui/Button';
 
 const Page = () => {
 	const { t } = useTranslation();
 	const { data, isLoading } = useGetAllDonatersQuery();
-	const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
-	const showAdminActions = !isLoadingUser && user && user?.role !== 'USER';
+	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
+	const isAdmin = !isLoadingUser && user && user?.role !== 'USER';
 
 	return (
 		<>
-			{showAdminActions && (
+			{isAdmin && (
 				<div className='flex self-end'>
 					<Button href={'/donate/add'} variant='white'>
 						<FaPlus /> {t('buttons.addDonater')}
@@ -31,7 +31,7 @@ const Page = () => {
 						<DonatersCard
 							key={donater.id}
 							donater={donater}
-							showAdminActions={showAdminActions}
+							showAdminActions={isAdmin}
 						/>
 					))
 				) : (

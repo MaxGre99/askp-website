@@ -1,3 +1,5 @@
+import { usePathname } from 'next/navigation';
+
 import { FaSearch } from 'react-icons/fa';
 
 import { Button } from '@/shared/ui/Button';
@@ -22,6 +24,9 @@ export const ListFilter = ({
 	pageSize,
 	onPageSizeChange,
 }: Props) => {
+	const pathname = usePathname();
+	const isAccountPage = pathname.includes('/account/');
+
 	return (
 		<div className='flex gap-4 items-center max-w-xl w-full'>
 			<div className='flex gap-2 flex-1'>
@@ -31,7 +36,7 @@ export const ListFilter = ({
 					placeholder={placeholder}
 					className='input flex-1'
 				/>
-				<Button variant='white' onClick={onSubmit}>
+				<Button variant={isAccountPage ? 'blue' : 'white'} onClick={onSubmit}>
 					<FaSearch />
 					{buttonText}
 				</Button>

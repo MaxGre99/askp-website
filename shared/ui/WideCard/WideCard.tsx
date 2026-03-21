@@ -1,5 +1,6 @@
 // import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import clsx from 'clsx';
 import { FaPencilRuler, FaRegTrashAlt } from 'react-icons/fa';
@@ -8,24 +9,21 @@ import { MdImageNotSupported } from 'react-icons/md';
 import { Article } from '@/entities/articles';
 import { EventType } from '@/entities/events';
 import { NewsType } from '@/entities/news';
+// import { useGetUserQuery } from '@/entities/users';
 import { getAuthorName } from '@/shared/lib/getAuthorName';
 import { stripHtml } from '@/shared/lib/stripHtml';
 
 interface WideCardProps {
 	index: number;
 	item: EventType | NewsType | Article;
-	accentColor?: 'blue' | 'white';
-	showAdminActions?: boolean;
 	onDelete?: (slug: string) => void;
 }
 
-export const WideCard = ({
-	index,
-	item,
-	accentColor,
-	showAdminActions,
-	onDelete,
-}: WideCardProps) => {
+export const WideCard = ({ index, item, onDelete }: WideCardProps) => {
+	// const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
+	const pathname = usePathname();
+	const showAdminActions = pathname.includes('/account/'); // !isLoadingUser && user && user.role !== 'USER';
+
 	const isEven = index % 2 === 0;
 	const type =
 		'author' in item ? 'articles' : 'content' in item ? 'news' : 'events';
@@ -46,9 +44,8 @@ export const WideCard = ({
 			<Link href={`/${type}/${item.slug}`}>
 				<article
 					className={clsx(
-						'bg-white rounded-2xl overflow-hidden transition hover:scale-[1.01] flex gap-2 h-[192px]',
+						'bg-white rounded-2xl border border-gray-300 overflow-hidden transition hover:scale-[1.01] flex gap-2 h-[192px]',
 						isEven ? 'flex-row' : 'flex-row-reverse',
-						accentColor === 'blue' ? 'border-2 border-blue-300' : '',
 					)}
 				>
 					<div
@@ -75,7 +72,7 @@ export const WideCard = ({
 						<span className='text-xs shrink-0 text-gray-600'>
 							{localDateTime}
 						</span>
-						{'author' in item && (
+						{'author' in item && item.author && (
 							<span className='text-xs shrink-0 text-gray-600'>
 								{getAuthorName(item.author)}
 							</span>

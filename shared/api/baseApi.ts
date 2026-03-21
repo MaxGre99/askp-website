@@ -8,7 +8,7 @@ export const baseApi = createApi({
 	}),
 	tagTypes: [
 		'Profiles',
-		'Applications',
+		// 'Applications',
 		'Events',
 		'News',
 		'Me',
@@ -19,6 +19,7 @@ export const baseApi = createApi({
 		'MyProfile',
 		'Donaters',
 		'Products',
+		'Users',
 	],
 	endpoints: () => ({}),
 });

@@ -1,7 +1,7 @@
-import { NewsPage } from '@/widgets/news';
+import { ContentList } from '@/widgets/content-list';
 
 const Page = () => {
-	return <NewsPage />;
+	return <ContentList type='news' mode='all' />;
 };
 
 export default Page;

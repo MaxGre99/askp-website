@@ -8,7 +8,7 @@ import { FaHouseUser, /* FaRegBell, */ FaRegUser } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
-import { useGetUserQuery, useSignOutMutation } from '@/entities/users';
+import { useGetMeQuery, useSignOutMutation } from '@/entities/users';
 import { Button } from '@/shared/ui/Button';
 
 import { SignInForm } from './SignInForm';
@@ -18,7 +18,7 @@ export const AccountBlock = () => {
 	const { t } = useTranslation();
 	const [showMenu, setShowMenu] = useState(false);
 
-	const { data: user } = useGetUserQuery();
+	const { data: user } = useGetMeQuery();
 	const [signOut] = useSignOutMutation();
 	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
 		skip: !user?.id,
@@ -75,11 +75,11 @@ export const AccountBlock = () => {
 
 							<div className='flex gap-2 items-center self-start'>
 								<Button
-									className='w-fit! h-fit! text-black! p-0!'
+									className='w-fit! h-fit! text-black! p-0! border-0!'
 									onClick={onSignOut}
 									variant='ghost'
 								>
-									<MdOutlineLogout />
+									<MdOutlineLogout size={2}/>
 								</Button>
 							</div>
 						</div>

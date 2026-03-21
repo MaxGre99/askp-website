@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { useGetUserQuery } from '@/entities/users';
+import { useGetMeQuery } from '@/entities/users';
 
 import { redirectWithToast } from '../lib/redirectWithToast';
 
@@ -16,7 +16,7 @@ const ADMIN_ROUTES = [
 export const useAccountGuard = () => {
 	const pathname = usePathname();
 	const router = useRouter();
-	const { data: user, isLoading } = useGetUserQuery();
+	const { data: user, isLoading } = useGetMeQuery();
 
 	const isForbidden =
 		!isLoading &&

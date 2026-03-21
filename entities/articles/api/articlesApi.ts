@@ -64,7 +64,7 @@ export const articlesApi = baseApi.injectEndpoints({
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
-				return `me/articles?${params.toString()}`;
+				return `my/articles?${params.toString()}`;
 			},
 			providesTags: ['MyArticles'],
 		}),

@@ -7,7 +7,7 @@ import { FaPlus } from 'react-icons/fa';
 
 // import { MdImageNotSupported } from 'react-icons/md';
 import { ProductCard, useGetAllProductsQuery } from '@/entities/products';
-import { useGetUserQuery } from '@/entities/users';
+import { useGetMeQuery } from '@/entities/users';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 // import { Button } from '@/shared/ui/Button';
 import { Pagination } from '@/shared/ui/Pagination';
@@ -26,7 +26,7 @@ export const ShopPage = () => {
 	} = useListFilter();
 	const { data, isLoading } = useGetAllProductsQuery({ page, query, pageSize });
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
-	const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
+	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 
 	const isAdmin = !isLoadingUser && user && user.role !== 'USER';
 

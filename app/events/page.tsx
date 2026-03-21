@@ -1,7 +1,7 @@
-import { EventsPage } from '@/widgets/events';
+import { ContentList } from '@/widgets/content-list';
 
 const Page = () => {
-	return <EventsPage />;
+	return <ContentList type='events' mode='all' />;
 };
 
 export default Page;

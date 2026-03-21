@@ -6,13 +6,14 @@ export const newsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllNews: builder.query<
 			{ news: NewsType[]; total: number },
-			{ page: number; query?: string; pageSize?: number }
+			{ page: number; query?: string; pageSize?: number; withAuthor?: boolean }
 		>({
-			query: ({ page, query, pageSize = 4 }) => {
+			query: ({ page, query, pageSize = 4, withAuthor }) => {
 				const params = new URLSearchParams();
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
+				if (withAuthor) params.set('withAuthor', 'true');
 				return `/news?${params.toString()}`;
 			},
 			providesTags: ['News'],
@@ -57,7 +58,7 @@ export const newsApi = baseApi.injectEndpoints({
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
-				return `me/news?${params.toString()}`;
+				return `my/news?${params.toString()}`;
 			},
 			providesTags: ['MyNews'],
 		}),

@@ -1,7 +1,7 @@
-import { useGetUserQuery } from '../api/userApi';
+import { useGetMeQuery } from '../api/authApi';
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-	useGetUserQuery();
+	useGetMeQuery();
 
 	return children;
 };

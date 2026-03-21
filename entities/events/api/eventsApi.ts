@@ -6,13 +6,14 @@ export const eventsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllEvents: builder.query<
 			{ events: EventType[]; total: number },
-			{ page: number; query?: string; pageSize?: number }
+			{ page: number; query?: string; pageSize?: number; withAuthor?: boolean }
 		>({
-			query: ({ page, query, pageSize = 4 }) => {
+			query: ({ page, query, pageSize = 4, withAuthor }) => {
 				const params = new URLSearchParams();
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
+				if (withAuthor) params.set('withAuthor', 'true');
 				return `/events?${params.toString()}`;
 			},
 			providesTags: ['Events'],
@@ -64,7 +65,7 @@ export const eventsApi = baseApi.injectEndpoints({
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
-				return `me/events?${params.toString()}`;
+				return `my/events?${params.toString()}`;
 			},
 			providesTags: ['MyEvents'],
 		}),

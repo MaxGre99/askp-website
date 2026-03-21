@@ -5,7 +5,7 @@ import { Profile } from '../model/types';
 export const profileApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getMyProfile: builder.query<Profile, void>({
-			query: () => '/me/profile',
+			query: () => '/my/profile',
 			providesTags: ['MyProfile'],
 		}),
 		getProfile: builder.query<Profile, string>({
@@ -30,7 +30,7 @@ export const profileApi = baseApi.injectEndpoints({
 		}),
 		updateProfile: builder.mutation<Profile, Partial<Profile>>({
 			query: (body) => ({
-				url: '/me/profile',
+				url: '/my/profile',
 				method: 'PUT',
 				body,
 			}),

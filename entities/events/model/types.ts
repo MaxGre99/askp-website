@@ -1,3 +1,5 @@
+import { AuthorWithProfile } from '@/shared/lib/getAuthorName';
+
 export type EventType = {
 	id: string;
 	title: string;
@@ -9,4 +11,5 @@ export type EventType = {
 	eventDate: string;
 	createdAt: string;
 	updatedAt: string;
+	author?: AuthorWithProfile;
 };

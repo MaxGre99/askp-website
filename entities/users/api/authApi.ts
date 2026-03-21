@@ -5,9 +5,13 @@ import { SignInDto, SignUpDto } from '../model/authTypes';
 
 export const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
+		getMe: builder.query<User, void>({
+			query: () => '/auth/me',
+			providesTags: ['Me'],
+		}),
 		signUp: builder.mutation<User, SignUpDto>({
 			query: (body) => ({
-				url: '/auth/signUp',
+				url: '/auth/sign-up',
 				method: 'POST',
 				body,
 			}),
@@ -15,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
 
 		signIn: builder.mutation<{ ok: true }, SignInDto>({
 			query: (body) => ({
-				url: '/auth/signIn',
+				url: '/auth/sign-in',
 				method: 'POST',
 				body,
 			}),
@@ -29,18 +33,22 @@ export const authApi = baseApi.injectEndpoints({
 
 		signOut: builder.mutation<{ ok: true }, void>({
 			query: () => ({
-				url: '/auth/signOut',
+				url: '/auth/sign-out',
 				method: 'POST',
 			}),
 			async onQueryStarted(_, { dispatch, queryFulfilled }) {
 				try {
 					await queryFulfilled;
-					dispatch(userApi.util.resetApiState());
+					dispatch(baseApi.util.resetApiState());
 				} catch {}
 			},
 		}),
 	}),
 });
 
-export const { useSignUpMutation, useSignInMutation, useSignOutMutation } =
-	authApi;
+export const {
+	useGetMeQuery,
+	useSignUpMutation,
+	useSignInMutation,
+	useSignOutMutation,
+} = authApi;
