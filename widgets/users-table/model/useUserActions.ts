@@ -3,6 +3,7 @@ import {
 	useBlockUserMutation,
 	useRejectUserMutation,
 	useSetAdminUserMutation,
+	useSetUserMutation,
 	useUnblockUserMutation,
 } from '@/entities/users';
 
@@ -12,6 +13,7 @@ export const useUserActions = () => {
 	const [block] = useBlockUserMutation();
 	const [unblock] = useUnblockUserMutation();
 	const [setAdmin] = useSetAdminUserMutation();
+	const [setUser] = useSetUserMutation();
 
 	return {
 		approve,
@@ -19,5 +21,6 @@ export const useUserActions = () => {
 		block,
 		unblock,
 		setAdmin,
+		setUser,
 	};
 };

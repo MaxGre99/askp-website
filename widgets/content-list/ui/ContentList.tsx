@@ -18,9 +18,10 @@ interface Props {
 	type: ContentListType;
 	mode: 'all' | 'my';
 	withAuthor?: boolean;
+	showAll?: boolean;
 }
 
-export const ContentList = ({ type, mode, withAuthor }: Props) => {
+export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 	// const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
 	const pathname = usePathname();
 	const isAccountPage = pathname.includes('/account/');
@@ -40,8 +41,16 @@ export const ContentList = ({ type, mode, withAuthor }: Props) => {
 	} = useListFilter();
 
 	const queryHook = mode === 'my' ? config.getMyQuery : config.getAllQuery;
-	const { data, isLoading } = queryHook({ page, query, pageSize, withAuthor });
-	const [deleteMutation] = config.deletemutation();
+	const { data, isLoading } = queryHook({
+		page,
+		query,
+		pageSize,
+		withAuthor,
+		showAll,
+	});
+	const [deleteMutation] = config.deleteMutation();
+	const [publishMutation] = config.publishMutation();
+	const [unpublishMutation] = config.unpublishMutation();
 
 	console.log(data);
 
@@ -79,6 +88,8 @@ export const ContentList = ({ type, mode, withAuthor }: Props) => {
 						items={items}
 						{...((mode === 'my' || isAccountPage) && {
 							onDelete: deleteMutation,
+							onPublish: publishMutation,
+							onUnpublish: unpublishMutation,
 						})}
 					/>
 					<Pagination

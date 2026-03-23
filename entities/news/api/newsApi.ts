@@ -1,19 +1,26 @@
 import { baseApi } from '@/shared/api';
 
-import { NewsType } from '../model/types';
+import { CreateNewsDto, NewsType, UpdateNewsDto } from '../model/types';
 
 export const newsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllNews: builder.query<
 			{ news: NewsType[]; total: number },
-			{ page: number; query?: string; pageSize?: number; withAuthor?: boolean }
+			{
+				page: number;
+				query?: string;
+				pageSize?: number;
+				withAuthor?: boolean;
+				showAll?: boolean;
+			}
 		>({
-			query: ({ page, query, pageSize = 4, withAuthor }) => {
+			query: ({ page, query, pageSize = 4, withAuthor, showAll }) => {
 				const params = new URLSearchParams();
 				params.set('page', String(page));
 				params.set('pageSize', String(pageSize));
 				if (query) params.set('query', query);
 				if (withAuthor) params.set('withAuthor', 'true');
+				if (showAll) params.set('showAll', 'true');
 				return `/news?${params.toString()}`;
 			},
 			providesTags: ['News'],
@@ -25,13 +32,13 @@ export const newsApi = baseApi.injectEndpoints({
 				{ type: 'MyNews', id: slug },
 			],
 		}),
-		createNews: builder.mutation<NewsType, Partial<NewsType>>({
+		createNews: builder.mutation<NewsType, CreateNewsDto>({
 			query: (body) => ({ url: '/news', method: 'POST', body }),
 			invalidatesTags: ['News', 'MyNews'],
 		}),
 		updateNews: builder.mutation<
 			NewsType,
-			{ slug: string; body: Partial<NewsType> }
+			{ slug: string; body: UpdateNewsDto }
 		>({
 			query: ({ slug, body }) => ({
 				url: `/news/${slug}`,
@@ -62,6 +69,32 @@ export const newsApi = baseApi.injectEndpoints({
 			},
 			providesTags: ['MyNews'],
 		}),
+		publishNews: builder.mutation<NewsType, string>({
+			query: (slug) => ({
+				url: `/news/${slug}`,
+				method: 'PATCH',
+				body: { published: true },
+			}),
+			invalidatesTags: (_result, _error, slug) => [
+				'News',
+				'MyNews',
+				{ type: 'News', id: slug },
+				{ type: 'MyNews', id: slug },
+			],
+		}),
+		unpublishNews: builder.mutation<NewsType, string>({
+			query: (slug) => ({
+				url: `/news/${slug}`,
+				method: 'PATCH',
+				body: { published: false },
+			}),
+			invalidatesTags: (_result, _error, slug) => [
+				'News',
+				'MyNews',
+				{ type: 'News', id: slug },
+				{ type: 'MyNews', id: slug },
+			],
+		}),
 	}),
 });
 
@@ -72,4 +105,6 @@ export const {
 	useUpdateNewsMutation,
 	useDeleteNewsMutation,
 	useGetMyNewsQuery,
+	usePublishNewsMutation,
+	useUnpublishNewsMutation,
 } = newsApi;

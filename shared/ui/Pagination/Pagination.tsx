@@ -41,7 +41,7 @@ export const Pagination = ({
 						…
 					</Button>
 				}
-				containerClassName='flex justify-center items-center gap-3'
+				containerClassName='flex justify-center items-center gap-3 w-fit rounded-2xl self-center p-2'
 				pageClassName=''
 				pageLinkClassName=''
 				activeClassName=''

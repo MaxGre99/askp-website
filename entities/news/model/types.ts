@@ -1,5 +1,19 @@
 import { AuthorWithProfile } from '@/shared/lib/getAuthorName';
 
+export type CreateNewsDto = {
+	title: string;
+	content: string;
+	image?: string | null;
+	published: boolean;
+};
+
+export type UpdateNewsDto = {
+	title?: string;
+	content?: string;
+	image?: string | null;
+	published?: boolean;
+};
+
 export type NewsType = {
 	id: string;
 	title: string;
@@ -12,10 +26,3 @@ export type NewsType = {
 	updatedAt: string;
 	author?: AuthorWithProfile;
 };
-
-export interface CreateNewsDto {
-	title: string;
-	content: string;
-	image?: string;
-	published: boolean;
-}

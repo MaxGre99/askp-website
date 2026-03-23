@@ -28,7 +28,7 @@ export const accountSidebarConfig = {
 			title: 'myArticles',
 			href: 'my-articles',
 			icon: PiArticleMediumBold,
-			access: ['OWNER', 'ADMIN'],
+			access: ['OWNER', 'ADMIN', 'USER'],
 		},
 	],
 	allBlocks: [

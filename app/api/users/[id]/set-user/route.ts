@@ -19,7 +19,7 @@ export const POST = async (
 			prisma.user.update({
 				where: { id: userId },
 				data: {
-					role: 'ADMIN',
+					role: 'USER',
 					status: 'ACTIVE',
 					approvedAt: new Date(),
 					approvedBy: authAdmin.id,
@@ -34,7 +34,7 @@ export const POST = async (
 
 		return NextResponse.json({ ok: true });
 	} catch (err: unknown) {
-		console.error('SET_ADMIN_USER_ERROR:', err);
+		console.error('SET_USER_USER_ERROR:', err);
 		if (err instanceof ApiError) {
 			return NextResponse.json({ error: err.message }, { status: err.status });
 		}

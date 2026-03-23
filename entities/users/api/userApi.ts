@@ -54,6 +54,13 @@ export const userApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ['Users'],
 		}),
+		setUser: builder.mutation<void, string>({
+			query: (id) => ({
+				url: `/users/${id}/set-user`,
+				method: 'POST',
+			}),
+			invalidatesTags: ['Users'],
+		}),
 	}),
 });
 
@@ -66,4 +73,5 @@ export const {
 	useRejectUserMutation,
 	useSetAdminUserMutation,
 	useUnblockUserMutation,
+	useSetUserMutation,
 } = userApi;

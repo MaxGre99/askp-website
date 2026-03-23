@@ -58,7 +58,7 @@ export const useEditEventForm = () => {
 
 			const updated = await updateEvent({
 				slug: slug as string,
-				body: { ...trimmed, image: trimmed.image || undefined },
+				body: { ...trimmed, image: trimmed.image || null },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали

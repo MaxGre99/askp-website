@@ -15,12 +15,17 @@ export const GET = async (req: Request) => {
 			50,
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
 		);
+		const showAll = url.searchParams.get('showAll') === 'true';
 
-		const where: Prisma.ArticleWhereInput = query
-			? { title: { contains: query, mode: 'insensitive' as Prisma.QueryMode } }
-			: {};
+		const where: Prisma.ArticleWhereInput = {
+			...(query && {
+				title: { contains: query, mode: 'insensitive' as Prisma.QueryMode },
+			}),
+			...(!showAll && { published: true }),
+		};
 
 		const total = await prisma.article.count({ where });
+
 		const articles = await prisma.article.findMany({
 			where,
 			orderBy: { createdAt: 'desc' },
@@ -50,7 +55,7 @@ export const GET = async (req: Request) => {
 };
 
 export const POST = async (req: Request) => {
-	const authUser = await getAuthUser('ADMIN');
+	const authUser = await getAuthUser();
 
 	try {
 		const { title, content, image, published } = await req.json();
@@ -62,7 +67,7 @@ export const POST = async (req: Request) => {
 				content,
 				image,
 				authorId: authUser.id,
-				published: published ?? true,
+				published: published ?? false,
 				slug,
 			},
 		});

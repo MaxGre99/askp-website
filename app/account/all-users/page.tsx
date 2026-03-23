@@ -14,7 +14,7 @@ const Page = () => {
 			data={data}
 			loading={isLoading}
 			emptyText={t('account.users.empty')}
-			actions={['approve', 'reject', 'block', 'unblock', 'setAdmin']}
+			actions={['approve', 'reject', 'block', 'unblock', 'setAdmin', 'setUser']}
 		/>
 	);
 };

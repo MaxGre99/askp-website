@@ -10,26 +10,23 @@ export const GET = async (req: Request) => {
 	try {
 		const url = new URL(req.url);
 		const query = url.searchParams.get('query') || '';
-		const authorId = url.searchParams.get('authorId');
 		const page = Math.max(1, Number(url.searchParams.get('page') ?? 1));
 		const pageSize = Math.min(
 			50,
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
 		);
 
+		const showAll = url.searchParams.get('showAll') === 'true';
+		const withAuthor = url.searchParams.get('withAuthor') === 'true';
+
 		const where: Prisma.NewsWhereInput = {
 			...(query && {
-				title: {
-					contains: query,
-					mode: 'insensitive',
-				},
+				title: { contains: query, mode: 'insensitive' as Prisma.QueryMode },
 			}),
-			...(authorId && { authorId }),
+			...(!showAll && { published: true }),
 		};
 
 		const total = await prisma.news.count({ where });
-
-		const withAuthor = url.searchParams.get('withAuthor') === 'true';
 
 		const news = await prisma.news.findMany({
 			where,
@@ -72,7 +69,7 @@ export const POST = async (req: Request) => {
 				content,
 				image,
 				authorId: authUser.id,
-				published: published ?? true,
+				published: published ?? false,
 				slug,
 			},
 		});

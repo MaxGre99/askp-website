@@ -38,13 +38,13 @@ export const UsersTableRow = ({ user, actions }: UsersTableRowProps) => {
 			{'status' in user && (
 				<td className='px-4 py-3'>
 					<span
-						className={`px-2.5 py-1 rounded-full text-sm font-medium ${USER_STATUS_STYLES[user.status as UserStatus]}`}
+						className={`px-2.5 py-1 rounded-full text-sm font-medium text-nowrap  ${USER_STATUS_STYLES[user.status as UserStatus]}`}
 					>
 						{t(`labels.${user.status}`)}
 					</span>
 				</td>
 			)}
-			<td className='px-4 py-3'>{actions}</td>
+			{user.role !== 'OWNER' && <td className='px-4 py-3'>{actions}</td>}
 		</tr>
 	);
 };

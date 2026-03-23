@@ -29,7 +29,7 @@ export const UsersTable = ({ data, loading, emptyText, renderRow }: Props) => {
 	}
 
 	return (
-		<div className='rounded-2xl border overflow-auto'>
+		<div className='w-full rounded-2xl border overflow-auto'>
 			<table className='w-full text-sm'>
 				<thead className='bg-gray-50 text-gray-600'>
 					<tr>

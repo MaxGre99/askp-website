@@ -6,9 +6,16 @@ import { WideCard } from '@/shared/ui/WideCard';
 type Props = {
 	items: NewsType[] | EventType[] | Article[];
 	onDelete?: (slug: string) => void;
+	onPublish?: (slug: string) => void;
+	onUnpublish?: (slug: string) => void;
 };
 
-export const WideCardsList = ({ items, onDelete }: Props) => {
+export const WideCardsList = ({
+	items,
+	onDelete,
+	onPublish,
+	onUnpublish,
+}: Props) => {
 	return (
 		<div className='flex flex-1 flex-col gap-4'>
 			{items.map((item, index) => (
@@ -17,6 +24,8 @@ export const WideCardsList = ({ items, onDelete }: Props) => {
 					item={item}
 					index={index}
 					onDelete={onDelete}
+					onPublish={onPublish}
+					onUnpublish={onUnpublish}
 				/>
 			))}
 		</div>

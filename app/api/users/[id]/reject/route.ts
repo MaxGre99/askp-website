@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
+import { guardOwner } from '@/shared/lib/guardOwner';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (
@@ -13,6 +14,7 @@ export const POST = async (
 
 		// проверяем, что это ADMIN или OWNER
 		await getAuthUser('ADMIN');
+		await guardOwner(userId);
 
 		await prisma.user.update({
 			where: { id: userId },

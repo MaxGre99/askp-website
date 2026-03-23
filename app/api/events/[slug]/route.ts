@@ -35,9 +35,9 @@ export const PATCH = async (
 			where: { slug },
 			data: {
 				...body,
-				eventDate: body.eventDate ? new Date(body.eventDate) : undefined,
-				image: body.image ?? null,
-				slug: body.title ? slugify(body.title) : undefined,
+				...('image' in body && { image: body.image ?? null }),
+				...(body.eventDate && { eventDate: new Date(body.eventDate) }),
+				...(body.title && { slug: slugify(body.title) }),
 			},
 		});
 		return NextResponse.json(updated);

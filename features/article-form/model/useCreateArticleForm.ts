@@ -26,7 +26,7 @@ export const useCreateArticleForm = () => {
 		title: '',
 		content: '',
 		image: '',
-		published: true,
+		published: false,
 	};
 
 	// Вызывается из формы при каждой загрузке картинки в контент
@@ -40,7 +40,7 @@ export const useCreateArticleForm = () => {
 
 			const article = await createArticle({
 				...trimmed,
-				image: trimmed.image || undefined,
+				image: trimmed.image || null,
 			}).unwrap();
 
 			// Удаляем картинки из контента, которые загрузили но не использовали

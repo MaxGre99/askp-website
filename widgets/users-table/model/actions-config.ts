@@ -2,6 +2,7 @@ import { IconType } from 'react-icons';
 import {
 	RiUserFollowFill,
 	RiUserForbidFill,
+	RiUserMinusFill,
 	RiUserReceived2Fill,
 	RiUserStarFill,
 	RiUserUnfollowFill,
@@ -12,7 +13,8 @@ export type UserAction =
 	| 'reject'
 	| 'block'
 	| 'unblock'
-	| 'setAdmin';
+	| 'setAdmin'
+	| 'setUser';
 
 export const USER_ACTIONS: Record<
 	UserAction,
@@ -31,5 +33,10 @@ export const USER_ACTIONS: Record<
 	setAdmin: {
 		icon: RiUserStarFill,
 		color: 'bg-fuchsia-500 hover:bg-fuchsia-600',
+	},
+	setUser: {
+		icon: RiUserMinusFill,
+		color:
+			'bg-transparent text-blue-500! border border-dashed hover:text-blue-600!',
 	},
 };

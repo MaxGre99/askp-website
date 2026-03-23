@@ -41,7 +41,7 @@ export const useCreateEventForm = () => {
 
 			const event = await createEvent({
 				...trimmed,
-				image: trimmed.image || undefined,
+				image: trimmed.image || null,
 			}).unwrap();
 
 			// Удаляем картинки из контента, которые загрузили но не использовали

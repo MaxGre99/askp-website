@@ -16,13 +16,17 @@ export const GET = async (req: Request) => {
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
 		);
 
-		const where: Prisma.EventWhereInput = query
-			? { title: { contains: query, mode: 'insensitive' as Prisma.QueryMode } }
-			: {};
+		const showAll = url.searchParams.get('showAll') === 'true';
+		const withAuthor = url.searchParams.get('withAuthor') === 'true';
+
+		const where: Prisma.EventWhereInput = {
+			...(query && {
+				title: { contains: query, mode: 'insensitive' as Prisma.QueryMode },
+			}),
+			...(!showAll && { published: true }),
+		};
 
 		const total = await prisma.event.count({ where });
-
-		const withAuthor = url.searchParams.get('withAuthor') === 'true';
 
 		const events = await prisma.event.findMany({
 			where,
@@ -67,7 +71,7 @@ export const POST = async (req: Request) => {
 				image,
 				authorId: authUser.id,
 				eventDate: new Date(eventDate),
-				published: published ?? true,
+				published: published ?? false,
 				slug,
 			},
 		});

@@ -36,7 +36,7 @@ export const useEditArticleForm = () => {
 		title: article?.title ?? '',
 		content: article?.content ?? '',
 		image: article?.image ?? '',
-		published: article?.published ?? true,
+		published: /* article?.published ?? */ false,
 	};
 
 	const trackUploadedUrl = (url: string) => {
@@ -59,7 +59,7 @@ export const useEditArticleForm = () => {
 
 			const updated = await updateArticle({
 				slug: slug as string,
-				body: { ...trimmed, image: trimmed.image || undefined },
+				body: { ...trimmed, image: trimmed.image || null },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали

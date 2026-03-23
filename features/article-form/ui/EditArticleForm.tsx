@@ -7,6 +7,7 @@ import {
 	useUploadArticleCoverMutation,
 	useUploadArticleImageMutation,
 } from '@/entities/article-images';
+import { useGetMeQuery } from '@/entities/users';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
@@ -14,6 +15,9 @@ import { ImageInput } from '@/shared/ui/ImageInput';
 import { useEditArticleForm } from '../model/useEditArticleForm';
 
 export const EditArticleForm = () => {
+	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
+	const isAdmin = !isLoadingUser && user && user.role !== 'USER';
+
 	const { initialValues, schema, handleSubmit, trackUploadedUrl, isLoading } =
 		useEditArticleForm();
 	const [uploadArticleImage] = useUploadArticleImageMutation();
@@ -71,14 +75,20 @@ export const EditArticleForm = () => {
 						/>
 					</div>
 
-					<label className='flex items-center gap-2 cursor-pointer'>
-						<input
-							type='checkbox'
-							checked={values.published}
-							onChange={(e) => setFieldValue('published', e.target.checked)}
-						/>
-						Опубликовать
-					</label>
+					{isAdmin ? (
+						<label className='flex items-center gap-2 cursor-pointer'>
+							<input
+								type='checkbox'
+								checked={values.published}
+								onChange={(e) => setFieldValue('published', e.target.checked)}
+							/>
+							Опубликовать
+						</label>
+					) : (
+						<p className='italic text-gray-600'>
+							Статья будет опубликована после одобрения администрацией.
+						</p>
+					)}
 
 					<button
 						type='submit'
