@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { guardOwner } from '@/shared/lib/guardOwner';
+import { sendApprovalEmail } from '@/shared/lib/mails';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (
@@ -30,6 +31,15 @@ export const POST = async (
 				create: { userId },
 			}),
 		]);
+
+		const user = await prisma.user.findUnique({
+			where: { id: userId },
+			select: { email: true, firstName: true, lastName: true },
+		});
+
+		if (user) {
+			await sendApprovalEmail(user).catch(console.error);
+		}
 
 		return NextResponse.json({ ok: true });
 	} catch (err: unknown) {

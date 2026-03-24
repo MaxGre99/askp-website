@@ -4,6 +4,10 @@ import { Prisma } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 import { ApiError } from '@/shared/api';
+import {
+	sendNewApplicationEmailToAdmin,
+	sendRegistrationEmailToUser,
+} from '@/shared/lib/mails';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
@@ -35,6 +39,19 @@ export const POST = async (req: Request) => {
 				status: true,
 			},
 		});
+
+		await Promise.allSettled([
+			sendRegistrationEmailToUser({
+				email: user.email,
+				firstName: user.firstName,
+				lastName: user.lastName,
+			}),
+			sendNewApplicationEmailToAdmin({
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+			}),
+		]);
 
 		return NextResponse.json(user, { status: 201 });
 	} catch (err: unknown) {
