@@ -13,7 +13,7 @@ const Page = () => {
 			data={data}
 			loading={isLoading}
 			emptyText={t('account.applications.blocked.empty')}
-			actions={['unblock']}
+			getActions={() => ['unblock']}
 		/>
 	);
 };

@@ -3,7 +3,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { useGetPendingUsersQuery } from '@/entities/users';
-import { AdminUsersTable } from '@/widgets/users-table';
+import { AdminUsersTable, getActionsForUser } from '@/widgets/users-table';
 
 const Page = () => {
 	const { data, isLoading } = useGetPendingUsersQuery();
@@ -13,7 +13,7 @@ const Page = () => {
 			data={data}
 			loading={isLoading}
 			emptyText={t('account.applications.pending.empty')}
-			actions={['approve', 'reject', 'block', 'setAdmin']}
+			getActions={getActionsForUser}
 		/>
 	);
 };

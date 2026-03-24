@@ -10,14 +10,14 @@ interface Props {
 	data?: UserWithCreatedAt[] | FullUser[];
 	loading: boolean;
 	emptyText: string;
-	actions: UserAction[];
+	getActions: (user: UserWithCreatedAt | FullUser) => UserAction[];
 }
 
 export const AdminUsersTable = ({
 	data,
 	loading,
 	emptyText,
-	actions,
+	getActions,
 }: Props) => {
 	return (
 		<UsersTable
@@ -28,7 +28,7 @@ export const AdminUsersTable = ({
 				<UsersTableRow
 					key={u.id}
 					user={u}
-					actions={<UsersActions id={u.id} types={actions} />}
+					actions={<UsersActions id={u.id} types={getActions(u)} />}
 				/>
 			)}
 		/>

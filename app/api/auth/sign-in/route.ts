@@ -22,7 +22,11 @@ export const POST = async (req: Request) => {
 
 		if (user.status !== 'ACTIVE') {
 			throw new ApiError(
-				user.status === 'PENDING' ? 'not_approved' : 'blocked',
+				user.status === 'PENDING'
+					? 'not_approved'
+					: user.status === 'BLOCKED'
+						? 'blocked'
+						: 'rejected',
 				403,
 			);
 		}

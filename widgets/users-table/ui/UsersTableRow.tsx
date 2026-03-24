@@ -44,7 +44,7 @@ export const UsersTableRow = ({ user, actions }: UsersTableRowProps) => {
 					</span>
 				</td>
 			)}
-			{user.role !== 'OWNER' && <td className='px-4 py-3'>{actions}</td>}
+			<td className='px-4 py-3'>{actions}</td>
 		</tr>
 	);
 };

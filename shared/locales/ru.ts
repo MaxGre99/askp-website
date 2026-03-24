@@ -189,7 +189,7 @@ const ru = {
 			invalid: {
 				email: 'Некорретный email',
 				password: 'Минимум 6 символов',
-				url: 'Невалидный URL'
+				url: 'Невалидный URL',
 			},
 		},
 		backendErrors: {
@@ -200,6 +200,7 @@ const ru = {
 			wrong_password: 'Неверный пароль',
 			not_approved: 'Пользователь не подтверждён администратором',
 			blocked: 'Пользователь заблокирован',
+			rejected: 'Пользователю отказано',
 			failed_to_get_avatar: 'Ошибка получения аватарки',
 			failed_to_delete_avatar: 'Ошибка удаления аватарки',
 			database_error: 'Ошибка базы данных',

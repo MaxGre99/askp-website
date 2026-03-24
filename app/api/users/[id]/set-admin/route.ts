@@ -12,25 +12,25 @@ export const POST = async (
 	try {
 		const { id: userId } = await params;
 
-		const authAdmin = await getAuthUser('ADMIN');
+		/* const authAdmin = */ await getAuthUser('ADMIN');
 		await guardOwner(userId);
 
-		await prisma.$transaction([
-			prisma.user.update({
-				where: { id: userId },
-				data: {
-					role: 'ADMIN',
-					status: 'ACTIVE',
-					approvedAt: new Date(),
-					approvedBy: authAdmin.id,
-				},
-			}),
-			prisma.profile.upsert({
+		await /* prisma.$transaction([ */
+		prisma.user.update({
+			where: { id: userId },
+			data: {
+				role: 'ADMIN',
+				// status: 'ACTIVE',
+				// approvedAt: new Date(),
+				// approvedBy: authAdmin.id,
+			},
+		});
+		/* prisma.profile.upsert({
 				where: { userId },
 				update: {},
 				create: { userId },
 			}),
-		]);
+		]); */
 
 		return NextResponse.json({ ok: true });
 	} catch (err: unknown) {
