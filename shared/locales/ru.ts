@@ -91,7 +91,9 @@ const ru = {
 			telegramChannel: 'Ссылка на канал в Телеграме',
 			vkUrl: 'Ссылка на профиль в ВК',
 			website: 'Ссылка на личный сайт',
-			problemDescription: 'Описание проблемы',
+			// problemDescription: 'Описание проблемы',
+			message: 'Сообщение',
+			vk: 'ВКонтакте',
 			rememberMe: 'Запомнить меня',
 			MALE: 'Мужской',
 			FEMALE: 'Женский',
@@ -132,7 +134,9 @@ const ru = {
 			email: 'example@mail.com',
 			telegram: '@username',
 			whatsapp: '+7 (___) ___-__-__',
-			problemDescription: 'Опишите вашу ситуацию (необязательно)',
+			// problemDescription: 'Опишите вашу ситуацию (необязательно)',
+			message: 'Ваше сообщение',
+			vk: 'https://vk.com/durov',
 		},
 		buttons: {
 			find: 'Поиск',
@@ -172,8 +176,9 @@ const ru = {
 			required: {
 				firstName: 'Имя обязательно',
 				lastName: 'Фамилия обязательна',
-				contact: 'Укажите хотя бы один способ связи',
+				// contact: 'Укажите хотя бы один способ связи',
 				email: 'Email обязателен',
+				phone: 'Номер обязателен',
 				password: 'Пароль обязателен',
 				title: 'Заголовок обязателен',
 				content: 'Новость обязана иметь тело',
@@ -184,6 +189,7 @@ const ru = {
 			invalid: {
 				email: 'Некорретный email',
 				password: 'Минимум 6 символов',
+				url: 'Невалидный URL'
 			},
 		},
 		backendErrors: {

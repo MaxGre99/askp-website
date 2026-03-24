@@ -19,6 +19,7 @@ import { stripHtml } from '@/shared/lib/stripHtml';
 interface WideCardProps {
 	index: number;
 	item: EventType | NewsType | Article;
+	type: 'events' | 'news' | 'articles';
 	onDelete?: (slug: string) => void;
 	onPublish?: (slug: string) => void;
 	onUnpublish?: (slug: string) => void;
@@ -27,6 +28,7 @@ interface WideCardProps {
 export const WideCard = ({
 	index,
 	item,
+	type,
 	onDelete,
 	onPublish,
 	onUnpublish,
@@ -39,8 +41,8 @@ export const WideCard = ({
 	const showAdminActions = !isLoadingUser && user && user.role !== 'USER';
 
 	const isEven = index % 2 === 0;
-	const type =
-		'author' in item ? 'articles' : 'content' in item ? 'news' : 'events';
+	// const type =
+	// 	'eventDate' in item ? 'events' : 'content' in item ? 'news' : 'articles';
 	const text =
 		'content' in item ? stripHtml(item.content) : stripHtml(item.description);
 	const localDateTime = new Date(

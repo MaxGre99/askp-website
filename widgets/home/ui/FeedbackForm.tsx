@@ -1,4 +1,4 @@
-import { Form, Formik, useFormikContext } from 'formik';
+import { Form, Formik /* , useFormikContext */ } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -9,10 +9,11 @@ import { FormField } from '@/shared/ui/FormField';
 // Тип для значений формы (initialValues)
 interface FormValues {
 	name: string;
-	phone?: string;
-	email?: string;
+	phone: string;
+	email: string;
 	telegram?: string;
 	whatsapp?: string;
+	vk?: string;
 	message?: string;
 }
 
@@ -25,12 +26,15 @@ export const FeedbackForm = ({
 
 	const contactSchema = Yup.object({
 		name: Yup.string().required(t('validationErrors.required.firstName')),
-		phone: Yup.string(),
-		email: Yup.string().email(t('validationErrors.invalid.email')),
+		phone: Yup.string().required(t('validationErrors.required.phone')),
+		email: Yup.string()
+			.email(t('validationErrors.invalid.email'))
+			.required(t('validationErrors.required.email')),
 		telegram: Yup.string(),
 		whatsapp: Yup.string(),
+		vk: Yup.string().url(t('validationErrors.invalid.url')),
 		message: Yup.string(),
-	}).test(
+	}); /* .test(
 		'one-contact-required',
 		t('validationErrors.required.contact'),
 		function (values) {
@@ -45,31 +49,31 @@ export const FeedbackForm = ({
 				message: t('validationErrors.required.contact'),
 			});
 		},
-	);
+	); */
 
 	// Расширенный тип для ошибок (включая кастомную 'contacts')
-	interface ExtendedErrors extends Yup.InferType<typeof contactSchema> {
-		contacts?: string;
-	}
+	// interface ExtendedErrors extends Yup.InferType<typeof contactSchema> {
+	// 	contacts?: string;
+	// }
 
-	// Интерфейс для пропсов компонента ContactError
-	interface ContactErrorProps {
-		className?: string; // Опциональный, для передачи дополнительных классов
-	}
+	// // Интерфейс для пропсов компонента ContactError
+	// interface ContactErrorProps {
+	// 	className?: string; // Опциональный, для передачи дополнительных классов
+	// }
 
 	// Компонент для отображения ошибки
-	const ContactError = ({ className = '' }: ContactErrorProps) => {
-		// Типизируем контекст на основе FormValues
-		const { errors: formikErrors, submitCount } =
-			useFormikContext<FormValues>();
+	// const ContactError = ({ className = '' }: ContactErrorProps) => {
+	// 	// Типизируем контекст на основе FormValues
+	// 	const { errors: formikErrors, submitCount } =
+	// 		useFormikContext<FormValues>();
 
-		// Расширяем тип ошибок для доступа к 'contacts'
-		const errors = formikErrors as unknown as ExtendedErrors;
+	// 	// Расширяем тип ошибок для доступа к 'contacts'
+	// 	const errors = formikErrors as unknown as ExtendedErrors;
 
-		return submitCount > 0 && errors.contacts ? (
-			<p className={`error text-center ${className}`}>{errors.contacts}</p>
-		) : null;
-	};
+	// 	return submitCount > 0 && errors.contacts ? (
+	// 		<p className={`error text-center ${className}`}>{errors.contacts}</p>
+	// 	) : null;
+	// };
 
 	return (
 		<Formik<FormValues>
@@ -79,6 +83,7 @@ export const FeedbackForm = ({
 				email: '',
 				telegram: '',
 				whatsapp: '',
+				vk: '',
 				message: '',
 			}}
 			validationSchema={contactSchema}
@@ -106,20 +111,22 @@ export const FeedbackForm = ({
 					placeholder={t('placeholders.firstName')}
 					required
 				/>
-				<div className='grid grid-cols-2 gap-4 mt-3'>
+				<div className='grid grid-cols-2 gap-3 mt-3'>
 					<FormField
 						name='phone'
 						label={t('labels.phone')}
 						type='tel'
 						placeholder={t('placeholders.phone')}
 						// highlightOnError='contacts'
+						required
 					/>
 					<FormField
 						name='email'
 						label={t('labels.email')}
 						type='email'
-						placeholder={t('placeholders.phone')}
+						placeholder={t('placeholders.email')}
 						// highlightOnError='contacts'
+						required
 					/>
 					<FormField
 						name='telegram'
@@ -134,13 +141,21 @@ export const FeedbackForm = ({
 						// highlightOnError='contacts'
 					/>
 				</div>
-				<ContactError className='mt-2' />
+				<FormField
+					name='vk'
+					label={t('labels.vk')}
+					placeholder={t('placeholders.vk')}
+					className='w-fit self-center'
+					labelClassname='w-fit self-center mt-3'
+					// highlightOnError='contacts'
+				/>
+				{/* <ContactError className='mt-2' /> */}
 				<div className='mt-3'>
 					<FormField
 						name='message'
-						label={t('labels.problemDescription')}
+						label={t('labels.message')}
 						as='textarea'
-						placeholder={t('placeholders.problemDescription')}
+						placeholder={t('placeholders.message')}
 					/>
 				</div>
 				<Button type='submit' className='mt-5'>

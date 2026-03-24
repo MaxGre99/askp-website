@@ -8,6 +8,7 @@ interface FormFieldProps<Values extends object = object> {
 	placeholder?: string;
 	required?: boolean;
 	className?: string;
+	labelClassname?: string;
 }
 
 export const FormField = <Values extends object>({
@@ -18,6 +19,7 @@ export const FormField = <Values extends object>({
 	placeholder,
 	required,
 	className,
+	labelClassname,
 }: FormFieldProps<Values>) => {
 	const { errors, touched /* , values, setFieldValue */ } =
 		useFormikContext<Values>();
@@ -26,7 +28,7 @@ export const FormField = <Values extends object>({
 	// const fieldValue = values[name];
 
 	return (
-		<div className={`flex flex-col gap-1`}>
+		<div className={`flex flex-col gap-1 ${labelClassname}`}>
 			{label && (
 				<label className='text-sm font-medium text-gray-700'>
 					{label}

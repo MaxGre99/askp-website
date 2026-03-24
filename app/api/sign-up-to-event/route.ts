@@ -6,10 +6,10 @@ import { ApiError } from '@/shared/api';
 
 export const POST = async (req: NextRequest) => {
 	try {
-		const { eventName, name, phone, email, telegram, whatsapp } =
+		const { eventName, name, phone, email, telegram, whatsapp, vk } =
 			await req.json();
 
-		if (!eventName || !name || !(phone || email || telegram || whatsapp))
+		if (!eventName || !name || !phone || !email)
 			throw new ApiError('incorrect_form_data', 400);
 
 		const transporter = nodemailer.createTransport({
@@ -29,6 +29,7 @@ export const POST = async (req: NextRequest) => {
 Email: ${email || '-'}
 Telegram: ${telegram || '-'}
 WhatsApp: ${whatsapp || '-'}
+Вконтакте: ${vk || '-'}
 `;
 
 		await transporter.sendMail({

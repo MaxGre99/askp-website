@@ -86,6 +86,7 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 				<>
 					<WideCardsList
 						items={items}
+						type={type}
 						{...((mode === 'my' || isAccountPage) && {
 							onDelete: deleteMutation,
 							onPublish: publishMutation,

@@ -4,7 +4,8 @@ import { NewsType } from '@/entities/news';
 import { WideCard } from '@/shared/ui/WideCard';
 
 type Props = {
-	items: NewsType[] | EventType[] | Article[];
+	items: EventType[] | NewsType[] | Article[];
+	type: 'events' | 'news' | 'articles';
 	onDelete?: (slug: string) => void;
 	onPublish?: (slug: string) => void;
 	onUnpublish?: (slug: string) => void;
@@ -12,6 +13,7 @@ type Props = {
 
 export const WideCardsList = ({
 	items,
+	type,
 	onDelete,
 	onPublish,
 	onUnpublish,
@@ -22,6 +24,7 @@ export const WideCardsList = ({
 				<WideCard
 					key={item.slug}
 					item={item}
+					type={type}
 					index={index}
 					onDelete={onDelete}
 					onPublish={onPublish}
