@@ -14,6 +14,7 @@ export const GET = async () => {
 			firstName: true,
 			lastName: true,
 			createdAt: true,
+			status: true,
 		},
 		orderBy: { createdAt: 'asc' },
 	});
