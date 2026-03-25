@@ -24,6 +24,11 @@ import {
 	FaStrikethrough,
 	FaUnderline,
 } from 'react-icons/fa';
+import {
+	TbAlignBoxCenterMiddle,
+	TbAlignBoxLeftMiddle,
+	TbAlignBoxRightMiddle,
+} from 'react-icons/tb';
 
 import { ImageWithWrap } from '../ImageWithWrap';
 
@@ -210,7 +215,7 @@ const MenuBar = ({
 				active={editor.getAttributes('image').wrap === 'left'}
 				title='Обтекание слева'
 			>
-				<FaAlignLeft />
+				<TbAlignBoxLeftMiddle />
 			</ToolbarButton>
 
 			<ToolbarButton
@@ -225,7 +230,7 @@ const MenuBar = ({
 				active={editor.getAttributes('image').wrap === 'right'}
 				title='Обтекание справа'
 			>
-				<FaAlignRight />
+				<TbAlignBoxRightMiddle />
 			</ToolbarButton>
 
 			<ToolbarButton
@@ -240,7 +245,7 @@ const MenuBar = ({
 				active={editor.getAttributes('image').wrap === 'none'}
 				title='Без обтекания'
 			>
-				<FaAlignCenter />
+				<TbAlignBoxCenterMiddle />
 			</ToolbarButton>
 
 			<div className='w-px bg-gray-300 mx-1' />

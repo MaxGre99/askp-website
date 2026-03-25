@@ -186,9 +186,11 @@ body {
 }
 
 /* фикс: убираем flex у контейнера */
-/* [data-resize-container] {
-	display: flex !important;
-} */
+[data-resize-container] {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 /* LEFT */
 [data-resize-container][data-wrap='left'] {
