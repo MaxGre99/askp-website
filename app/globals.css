@@ -184,3 +184,37 @@ body {
 	color: #6b7280;
 	font-style: italic;
 }
+
+/* фикс: убираем flex у контейнера */
+/* [data-resize-container] {
+	display: flex !important;
+} */
+
+/* LEFT */
+[data-resize-container][data-wrap='left'] {
+	display: block !important;
+	float: left;
+	margin: 8px 16px 8px 0;
+	max-width: 50%;
+}
+
+/* RIGHT */
+[data-resize-container][data-wrap='right'] {
+	display: block !important;
+	float: right;
+	margin: 8px 0 8px 16px;
+	max-width: 50%;
+}
+
+/* NONE */
+[data-resize-container][data-wrap='none'] {
+	float: none;
+	margin: 12px auto;
+}
+
+/* очистка обтекания */
+.ProseMirror::after {
+	content: '';
+	display: block;
+	clear: both;
+}

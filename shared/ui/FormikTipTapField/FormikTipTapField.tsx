@@ -197,6 +197,51 @@ const MenuBar = ({
 				<FaRegImage />
 			</ToolbarButton>
 
+			<ToolbarButton
+				onClick={() =>
+					editor
+						.chain()
+						.focus()
+						.setNodeSelection(editor.state.selection.from)
+						.updateAttributes('image', { wrap: 'left' })
+						.run()
+				}
+				active={editor.getAttributes('image').wrap === 'left'}
+				title='Обтекание слева'
+			>
+				<FaAlignLeft />
+			</ToolbarButton>
+
+			<ToolbarButton
+				onClick={() =>
+					editor
+						.chain()
+						.focus()
+						.setNodeSelection(editor.state.selection.from)
+						.updateAttributes('image', { wrap: 'right' })
+						.run()
+				}
+				active={editor.getAttributes('image').wrap === 'right'}
+				title='Обтекание справа'
+			>
+				<FaAlignRight />
+			</ToolbarButton>
+
+			<ToolbarButton
+				onClick={() =>
+					editor
+						.chain()
+						.focus()
+						.setNodeSelection(editor.state.selection.from)
+						.updateAttributes('image', { wrap: 'none' })
+						.run()
+				}
+				active={editor.getAttributes('image').wrap === 'none'}
+				title='Без обтекания'
+			>
+				<FaAlignCenter />
+			</ToolbarButton>
+
 			<div className='w-px bg-gray-300 mx-1' />
 
 			{/* Очистить */}
@@ -211,6 +256,44 @@ const MenuBar = ({
 		</div>
 	);
 };
+
+export type ImageWrap = 'none' | 'left' | 'right';
+
+export const ImageWithWrap = Image.extend({
+	addAttributes() {
+		return {
+			...this.parent?.(),
+
+			wrap: {
+				default: 'none',
+				parseHTML: (element) => element.getAttribute('data-wrap') || 'none',
+				renderHTML: (attributes) => {
+					return {
+						'data-wrap': attributes.wrap,
+					};
+				},
+			},
+		};
+	},
+
+	addCommands() {
+		return {
+			setImageWrap:
+				(wrap) =>
+				({ commands }) => {
+					return commands.updateAttributes('image', { wrap });
+				},
+		};
+	},
+});
+
+declare module '@tiptap/core' {
+	interface Commands<ReturnType> {
+		imageWrap: {
+			setImageWrap: (wrap: 'none' | 'left' | 'right') => ReturnType;
+		};
+	}
+}
 
 // Основной компонент
 
@@ -228,8 +311,11 @@ export const FormikTipTapField = ({
 		extensions: [
 			StarterKit,
 			TextAlign.configure({ types: ['heading', 'paragraph'] }),
-			Image.configure({
+			ImageWithWrap.configure({
 				resize: { enabled: true, alwaysPreserveAspectRatio: true },
+				HTMLAttributes: {
+					class: 'editor-image',
+				},
 			}),
 			Youtube.configure({ width: 640, height: 360 }),
 		],
@@ -251,6 +337,42 @@ export const FormikTipTapField = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [field.value]);
+
+	useEffect(() => {
+		if (!editor) return;
+
+		const syncWrapToContainer = () => {
+			const { state } = editor;
+			const { doc } = state;
+
+			doc.descendants((node, posHere) => {
+				if (node.type.name === 'image') {
+					const wrap = node.attrs.wrap || 'none';
+
+					// ищем соответствующий DOM элемент
+					const dom = editor.view.nodeDOM(posHere) as HTMLElement | null;
+
+					if (dom && dom.hasAttribute('data-resize-container')) {
+						if (dom.getAttribute('data-wrap') !== wrap) {
+							dom.setAttribute('data-wrap', wrap);
+						}
+					}
+				}
+			});
+		};
+
+		// при каждом изменении редактора
+		editor.on('update', syncWrapToContainer);
+		editor.on('selectionUpdate', syncWrapToContainer);
+
+		// первый прогон
+		setTimeout(syncWrapToContainer, 0);
+
+		return () => {
+			editor.off('update', syncWrapToContainer);
+			editor.off('selectionUpdate', syncWrapToContainer);
+		};
+	}, [editor]);
 
 	return (
 		<>
