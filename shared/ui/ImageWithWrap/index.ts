@@ -1,0 +1,1 @@
+export { ImageWithWrap } from './ImageWithWrap';

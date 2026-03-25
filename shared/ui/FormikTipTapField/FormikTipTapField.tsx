@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect } from 'react';
 
-import Image from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import Youtube from '@tiptap/extension-youtube';
 import { type Editor, EditorContent, useEditor } from '@tiptap/react';
@@ -25,6 +24,8 @@ import {
 	FaStrikethrough,
 	FaUnderline,
 } from 'react-icons/fa';
+
+import { ImageWithWrap } from '../ImageWithWrap';
 
 // Тулбар (кнопка и меню)
 
@@ -256,44 +257,6 @@ const MenuBar = ({
 		</div>
 	);
 };
-
-export type ImageWrap = 'none' | 'left' | 'right';
-
-export const ImageWithWrap = Image.extend({
-	addAttributes() {
-		return {
-			...this.parent?.(),
-
-			wrap: {
-				default: 'none',
-				parseHTML: (element) => element.getAttribute('data-wrap') || 'none',
-				renderHTML: (attributes) => {
-					return {
-						'data-wrap': attributes.wrap,
-					};
-				},
-			},
-		};
-	},
-
-	addCommands() {
-		return {
-			setImageWrap:
-				(wrap) =>
-				({ commands }) => {
-					return commands.updateAttributes('image', { wrap });
-				},
-		};
-	},
-});
-
-declare module '@tiptap/core' {
-	interface Commands<ReturnType> {
-		imageWrap: {
-			setImageWrap: (wrap: 'none' | 'left' | 'right') => ReturnType;
-		};
-	}
-}
 
 // Основной компонент
 

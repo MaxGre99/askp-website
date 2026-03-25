@@ -2,11 +2,12 @@
 
 import { useEffect } from 'react';
 
-import Image from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import Youtube from '@tiptap/extension-youtube';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+
+import { ImageWithWrap } from '../ImageWithWrap';
 
 export const TipTapReadOnly = ({
 	content,
@@ -24,8 +25,8 @@ export const TipTapReadOnly = ({
 				},
 			}),
 			TextAlign.configure({ types: ['heading', 'paragraph'] }), // ← было без configure!
-			Image.configure({
-				resize: { enabled: false }, // resize не нужен в readonly
+			ImageWithWrap.configure({
+				resize: { enabled: false },
 			}),
 			Youtube,
 		],
@@ -42,7 +43,7 @@ export const TipTapReadOnly = ({
 	return (
 		<EditorContent
 			editor={editor}
-			className={`${noBorder ? 'noBorder' : ''}`}
+			className={`${noBorder ? 'noBorder' : ''} noResize`}
 		/>
 	);
 };

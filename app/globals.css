@@ -218,3 +218,20 @@ body {
 	display: block;
 	clear: both;
 }
+
+.noResize .ProseMirror img[data-wrap='left'] {
+	float: left;
+	margin: 8px;
+	max-width: 50%;
+}
+
+.noResize .ProseMirror img[data-wrap='right'] {
+	float: right;
+	margin: 8px;
+	max-width: 50%;
+}
+
+.noResize .ProseMirror img[data-wrap='none'] {
+	margin: 8px;
+	float: none;
+}
