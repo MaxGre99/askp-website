@@ -13,8 +13,11 @@ import { Article } from '@/entities/articles';
 import { EventType } from '@/entities/events';
 import { NewsType } from '@/entities/news';
 import { useGetMeQuery } from '@/entities/users';
+import { useConfirm } from '@/shared/hooks/useConfirmModal';
 import { getAuthorName } from '@/shared/lib/getAuthorName';
 import { stripHtml } from '@/shared/lib/stripHtml';
+
+import { ConfirmModal } from '../ConfirmModal';
 
 interface WideCardProps {
 	index: number;
@@ -35,6 +38,8 @@ export const WideCard = ({
 }: WideCardProps) => {
 	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 	const { t } = useTranslation();
+
+	const { confirmProps, confirm } = useConfirm();
 
 	const pathname = usePathname();
 	const showActions = pathname.includes('/account/');
@@ -57,6 +62,7 @@ export const WideCard = ({
 
 	return (
 		<div className='flex flex-col gap-1'>
+			<ConfirmModal {...confirmProps} />
 			<Link href={`/${type}/${item.slug}`}>
 				<article
 					className={clsx(
@@ -124,22 +130,35 @@ export const WideCard = ({
 					{showAdminActions &&
 						(!item.published ? (
 							<button
+								title={t(`buttons.publish${type}`)}
 								type='button'
-								onClick={() => onPublish?.(item.slug)}
+								onClick={() =>
+									confirm(t(`buttons.publish${type}`), () =>
+										onPublish?.(item.slug),
+									)
+								}
 								className='bg-white/90 hover:bg-green-50 border border-gray-200 text-gray-600 hover:text-green-600 px-3 py-1 rounded-lg text-xs font-medium transition'
 							>
 								<BiShow size={16} />
 							</button>
 						) : (
 							<button
+								title={t(`buttons.unpublish${type}`)}
 								type='button'
-								onClick={() => onUnpublish?.(item.slug)}
+								onClick={() =>
+									confirm(
+										t(`buttons.unpublish${type}`),
+										() => onUnpublish?.(item.slug),
+										'delete',
+									)
+								}
 								className='bg-white/90 hover:bg-gray-400 border border-gray-200 text-gray-600 hover:text-white px-3 py-1 rounded-lg text-xs font-medium transition'
 							>
 								<BiSolidHide size={16} />
 							</button>
 						))}
 					<Link
+						title={t(`buttons.edit${type}`)}
 						href={`${type}/${item.slug}/edit`}
 						className='bg-white/90 hover:bg-blue-50 border border-gray-200 text-gray-600 hover:text-blue-600 px-3 py-1 rounded-lg text-xs font-medium transition'
 					>
@@ -147,7 +166,14 @@ export const WideCard = ({
 					</Link>
 					<button
 						type='button'
-						onClick={() => onDelete?.(item.slug)}
+						title={t(`buttons.delete${type}`)}
+						onClick={() =>
+							confirm(
+								t(`buttons.delete${type}`),
+								() => onDelete?.(item.slug),
+								'delete',
+							)
+						}
 						className='bg-white/90 hover:bg-red-50 border border-gray-200 text-gray-600 hover:text-red-600 px-3 py-1 rounded-lg text-xs font-medium transition'
 					>
 						<FaRegTrashAlt size={16} />

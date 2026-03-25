@@ -1,1 +1,0 @@
-export { updateQuery } from './updateQuery';

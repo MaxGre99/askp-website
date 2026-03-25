@@ -1,7 +1,7 @@
 'use client';
 
 import { DonaterFormFields, useEditDonaterForm } from '@/features/donater-form';
-import { useAccountGuard } from '@/shared/routing/useAccountGuard';
+import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
 
 export const EditDonaterPage = () => {
 	const { initialValues, schema, handleSubmit, isLoading } =

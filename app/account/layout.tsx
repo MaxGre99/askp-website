@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 
-import { useAccountGuard } from '@/shared/routing/useAccountGuard';
+import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
 import { AccountSidebar } from '@/widgets/account-sidebar';
 
 const AccountLayout = ({ children }: { children: ReactNode }) => {

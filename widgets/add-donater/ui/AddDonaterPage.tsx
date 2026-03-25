@@ -4,7 +4,7 @@ import {
 	DonaterFormFields,
 	useCreateDonaterForm,
 } from '@/features/donater-form';
-import { useAccountGuard } from '@/shared/routing/useAccountGuard';
+import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
 
 export const AddDonaterPage = () => {
 	const { initialValues, schema, handleSubmit } = useCreateDonaterForm();
