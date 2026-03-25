@@ -10,7 +10,7 @@ export const profileApi = baseApi.injectEndpoints({
 		}),
 		getProfile: builder.query<Profile, string>({
 			query: (userId) => `/profiles/${userId}`,
-			providesTags: (result, error, userId) => [
+			providesTags: (_result, _error, userId) => [
 				{ type: 'Profiles', id: userId },
 				{ type: 'MyProfile', id: userId },
 			],

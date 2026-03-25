@@ -8,7 +8,9 @@ import { FaHouseUser, /* FaRegBell, */ FaRegUser } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
+import { useGetProfileQuery } from '@/entities/profiles';
 import { useGetMeQuery, useSignOutMutation } from '@/entities/users';
+import { getDisplayName } from '@/shared/lib/getDisplayName';
 import { Button } from '@/shared/ui/Button';
 
 import { SignInForm } from './SignInForm';
@@ -21,6 +23,9 @@ export const AccountBlock = () => {
 	const { data: user } = useGetMeQuery();
 	const [signOut] = useSignOutMutation();
 	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
+		skip: !user?.id,
+	});
+	const { data: profile } = useGetProfileQuery(user?.id as string, {
 		skip: !user?.id,
 	});
 
@@ -53,7 +58,7 @@ export const AccountBlock = () => {
 			</Button>
 
 			{showMenu && (
-				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 min-w-64 z-50'>
+				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 z-50 min-w-[256px]'>
 					{user ? (
 						<div className='flex items-center gap-6'>
 							<div className='rounded-[50%] bg-gray-50 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-gray-200 border overflow-hidden'>
@@ -61,15 +66,13 @@ export const AccountBlock = () => {
 							</div>
 
 							<div className='flex flex-col gap-1 text-black'>
-								<p className='text-nowrap'>
-									{user.firstName} {user.lastName}
-								</p>
+								<p className='text-nowrap'>{getDisplayName(profile, user)}</p>
 								<Link
 									href={'/account'}
 									className='flex gap-1 items-center hover:underline'
 								>
 									<FaHouseUser />
-									<p>{t('account.title')}</p>
+									<p className='text-nowrap'>{t('account.title')}</p>
 								</Link>
 							</div>
 

@@ -16,7 +16,21 @@ export const POST = async (
 		const authAdmin = await getAuthUser('ADMIN');
 		await guardOwner(userId);
 
+		const user = await prisma.user.findUnique({
+			where: { id: userId },
+			select: {
+				firstName: true,
+				lastName: true,
+				email: true,
+			},
+		});
+
+		if (!user) {
+			throw new ApiError('user_not_found', 404);
+		}
+
 		await prisma.$transaction([
+			// Активируем пользователя
 			prisma.user.update({
 				where: { id: userId },
 				data: {
@@ -25,21 +39,29 @@ export const POST = async (
 					approvedBy: authAdmin.id,
 				},
 			}),
+
+			// Upsert профиля с копированием имён
 			prisma.profile.upsert({
 				where: { userId },
-				update: {},
-				create: { userId },
+				update: {}, // если профиль уже есть — ничего не меняем
+				create: {
+					userId,
+					firstName: user.firstName || null, // или '' если хочешь пустую строку
+					lastName: user.lastName || null,
+					displayName:
+						user.firstName && user.lastName
+							? `${user.firstName} ${user.lastName}`.trim()
+							: null,
+				},
 			}),
 		]);
 
-		const user = await prisma.user.findUnique({
-			where: { id: userId },
-			select: { email: true, firstName: true, lastName: true },
-		});
-
-		if (user) {
-			await sendApprovalEmail(user).catch(console.error);
-		}
+		// Отправка письма
+		await sendApprovalEmail({
+			email: user.email,
+			firstName: user.firstName,
+			lastName: user.lastName,
+		}).catch(console.error);
 
 		return NextResponse.json({ ok: true });
 	} catch (err: unknown) {
