@@ -49,7 +49,7 @@ export const eventsApi = baseApi.injectEndpoints({
 				method: 'PATCH',
 				body,
 			}),
-			invalidatesTags: (result, error, { slug }) => [
+			invalidatesTags: (_result, _error, { slug }) => [
 				'Events',
 				'MyEvents',
 				{ type: 'Events', id: slug },

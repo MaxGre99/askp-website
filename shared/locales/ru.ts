@@ -179,6 +179,10 @@ const ru = {
 			deleteevents: 'Удалить событие',
 			deletearticles: 'Удалить статью',
 			deletenews: 'Удалить новость',
+			publishProduct: 'Опубликовать товар',
+			unpublishProduct: 'Скрыть товар',
+			editProduct: 'Редактировать товар',
+			deleteProduct: 'Удалить товар',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',

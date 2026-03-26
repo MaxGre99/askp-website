@@ -38,7 +38,7 @@ export const GET = async (
 		if (!product)
 			return NextResponse.json({ error: 'not_found' }, { status: 404 });
 		return NextResponse.json(product);
-	} catch (err) {
+	} catch {
 		return NextResponse.json(
 			{ error: 'failed_to_fetch_product' },
 			{ status: 500 },
@@ -85,7 +85,7 @@ export const DELETE = async (
 	try {
 		await prisma.product.delete({ where: { slug } });
 		return NextResponse.json({ ok: true });
-	} catch (err) {
+	} catch {
 		return NextResponse.json(
 			{ error: 'failed_to_delete_product' },
 			{ status: 500 },

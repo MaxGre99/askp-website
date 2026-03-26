@@ -45,7 +45,7 @@ export default function ProductPage() {
 			<div className='bg-white rounded-2xl overflow-hidden'>
 				<div className='flex flex-col lg:flex-row gap-0'>
 					{/* Слайдер */}
-					<div className='lg:w-[55%] flex flex-col gap-3 p-6 bg-gray-50 border-r border-gray-100'>
+					<div className='lg:w-[55%] flex flex-col gap-3 p-6 bg-gray-50 border-r border-gray-100 justify-center'>
 						{hasImages ? (
 							<>
 								{/* Основной слайдер */}

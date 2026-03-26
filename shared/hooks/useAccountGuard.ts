@@ -17,10 +17,12 @@ const ADMIN_ROUTES = [
 	'/account/all-users',
 	'/account/blocked-users',
 	'/donate/add',
+	'/shop/add',
 ];
 
 const ADMIN_ROUTE_PATTERNS = [
-	/^\/donate\/[^/]+\/edit$/, // /donate/[id]/edit
+	/^\/donate\/[^/]+\/edit$/, // /donate/[slug]/edit
+	/^\/shop\/[^/]+\/edit$/, // /shop/[slug]/edit
 ];
 
 export const useAccountGuard = () => {

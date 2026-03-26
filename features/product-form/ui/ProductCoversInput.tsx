@@ -5,8 +5,8 @@ import { useRef, useState } from 'react';
 import { FieldArray, useField } from 'formik';
 
 import {
-	useDeleteProductImageMutation,
-	useUploadProductImageMutation,
+	useDeleteProductCoverMutation,
+	useUploadProductCoverMutation,
 } from '@/entities/product-images';
 
 const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
@@ -25,8 +25,8 @@ const ImageRow = ({
 	const [mode, setMode] = useState<'url' | 'upload'>(value ? 'url' : 'url');
 	const [uploading, setUploading] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [uploadProductImage] = useUploadProductImageMutation();
-	const [deleteProductImage] = useDeleteProductImageMutation();
+	const [uploadProductCover] = useUploadProductCoverMutation();
+	const [deleteProductCover] = useDeleteProductCoverMutation();
 
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -34,11 +34,11 @@ const ImageRow = ({
 		setUploading(true);
 		try {
 			if (value && value.startsWith(MINIO_PUBLIC_URL!)) {
-				await deleteProductImage(value).unwrap().catch(console.error);
+				await deleteProductCover(value).unwrap().catch(console.error);
 			}
 			const formData = new FormData();
 			formData.append('file', file);
-			const { url } = await uploadProductImage(formData).unwrap();
+			const { url } = await uploadProductCover(formData).unwrap();
 			onChange(index, url);
 			setMode('url');
 		} finally {
@@ -48,7 +48,7 @@ const ImageRow = ({
 
 	const handleDelete = async () => {
 		if (value && value.startsWith(MINIO_PUBLIC_URL!)) {
-			await deleteProductImage(value).unwrap().catch(console.error);
+			await deleteProductCover(value).unwrap().catch(console.error);
 		}
 		onRemove(index);
 	};
@@ -106,7 +106,7 @@ const ImageRow = ({
 				<img
 					src={value}
 					alt={`preview-${index}`}
-					className='w-full h-32 object-cover rounded-lg'
+					className='w-full object-fill rounded-lg'
 				/>
 			)}
 		</div>

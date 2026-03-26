@@ -24,11 +24,18 @@ export const ShopPage = () => {
 		changePage,
 		changePageSize,
 	} = useListFilter();
-	const { data, isLoading } = useGetAllProductsQuery({ page, query, pageSize });
-	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
+
 	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 
 	const isAdmin = !isLoadingUser && user && user.role !== 'USER';
+
+	const { data, isLoading } = useGetAllProductsQuery({
+		page,
+		query,
+		pageSize,
+		showAll: isAdmin,
+	});
+	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
@@ -52,9 +59,9 @@ export const ShopPage = () => {
 
 			{!isLoading && data && data.products.length > 0 ? (
 				<>
-					<div className='flex flex-1 w-full flex-wrap gap-6 items-center'>
+					<div className='flex flex-1 w-full flex-wrap gap-6'>
 						{isAdmin && (
-							<Link href='/account/shop/add'>
+							<Link href='/shop/add'>
 								<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[320px] h-[368px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
 									<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
 										<FaPlus size={32} />
@@ -76,7 +83,7 @@ export const ShopPage = () => {
 					/>
 				</>
 			) : isAdmin ? (
-				<Link href='/account/shop/add'>
+				<Link href='/shop/add'>
 					<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[320px] h-[368px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
 						<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
 							<FaPlus size={32} />

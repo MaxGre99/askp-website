@@ -16,9 +16,11 @@ export const GET = async (req: Request) => {
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 8)),
 		);
 
+		const showAll = url.searchParams.get('showAll') === 'true';
+
 		const where: Prisma.ProductWhereInput = {
-			published: true,
 			...(query && { name: { contains: query, mode: 'insensitive' } }),
+			...(!showAll && { published: true }),
 		};
 
 		const total = await prisma.product.count({ where });
