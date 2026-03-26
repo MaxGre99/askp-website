@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+import { getAuthUser } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
@@ -29,6 +30,7 @@ export const PATCH = async (
 	{ params }: { params: Promise<{ slug: string }> },
 ) => {
 	const { slug } = await params;
+	await getAuthUser('ADMIN');
 	try {
 		const body = await req.json();
 		const updated = await prisma.event.update({
@@ -59,6 +61,7 @@ export const DELETE = async (
 	},
 ) => {
 	const { slug } = await params;
+	await getAuthUser('ADMIN');
 	try {
 		await prisma.event.delete({ where: { slug } });
 		return NextResponse.json({ ok: true });

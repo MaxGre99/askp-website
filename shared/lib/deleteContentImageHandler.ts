@@ -4,10 +4,13 @@ import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { deleteS3File } from '@/shared/lib/deleteS3File';
 
-export const deleteContentImageHandler = (bucket: string) => {
+export const deleteContentImageHandler = (
+	bucket: string,
+	type: 'OWNER' | 'ADMIN' | 'USER' = 'USER',
+) => {
 	return async (req: Request) => {
 		try {
-			const user = await getAuthUser();
+			const user = await getAuthUser(type);
 			const { url } = await req.json();
 
 			if (!url || typeof url !== 'string')

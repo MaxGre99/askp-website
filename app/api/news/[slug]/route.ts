@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { Prisma } from '@prisma/client';
 
+import { getAuthUser } from '@/shared/lib/auth';
 import { deleteS3File } from '@/shared/lib/deleteS3File';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { prisma } from '@/shared/lib/prisma';
@@ -33,6 +34,7 @@ export const PATCH = async (
 	{ params }: { params: Promise<{ slug: string }> },
 ) => {
 	const { slug } = await params;
+	await getAuthUser('ADMIN');
 	try {
 		const body = await req.json();
 		const updated = await prisma.news.update({
@@ -67,6 +69,7 @@ export const DELETE = async (
 	{ params }: { params: Promise<{ slug: string }> },
 ) => {
 	const { slug } = await params;
+	await getAuthUser('ADMIN');
 	try {
 		const news = await prisma.news.findUnique({ where: { slug } });
 		if (!news)

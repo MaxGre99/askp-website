@@ -7,10 +7,13 @@ import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { s3 } from '@/shared/lib/s3';
 
-export const createContentImageHandler = (bucket: string) => {
+export const createContentImageHandler = (
+	bucket: string,
+	type: 'OWNER' | 'ADMIN' | 'USER' = 'USER',
+) => {
 	return async (req: Request) => {
 		try {
-			const user = await getAuthUser();
+			const user = await getAuthUser(type);
 			const formData = await req.formData();
 			const file = formData.get('file') as File | null;
 			if (!file) throw new ApiError('file_not_provided', 400);

@@ -7,10 +7,16 @@ import { redirectWithToast } from '../lib/redirectWithToast';
 
 const ADMIN_ROUTES = [
 	'/account/news',
-	'/account/applications',
 	'/account/events',
+	'/account/my-news',
+	'/account/my-events',
+	'/account/all-news',
+	'/account/all-events',
+	'/account/all-articles',
+	'/account/pending-users',
+	'/account/all-users',
+	'/account/blocked-users',
 	'/donate/add',
-	'/donate/edit',
 ];
 
 const ADMIN_ROUTE_PATTERNS = [

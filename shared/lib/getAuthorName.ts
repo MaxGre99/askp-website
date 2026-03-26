@@ -5,7 +5,7 @@ export interface AuthorWithProfile {
 }
 
 export const getAuthorName = (author: AuthorWithProfile): string => {
-	return (
-		author.profile?.displayName ?? `${author.firstName} ${author.lastName}`
-	);
+	return author.profile?.displayName && author.profile.displayName !== ''
+		? author.profile?.displayName
+		: `${author.firstName} ${author.lastName}`;
 };

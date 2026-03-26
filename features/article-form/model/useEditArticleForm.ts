@@ -11,6 +11,7 @@ import {
 	useGetArticleQuery,
 	useUpdateArticleMutation,
 } from '@/entities/articles';
+import { useAuthorGuard } from '@/shared/hooks/useAuthorGuard';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
@@ -24,6 +25,8 @@ export const useEditArticleForm = () => {
 	const router = useRouter();
 
 	const { data: article, isLoading } = useGetArticleQuery(slug as string);
+	const { isLoading: isLoadingGuard } = useAuthorGuard(article?.authorId);
+
 	const [updateArticle] = useUpdateArticleMutation();
 	const [deleteArticleImage] = useDeleteArticleImageMutation();
 	const [deleteArticleCover] = useDeleteArticleCoverMutation();
@@ -84,5 +87,11 @@ export const useEditArticleForm = () => {
 		}
 	};
 
-	return { initialValues, schema, handleSubmit, trackUploadedUrl, isLoading };
+	return {
+		initialValues,
+		schema,
+		handleSubmit,
+		trackUploadedUrl,
+		isLoading: isLoading || isLoadingGuard,
+	};
 };
