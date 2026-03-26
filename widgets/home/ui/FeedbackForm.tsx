@@ -105,13 +105,13 @@ export const FeedbackForm = ({
 			}}
 		>
 			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-white/80 p-6'>
-				<FormField
-					name='name'
-					label={t('labels.firstName')}
-					placeholder={t('placeholders.firstName')}
-					required
-				/>
-				<div className='grid grid-cols-2 gap-3 mt-3'>
+				<div className='grid grid-cols-2 gap-4'>
+					<FormField
+						name='name'
+						label={t('labels.firstName')}
+						placeholder={t('placeholders.firstName')}
+						required
+					/>
 					<FormField
 						name='phone'
 						label={t('labels.phone')}
@@ -140,17 +140,17 @@ export const FeedbackForm = ({
 						placeholder={t('placeholders.whatsapp')}
 						// highlightOnError='contacts'
 					/>
+					<FormField
+						name='vk'
+						label={t('labels.vk')}
+						placeholder={t('placeholders.vk')}
+						// className='w-fit self-center'
+						// labelClassname='w-fit self-center mt-3'
+						// highlightOnError='contacts'
+					/>
 				</div>
-				<FormField
-					name='vk'
-					label={t('labels.vk')}
-					placeholder={t('placeholders.vk')}
-					className='w-fit self-center'
-					labelClassname='w-fit self-center mt-3'
-					// highlightOnError='contacts'
-				/>
 				{/* <ContactError className='mt-2' /> */}
-				<div className='mt-3'>
+				<div className='mt-4'>
 					<FormField
 						name='message'
 						label={t('labels.message')}
@@ -158,7 +158,7 @@ export const FeedbackForm = ({
 						placeholder={t('placeholders.message')}
 					/>
 				</div>
-				<Button type='submit' className='mt-5'>
+				<Button type='submit' className='mt-6'>
 					{t('buttons.send')}
 				</Button>
 			</Form>

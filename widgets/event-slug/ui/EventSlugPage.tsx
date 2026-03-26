@@ -2,15 +2,11 @@
 
 import { useParams } from 'next/navigation';
 
-import { useTranslation } from 'react-i18next';
-
 import { useGetEventQuery } from '@/entities/events';
 import { SignUpToEventForm } from '@/features/sign-up-to-event-form';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const EventSlugPage = () => {
-	const { t } = useTranslation();
-
 	const { slug } = useParams();
 
 	const { data, isLoading } = useGetEventQuery((slug as string)!);
@@ -35,7 +31,6 @@ export const EventSlugPage = () => {
 				<TipTapReadOnly content={data?.description ?? ''} noBorder />
 			</div>
 			<section className='flex flex-col gap-5 items-center w-full mb-6'>
-				<h2 className='font-oswald'>{t('events.signUpForm')}</h2>
 				<SignUpToEventForm eventName={data?.title ?? ''} />
 			</section>
 		</div>

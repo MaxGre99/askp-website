@@ -97,19 +97,23 @@ export const SignUpToEventForm = ({ eventName }: { eventName: string }) => {
 				}
 			}}
 		>
-			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-blue-100/60 p-6'>
-				<FormField
-					name='name'
-					label={t('labels.firstName')}
-					placeholder={t('placeholders.firstName')}
-					required
-				/>
-				<div className='grid grid-cols-2 gap-3 mt-3'>
+			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-blue-100/60 p-6 gap-6'>
+				<h2 className='font-oswald text-center font-light'>
+					{t('events.signUpForm')}
+				</h2>
+				<div className='grid grid-cols-2 gap-4'>
+					<FormField
+						name='name'
+						label={t('labels.firstName')}
+						placeholder={t('placeholders.firstName')}
+						required
+					/>
 					<FormField
 						name='phone'
 						label={t('labels.phone')}
 						type='tel'
 						placeholder={t('placeholders.phone')}
+						required
 						// highlightOnError='contacts'
 					/>
 					<FormField
@@ -117,6 +121,7 @@ export const SignUpToEventForm = ({ eventName }: { eventName: string }) => {
 						label={t('labels.email')}
 						type='email'
 						placeholder={t('placeholders.email')}
+						required
 						// highlightOnError='contacts'
 					/>
 					<FormField
@@ -131,19 +136,17 @@ export const SignUpToEventForm = ({ eventName }: { eventName: string }) => {
 						placeholder={t('placeholders.whatsapp')}
 						// highlightOnError='contacts'
 					/>
+					<FormField
+						name='vk'
+						label={t('labels.vk')}
+						placeholder={t('placeholders.vk')}
+						// className='w-fit self-center'
+						// labelClassname='w-fit self-center mt-3'
+						// highlightOnError='contacts'
+					/>
 				</div>
-				<FormField
-					name='vk'
-					label={t('labels.vk')}
-					placeholder={t('placeholders.vk')}
-					className='w-fit self-center'
-					labelClassname='w-fit self-center mt-3'
-					// highlightOnError='contacts'
-				/>
 				{/* <ContactError className='mt-2' /> */}
-				<Button type='submit' className='mt-5'>
-					{t('buttons.send')}
-				</Button>
+				<Button type='submit'>{t('buttons.send')}</Button>
 			</Form>
 		</Formik>
 	);
