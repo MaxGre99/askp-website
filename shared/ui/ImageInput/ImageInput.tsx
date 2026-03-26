@@ -49,7 +49,7 @@ export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<div className='flex items-center justify-between'>
-				<label className='font-bold'>{label}</label>
+				<label>{label}</label>
 				<div className='flex gap-1 text-sm'>
 					<button
 						type='button'

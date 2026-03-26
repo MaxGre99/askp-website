@@ -15,7 +15,7 @@ const AccountLayout = ({ children }: { children: ReactNode }) => {
 	return (
 		<div className='flex flex-1 gap-2 w-full'>
 			<AccountSidebar />
-			<div className='flex flex-1 max-w-[calc(100%-308px)] bg-white rounded-2xl p-6'>
+			<div className='flex flex-1 max-w-[calc(100%-308px)] bg-white rounded-2xl p-6 justify-center'>
 				{children}
 			</div>
 		</div>

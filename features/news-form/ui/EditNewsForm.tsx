@@ -55,6 +55,7 @@ export const EditNewsForm = () => {
 						name='title'
 						label='Заголовок'
 						placeholder='Введите заголовок новости'
+						required
 					/>
 
 					<ImageInput
@@ -65,7 +66,9 @@ export const EditNewsForm = () => {
 					/>
 
 					<div className='flex flex-col'>
-						<label className='font-bold mb-2'>Содержание:</label>
+						<label className='mb-2'>
+							Содержание<span className='text-red-500'>*</span>
+						</label>
 						<FormikTipTapField
 							name='content'
 							onUploadImage={handleUploadImage}

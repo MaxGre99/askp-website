@@ -55,12 +55,14 @@ export const EditEventForm = () => {
 						name='title'
 						label='Заголовок'
 						placeholder='Введите заголовок события'
+						required
 					/>
 
 					<FormField
 						name='eventDate'
 						label='Дата события'
 						type='datetime-local'
+						required
 					/>
 
 					<ImageInput
@@ -71,7 +73,9 @@ export const EditEventForm = () => {
 					/>
 
 					<div className='flex flex-col'>
-						<label className='font-bold mb-2'>Описание:</label>
+						<label className='mb-2'>
+							Описание<span className='text-red-500'>*</span>
+						</label>
 						<FormikTipTapField
 							name='description'
 							onUploadImage={handleUploadImage}

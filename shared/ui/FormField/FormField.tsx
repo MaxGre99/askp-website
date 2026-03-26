@@ -28,9 +28,11 @@ export const FormField = <Values extends object>({
 	// const fieldValue = values[name];
 
 	return (
-		<div className={`flex flex-col gap-1 ${labelClassname}`}>
+		<div className='flex flex-col gap-1'>
 			{label && (
-				<label className='text-sm font-medium text-gray-700'>
+				<label
+					className={`text-sm font-medium text-gray-700 ${labelClassname}`}
+				>
 					{label}
 					{required && <span className='text-red-500'>*</span>}
 				</label>

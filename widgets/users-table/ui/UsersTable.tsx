@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { FullUser, UserWithCreatedAt } from '@/entities/users';
+import { Loader } from '@/shared/ui/Loader';
 
 type Props = {
 	data?: UserWithCreatedAt[] | FullUser[];
@@ -15,7 +16,7 @@ export const UsersTable = ({ data, loading, emptyText, renderRow }: Props) => {
 	if (loading) {
 		return (
 			<div className='flex flex-1 w-full items-center justify-center rounded-2xl border text-gray-500 animate-pulse'>
-				{t('notifications.loading')}
+				<Loader />
 			</div>
 		);
 	}

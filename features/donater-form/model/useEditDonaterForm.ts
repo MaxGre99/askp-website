@@ -1,7 +1,6 @@
 import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
 
 import { useDeleteDonaterCoverMutation } from '@/entities/donater-covers';
 import {
@@ -9,6 +8,8 @@ import {
 	useUpdateDonaterMutation,
 } from '@/entities/donaters';
 import { trimStrings } from '@/shared/lib/trimStrings';
+
+import { createDonaterSchema } from './schema';
 
 export const useEditDonaterForm = () => {
 	const { t } = useTranslation();
@@ -18,19 +19,13 @@ export const useEditDonaterForm = () => {
 	const [updateDonater] = useUpdateDonaterMutation();
 	const [deleteDonaterCover] = useDeleteDonaterCoverMutation();
 
-	const schema = Yup.object({
-		name: Yup.string().required(t('validationErrors.required.name')),
-		description: Yup.string().required(
-			t('validationErrors.required.description'),
-		),
-		image: Yup.string().nullable().optional(),
-	});
-
 	const initialValues = {
 		name: donater?.name ?? '',
 		description: donater?.description ?? '',
 		image: donater?.image ?? '',
 	};
+
+	const schema = createDonaterSchema(t);
 
 	const handleSubmit = async (values: typeof initialValues) => {
 		const trimmed = trimStrings(values);

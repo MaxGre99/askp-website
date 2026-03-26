@@ -3,6 +3,8 @@
 import { Formik } from 'formik';
 import { Form } from 'formik';
 
+import { Loader } from '@/shared/ui/Loader';
+
 import { useProfileForm } from '../model/useProfileForm';
 
 import { ProfileActions } from './ProfileActions';
@@ -21,7 +23,7 @@ export const ProfileForm = () => {
 		loading,
 	} = useProfileForm();
 
-	if (loading) return <div>Загрузка профиля...</div>;
+	if (loading) return <Loader />;
 
 	return (
 		<Formik

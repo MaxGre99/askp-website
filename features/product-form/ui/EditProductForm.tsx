@@ -39,23 +39,28 @@ export const EditProductForm = () => {
 						name='name'
 						label='Название'
 						placeholder='Введите название'
+						required
 					/>
 					<FormField
 						name='contentLink'
 						label='Ссылка на курс'
 						placeholder='https://...'
+						required
 					/>
 					<FormField
 						name='price'
 						label='Цена (₽)'
 						type='number'
 						placeholder='1500'
+						required
 					/>
 
 					<ProductCoversInput />
 
 					<div className='flex flex-col'>
-						<label className='font-bold mb-2'>Описание:</label>
+						<label className='mb-2'>
+							Описание<span className='text-red-500'>*</span>
+						</label>
 						<FormikTipTapField
 							name='description'
 							onUploadImage={handleUploadProductImage}

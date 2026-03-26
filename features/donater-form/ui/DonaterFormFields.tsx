@@ -16,7 +16,7 @@ interface Props {
 	schema: Yup.ObjectSchema<
 		{
 			name: string;
-			description: string;
+			description: string | null | undefined;
 			image: string | null | undefined;
 		},
 		Yup.AnyObject,
@@ -72,6 +72,7 @@ export const DonaterFormFields = ({
 						name='name'
 						label='Название'
 						placeholder='Введите название'
+						required
 					/>
 					<FormField
 						name='description'
