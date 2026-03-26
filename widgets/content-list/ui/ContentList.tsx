@@ -6,10 +6,10 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
-// import { useGetUserQuery } from '@/entities/users';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { WideCardsList } from '@/features/wide-cards-list';
 import { Button } from '@/shared/ui/Button';
+import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
 
 import { CONTENT_LIST_CONFIG, ContentListType } from '../model/config';
@@ -22,10 +22,8 @@ interface Props {
 }
 
 export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
-	// const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
 	const pathname = usePathname();
 	const isAccountPage = pathname.includes('/account/');
-	// const isAccountPage = !isLoadingUser && user && user.role !== 'USER';
 	const { t } = useTranslation();
 	const config = CONTENT_LIST_CONFIG[type];
 
@@ -58,6 +56,8 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 	const total = config.getTotal(data);
 	const totalPages = Math.ceil(total / pageSize) || 1;
 
+	if (isLoading) return <Loader />;
+
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
@@ -82,7 +82,7 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 				/>
 			</div>
 
-			{!isLoading && items.length > 0 ? (
+			{items.length > 0 ? (
 				<>
 					<WideCardsList
 						items={items}
@@ -100,16 +100,14 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 					/>
 				</>
 			) : (
-				!isLoading && (
-					<p
-						className={clsx(
-							'font-oswald flex flex-1 w-full items-center justify-center text-3xl',
-							mode === 'my' || isAccountPage ? 'text-gray-700' : 'text-white',
-						)}
-					>
-						{t('notifications.empty')}
-					</p>
-				)
+				<p
+					className={clsx(
+						'font-oswald flex flex-1 w-full items-center justify-center text-3xl',
+						mode === 'my' || isAccountPage ? 'text-gray-700' : 'text-white',
+					)}
+				>
+					{t('notifications.empty')}
+				</p>
 			)}
 		</div>
 	);

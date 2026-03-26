@@ -10,6 +10,7 @@ import { Navigation, Pagination, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useGetProductQuery } from '@/entities/products';
+import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 import 'swiper/css/navigation';
@@ -18,21 +19,16 @@ import 'swiper/css/thumbs';
 
 import 'swiper/css';
 
-export default function ProductPage() {
+const Page = () => {
 	const { slug } = useParams();
 	const { data: product, isLoading } = useGetProductQuery(slug as string);
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
-	if (isLoading)
-		return (
-			<div className='flex flex-1 items-center justify-center'>
-				<div className='w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
-			</div>
-		);
+	if (isLoading) return <Loader />;
 
 	if (!product)
 		return (
-			<div className='flex flex-1 items-center justify-center text-white font-oswald text-2xl'>
+			<div className='flex flex-1 items-center justify-center text-white font-oswald text-5xl'>
 				Товар не найден
 			</div>
 		);
@@ -166,4 +162,6 @@ export default function ProductPage() {
 			)}
 		</div>
 	);
-}
+};
+
+export default Page;

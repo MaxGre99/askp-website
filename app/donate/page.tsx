@@ -7,12 +7,15 @@ import { DonatersCard, useGetAllDonatersQuery } from '@/entities/donaters';
 import { useGetMeQuery } from '@/entities/users';
 import { DonateWidget } from '@/features/donate';
 import { Button } from '@/shared/ui/Button';
+import { Loader } from '@/shared/ui/Loader';
 
 const Page = () => {
 	const { t } = useTranslation();
 	const { data, isLoading } = useGetAllDonatersQuery();
 	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 	const isAdmin = !isLoadingUser && user && user?.role !== 'USER';
+
+	if (isLoading) return <Loader />;
 
 	return (
 		<>
@@ -24,9 +27,7 @@ const Page = () => {
 				</div>
 			)}
 			<div className='flex flex-col flex-1 gap-6 items-center justify-center w-full'>
-				{isLoading ? (
-					<div>Загрузка...</div>
-				) : data?.donaters.length ? (
+				{data?.donaters.length ? (
 					data.donaters.map((donater) => (
 						<DonatersCard
 							key={donater.id}

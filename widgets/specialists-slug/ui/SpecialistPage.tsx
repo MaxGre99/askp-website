@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@/entities/avatars';
 import { useGetProfileQuery } from '@/entities/profiles';
+import { Loader } from '@/shared/ui/Loader';
 import {
 	CONTACTS_CONFIG,
 	PHONE_REF_CONFIG,
@@ -20,6 +21,8 @@ export const SpecialistPage = () => {
 	const { userId } = useParams();
 	const { data: profile, isLoading } = useGetProfileQuery(userId as string);
 	const { t } = useTranslation();
+
+	if (isLoading) return <Loader />;
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6 bg-white rounded-2xl p-6'>

@@ -10,6 +10,7 @@ import {
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
+import { Loader } from '@/shared/ui/Loader';
 
 import { useEditNewsForm } from '../model/useEditNewsForm';
 
@@ -39,14 +40,14 @@ export const EditNewsForm = () => {
 		await deleteNewsCover(url);
 	};
 
-	if (isLoading) return <div>Загрузка...</div>;
+	if (isLoading) return <Loader />;
 
 	return (
 		<Formik
 			initialValues={initialValues}
 			validationSchema={schema}
 			onSubmit={handleSubmit}
-			enableReinitialize // ← важно: подхватывает initialValues когда news загрузится
+			enableReinitialize // подхватывает initialValues когда news загрузится
 		>
 			{({ values, setFieldValue, isSubmitting /* , errors */ }) => (
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>

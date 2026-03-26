@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 
 import { useGetArticleQuery } from '@/entities/articles';
+import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const ArticleSlugPage = () => {
@@ -10,9 +11,8 @@ export const ArticleSlugPage = () => {
 
 	const { data, isLoading } = useGetArticleQuery((slug as string)!);
 
-	if (isLoading) {
-		return <div></div>;
-	}
+	if (isLoading) return <Loader />;
+
 	return (
 		<div className='flex flex-1 flex-col w-full justify-start items-center bg-white rounded-2xl'>
 			{data?.image && (

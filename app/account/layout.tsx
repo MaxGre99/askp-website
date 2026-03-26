@@ -3,13 +3,14 @@
 import { ReactNode } from 'react';
 
 import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
+import { Loader } from '@/shared/ui/Loader';
 import { AccountSidebar } from '@/widgets/account-sidebar';
 
 const AccountLayout = ({ children }: { children: ReactNode }) => {
 	const { isForbidden, isUnauthorized, isLoading } = useAccountGuard();
 
 	// Не рендерим ничего пока проверяем или если нет доступа
-	if (isLoading || isForbidden || isUnauthorized) return null;
+	if (isLoading || isForbidden || isUnauthorized) return <Loader />;
 
 	return (
 		<div className='flex flex-1 gap-2 w-full'>

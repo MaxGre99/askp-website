@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 
 import { useGetNewsQuery } from '@/entities/news';
+import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const NewsSlugPage = () => {
@@ -10,9 +11,8 @@ export const NewsSlugPage = () => {
 
 	const { data, isLoading } = useGetNewsQuery((slug as string)!);
 
-	if (isLoading) {
-		return <div></div>;
-	}
+	if (isLoading) return <Loader />;
+
 	return (
 		<div className='flex flex-1 flex-col w-full justify-start items-center bg-white rounded-2xl'>
 			{data?.image && (

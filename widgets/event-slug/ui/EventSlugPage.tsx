@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 
 import { useGetEventQuery } from '@/entities/events';
 import { SignUpToEventForm } from '@/features/sign-up-to-event-form';
+import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const EventSlugPage = () => {
@@ -11,9 +12,7 @@ export const EventSlugPage = () => {
 
 	const { data, isLoading } = useGetEventQuery((slug as string)!);
 
-	if (isLoading) {
-		return <div></div>;
-	}
+	if (isLoading) return <Loader />;
 
 	return (
 		<div className='flex flex-1 flex-col w-full justify-start items-center bg-white rounded-2xl'>

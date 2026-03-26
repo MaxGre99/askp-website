@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
+import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
 import { ProfileCard } from '@/widgets/home/ui/ProfileCard';
 
@@ -26,6 +27,8 @@ export const SpecialistsPage = () => {
 
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
 
+	if (isLoading) return <Loader />;
+
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
@@ -44,7 +47,7 @@ export const SpecialistsPage = () => {
 				/>
 			</div>
 
-			{!isLoading && data && data.profiles.length > 0 ? (
+			{data && data.profiles.length > 0 ? (
 				<>
 					<div className='flex flex-1 w-full flex-wrap gap-8 justify-center items-center'>
 						{data.profiles.map((profile) => (

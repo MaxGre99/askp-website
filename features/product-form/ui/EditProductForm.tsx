@@ -5,6 +5,7 @@ import { Form, Formik } from 'formik';
 import { useUploadProductImageMutation } from '@/entities/product-images';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
+import { Loader } from '@/shared/ui/Loader';
 
 import { useEditProductForm } from '../model/useEditProductForm';
 
@@ -23,7 +24,7 @@ export const EditProductForm = () => {
 		return url;
 	};
 
-	if (isLoading) return <div>Загрузка...</div>;
+	if (isLoading) return <Loader />;
 
 	return (
 		<Formik

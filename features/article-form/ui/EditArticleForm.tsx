@@ -11,6 +11,7 @@ import { useGetMeQuery } from '@/entities/users';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
+import { Loader } from '@/shared/ui/Loader';
 
 import { useEditArticleForm } from '../model/useEditArticleForm';
 
@@ -43,7 +44,7 @@ export const EditArticleForm = () => {
 		await deleteArticleCover(url);
 	};
 
-	if (isLoading) return <div>Загрузка...</div>;
+	if (isLoading) return <Loader />;
 
 	return (
 		<Formik

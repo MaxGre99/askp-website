@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
-// import { MdImageNotSupported } from 'react-icons/md';
 import { ProductCard, useGetAllProductsQuery } from '@/entities/products';
 import { useGetMeQuery } from '@/entities/users';
 import { ListFilter, useListFilter } from '@/features/list-filter';
-// import { Button } from '@/shared/ui/Button';
+import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
 
 export const ShopPage = () => {
@@ -37,11 +36,12 @@ export const ShopPage = () => {
 	});
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
 
+	if (isLoading) return <Loader />;
+
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
 			<div className='flex justify-between items-center gap-3'>
 				<h1 className='font-oswald text-white font-light'>Магазин</h1>
-				{/* <div className='flex gap-3 items-center'> */}
 				<ListFilter
 					value={draftQuery}
 					onChange={setDraftQuery}
@@ -51,13 +51,9 @@ export const ShopPage = () => {
 					pageSize={pageSize}
 					onPageSizeChange={changePageSize}
 				/>
-				{/* <Button href={'/shop/add'} variant='white' className='shrink-0'>
-						<FaPlus /> {t('buttons.addProduct')}
-					</Button>
-				</div> */}
 			</div>
 
-			{!isLoading && data && data.products.length > 0 ? (
+			{data && data.products.length > 0 ? (
 				<>
 					<div className='flex flex-1 w-full flex-wrap gap-6'>
 						{isAdmin && (

@@ -2,6 +2,7 @@
 
 import { DonaterFormFields, useEditDonaterForm } from '@/features/donater-form';
 import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
+import { Loader } from '@/shared/ui/Loader';
 
 export const EditDonaterPage = () => {
 	const { initialValues, schema, handleSubmit, isLoading } =
@@ -14,9 +15,8 @@ export const EditDonaterPage = () => {
 	} = useAccountGuard();
 
 	// Не рендерим ничего пока проверяем или если нет доступа
-	if (isLoadingUser || isForbidden || isUnauthorized) return null;
-
-	if (isLoading) return <div>Загрузка...</div>;
+	if (isLoadingUser || isLoading || isForbidden || isUnauthorized)
+		return <Loader />;
 
 	return (
 		<div className='flex flex-col gap-2 items-center justify-center w-2xl bg-white rounded-2xl p-6'>
