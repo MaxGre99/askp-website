@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
+import { useTranslation } from 'react-i18next';
+
 import {
 	useDeleteProductCoverMutation,
 	useDeleteProductImageMutation,
@@ -17,6 +19,7 @@ import { productSchema } from './schema';
 const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 
 export const useEditProductForm = () => {
+	const { t } = useTranslation();
 	const { slug } = useParams();
 	const router = useRouter();
 	const { data: product, isLoading } = useGetProductQuery(slug as string);
@@ -33,6 +36,8 @@ export const useEditProductForm = () => {
 		images: product?.images ?? [],
 		published: product?.published ?? false,
 	};
+
+	const schema = productSchema(t);
 
 	const trackUploadedUrl = (url: string) =>
 		uploadedDescriptionUrls.current.add(url);
@@ -77,7 +82,7 @@ export const useEditProductForm = () => {
 
 	return {
 		initialValues,
-		schema: productSchema,
+		schema,
 		handleSubmit,
 		trackUploadedUrl,
 		isLoading,

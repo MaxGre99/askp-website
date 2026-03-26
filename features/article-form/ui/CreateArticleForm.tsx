@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 
 import {
 	useDeleteArticleCoverMutation,
@@ -49,7 +49,7 @@ export const CreateArticleForm = () => {
 			validationSchema={schema}
 			onSubmit={handleSubmit}
 		>
-			{({ values, setFieldValue, isSubmitting /* , errors */ }) => (
+			{({ values, setFieldValue, isSubmitting, touched, errors }) => (
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
@@ -66,13 +66,15 @@ export const CreateArticleForm = () => {
 					/>
 
 					<div className='flex flex-col'>
-						<label className='mb-2'>
+						<label className='mb-1'>
 							Содержание<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='content'
 							onUploadImage={handleUploadImage}
+							hasError={!!(errors.content && touched.content)}
 						/>
+						<ErrorMessage name='content' component='p' className='error mt-2' />
 					</div>
 
 					{isAdmin ? (
@@ -97,7 +99,7 @@ export const CreateArticleForm = () => {
 					>
 						{isSubmitting ? 'Сохранение...' : 'Создать статью'}
 					</button>
-					{/* {errors && <p>{Object.values(errors)}</p>} */}
+					{/* {errors && <p>{Object.keys(errors)}</p>} */}
 				</Form>
 			)}
 		</Formik>

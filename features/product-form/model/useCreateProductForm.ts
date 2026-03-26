@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { useTranslation } from 'react-i18next';
+
 import { useDeleteProductImageMutation } from '@/entities/product-images';
 import { useCreateProductMutation } from '@/entities/products';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
@@ -9,6 +11,7 @@ import { trimStrings } from '@/shared/lib/trimStrings';
 import { productSchema } from './schema';
 
 export const useCreateProductForm = () => {
+	const { t } = useTranslation();
 	const router = useRouter();
 	const [createProduct] = useCreateProductMutation();
 	const [deleteProductImage] = useDeleteProductImageMutation();
@@ -22,6 +25,8 @@ export const useCreateProductForm = () => {
 		images: [] as string[],
 		published: false,
 	};
+
+	const schema = productSchema(t);
 
 	const trackUploadedUrl = (url: string) =>
 		uploadedDescriptionUrls.current.add(url);
@@ -50,7 +55,7 @@ export const useCreateProductForm = () => {
 
 	return {
 		initialValues,
-		schema: productSchema,
+		schema,
 		handleSubmit,
 		trackUploadedUrl,
 	};

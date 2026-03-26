@@ -17,14 +17,14 @@ export const CookieBanner = () => {
 					Продолжая использование сайта, вы соглашаетесь с нашей{' '}
 					<Link
 						href='/cookies'
-						className='underline hover:text-blue-500 transition-colors'
+						className='underline text-blue-500 hover:text-blue-600 active:text-blue-400 transition-colors'
 					>
 						политикой cookie
 					</Link>{' '}
 					и{' '}
 					<Link
 						href='/privacy'
-						className='underline hover:text-blue-500 transition-colors'
+						className='underline text-blue-500 hover:text-blue-600 active:text-blue-400 transition-colors'
 					>
 						политикой конфиденциальности
 					</Link>

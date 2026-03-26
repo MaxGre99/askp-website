@@ -268,9 +268,11 @@ const MenuBar = ({
 export const FormikTipTapField = ({
 	name,
 	onUploadImage,
+	hasError,
 }: {
 	name: string;
 	onUploadImage: (file: File) => Promise<string>;
+	hasError: boolean;
 }) => {
 	const [field, , helpers] = useField(name);
 
@@ -289,7 +291,11 @@ export const FormikTipTapField = ({
 		],
 		content: field.value || '',
 		onUpdate: ({ editor }) => {
-			helpers.setValue(editor.getHTML());
+			const html = editor.getHTML();
+			helpers.setValue(html);
+			// Если контент пустой — помечаем touched чтобы ошибка показалась
+			const text = html.replace(/<[^>]*>/g, '').trim();
+			if (!text) helpers.setTouched(true);
 		},
 		onBlur: () => {
 			helpers.setTouched(true);
@@ -345,7 +351,10 @@ export const FormikTipTapField = ({
 	return (
 		<>
 			<MenuBar editor={editor} onUploadImage={onUploadImage} />
-			<EditorContent editor={editor} />
+			<EditorContent
+				editor={editor}
+				className={`${hasError ? 'ring-2 ring-red-400' : ''}`}
+			/>
 		</>
 	);
 };

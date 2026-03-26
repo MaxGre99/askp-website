@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { ErrorMessage } from 'formik';
 
 import { useUploadProfileBioImageMutation } from '@/entities/profile-bio-images';
 import { Profile } from '@/entities/profiles';
@@ -11,9 +12,14 @@ import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 interface Props {
 	profile?: Profile;
 	isEditing: boolean;
+	hasErrorsFullBio: boolean;
 }
 
-export const ProfileBioSection = ({ profile, isEditing }: Props) => {
+export const ProfileBioSection = ({
+	profile,
+	isEditing,
+	hasErrorsFullBio,
+}: Props) => {
 	const [uploadProfileBioImage] = useUploadProfileBioImageMutation();
 
 	const handleUploadProfileBioImage = async (file: File) => {
@@ -41,10 +47,14 @@ export const ProfileBioSection = ({ profile, isEditing }: Props) => {
 			<div className={clsx('flex flex-col w-full')}>
 				<label className='font-bold mb-2'>Подробно о себе:</label>
 				{isEditing ? (
-					<FormikTipTapField
-						name='fullBio'
-						onUploadImage={handleUploadProfileBioImage}
-					/>
+					<>
+						<FormikTipTapField
+							name='fullBio'
+							onUploadImage={handleUploadProfileBioImage}
+							hasError={hasErrorsFullBio}
+						/>
+						<ErrorMessage name='fullBio' component='p' className='error mt-2' />
+					</>
 				) : (
 					<TipTapReadOnly content={profile?.fullBio || ''} />
 				)}

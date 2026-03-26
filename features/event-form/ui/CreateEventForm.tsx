@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 
 import {
 	useDeleteEventCoverMutation,
@@ -45,7 +45,7 @@ export const CreateEventForm = () => {
 			validationSchema={schema}
 			onSubmit={handleSubmit}
 		>
-			{({ values, setFieldValue, isSubmitting /* , errors */ }) => (
+			{({ values, setFieldValue, isSubmitting, touched, errors }) => (
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
@@ -69,12 +69,18 @@ export const CreateEventForm = () => {
 					/>
 
 					<div className='flex flex-col'>
-						<label className='mb-2'>
+						<label className='mb-1'>
 							Описание<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='description'
 							onUploadImage={handleUploadImage}
+							hasError={!!(errors.description && touched.description)}
+						/>
+						<ErrorMessage
+							name='description'
+							component='p'
+							className='error mt-2'
 						/>
 					</div>
 

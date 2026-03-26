@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 
 import { useUploadProductImageMutation } from '@/entities/product-images';
 import { FormField } from '@/shared/ui/FormField';
@@ -33,7 +33,7 @@ export const EditProductForm = () => {
 			onSubmit={handleSubmit}
 			enableReinitialize
 		>
-			{({ values, setFieldValue, isSubmitting }) => (
+			{({ values, setFieldValue, isSubmitting, touched, errors }) => (
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='name'
@@ -58,12 +58,18 @@ export const EditProductForm = () => {
 					<ProductCoversInput />
 
 					<div className='flex flex-col'>
-						<label className='mb-2'>
+						<label className='mb-1'>
 							Описание<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='description'
 							onUploadImage={handleUploadProductImage}
+							hasError={!!(errors.description && touched.description)}
+						/>
+						<ErrorMessage
+							name='description'
+							component='p'
+							className='error mt-2'
 						/>
 					</div>
 

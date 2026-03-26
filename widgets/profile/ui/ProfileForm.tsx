@@ -32,15 +32,21 @@ export const ProfileForm = () => {
 			enableReinitialize
 			onSubmit={handleSubmit}
 		>
-			<Form className='flex flex-col gap-6'>
-				<ProfileMainBlock profile={profile} isEditing={isEditing} />
+			{({ touched, errors }) => (
+				<Form className='flex flex-col gap-6'>
+					<ProfileMainBlock profile={profile} isEditing={isEditing} />
 
-				<ProfileBioSection profile={profile} isEditing={isEditing} />
+					<ProfileBioSection
+						profile={profile}
+						isEditing={isEditing}
+						hasErrorsFullBio={!!(errors.fullBio && touched.fullBio)}
+					/>
 
-				<ProfileContactsBlock profile={profile} isEditing={isEditing} />
+					<ProfileContactsBlock profile={profile} isEditing={isEditing} />
 
-				<ProfileActions isEditing={isEditing} setIsEditing={setIsEditing} />
-			</Form>
+					<ProfileActions isEditing={isEditing} setIsEditing={setIsEditing} />
+				</Form>
+			)}
 		</Formik>
 	);
 };

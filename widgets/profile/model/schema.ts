@@ -16,6 +16,18 @@ export const editProfileSchema = (t: TFunction) =>
 		birthDate: Yup.date().nullable(),
 		shortBio: Yup.string().max(500).nullable(),
 		fullBio: Yup.string().nullable(),
+		/*
+		Yup.string()
+					.required(t('validationErrors.required.content'))
+					.test(
+						'not-empty-tiptap',
+						t('validationErrors.required.content'),
+						(val) => {
+							if (!val) return false;
+							return val.replace(/<[^>]*>/g, '').trim().length > 0;
+						},
+					),
+		*/
 		phone: Yup.string().nullable(),
 		telegramUser: Yup.string().nullable(),
 		telegramChannel: Yup.string().nullable(),
