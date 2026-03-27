@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 import { useTranslation } from 'react-i18next';
@@ -8,6 +9,7 @@ import { FaPlus } from 'react-icons/fa';
 import { ProductCard, useGetAllProductsQuery } from '@/entities/products';
 import { useGetMeQuery } from '@/entities/users';
 import { ListFilter, useListFilter } from '@/features/list-filter';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
 
@@ -28,13 +30,18 @@ export const ShopPage = () => {
 
 	const isAdmin = !isLoadingUser && user && user.role !== 'USER';
 
-	const { data, isLoading } = useGetAllProductsQuery({
+	const { data, isLoading, isError, error } = useGetAllProductsQuery({
 		page,
 		query,
 		pageSize,
 		showAll: isAdmin,
 	});
+
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

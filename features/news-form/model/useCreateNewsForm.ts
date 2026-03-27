@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useCreateNewsMutation } from '@/entities/news';
 import { useDeleteNewsImageMutation } from '@/entities/news-images';
-import { getApiErrorMessage } from '@/shared/api';
+// import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createNewsSchema } from './schema';
@@ -54,7 +55,7 @@ export const useCreateNewsForm = () => {
 
 			router.push(`/news/${news.slug}`);
 		} catch (err) {
-			console.log('slug error:', getApiErrorMessage(err));
+			handleApiError(err);
 		}
 	};
 

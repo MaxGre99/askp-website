@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const getApiErrorMessage = (err: unknown): string => {
-	if (err && typeof err === 'object') {
-		if ('data' in err && (err.data as any)?.error)
-			return (err.data as any).error;
-		if ('message' in err) return (err as any).message;
+	if (err && typeof err === 'object' && 'data' in err) {
+		const data = (err as { data?: { error?: string } }).data;
+		if (data?.error) return data.error;
 	}
-	return 'unknown_error';
+	return 'internal_server_error';
 };

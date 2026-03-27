@@ -4,6 +4,8 @@ import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { deleteS3File } from '@/shared/lib/deleteS3File';
 
+import { handleRouteError } from './handleRouteError';
+
 export const deleteContentImageHandler = (
 	bucket: string,
 	type: 'OWNER' | 'ADMIN' | 'USER' = 'USER',
@@ -26,14 +28,9 @@ export const deleteContentImageHandler = (
 
 			return NextResponse.json({ success: true });
 		} catch (err) {
-			if (err instanceof ApiError)
-				return NextResponse.json(
-					{ error: err.message },
-					{ status: err.status },
-				);
-			return NextResponse.json(
-				{ error: 'internal_server_error' },
-				{ status: 500 },
+			return handleRouteError(
+				err,
+				`DELETE_IMAGE_${bucket.toUpperCase()}_ERROR`,
 			);
 		}
 	};

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 
 import { getAuthUser } from '@/shared/lib/auth';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
@@ -48,18 +49,18 @@ export const GET = async (req: Request) => {
 
 		return NextResponse.json({ events, total });
 	} catch (err) {
-		console.error('GET_EVENTS_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_events' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_EVENTS_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_events' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
 export const POST = async (req: Request) => {
-	const authUser = await getAuthUser('ADMIN');
-
 	try {
+		const authUser = await getAuthUser('ADMIN');
+
 		const { title, description, image, eventDate, published } =
 			await req.json();
 		const slug = slugify(title);
@@ -78,19 +79,10 @@ export const POST = async (req: Request) => {
 
 		return NextResponse.json(event);
 	} catch (err) {
-		if (
-			err instanceof Prisma.PrismaClientKnownRequestError &&
-			err.code === 'P2002'
-		) {
-			return NextResponse.json(
-				{ error: 'slug_already_exists' },
-				{ status: 409 },
-			);
-		}
-		console.error('CREATE_EVENT_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_create_event' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'CREATE_EVENT_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_create_event' },
+		// 	{ status: 500 },
+		// );
 	}
 };

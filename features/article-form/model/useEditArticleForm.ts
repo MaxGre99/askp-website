@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import {
 } from '@/entities/articles';
 import { useAuthorGuard } from '@/shared/hooks/useAuthorGuard';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createArticleSchema } from './schema';
@@ -24,7 +25,12 @@ export const useEditArticleForm = () => {
 	const { slug } = useParams();
 	const router = useRouter();
 
-	const { data: article, isLoading } = useGetArticleQuery(slug as string);
+	const {
+		data: article,
+		isLoading,
+		isError,
+		error,
+	} = useGetArticleQuery(slug as string);
 	const { isLoading: isLoadingGuard } = useAuthorGuard(article?.authorId);
 
 	const [updateArticle] = useUpdateArticleMutation();
@@ -83,9 +89,13 @@ export const useEditArticleForm = () => {
 
 			router.push(`/articles/${updated.slug}`);
 		} catch (err) {
-			console.error(err);
+			handleApiError(err);
 		}
 	};
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	return {
 		initialValues,

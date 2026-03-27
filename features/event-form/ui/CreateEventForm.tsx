@@ -100,7 +100,6 @@ export const CreateEventForm = () => {
 					>
 						{isSubmitting ? 'Сохранение...' : 'Создать событие'}
 					</button>
-					{/* {errors && <p>{Object.values(errors)}</p>} */}
 				</Form>
 			)}
 		</Formik>

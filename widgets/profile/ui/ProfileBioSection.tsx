@@ -12,7 +12,7 @@ import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 interface Props {
 	profile?: Profile;
 	isEditing: boolean;
-	hasErrorsFullBio: boolean;
+	hasErrorsFullBio?: boolean;
 }
 
 export const ProfileBioSection = ({
@@ -51,7 +51,7 @@ export const ProfileBioSection = ({
 						<FormikTipTapField
 							name='fullBio'
 							onUploadImage={handleUploadProfileBioImage}
-							hasError={hasErrorsFullBio}
+							hasError={hasErrorsFullBio ?? false}
 						/>
 						<ErrorMessage name='fullBio' component='p' className='error mt-2' />
 					</>

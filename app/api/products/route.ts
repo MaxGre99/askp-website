@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 
 import { getAuthUser } from '@/shared/lib/auth';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
@@ -45,17 +46,18 @@ export const GET = async (req: Request) => {
 
 		return NextResponse.json({ products, total });
 	} catch (err) {
-		console.error('GET_PRODUCTS_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_products' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_PRODUCTS_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_products' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
 export const POST = async (req: Request) => {
-	await getAuthUser('ADMIN');
 	try {
+		await getAuthUser('ADMIN');
+
 		const { name, description, contentLink, price, images, published } =
 			await req.json();
 
@@ -75,18 +77,6 @@ export const POST = async (req: Request) => {
 
 		return NextResponse.json(product);
 	} catch (err) {
-		if (
-			err instanceof Prisma.PrismaClientKnownRequestError &&
-			err.code === 'P2002'
-		) {
-			return NextResponse.json(
-				{ error: 'slug_already_exists' },
-				{ status: 409 },
-			);
-		}
-		return NextResponse.json(
-			{ error: 'failed_to_create_product' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'CREATE_PRODUCT_ERROR');
 	}
 };

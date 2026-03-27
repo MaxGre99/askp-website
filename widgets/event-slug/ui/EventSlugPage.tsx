@@ -1,16 +1,24 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import { useGetEventQuery } from '@/entities/events';
 import { SignUpToEventForm } from '@/features/sign-up-to-event-form';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const EventSlugPage = () => {
 	const { slug } = useParams();
 
-	const { data, isLoading } = useGetEventQuery((slug as string)!);
+	const { data, isLoading, isError, error } = useGetEventQuery(
+		(slug as string)!,
+	);
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

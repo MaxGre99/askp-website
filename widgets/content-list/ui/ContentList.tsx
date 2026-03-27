@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 import clsx from 'clsx';
@@ -8,6 +9,7 @@ import { FaPlus } from 'react-icons/fa';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { WideCardsList } from '@/features/wide-cards-list';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Button } from '@/shared/ui/Button';
 import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
@@ -39,22 +41,49 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 	} = useListFilter();
 
 	const queryHook = mode === 'my' ? config.getMyQuery : config.getAllQuery;
-	const { data, isLoading } = queryHook({
+	const { data, isLoading, isError, error } = queryHook({
 		page,
 		query,
 		pageSize,
 		withAuthor,
 		showAll,
 	});
+
 	const [deleteMutation] = config.deleteMutation();
 	const [publishMutation] = config.publishMutation();
 	const [unpublishMutation] = config.unpublishMutation();
 
-	console.log(data);
+	const handleDelete = async (slug: string) => {
+		try {
+			await deleteMutation(slug).unwrap();
+		} catch (err) {
+			handleApiError(err);
+		}
+	};
+
+	const handlePublish = async (slug: string) => {
+		try {
+			await publishMutation(slug).unwrap();
+		} catch (err) {
+			handleApiError(err);
+		}
+	};
+
+	const handleUnpublish = async (slug: string) => {
+		try {
+			await unpublishMutation(slug).unwrap();
+		} catch (err) {
+			handleApiError(err);
+		}
+	};
 
 	const items = config.getItems(data);
 	const total = config.getTotal(data);
 	const totalPages = Math.ceil(total / pageSize) || 1;
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 
@@ -88,9 +117,9 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 						items={items}
 						type={type}
 						{...((mode === 'my' || isAccountPage) && {
-							onDelete: deleteMutation,
-							onPublish: publishMutation,
-							onUnpublish: unpublishMutation,
+							onDelete: handleDelete,
+							onPublish: handlePublish,
+							onUnpublish: handleUnpublish,
 						})}
 					/>
 					<Pagination

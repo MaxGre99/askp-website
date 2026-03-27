@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 
 import { getAuthUser } from '@/shared/lib/auth';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async (req: Request) => {
-	const authUser = await getAuthUser('ADMIN');
-
 	try {
+		const authUser = await getAuthUser('ADMIN');
+
 		const url = new URL(req.url);
 		const page = Math.max(1, Number(url.searchParams.get('page') ?? 1));
 		const pageSize = Math.min(
@@ -29,10 +30,10 @@ export const GET = async (req: Request) => {
 
 		return NextResponse.json({ events, total });
 	} catch (err) {
-		console.error('GET_USER_EVENTS_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_user_events' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_USER_EVENTS_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_user_events' },
+		// 	{ status: 500 },
+		// );
 	}
 };

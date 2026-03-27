@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useDeleteEventImageMutation } from '@/entities/event-images';
 import { useCreateEventMutation } from '@/entities/events';
-import { getApiErrorMessage } from '@/shared/api';
+// import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createEventSchema } from './schema';
@@ -57,7 +58,7 @@ export const useCreateEventForm = () => {
 
 			router.push(`/events/${event.slug}`);
 		} catch (err) {
-			console.log('slug error:', getApiErrorMessage(err));
+			handleApiError(err);
 		}
 	};
 

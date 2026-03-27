@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { getAuthUser } from '@/shared/lib/auth';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async () => {
@@ -8,29 +9,33 @@ export const GET = async () => {
 		const donaters = await prisma.donater.findMany({
 			orderBy: { name: 'asc' },
 		});
+
 		return NextResponse.json({ donaters });
 	} catch (err) {
-		console.error('GET_DONATERS_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_donaters' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_DONATERS_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_donaters' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
 export const POST = async (req: Request) => {
-	await getAuthUser('ADMIN');
 	try {
+		await getAuthUser('ADMIN');
+
 		const { name, description, image } = await req.json();
+
 		const donater = await prisma.donater.create({
 			data: { name, description, image: image || null },
 		});
+
 		return NextResponse.json(donater);
 	} catch (err) {
-		console.error('CREATE_DONATER_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_create_donater' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'CREATE_DONATER_ERROR:');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_create_donater' },
+		// 	{ status: 500 },
+		// );
 	}
 };

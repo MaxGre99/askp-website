@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
@@ -28,7 +29,7 @@ export const POST = async (req: Request) => {
 
 		return NextResponse.json({ ok: true });
 	} catch (err) {
-		console.error('WEBHOOK_ERROR:', err);
-		return NextResponse.json({ error: 'webhook_error' }, { status: 500 });
+		return handleRouteError(err, 'WEBHOOK_ERROR');
+		// return NextResponse.json({ error: 'webhook_error' }, { status: 500 });
 	}
 };

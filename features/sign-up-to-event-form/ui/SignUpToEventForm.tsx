@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 
@@ -81,19 +82,23 @@ export const SignUpToEventForm = ({ eventName }: { eventName: string }) => {
 			}}
 			validationSchema={contactSchema}
 			onSubmit={async (values, { resetForm }) => {
-				const res = await fetch('/api/sign-up-to-event', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ eventName, ...values }),
-				});
+				try {
+					const res = await fetch('/api/sign-up-to-event', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ eventName, ...values }),
+					});
 
-				if (res.ok) {
+					if (!res.ok) {
+						const data = await res.json();
+						handleApiError({ data });
+						return;
+					}
+
 					resetForm();
 					toast(t('notifications.signedUpToEvent'), { type: 'success' });
-				} else {
-					toast(t('notifications.signingError'), { type: 'error' });
+				} catch (err) {
+					handleApiError(err);
 				}
 			}}
 		>

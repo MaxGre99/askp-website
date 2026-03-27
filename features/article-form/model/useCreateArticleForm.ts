@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { useDeleteArticleImageMutation } from '@/entities/article-images';
 import { useCreateArticleMutation } from '@/entities/articles';
-import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createArticleSchema } from './schema';
@@ -56,7 +56,7 @@ export const useCreateArticleForm = () => {
 
 			router.push(`/articles/${article.slug}`);
 		} catch (err) {
-			console.log('slug error:', getApiErrorMessage(err));
+			handleApiError(err);
 		}
 	};
 

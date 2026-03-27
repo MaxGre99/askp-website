@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { Prisma } from '@prisma/client';
 
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async (req: Request) => {
@@ -43,10 +44,10 @@ export const GET = async (req: Request) => {
 
 		return NextResponse.json({ profiles, total });
 	} catch (err) {
-		console.error('GET_PROFILES_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_profiles' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_PROFILES_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_profiles' },
+		// 	{ status: 500 },
+		// );
 	}
 };

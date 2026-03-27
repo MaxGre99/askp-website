@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 
-import { Prisma } from '@prisma/client';
+// import { Prisma } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import { ApiError } from '@/shared/api';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
@@ -15,9 +16,11 @@ export const POST = async (req: Request) => {
 			throw new ApiError('email_and_password_are_required', 400);
 
 		const user = await prisma.user.findUnique({ where: { email } });
+
 		if (!user) throw new ApiError('user_not_found', 401);
 
 		const isValid = await bcrypt.compare(password, user.password);
+
 		if (!isValid) throw new ApiError('wrong_password', 401);
 
 		if (user.status !== 'ACTIVE') {
@@ -46,6 +49,7 @@ export const POST = async (req: Request) => {
 		);
 
 		const res = NextResponse.json({ ok: true });
+
 		res.cookies.set('askp-token', token, {
 			httpOnly: true,
 			path: '/',
@@ -54,17 +58,17 @@ export const POST = async (req: Request) => {
 		});
 
 		return res;
-	} catch (err: unknown) {
-		console.error('SIGNIN_ERROR:', err);
+	} catch (err) {
+		return handleRouteError(err, 'SIGNIN_ERROR');
 
-		if (err instanceof ApiError)
-			return NextResponse.json({ error: err.message }, { status: err.status });
-		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json({ error: 'database_error' }, { status: 500 });
+		// if (err instanceof ApiError)
+		// 	return NextResponse.json({ error: err.message }, { status: err.status });
+		// if (err instanceof Prisma.PrismaClientKnownRequestError)
+		// 	return NextResponse.json({ error: 'database_error' }, { status: 500 });
 
-		return NextResponse.json(
-			{ error: 'internal_server_error' },
-			{ status: 500 },
-		);
+		// return NextResponse.json(
+		// 	{ error: 'internal_server_error' },
+		// 	{ status: 500 },
+		// );
 	}
 };

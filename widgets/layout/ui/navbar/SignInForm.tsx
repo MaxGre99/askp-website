@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useSignInMutation } from '@/entities/users';
-import { getApiErrorMessage } from '@/shared/api';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 
@@ -37,16 +37,16 @@ export const SignInForm = ({
 				rememberMe: false,
 			}}
 			validationSchema={validationSchema}
-			onSubmit={async (values, { setStatus }) => {
+			onSubmit={async (values) => {
 				try {
 					await signIn(values).unwrap();
 					setShowMenu(false);
 				} catch (err) {
-					setStatus(getApiErrorMessage(err));
+					handleApiError(err);
 				}
 			}}
 		>
-			{({ isSubmitting, status, values, setFieldValue }) => (
+			{({ isSubmitting, values, setFieldValue }) => (
 				<Form className='flex flex-col gap-2'>
 					<FormField
 						name='email'
@@ -72,8 +72,6 @@ export const SignInForm = ({
 						/>
 						{t('labels.rememberMe')}
 					</label>
-
-					{status && <p className='error'>{t(`backendErrors.${status}`)}</p>}
 
 					<Button type='submit' disabled={isSubmitting}>
 						{isSubmitting ? 'Входим…' : t('buttons.signIn')}

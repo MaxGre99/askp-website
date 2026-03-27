@@ -1,15 +1,23 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import { useGetArticleQuery } from '@/entities/articles';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const ArticleSlugPage = () => {
 	const { slug } = useParams();
 
-	const { data, isLoading } = useGetArticleQuery((slug as string)!);
+	const { data, isLoading, isError, error } = useGetArticleQuery(
+		(slug as string)!,
+	);
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

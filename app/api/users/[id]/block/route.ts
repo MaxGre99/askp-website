@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
-import { Prisma } from '@prisma/client';
-
-import { ApiError } from '@/shared/api';
+// import { Prisma } from '@prisma/client';
+// import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { guardOwner } from '@/shared/lib/guardOwner';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (
@@ -24,18 +24,18 @@ export const POST = async (
 		});
 
 		return NextResponse.json({ ok: true });
-	} catch (err: unknown) {
-		console.error('BLOCK_USER_ERROR:', err);
+	} catch (err) {
+		return handleRouteError(err, 'BLOCK_USER_ERROR');
 
-		if (err instanceof ApiError)
-			return NextResponse.json({ error: err.message }, { status: err.status });
+		// if (err instanceof ApiError)
+		// 	return NextResponse.json({ error: err.message }, { status: err.status });
 
-		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json({ error: 'database_error' }, { status: 500 });
+		// if (err instanceof Prisma.PrismaClientKnownRequestError)
+		// 	return NextResponse.json({ error: 'database_error' }, { status: 500 });
 
-		return NextResponse.json(
-			{ error: 'internal_server_error' },
-			{ status: 500 },
-		);
+		// return NextResponse.json(
+		// 	{ error: 'internal_server_error' },
+		// 	{ status: 500 },
+		// );
 	}
 };

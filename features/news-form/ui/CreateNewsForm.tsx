@@ -89,7 +89,6 @@ export const CreateNewsForm = () => {
 					>
 						{isSubmitting ? 'Сохранение...' : 'Создать новость'}
 					</button>
-					{/* {errors && <p>{Object.values(errors)}</p>} */}
 				</Form>
 			)}
 		</Formik>

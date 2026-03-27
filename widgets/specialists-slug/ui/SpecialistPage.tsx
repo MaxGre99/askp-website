@@ -1,11 +1,13 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@/entities/avatars';
 import { useGetProfileQuery } from '@/entities/profiles';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import {
 	CONTACTS_CONFIG,
@@ -19,8 +21,17 @@ import { ProfileSideFields } from '@/widgets/profile/ui/ProfileSideFields';
 
 export const SpecialistPage = () => {
 	const { userId } = useParams();
-	const { data: profile, isLoading } = useGetProfileQuery(userId as string);
+	const {
+		data: profile,
+		isLoading,
+		isError,
+		error,
+	} = useGetProfileQuery(userId as string);
 	const { t } = useTranslation();
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

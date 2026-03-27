@@ -99,7 +99,6 @@ export const CreateArticleForm = () => {
 					>
 						{isSubmitting ? 'Сохранение...' : 'Создать статью'}
 					</button>
-					{/* {errors && <p>{Object.keys(errors)}</p>} */}
 				</Form>
 			)}
 		</Formik>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 
@@ -88,19 +89,24 @@ export const FeedbackForm = ({
 			}}
 			validationSchema={contactSchema}
 			onSubmit={async (values, { resetForm }) => {
-				const res = await fetch('/api/feedback', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ type, ...values }),
-				});
+				try {
+					const res = await fetch('/api/feedback', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ type, ...values }),
+					});
 
-				if (res.ok) {
+					if (!res.ok) {
+						const data = await res.json();
+						// Используем тот же handleApiError но с нормализованной ошибкой
+						handleApiError({ data });
+						return;
+					}
+
 					resetForm();
 					toast(t('notifications.feedbackSent'), { type: 'success' });
-				} else {
-					toast(t('notifications.sendingError'), { type: 'error' });
+				} catch (err) {
+					handleApiError(err);
 				}
 			}}
 		>

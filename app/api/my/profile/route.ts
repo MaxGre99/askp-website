@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { ApiError } from '@/shared/api';
+// import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async () => {
@@ -20,20 +21,21 @@ export const GET = async () => {
 		}
 
 		return NextResponse.json(profile);
-	} catch (err: unknown) {
-		console.error('GET_PROFILE_ERROR:', err);
-		if (err instanceof ApiError)
-			return NextResponse.json({ error: err.message }, { status: err.status });
-		return NextResponse.json(
-			{ error: 'internal_server_error' },
-			{ status: 500 },
-		);
+	} catch (err) {
+		return handleRouteError(err, 'GET_PROFILE_ERROR');
+		// if (err instanceof ApiError)
+		// 	return NextResponse.json({ error: err.message }, { status: err.status });
+		// return NextResponse.json(
+		// 	{ error: 'internal_server_error' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
 export const PUT = async (req: Request) => {
 	try {
 		const authUser = await getAuthUser();
+
 		const body = await req.json();
 
 		const profile = await prisma.profile.update({
@@ -60,13 +62,13 @@ export const PUT = async (req: Request) => {
 		});
 
 		return NextResponse.json(profile);
-	} catch (err: unknown) {
-		console.error('UPDATE_PROFILE_ERROR:', err);
-		if (err instanceof ApiError)
-			return NextResponse.json({ error: err.message }, { status: err.status });
-		return NextResponse.json(
-			{ error: 'internal_server_error' },
-			{ status: 500 },
-		);
+	} catch (err) {
+		return handleRouteError(err, 'UPDATE_PROFILE_ERROR');
+		// if (err instanceof ApiError)
+		// 	return NextResponse.json({ error: err.message }, { status: err.status });
+		// return NextResponse.json(
+		// 	{ error: 'internal_server_error' },
+		// 	{ status: 500 },
+		// );
 	}
 };

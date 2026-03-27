@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 
-import { Prisma } from '@prisma/client';
+// import { Prisma } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 import { ApiError } from '@/shared/api';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import {
 	sendNewApplicationEmailToAdmin,
 	sendRegistrationEmailToUser,
@@ -18,6 +19,7 @@ export const POST = async (req: Request) => {
 			throw new ApiError('required_fields', 400);
 
 		const existingUser = await prisma.user.findUnique({ where: { email } });
+
 		if (existingUser) throw new ApiError('already_exists', 409);
 
 		const hashedPassword = await bcrypt.hash(password, 10);
@@ -54,15 +56,15 @@ export const POST = async (req: Request) => {
 		]);
 
 		return NextResponse.json(user, { status: 201 });
-	} catch (err: unknown) {
-		console.error('SIGNUP_ERROR:', err);
-		if (err instanceof ApiError)
-			return NextResponse.json({ error: err.message }, { status: err.status });
-		if (err instanceof Prisma.PrismaClientKnownRequestError)
-			return NextResponse.json({ error: 'database_error' }, { status: 500 });
-		return NextResponse.json(
-			{ error: 'internal_server_error' },
-			{ status: 500 },
-		);
+	} catch (err) {
+		return handleRouteError(err, 'SIGNUP_ERROR');
+		// if (err instanceof ApiError)
+		// 	return NextResponse.json({ error: err.message }, { status: err.status });
+		// if (err instanceof Prisma.PrismaClientKnownRequestError)
+		// 	return NextResponse.json({ error: 'database_error' }, { status: 500 });
+		// return NextResponse.json(
+		// 	{ error: 'internal_server_error' },
+		// 	{ status: 500 },
+		// );
 	}
 };

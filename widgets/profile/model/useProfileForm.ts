@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,7 @@ import {
 } from '@/entities/profiles';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatDateForInput } from '@/shared/lib/formatDateForInput';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { localDateToISO } from '@/shared/lib/localDateToISO';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
@@ -16,7 +17,7 @@ import { editProfileSchema } from './schema';
 
 export const useProfileForm = () => {
 	const { t } = useTranslation();
-	const { data: profile, isLoading } = useGetMyProfileQuery();
+	const { data: profile, isLoading, isError, error } = useGetMyProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
 	const [deleteProfileBioImage] = useDeleteProfileBioImageMutation();
 
@@ -46,29 +47,37 @@ export const useProfileForm = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleSubmit = async (values: any) => {
-		const trimmed = trimStrings(values);
-		const submitValues = {
-			...trimmed,
-			birthDate: trimmed.birthDate ? localDateToISO(trimmed.birthDate) : null,
-		};
+		try {
+			const trimmed = trimStrings(values);
+			const submitValues = {
+				...trimmed,
+				birthDate: trimmed.birthDate ? localDateToISO(trimmed.birthDate) : null,
+			};
 
-		await updateProfile(submitValues).unwrap();
+			await updateProfile(submitValues).unwrap();
 
-		// Удаляем изображения, которые пропали из редактора
-		const oldUrls = extractImageUrls(initialValues.fullBio ?? '');
-		const newUrls = extractImageUrls(values.fullBio ?? '');
-		const removedUrls = oldUrls.filter(
-			(url) =>
-				!newUrls.includes(url) &&
-				url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
-		);
+			// Удаляем изображения, которые пропали из редактора
+			const oldUrls = extractImageUrls(initialValues.fullBio ?? '');
+			const newUrls = extractImageUrls(values.fullBio ?? '');
+			const removedUrls = oldUrls.filter(
+				(url) =>
+					!newUrls.includes(url) &&
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+			);
 
-		await Promise.allSettled(
-			removedUrls.map((url) => deleteProfileBioImage(url)),
-		);
+			await Promise.allSettled(
+				removedUrls.map((url) => deleteProfileBioImage(url)),
+			);
 
-		setIsEditing(false);
+			setIsEditing(false);
+		} catch (err) {
+			handleApiError(err);
+		}
 	};
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	return {
 		profile,

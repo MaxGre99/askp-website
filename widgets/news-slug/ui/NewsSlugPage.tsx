@@ -1,15 +1,23 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import { useGetNewsQuery } from '@/entities/news';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const NewsSlugPage = () => {
 	const { slug } = useParams();
 
-	const { data, isLoading } = useGetNewsQuery((slug as string)!);
+	const { data, isLoading, isError, error } = useGetNewsQuery(
+		(slug as string)!,
+	);
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

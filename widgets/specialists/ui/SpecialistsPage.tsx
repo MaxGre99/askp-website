@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
 import { ProfileCard } from '@/widgets/home/ui/ProfileCard';
@@ -23,9 +26,17 @@ export const SpecialistsPage = () => {
 		changePageSize,
 	} = useListFilter();
 
-	const { data, isLoading } = useAllProfilesList(page, query, pageSize);
+	const { data, isLoading, isError, error } = useAllProfilesList(
+		page,
+		query,
+		pageSize,
+	);
 
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

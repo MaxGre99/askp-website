@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import {
 import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatForDatetimeLocal } from '@/shared/lib/formatForDatetimeLocal';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createEventSchema } from './schema';
@@ -21,7 +22,12 @@ export const useEditEventForm = () => {
 	const { slug } = useParams();
 	const router = useRouter();
 
-	const { data: event, isLoading } = useGetEventQuery(slug as string);
+	const {
+		data: event,
+		isLoading,
+		isError,
+		error,
+	} = useGetEventQuery(slug as string);
 	const [updateEvent] = useUpdateEventMutation();
 	const [deleteEventImage] = useDeleteEventImageMutation();
 	const [deleteEventCover] = useDeleteEventCoverMutation();
@@ -79,9 +85,13 @@ export const useEditEventForm = () => {
 
 			router.push(`/events/${updated.slug}`);
 		} catch (err) {
-			console.error(err);
+			handleApiError(err);
 		}
 	};
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	return { initialValues, schema, handleSubmit, trackUploadedUrl, isLoading };
 };

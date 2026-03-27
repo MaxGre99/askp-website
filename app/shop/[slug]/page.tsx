@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+// import { useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import { FiChevronLeft, FiChevronRight, FiShoppingBag } from 'react-icons/fi';
 import { MdImageNotSupported } from 'react-icons/md';
-import type { Swiper as SwiperType } from 'swiper';
+// import type { Swiper as SwiperType } from 'swiper';
 import { Navigation, Pagination, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useGetProductQuery } from '@/entities/products';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
@@ -21,8 +23,17 @@ import 'swiper/css';
 
 const Page = () => {
 	const { slug } = useParams();
-	const { data: product, isLoading } = useGetProductQuery(slug as string);
-	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+	const {
+		data: product,
+		isLoading,
+		isError,
+		error,
+	} = useGetProductQuery(slug as string);
+	// const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 
@@ -49,12 +60,12 @@ const Page = () => {
 									<Swiper
 										loop
 										modules={[Navigation, Pagination, Thumbs]}
-										thumbs={{
-											swiper:
-												thumbsSwiper && !thumbsSwiper.destroyed
-													? thumbsSwiper
-													: null,
-										}}
+										// thumbs={{
+										// 	swiper:
+										// 		thumbsSwiper && !thumbsSwiper.destroyed
+										// 			? thumbsSwiper
+										// 			: null,
+										// }}
 										navigation={{
 											nextEl: '.product-next',
 											prevEl: '.product-prev',

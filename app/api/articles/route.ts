@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 
 import { getAuthUser } from '@/shared/lib/auth';
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
@@ -46,19 +47,20 @@ export const GET = async (req: Request) => {
 
 		return NextResponse.json({ articles, total });
 	} catch (err) {
-		console.error('GET_ARTICLES_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_articles' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_ARTICLES_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_articles' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
 export const POST = async (req: Request) => {
-	const authUser = await getAuthUser();
-
 	try {
+		const authUser = await getAuthUser();
+
 		const { title, content, image, published } = await req.json();
+
 		const slug = slugify(title);
 
 		const article = await prisma.article.create({
@@ -74,19 +76,10 @@ export const POST = async (req: Request) => {
 
 		return NextResponse.json(article);
 	} catch (err) {
-		if (
-			err instanceof Prisma.PrismaClientKnownRequestError &&
-			err.code === 'P2002'
-		) {
-			return NextResponse.json(
-				{ error: 'slug_already_exists' },
-				{ status: 409 },
-			);
-		}
-		console.error('CREATE_ARTICLE_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_create_article' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'CREATE_ARTICLE_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_create_article' },
+		// 	{ status: 500 },
+		// );
 	}
 };

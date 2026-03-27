@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDeleteProductImageMutation } from '@/entities/product-images';
 import { useCreateProductMutation } from '@/entities/products';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { productSchema } from './schema';
@@ -49,7 +50,7 @@ export const useCreateProductForm = () => {
 
 			router.push(`/shop/${product.slug}`);
 		} catch (err) {
-			console.error(err);
+			handleApiError(err);
 		}
 	};
 

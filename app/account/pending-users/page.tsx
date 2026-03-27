@@ -1,14 +1,21 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
 import { useGetPendingUsersQuery } from '@/entities/users';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Loader } from '@/shared/ui/Loader';
 import { AdminUsersTable, getActionsForUser } from '@/widgets/users-table';
 
 const Page = () => {
-	const { data, isLoading } = useGetPendingUsersQuery();
+	const { data, isLoading, isError, error } = useGetPendingUsersQuery();
 	const { t } = useTranslation();
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

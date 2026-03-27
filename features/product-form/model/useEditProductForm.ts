@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import {
 	useUpdateProductMutation,
 } from '@/entities/products';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { productSchema } from './schema';
@@ -22,7 +23,12 @@ export const useEditProductForm = () => {
 	const { t } = useTranslation();
 	const { slug } = useParams();
 	const router = useRouter();
-	const { data: product, isLoading } = useGetProductQuery(slug as string);
+	const {
+		data: product,
+		isLoading,
+		isError,
+		error,
+	} = useGetProductQuery(slug as string);
 	const [updateProduct] = useUpdateProductMutation();
 	const [deleteProductCover] = useDeleteProductCoverMutation();
 	const [deleteProductImage] = useDeleteProductImageMutation();
@@ -76,9 +82,13 @@ export const useEditProductForm = () => {
 
 			router.push(`/shop/${updated.slug}`);
 		} catch (err) {
-			console.error(err);
+			handleApiError(err);
 		}
 	};
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	return {
 		initialValues,

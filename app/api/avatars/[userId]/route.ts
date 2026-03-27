@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 /* import {
 	DeleteObjectCommand, HeadObjectCommand,
 } from '@aws-sdk/client-s3'; */
@@ -14,27 +15,15 @@ export const GET = async (
 ) => {
 	try {
 		const { userId } = await params;
-		// const exts = ['png', 'jpg', 'jpeg'];
 
-		// for (const ext of exts) {
-		// const key = `${userId}.webp`;
-		try {
-			const profile = await prisma.profile.findUnique({
-				where: { userId },
-				select: { avatarUrl: true },
-			});
-			return NextResponse.json({ url: profile?.avatarUrl ?? null });
-		} catch {}
-		// }
+		const profile = await prisma.profile.findUnique({
+			where: { userId },
+			select: { avatarUrl: true },
+		});
 
-		// Если не найдено ни одного файла
-		return NextResponse.json({ url: null });
+		return NextResponse.json({ url: profile?.avatarUrl ?? null });
 	} catch (err) {
-		console.error('GET_AVATAR_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_get_avatar' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_AVATAR_ERROR');
 	}
 };
 

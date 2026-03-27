@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 import { slugify } from '@/shared/lib/slugify';
 
@@ -11,8 +12,9 @@ export const GET = async (
 		params: Promise<{ slug: string }>;
 	},
 ) => {
-	const { slug } = await params;
 	try {
+		const { slug } = await params;
+
 		const article = await prisma.article.findUnique({
 			where: { slug },
 			include: {
@@ -27,13 +29,14 @@ export const GET = async (
 				},
 			},
 		});
+
 		return NextResponse.json(article);
 	} catch (err) {
-		console.error('GET_ARTICLE_BY_SLUG_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_fetch_article' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'GET_ARTICLE_BY_SLUG_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_fetch_article' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
@@ -41,9 +44,11 @@ export const PATCH = async (
 	req: Request,
 	{ params }: { params: Promise<{ slug: string }> },
 ) => {
-	const { slug } = await params;
 	try {
+		const { slug } = await params;
+
 		const body = await req.json();
+
 		const updated = await prisma.article.update({
 			where: { slug },
 			data: {
@@ -52,13 +57,14 @@ export const PATCH = async (
 				...(body.title && { slug: slugify(body.title) }),
 			},
 		});
+
 		return NextResponse.json(updated);
 	} catch (err) {
-		console.error('UPDATE_ARTICLE_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_update_article' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'UPDATE_ARTICLE_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_update_article' },
+		// 	{ status: 500 },
+		// );
 	}
 };
 
@@ -70,15 +76,17 @@ export const DELETE = async (
 		params: Promise<{ slug: string }>;
 	},
 ) => {
-	const { slug } = await params;
 	try {
+		const { slug } = await params;
+
 		await prisma.article.delete({ where: { slug } });
+
 		return NextResponse.json({ ok: true });
 	} catch (err) {
-		console.error('DELETE_ARTICLE_ERROR:', err);
-		return NextResponse.json(
-			{ error: 'failed_to_delete_article' },
-			{ status: 500 },
-		);
+		return handleRouteError(err, 'DELETE_ARTICLE_ERROR');
+		// return NextResponse.json(
+		// 	{ error: 'failed_to_delete_article' },
+		// 	{ status: 500 },
+		// );
 	}
 };

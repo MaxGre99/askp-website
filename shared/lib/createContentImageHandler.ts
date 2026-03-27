@@ -7,6 +7,8 @@ import { ApiError } from '@/shared/api';
 import { getAuthUser } from '@/shared/lib/auth';
 import { s3 } from '@/shared/lib/s3';
 
+import { handleRouteError } from './handleRouteError';
+
 export const createContentImageHandler = (
 	bucket: string,
 	type: 'OWNER' | 'ADMIN' | 'USER' = 'USER',
@@ -45,14 +47,9 @@ export const createContentImageHandler = (
 				url: `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/${bucket}/${fileName}`,
 			});
 		} catch (err) {
-			if (err instanceof ApiError)
-				return NextResponse.json(
-					{ error: err.message },
-					{ status: err.status },
-				);
-			return NextResponse.json(
-				{ error: 'internal_server_error' },
-				{ status: 500 },
+			return handleRouteError(
+				err,
+				`CREATE_IMAGE_${bucket.toUpperCase()}_ERROR`,
 			);
 		}
 	};

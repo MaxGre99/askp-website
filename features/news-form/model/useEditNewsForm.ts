@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import {
 	useDeleteNewsImageMutation,
 } from '@/entities/news-images';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createNewsSchema } from './schema';
@@ -20,7 +21,12 @@ export const useEditNewsForm = () => {
 	const { slug } = useParams();
 	const router = useRouter();
 
-	const { data: news, isLoading } = useGetNewsQuery(slug as string);
+	const {
+		data: news,
+		isLoading,
+		isError,
+		error,
+	} = useGetNewsQuery(slug as string);
 	const [updateNews] = useUpdateNewsMutation();
 	const [deleteNewsImage] = useDeleteNewsImageMutation();
 	const [deleteNewsCover] = useDeleteNewsCoverMutation();
@@ -77,9 +83,13 @@ export const useEditNewsForm = () => {
 
 			router.push(`/news/${updated.slug}`);
 		} catch (err) {
-			console.error(err);
+			handleApiError(err);
 		}
 	};
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	return { initialValues, schema, handleSubmit, trackUploadedUrl, isLoading };
 };

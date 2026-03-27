@@ -1,19 +1,26 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { DonatersCard, useGetAllDonatersQuery } from '@/entities/donaters';
 import { useGetMeQuery } from '@/entities/users';
 import { DonateWidget } from '@/features/donate';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { Button } from '@/shared/ui/Button';
 import { Loader } from '@/shared/ui/Loader';
 
 const Page = () => {
 	const { t } = useTranslation();
-	const { data, isLoading } = useGetAllDonatersQuery();
+	const { data, isLoading, isError, error } = useGetAllDonatersQuery();
 	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 	const isAdmin = !isLoadingUser && user && user?.role !== 'USER';
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
 
 	if (isLoading) return <Loader />;
 

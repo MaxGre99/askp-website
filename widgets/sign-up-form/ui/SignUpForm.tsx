@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useSignUpMutation } from '@/entities/users';
-import { getApiErrorMessage } from '@/shared/api';
+import { handleApiError } from '@/shared/lib/handleApiError';
 import { SignUpFormValues } from '@/shared/schemas';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
@@ -29,7 +29,6 @@ export const SignUpForm = () => {
 
 	const [signUp, { isLoading }] = useSignUpMutation();
 	const [success, setSuccess] = useState(false);
-	const [apiError, setApiError] = useState('');
 
 	if (success) {
 		return (
@@ -50,12 +49,10 @@ export const SignUpForm = () => {
 			validationSchema={signUpYupSchema}
 			onSubmit={async (values) => {
 				try {
-					setApiError('');
 					await signUp(values).unwrap();
 					setSuccess(true);
 				} catch (err) {
-					setSuccess(false);
-					setApiError(getApiErrorMessage(err));
+					handleApiError(err);
 				}
 			}}
 		>
@@ -100,10 +97,6 @@ export const SignUpForm = () => {
 						required
 					/>
 				</div>
-
-				{apiError && (
-					<p className='error text-center'>{t(`backendErrors.${apiError}`)}</p>
-				)}
 
 				<Button type='submit' disabled={isLoading}>
 					{isLoading ? t('notifications.creating') : t('buttons.signUp')}
