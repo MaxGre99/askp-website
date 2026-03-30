@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { t } from 'i18next';
 import AvatarEditor from 'react-avatar-editor';
 import { createPortal } from 'react-dom';
 import { BiRotateRight, BiZoomIn, BiZoomOut } from 'react-icons/bi';
@@ -77,7 +78,7 @@ export const AvatarEditorModal = ({
 	return createPortal(
 		<div className='fixed inset-0 bg-blue-500/60 backdrop-blur-2xl flex items-center justify-center z-50'>
 			<div className='bg-white rounded-2xl p-6 min-w-[40svw] w-fit max-h-[95svh] overflow-auto'>
-				<h2 className='text-xl font-semibold mb-3'>Редактировать аватар</h2>
+				<h2 className='text-xl font-semibold mb-3'>{t('labels.editAvatar')}</h2>
 
 				<div className='flex flex-col items-start gap-3'>
 					<div className='flex items-center justify-center gap-5 w-full'>
@@ -108,7 +109,7 @@ export const AvatarEditorModal = ({
 							image={image}
 							width={400}
 							height={400}
-							border={[50, 50]}
+							border={50}
 							borderRadius={16}
 							scale={scale}
 							rotate={rotate}
@@ -144,7 +145,7 @@ export const AvatarEditorModal = ({
 						<div className='flex items-center justify-center gap-15 w-full'>
 							<div className='flex flex-col gap-3 items-start justify-start'>
 								<p className='text-lg font-medium text-gray-700'>
-									Предпросмотр:
+									{t('labels.preview')}:
 								</p>
 								<div className='flex gap-5 items-center'>
 									{/* Большой аватар (312x400) */}
@@ -168,14 +169,16 @@ export const AvatarEditorModal = ({
 												className='w-full h-full object-cover'
 											/>
 										</div>
-										<span className='text-xs text-gray-500'>64x64 круг</span>
+										<span className='text-xs text-gray-500'>
+											64x64 {t('labels.circle')}
+										</span>
 									</div>
 								</div>
 							</div>
 							{/* Кнопки действий */}
 							<div className='flex flex-col gap-3 justify-end'>
-								<Button onClick={handleSave}>Сохранить</Button>
-								<Button onClick={onClose}>Отмена</Button>
+								<Button onClick={handleSave}>{t('buttons.save')}</Button>
+								<Button onClick={onClose}>{t('buttons.cancel')}</Button>
 							</div>
 						</div>
 					)}

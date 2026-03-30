@@ -69,7 +69,7 @@ export const ShopPage = () => {
 									<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
 										<FaPlus size={32} />
 										<span className='font-oswald text-2xl tracking-wide'>
-											Добавить товар
+											{t('buttons.addProduct')}
 										</span>
 									</div>
 								</article>
@@ -91,7 +91,7 @@ export const ShopPage = () => {
 						<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
 							<FaPlus size={32} />
 							<span className='font-oswald text-2xl tracking-wide'>
-								Добавить товар
+								{t('buttons.addProduct')}
 							</span>
 						</div>
 					</article>

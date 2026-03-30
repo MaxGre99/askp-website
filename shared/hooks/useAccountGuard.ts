@@ -1,5 +1,9 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+
+import { useTranslation } from 'react-i18next';
 
 import { useGetMeQuery } from '@/entities/users';
 
@@ -26,6 +30,8 @@ const ADMIN_ROUTE_PATTERNS = [
 ];
 
 export const useAccountGuard = () => {
+	const { t } = useTranslation();
+
 	const pathname = usePathname();
 	const router = useRouter();
 	const { data: user, isLoading } = useGetMeQuery();
@@ -48,11 +54,7 @@ export const useAccountGuard = () => {
 
 	useEffect(() => {
 		if (isForbidden) {
-			redirectWithToast(
-				router,
-				'/account/profile',
-				'Недостаточно прав доступа',
-			);
+			redirectWithToast(router, '/account/profile', t('errors.forbidden'));
 		}
 
 		if (isUnauthorized) {
@@ -61,10 +63,10 @@ export const useAccountGuard = () => {
 				router.replace('/');
 			} else {
 				// Зашёл незалогиненным — с тостом
-				redirectWithToast(router, '/', 'Сначала необходимо авторизоваться');
+				redirectWithToast(router, '/', t('errors.unauthorized'));
 			}
 		}
-	}, [isForbidden, isUnauthorized, router]);
+	}, [isForbidden, isUnauthorized, router, t]);
 
 	return { isForbidden, isUnauthorized, isLoading };
 };

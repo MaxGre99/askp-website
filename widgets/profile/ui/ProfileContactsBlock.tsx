@@ -33,7 +33,7 @@ export const ProfileContactsBlock = ({ profile, isEditing }: Props) => {
 	if (!isEditing) {
 		return (
 			<div className='flex flex-col gap-2 w-full'>
-				<label className='font-bold'>Контакты:</label>
+				<label className='font-bold'>{t('labels.contacts')}:</label>
 				<div className='flex flex-wrap gap-5 gap-y-3'>
 					{/* Кнопки из phoneRefs */}
 					{profile?.phone &&

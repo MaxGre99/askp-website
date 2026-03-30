@@ -60,7 +60,7 @@ export const SignInForm = ({
 						name='password'
 						label={t('labels.password')}
 						type='password'
-						placeholder='Пароль'
+						placeholder={t('placeholders.password')}
 						required
 					/>
 
@@ -74,7 +74,7 @@ export const SignInForm = ({
 					</label>
 
 					<Button type='submit' disabled={isSubmitting}>
-						{isSubmitting ? 'Входим…' : t('buttons.signIn')}
+						{isSubmitting ? t('buttons.entering') : t('buttons.signIn')}
 					</Button>
 				</Form>
 			)}

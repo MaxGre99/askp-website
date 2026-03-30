@@ -7,6 +7,7 @@ import Youtube from '@tiptap/extension-youtube';
 import { type Editor, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useField } from 'formik';
+import { useTranslation } from 'react-i18next';
 import {
 	FaAlignCenter,
 	FaAlignJustify,
@@ -69,6 +70,8 @@ const MenuBar = ({
 	editor: Editor | null;
 	onUploadImage: (file: File) => Promise<string>;
 }) => {
+	const { t } = useTranslation();
+
 	const addImage = useCallback(() => {
 		const input = document.createElement('input');
 		input.setAttribute('type', 'file');
@@ -93,7 +96,7 @@ const MenuBar = ({
 					key={level}
 					onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
 					active={editor.isActive('heading', { level })}
-					title={`Заголовок ${level}`}
+					title={`${t('buttons.heading')} ${level}`}
 				>
 					<FaHeading className='inline' />
 					<strong>{level}</strong>
@@ -106,28 +109,28 @@ const MenuBar = ({
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleBold().run()}
 				active={editor.isActive('bold')}
-				title='Жирный'
+				title={t('buttons.bold')}
 			>
 				<FaBold />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleItalic().run()}
 				active={editor.isActive('italic')}
-				title='Курсив'
+				title={t('buttons.italic')}
 			>
 				<FaItalic />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleUnderline?.().run()}
 				active={editor.isActive('underline')}
-				title='Подчёркнутый'
+				title={t('buttons.underline')}
 			>
 				<FaUnderline />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleStrike().run()}
 				active={editor.isActive('strike')}
-				title='Зачёркнутый'
+				title={t('buttons.strike')}
 			>
 				<FaStrikethrough />
 			</ToolbarButton>
@@ -138,14 +141,14 @@ const MenuBar = ({
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleBlockquote().run()}
 				active={editor.isActive('blockquote')}
-				title='Цитата'
+				title={t('buttons.blockquote')}
 			>
 				<FaQuoteLeft />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleCodeBlock().run()}
 				active={editor.isActive('codeBlock')}
-				title='Блок кода'
+				title={t('buttons.codeBlock')}
 			>
 				<FaCode />
 			</ToolbarButton>
@@ -156,14 +159,14 @@ const MenuBar = ({
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleOrderedList().run()}
 				active={editor.isActive('orderedList')}
-				title='Нумерованный список'
+				title={t('buttons.orderedList')}
 			>
 				<FaListOl />
 			</ToolbarButton>
 			<ToolbarButton
 				onClick={() => editor.chain().focus().toggleBulletList().run()}
 				active={editor.isActive('bulletList')}
-				title='Маркированный список'
+				title={t('buttons.bulletList')}
 			>
 				<FaListUl />
 			</ToolbarButton>
@@ -178,10 +181,10 @@ const MenuBar = ({
 					active={editor.isActive({ textAlign: align })}
 					title={
 						{
-							left: 'Влево',
-							center: 'По центру',
-							right: 'Вправо',
-							justify: 'По ширине',
+							left: t('buttons.align.left'),
+							center: t('buttons.align.center'),
+							right: t('buttons.align.right'),
+							justify: t('buttons.align.justify'),
 						}[align]
 					}
 				>
@@ -213,7 +216,7 @@ const MenuBar = ({
 						.run()
 				}
 				active={editor.getAttributes('image').wrap === 'left'}
-				title='Обтекание слева'
+				title={t('buttons.float.left')}
 			>
 				<TbAlignBoxLeftMiddle />
 			</ToolbarButton>
@@ -228,7 +231,7 @@ const MenuBar = ({
 						.run()
 				}
 				active={editor.getAttributes('image').wrap === 'right'}
-				title='Обтекание справа'
+				title={t('buttons.float.right')}
 			>
 				<TbAlignBoxRightMiddle />
 			</ToolbarButton>
@@ -243,7 +246,7 @@ const MenuBar = ({
 						.run()
 				}
 				active={editor.getAttributes('image').wrap === 'none'}
-				title='Без обтекания'
+				title={t('buttons.float.none')}
 			>
 				<TbAlignBoxCenterMiddle />
 			</ToolbarButton>
@@ -255,7 +258,7 @@ const MenuBar = ({
 				onClick={() =>
 					editor.chain().focus().clearNodes().unsetAllMarks().run()
 				}
-				title='Очистить форматирование'
+				title={t('buttons.clearFormatting')}
 			>
 				<FaRemoveFormat />
 			</ToolbarButton>

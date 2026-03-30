@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import { Form, Formik } from 'formik';
@@ -64,7 +66,9 @@ export const SignUpForm = () => {
 				p-6 rounded-2xl shadow-lg
 			'
 			>
-				<h2 className='text-2xl font-semibold text-center'>Регистрация</h2>
+				<h2 className='text-2xl font-semibold text-center'>
+					{t('labels.signUp')}
+				</h2>
 
 				<FormField<SignUpFormValues>
 					name='email'
@@ -99,7 +103,7 @@ export const SignUpForm = () => {
 				</div>
 
 				<Button type='submit' disabled={isLoading}>
-					{isLoading ? t('notifications.creating') : t('buttons.signUp')}
+					{isLoading ? t('buttons.creating') : t('buttons.signUp')}
 				</Button>
 			</Form>
 		</Formik>

@@ -51,7 +51,7 @@ export const SpecialistPage = () => {
 			<ProfileBioSection profile={profile} isEditing={false} />
 
 			<div className='flex flex-col gap-2 w-full'>
-				<label className='font-bold'>Контакты:</label>
+				<label className='font-bold'>{t('labels.contacts')}:</label>
 				<div className='flex flex-wrap gap-5'>
 					{/* Кнопки из phoneRefs */}
 					{profile?.phone &&

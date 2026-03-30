@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/shared/ui/Button';
 
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export const ProfileActions = ({ isEditing, setIsEditing }: Props) => {
+	const { t } = useTranslation();
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const { isSubmitting, dirty, resetForm } = useFormikContext<any>();
 
@@ -25,16 +28,16 @@ export const ProfileActions = ({ isEditing, setIsEditing }: Props) => {
 						}}
 						disabled={isSubmitting}
 					>
-						Отмена
+						{t('buttons.cancel')}
 					</Button>
 
 					<Button type='submit' disabled={isSubmitting || !dirty}>
-						{isSubmitting ? 'Сохраняем...' : 'Сохранить'}
+						{isSubmitting ? t('buttons.saving') : t('buttons.save')}
 					</Button>
 				</>
 			) : (
 				<Button type='button' onClick={() => setIsEditing(true)}>
-					Редактировать профиль
+					{t('buttons.editProfile')}
 				</Button>
 			)}
 		</div>

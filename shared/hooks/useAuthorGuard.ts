@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { useTranslation } from 'react-i18next';
+
 import { useGetMeQuery } from '@/entities/users';
 
 import { redirectWithToast } from '../lib/redirectWithToast';
 
 export const useAuthorGuard = (authorId?: string) => {
+	const { t } = useTranslation();
+
 	const router = useRouter();
 	const { data: user, isLoading } = useGetMeQuery();
 
@@ -16,13 +20,9 @@ export const useAuthorGuard = (authorId?: string) => {
 
 	useEffect(() => {
 		if (isForbidden) {
-			redirectWithToast(
-				router,
-				'/account/my-articles',
-				'Недостаточно прав доступа',
-			);
+			redirectWithToast(router, '/account/my-articles', t('errors.forbidden'));
 		}
-	}, [isForbidden, router]);
+	}, [isForbidden, router, t]);
 
 	return { isForbidden, isLoading: isLoading || !isReady };
 };

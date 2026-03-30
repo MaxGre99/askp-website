@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { ErrorMessage } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { useUploadProfileBioImageMutation } from '@/entities/profile-bio-images';
 import { Profile } from '@/entities/profiles';
@@ -20,6 +21,8 @@ export const ProfileBioSection = ({
 	isEditing,
 	hasErrorsFullBio,
 }: Props) => {
+	const { t } = useTranslation();
+
 	const [uploadProfileBioImage] = useUploadProfileBioImageMutation();
 
 	const handleUploadProfileBioImage = async (file: File) => {
@@ -32,7 +35,7 @@ export const ProfileBioSection = ({
 	return (
 		<>
 			<div className='flex flex-col gap-2 w-full'>
-				<label className='font-bold'>Коротко о себе:</label>
+				<label className='font-bold'>{t('labels.shortBio')}:</label>
 				{isEditing ? (
 					<FormField<Profile>
 						name='shortBio'
@@ -45,7 +48,7 @@ export const ProfileBioSection = ({
 			</div>
 
 			<div className={clsx('flex flex-col w-full')}>
-				<label className='font-bold mb-2'>Подробно о себе:</label>
+				<label className='font-bold mb-2'>{t('labels.fullBio')}:</label>
 				{isEditing ? (
 					<>
 						<FormikTipTapField

@@ -10,10 +10,3 @@ export type SignInDto = {
 	password: string;
 	rememberMe: boolean;
 };
-
-// export type ApiError = {
-// 	status: number;
-// 	data: {
-// 		error: string;
-// 	};
-// };

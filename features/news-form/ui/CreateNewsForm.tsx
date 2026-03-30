@@ -1,6 +1,7 @@
 'use client';
 
 import { ErrorMessage, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import {
 	useDeleteNewsCoverMutation,
@@ -14,8 +15,11 @@ import { ImageInput } from '@/shared/ui/ImageInput';
 import { useCreateNewsForm } from '../model/useCreateNewsForm';
 
 export const CreateNewsForm = () => {
+	const { t } = useTranslation();
+
 	const { initialValues, schema, handleSubmit, trackUploadedUrl } =
 		useCreateNewsForm();
+
 	const [uploadNewsImage] = useUploadNewsImageMutation();
 	const [uploadNewsCover] = useUploadNewsCoverMutation();
 	const [deleteNewsCover] = useDeleteNewsCoverMutation();
@@ -49,21 +53,23 @@ export const CreateNewsForm = () => {
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
-						label='Заголовок'
-						placeholder='Введите заголовок новости'
+						label={t('labels.title')}
+						placeholder={t('placeholders.title')}
 						required
+						labelClassname='text-[16px]'
 					/>
 
 					<ImageInput
 						name='image'
-						label='Обложка'
+						label={t('labels.cover')}
 						onUpload={handleUploadCover}
 						onDelete={handleDeleteCover}
 					/>
 
 					<div className='flex flex-col'>
 						<label className='mb-1'>
-							Содержание<span className='text-red-500'>*</span>
+							{t('labels.content')}
+							<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='content'
@@ -79,7 +85,7 @@ export const CreateNewsForm = () => {
 							checked={values.published}
 							onChange={(e) => setFieldValue('published', e.target.checked)}
 						/>
-						Опубликовать сразу
+						{t('labels.instantPublish')}
 					</label>
 
 					<button
@@ -87,7 +93,7 @@ export const CreateNewsForm = () => {
 						disabled={isSubmitting}
 						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 self-start'
 					>
-						{isSubmitting ? 'Сохранение...' : 'Создать новость'}
+						{isSubmitting ? t('buttons.saving') : t('buttons.add')}
 					</button>
 				</Form>
 			)}

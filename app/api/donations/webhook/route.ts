@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { handleRouteError } from '@/shared/lib/handleRouteError';
-import { prisma } from '@/shared/lib/prisma';
+// import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
 	try {

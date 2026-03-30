@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 export const productSchema = (t: TFunction) =>
 	Yup.object({
-		name: Yup.string().required('Обязательное поле'),
+		name: Yup.string().required('validationErrors.required.name'),
 		description: Yup.string()
 			.required(t('validationErrors.required.description'))
 			.test(
@@ -15,9 +15,11 @@ export const productSchema = (t: TFunction) =>
 				},
 			),
 		contentLink: Yup.string()
-			.url('Некорректный URL')
-			.required('Обязательное поле'),
-		price: Yup.number().min(1, 'Минимум 1 ₽').required('Обязательное поле'),
+			.url('validationErrors.invalid.url')
+			.required('validationErrors.required.contentLink'),
+		price: Yup.number()
+			.min(1, 'validationErrors.min.price')
+			.required('validationErrors.required.price'),
 		images: Yup.array().of(Yup.string()),
 		published: Yup.boolean(),
 	});

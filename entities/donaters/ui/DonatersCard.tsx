@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 import { FaPencilRuler, FaRegTrashAlt } from 'react-icons/fa';
 
 import { Avatar } from '@/entities/avatars';
@@ -15,8 +16,12 @@ export const DonatersCard = ({
 	donater: Donater;
 	showAdminActions?: boolean;
 }) => {
+	const { t } = useTranslation();
+
 	const [deleteDonater] = useDeleteDonaterMutation();
+
 	const handleDelete = async () => await deleteDonater(donater.id);
+
 	return (
 		<div className='flex flex-col items-center justify-center text-center gap-4 p-4 w-full max-w-5xl rounded-2xl bg-white border border-gray-300 relative'>
 			<div
@@ -32,6 +37,7 @@ export const DonatersCard = ({
 			{showAdminActions && (
 				<div className='flex gap-1 pl-1 absolute top-4 right-4'>
 					<Link
+						title={t('buttons.editDonater')}
 						href={`/donate/${donater.id}/edit`}
 						className='bg-white/90 hover:bg-blue-50 border border-gray-200 text-gray-600 hover:text-blue-600 px-3 py-1 rounded-lg text-xs font-medium transition'
 					>
@@ -39,6 +45,7 @@ export const DonatersCard = ({
 					</Link>
 					<button
 						type='button'
+						title={t('buttons.deleteDonater')}
 						onClick={handleDelete}
 						className='bg-white/90 hover:bg-red-50 border border-gray-200 text-gray-600 hover:text-red-600 px-3 py-1 rounded-lg text-xs font-medium transition'
 					>

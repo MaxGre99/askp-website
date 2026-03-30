@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { v4 as uuid } from 'uuid';
 
+import { ApiError } from '@/shared/api';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { yookassa } from '@/shared/lib/yookassa';
 
@@ -13,7 +14,7 @@ export const POST = async (req: Request) => {
 
 		// Валидация суммы на сервере — не доверяем клиенту
 		if (!AMOUNTS.includes(amount)) {
-			return NextResponse.json({ error: 'invalid_amount' }, { status: 400 });
+			throw new ApiError('invalid_amount', 400);
 		}
 
 		const payment = await yookassa.createPayment(

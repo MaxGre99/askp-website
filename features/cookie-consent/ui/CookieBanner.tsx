@@ -2,9 +2,13 @@
 
 import Link from 'next/link';
 
+import { useTranslation } from 'react-i18next';
+
 import { useCookieConsent } from '../model/useCookieConsent';
 
 export const CookieBanner = () => {
+	const { t } = useTranslation();
+
 	const { show, accept } = useCookieConsent();
 
 	if (!show) return null;
@@ -34,7 +38,7 @@ export const CookieBanner = () => {
 					onClick={accept}
 					className='shrink-0 bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 active:bg-blue-400 transition-colors text-sm'
 				>
-					Принять
+					{t('buttons.accept')}
 				</button>
 			</div>
 		</div>

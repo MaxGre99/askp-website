@@ -1,6 +1,7 @@
 'use client';
 
 import { ErrorMessage, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import {
 	useDeleteNewsCoverMutation,
@@ -15,8 +16,11 @@ import { Loader } from '@/shared/ui/Loader';
 import { useEditNewsForm } from '../model/useEditNewsForm';
 
 export const EditNewsForm = () => {
+	const { t } = useTranslation();
+
 	const { initialValues, schema, handleSubmit, trackUploadedUrl, isLoading } =
 		useEditNewsForm();
+
 	const [uploadNewsImage] = useUploadNewsImageMutation();
 	const [uploadNewsCover] = useUploadNewsCoverMutation();
 	const [deleteNewsCover] = useDeleteNewsCoverMutation();
@@ -53,21 +57,23 @@ export const EditNewsForm = () => {
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
-						label='Заголовок'
-						placeholder='Введите заголовок новости'
+						label={t('labels.title')}
+						placeholder={t('placeholders.title')}
 						required
+						labelClassname='text-[16px]'
 					/>
 
 					<ImageInput
 						name='image'
-						label='Обложка'
+						label={t('labels.cover')}
 						onUpload={handleUploadCover}
 						onDelete={handleDeleteCover}
 					/>
 
 					<div className='flex flex-col'>
 						<label className='mb-1'>
-							Содержание<span className='text-red-500'>*</span>
+							{t('labels.content')}
+							<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='content'
@@ -83,7 +89,7 @@ export const EditNewsForm = () => {
 							checked={values.published}
 							onChange={(e) => setFieldValue('published', e.target.checked)}
 						/>
-						Опубликовать
+						{t('labels.publish')}
 					</label>
 
 					<button
@@ -91,7 +97,7 @@ export const EditNewsForm = () => {
 						disabled={isSubmitting}
 						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 self-start'
 					>
-						{isSubmitting ? 'Сохранение...' : 'Сохранить изменения'}
+						{isSubmitting ? t('buttons.saving') : t('buttons.saveChanges')}
 					</button>
 				</Form>
 			)}

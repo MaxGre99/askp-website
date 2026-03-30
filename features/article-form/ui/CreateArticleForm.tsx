@@ -1,6 +1,7 @@
 'use client';
 
 import { ErrorMessage, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import {
 	useDeleteArticleCoverMutation,
@@ -15,11 +16,14 @@ import { ImageInput } from '@/shared/ui/ImageInput';
 import { useCreateArticleForm } from '../model/useCreateArticleForm';
 
 export const CreateArticleForm = () => {
+	const { t } = useTranslation();
+
 	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 	const isAdmin = !isLoadingUser && user && user.role !== 'USER';
 
 	const { initialValues, schema, handleSubmit, trackUploadedUrl } =
 		useCreateArticleForm();
+
 	const [uploadArticleImage] = useUploadArticleImageMutation();
 	const [uploadArticleCover] = useUploadArticleCoverMutation();
 	const [deleteArticleCover] = useDeleteArticleCoverMutation();
@@ -53,21 +57,23 @@ export const CreateArticleForm = () => {
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
-						label='Заголовок'
-						placeholder='Введите заголовок статьи'
+						label={t('labels.title')}
+						placeholder={t('placeholders.articleTitle')}
 						required
+						labelClassname='text-[16px]'
 					/>
 
 					<ImageInput
 						name='image'
-						label='Обложка'
+						label={t('labels.cover')}
 						onUpload={handleUploadCover}
 						onDelete={handleDeleteCover}
 					/>
 
 					<div className='flex flex-col'>
 						<label className='mb-1'>
-							Содержание<span className='text-red-500'>*</span>
+							{t('labels.content')}
+							<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='content'
@@ -84,11 +90,11 @@ export const CreateArticleForm = () => {
 								checked={values.published}
 								onChange={(e) => setFieldValue('published', e.target.checked)}
 							/>
-							Опубликовать сразу
+							{t('labels.instantPublish')}
 						</label>
 					) : (
 						<p className='italic text-gray-600'>
-							Статья будет опубликована после одобрения администрацией.
+							{t('labels.publishAfterApproval')}
 						</p>
 					)}
 
@@ -97,7 +103,7 @@ export const CreateArticleForm = () => {
 						disabled={isSubmitting}
 						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 self-start'
 					>
-						{isSubmitting ? 'Сохранение...' : 'Создать статью'}
+						{isSubmitting ? t('buttons.saving') : t('buttons.add')}
 					</button>
 				</Form>
 			)}

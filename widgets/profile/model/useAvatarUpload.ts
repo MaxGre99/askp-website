@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useGetAvatarQuery, useUploadAvatarMutation } from '@/entities/avatars';
@@ -9,6 +10,8 @@ import { useGetAvatarQuery, useUploadAvatarMutation } from '@/entities/avatars';
 const MAX_SIZE = 3 * 1024 * 1024;
 
 export const useAvatarUpload = (userId?: string) => {
+	const { t } = useTranslation();
+
 	const { data: avatar } = useGetAvatarQuery(userId as string, {
 		skip: !userId,
 	});
@@ -19,12 +22,12 @@ export const useAvatarUpload = (userId?: string) => {
 
 	const onSelectFile = async (file: File) => {
 		if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-			toast('Разрешены только JPG, PNG и WebP', { type: 'warning' });
+			toast(t('errors.incorrectFileType'), { type: 'warning' });
 			return;
 		}
 
 		if (file.size > MAX_SIZE) {
-			toast('Максимальный размер 3MB', { type: 'warning' });
+			toast(t('errors.fileTooLarge'), { type: 'warning' });
 			return;
 		}
 
@@ -35,7 +38,7 @@ export const useAvatarUpload = (userId?: string) => {
 			setSelectedFile(null);
 		} catch (e) {
 			console.error(e);
-			toast('Ошибка загрузки аватара', { type: 'error' });
+			toast(t('errors.avatarUploadFailed'), { type: 'error' });
 		}
 	};
 

@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 
 import { useField } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	name: string;
@@ -14,6 +15,8 @@ interface Props {
 const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 
 export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
+	const { t } = useTranslation();
+
 	const [field, , helpers] = useField(name);
 	const [mode, setMode] = useState<'url' | 'upload'>('url');
 	const [uploading, setUploading] = useState(false);
@@ -56,14 +59,14 @@ export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 						onClick={() => setMode('url')}
 						className={`px-3 py-1 rounded-lg ${mode === 'url' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
 					>
-						По URL
+						{t('buttons.byUrl')}
 					</button>
 					<button
 						type='button'
 						onClick={() => setMode('upload')}
 						className={`px-3 py-1 rounded-lg ${mode === 'upload' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
 					>
-						Загрузить
+						{t('buttons.byFile')}
 					</button>
 				</div>
 			</div>
@@ -81,7 +84,7 @@ export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 					onClick={() => inputRef.current?.click()}
 					className='border-2 border-dashed border-gray-300 rounded-lg px-3 py-6 text-center text-gray-500 cursor-pointer hover:border-blue-400 hover:text-blue-500 transition-colors'
 				>
-					{uploading ? 'Загружается...' : 'Нажмите чтобы выбрать файл'}
+					{uploading ? t('buttons.loading') : t('buttons.pressToChoseFile')}
 					<input
 						ref={inputRef}
 						type='file'

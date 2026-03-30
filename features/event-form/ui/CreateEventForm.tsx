@@ -1,6 +1,7 @@
 'use client';
 
 import { ErrorMessage, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import {
 	useDeleteEventCoverMutation,
@@ -14,8 +15,11 @@ import { ImageInput } from '@/shared/ui/ImageInput';
 import { useCreateEventForm } from '../model/useCreateEventForm';
 
 export const CreateEventForm = () => {
+	const { t } = useTranslation();
+
 	const { initialValues, schema, handleSubmit, trackUploadedUrl } =
 		useCreateEventForm();
+
 	const [uploadEventImage] = useUploadEventImageMutation();
 	const [uploadEventCover] = useUploadEventCoverMutation();
 	const [deleteEventCover] = useDeleteEventCoverMutation();
@@ -49,28 +53,31 @@ export const CreateEventForm = () => {
 				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
 					<FormField
 						name='title'
-						label='Заголовок'
-						placeholder='Введите заголовок события'
+						label={t('labels.title')}
+						placeholder={t('placeholders.title')}
 						required
+						labelClassname='text-[16px]'
 					/>
 
 					<FormField
 						name='eventDate'
-						label='Дата события'
+						label={t('labels.eventDate')}
 						type='datetime-local'
 						required
+						labelClassname='text-[16px]'
 					/>
 
 					<ImageInput
 						name='image'
-						label='Обложка'
+						label={t('labels.cover')}
 						onUpload={handleUploadCover}
 						onDelete={handleDeleteCover}
 					/>
 
 					<div className='flex flex-col'>
 						<label className='mb-1'>
-							Описание<span className='text-red-500'>*</span>
+							{t('labels.description')}
+							<span className='text-red-500'>*</span>
 						</label>
 						<FormikTipTapField
 							name='description'
@@ -90,7 +97,7 @@ export const CreateEventForm = () => {
 							checked={values.published}
 							onChange={(e) => setFieldValue('published', e.target.checked)}
 						/>
-						Опубликовать сразу
+						{t('labels.instantPublish')}
 					</label>
 
 					<button
@@ -98,7 +105,7 @@ export const CreateEventForm = () => {
 						disabled={isSubmitting}
 						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 self-start'
 					>
-						{isSubmitting ? 'Сохранение...' : 'Создать событие'}
+						{isSubmitting ? t('buttons.saving') : t('buttons.add')}
 					</button>
 				</Form>
 			)}

@@ -22,7 +22,14 @@ export const HomeEvents = ({ items }: Props) => {
 				{items.length > 0 ? (
 					<>
 						{items.slice(0, 4).map((event, index) => {
-							return <WideCard key={event.slug} index={index} item={event} />;
+							return (
+								<WideCard
+									key={event.slug}
+									index={index}
+									item={event}
+									type='events'
+								/>
+							);
 						})}
 
 						<div className='flex justify-end'>

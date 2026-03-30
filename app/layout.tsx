@@ -7,6 +7,8 @@ import { CookieBanner } from '@/features/cookie-consent';
 import { Footer, Navbar } from '@/widgets/layout';
 
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
 import { Providers } from './providers';
 

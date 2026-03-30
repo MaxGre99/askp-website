@@ -1,6 +1,7 @@
 'use client';
 
 import { Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import {
@@ -44,6 +45,8 @@ export const DonaterFormFields = ({
 	submitLabel,
 	enableReinitialize,
 }: Props) => {
+	const { t } = useTranslation();
+
 	const [uploadDonaterImage] = useUploadDonaterCoverMutation();
 	const [deleteDonaterImage] = useDeleteDonaterCoverMutation();
 
@@ -70,20 +73,22 @@ export const DonaterFormFields = ({
 					<h1 className='text-2xl font-bold'>{title}</h1>
 					<FormField
 						name='name'
-						label='Название'
-						placeholder='Введите название'
+						label={t('labels.name')}
+						placeholder={t('placeholders.name')}
 						required
+						labelClassname='text-[16px]'
 					/>
 					<FormField
 						name='description'
-						label='Описание'
-						placeholder='Введите описание'
+						label={t('labels.description')}
+						placeholder={t('placeholders.description')}
 						as='textarea'
 						className='min-h-[90px]'
+						labelClassname='text-[16px]'
 					/>
 					<ImageInput
 						name='image'
-						label='Обложка'
+						label={t('labels.cover')}
 						onUpload={handleUploadDonaterCover}
 						onDelete={handleDeleteDonaterCover}
 					/>
@@ -92,7 +97,7 @@ export const DonaterFormFields = ({
 						disabled={isSubmitting}
 						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 disabled:opacity-50 self-start'
 					>
-						{isSubmitting ? 'Сохранение...' : submitLabel}
+						{isSubmitting ? t('buttons.saving') : submitLabel}
 					</button>
 				</Form>
 			)}

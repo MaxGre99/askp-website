@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 
 import { FieldArray, useField } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import {
 	useDeleteProductCoverMutation,
@@ -22,9 +23,12 @@ const ImageRow = ({
 	onChange: (i: number, url: string) => void;
 	onRemove: (i: number) => void;
 }) => {
+	const { t } = useTranslation();
+
 	const [mode, setMode] = useState<'url' | 'upload'>(value ? 'url' : 'url');
 	const [uploading, setUploading] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
+
 	const [uploadProductCover] = useUploadProductCoverMutation();
 	const [deleteProductCover] = useDeleteProductCoverMutation();
 
@@ -61,21 +65,21 @@ const ImageRow = ({
 					onClick={() => setMode('url')}
 					className={`px-3 py-1 rounded-lg ${mode === 'url' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
 				>
-					По URL
+					{t('buttons.byUrl')}
 				</button>
 				<button
 					type='button'
 					onClick={() => setMode('upload')}
 					className={`px-3 py-1 rounded-lg ${mode === 'upload' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
 				>
-					Загрузить
+					{t('buttons.byFile')}
 				</button>
 				<button
 					type='button'
 					onClick={handleDelete}
 					className='ml-auto text-red-500 hover:text-red-700 px-2 text-xs'
 				>
-					Удалить
+					{t('buttons.delete')}
 				</button>
 			</div>
 
@@ -91,7 +95,7 @@ const ImageRow = ({
 					onClick={() => inputRef.current?.click()}
 					className='border-2 border-dashed border-gray-300 rounded-lg px-3 py-4 text-center text-gray-500 cursor-pointer hover:border-blue-400 text-sm'
 				>
-					{uploading ? 'Загружается...' : 'Нажмите чтобы выбрать файл'}
+					{uploading ? t('buttons.loading') : t('buttons.pressToChoseFile')}
 					<input
 						ref={inputRef}
 						type='file'
@@ -114,11 +118,12 @@ const ImageRow = ({
 };
 
 export const ProductCoversInput = () => {
+	const { t } = useTranslation();
 	const [field, , helpers] = useField<string[]>('images');
 
 	return (
 		<div className='flex flex-col gap-2'>
-			<label className='font-bold'>Изображения для слайдера</label>
+			<label className='font-bold'>{t('labels.imagesForSlider')}</label>
 			<FieldArray name='images'>
 				{({ push, remove }) => (
 					<div className='flex flex-col gap-3'>
@@ -140,7 +145,7 @@ export const ProductCoversInput = () => {
 							onClick={() => push('')}
 							className='self-start text-sm text-blue-500 hover:text-blue-700'
 						>
-							+ Добавить изображение
+							+ {t('buttons.addImage')}
 						</button>
 					</div>
 				)}

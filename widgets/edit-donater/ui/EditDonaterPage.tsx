@@ -1,10 +1,14 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
+
 import { DonaterFormFields, useEditDonaterForm } from '@/features/donater-form';
 import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
 import { Loader } from '@/shared/ui/Loader';
 
 export const EditDonaterPage = () => {
+	const { t } = useTranslation();
+
 	const { initialValues, schema, handleSubmit, isLoading } =
 		useEditDonaterForm();
 
@@ -21,11 +25,11 @@ export const EditDonaterPage = () => {
 	return (
 		<div className='flex flex-col gap-2 items-center justify-center w-2xl bg-white rounded-2xl p-6'>
 			<DonaterFormFields
-				title='Редактировать мецената'
+				title={t('buttons.editDonater')}
 				initialValues={initialValues}
 				schema={schema}
 				handleSubmit={handleSubmit}
-				submitLabel='Сохранить'
+				submitLabel={t('buttons.saveChanges')}
 				enableReinitialize
 			/>
 		</div>
