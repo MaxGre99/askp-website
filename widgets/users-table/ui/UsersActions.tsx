@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { useConfirm } from '@/shared/hooks/useConfirmModal';
+import { Button } from '@/shared/ui/Button';
 import { ConfirmModal } from '@/shared/ui/ConfirmModal';
 
 import { USER_ACTIONS, UserAction } from '../model/actions-config';
@@ -26,7 +27,7 @@ export const UsersActions = ({
 				{types.map((type) => {
 					const { icon: Icon, color } = USER_ACTIONS[type];
 					return (
-						<button
+						<Button
 							key={type}
 							title={t(`buttons.${type}`)}
 							onClick={() =>
@@ -36,10 +37,10 @@ export const UsersActions = ({
 									blockTypes.includes(type) ? 'delete' : 'confirm',
 								)
 							}
-							className={`h-9 w-9 flex items-center justify-center rounded-lg text-white transition-colors ${color}`}
+							className={`h-9 w-9 rounded-lg p-0! border-transparent! ${color}`}
 						>
 							<Icon size={18} />
-						</button>
+						</Button>
 					);
 				})}
 			</div>

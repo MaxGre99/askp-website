@@ -48,7 +48,7 @@ export const AccountBlock = () => {
 			</Button> */}
 			<Button
 				className={clsx(
-					'hover:text-cyan-300 active:text-cyan-200',
+					'border-transparent! hover:text-cyan-300 active:text-cyan-200',
 					showMenu && 'text-cyan-300!',
 				)}
 				variant='ghost'

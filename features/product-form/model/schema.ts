@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 export const productSchema = (t: TFunction) =>
 	Yup.object({
-		name: Yup.string().required('validationErrors.required.name'),
+		name: Yup.string().required(t('validationErrors.required.name')),
 		description: Yup.string()
 			.required(t('validationErrors.required.description'))
 			.test(
@@ -15,11 +15,11 @@ export const productSchema = (t: TFunction) =>
 				},
 			),
 		contentLink: Yup.string()
-			.url('validationErrors.invalid.url')
-			.required('validationErrors.required.contentLink'),
+			.url(t('validationErrors.invalid.url'))
+			.required(t('validationErrors.required.contentLink')),
 		price: Yup.number()
-			.min(1, 'validationErrors.min.price')
-			.required('validationErrors.required.price'),
+			.min(1, t('validationErrors.min.price'))
+			.required(t('validationErrors.required.price')),
 		images: Yup.array().of(Yup.string()),
 		published: Yup.boolean(),
 	});

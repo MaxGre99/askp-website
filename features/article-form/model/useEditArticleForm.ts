@@ -68,7 +68,7 @@ export const useEditArticleForm = () => {
 
 			const updated = await updateArticle({
 				slug: slug as string,
-				body: { ...trimmed, image: trimmed.image || null },
+				body: { ...trimmed, image: newImage },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали

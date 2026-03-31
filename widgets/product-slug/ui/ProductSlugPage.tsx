@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useGetProductQuery } from '@/entities/products';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { Button } from '@/shared/ui/Button';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
@@ -83,12 +84,18 @@ export const ProductSlugPage = () => {
 									{/* Кастомные кнопки навигации */}
 									{product.images.length > 1 && (
 										<>
-											<button className='product-prev absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-md transition'>
+											<Button
+												variant='white'
+												className='product-prev absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full shadow-md p-0!'
+											>
 												<FiChevronLeft size={18} />
-											</button>
-											<button className='product-next absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-md transition'>
+											</Button>
+											<Button
+												variant='white'
+												className='product-next absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full shadow-md p-0!'
+											>
 												<FiChevronRight size={18} />
-											</button>
+											</Button>
 										</>
 									)}
 								</div>
@@ -147,10 +154,10 @@ export const ProductSlugPage = () => {
 							</span>
 						</div>
 
-						<button className='flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white px-8 py-4 rounded-2xl font-medium text-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25'>
+						<Button className='hover:shadow-lg hover:shadow-blue-500/25'>
 							<FiShoppingBag size={20} />
 							{t('buttons.buy')}
-						</button>
+						</Button>
 
 						<div className='flex flex-col gap-2 p-4 bg-blue-50 rounded-xl text-sm text-blue-700'>
 							<p>✓ {t('labels.instantAccess')}</p>

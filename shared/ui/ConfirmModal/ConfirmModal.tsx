@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '../Button';
+
 interface Props {
 	isOpen: boolean;
 	title: string;
@@ -37,23 +39,24 @@ export const ConfirmModal = ({
 			>
 				<p className='text-gray-800 text-center font-medium'>{title}?</p>
 				<div className='flex gap-3 justify-center'>
-					<button
+					<Button
+						variant='white'
 						onClick={onCancel}
-						className='px-5 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition text-sm'
+						className='px-5 py-2 rounded-xl text-gray-600! transition text-sm'
 					>
 						{t('buttons.cancel')}
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={onConfirm}
 						className={clsx(
 							'px-5 py-2 rounded-xl text-white transition text-sm',
 							isConfirm
-								? 'bg-green-500 hover:bg-green-600 active:bg-green-400 '
-								: 'bg-red-500 hover:bg-red-600 active:bg-red-400 ',
+								? 'bg-green-500! hover:bg-green-600! active:bg-green-400! border-green-500!'
+								: 'bg-red-500! hover:bg-red-600! active:bg-red-400! border-red-500!',
 						)}
 					>
 						{t('buttons.confirm')}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>,

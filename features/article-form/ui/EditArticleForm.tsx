@@ -9,6 +9,7 @@ import {
 	useUploadArticleImageMutation,
 } from '@/entities/article-images';
 import { useGetMeQuery } from '@/entities/users';
+import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
@@ -102,13 +103,9 @@ export const EditArticleForm = () => {
 						</p>
 					)}
 
-					<button
-						type='submit'
-						disabled={isSubmitting}
-						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 self-start'
-					>
+					<Button type='submit' disabled={isSubmitting} className='self-start'>
 						{isSubmitting ? t('buttons.saving') : t('buttons.saveChanges')}
-					</button>
+					</Button>
 				</Form>
 			)}
 		</Formik>

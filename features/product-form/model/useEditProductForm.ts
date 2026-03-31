@@ -64,7 +64,10 @@ export const useEditProductForm = () => {
 
 			const updated = await updateProduct({
 				slug: slug as string,
-				body: trimmed,
+				body: {
+					...trimmed,
+					images: trimmed.images.filter(Boolean),
+				},
 			}).unwrap();
 
 			// Удаляем картинки описания которые пропали

@@ -4,6 +4,7 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { useUploadProductImageMutation } from '@/entities/product-images';
+import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { Loader } from '@/shared/ui/Loader';
@@ -90,13 +91,9 @@ export const EditProductForm = () => {
 						{t('labels.publish')}
 					</label>
 
-					<button
-						type='submit'
-						disabled={isSubmitting}
-						className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 self-start'
-					>
+					<Button type='submit' disabled={isSubmitting} className='self-start'>
 						{isSubmitting ? t('buttons.saving') : t('buttons.saveChanges')}
-					</button>
+					</Button>
 				</Form>
 			)}
 		</Formik>

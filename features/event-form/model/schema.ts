@@ -15,6 +15,6 @@ export const createEventSchema = (t: TFunction) =>
 				},
 			),
 		image: Yup.string().nullable().optional(),
-		eventDate: Yup.date().required('validationErrors.required.eventDate'),
+		eventDate: Yup.date().required(t('validationErrors.required.eventDate')),
 		published: Yup.boolean(),
 	});

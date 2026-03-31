@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { BiShow, BiSolidHide } from 'react-icons/bi';
 import { FaPencilRuler, FaRegTrashAlt } from 'react-icons/fa';
-// import { LuBookOpenCheck } from 'react-icons/lu';
 import { MdImageNotSupported } from 'react-icons/md';
 
 import { Article } from '@/entities/articles';
@@ -17,6 +16,7 @@ import { useConfirm } from '@/shared/hooks/useConfirmModal';
 import { getAuthorName } from '@/shared/lib/getAuthorName';
 import { stripHtml } from '@/shared/lib/stripHtml';
 
+import { Button } from '../Button';
 import { ConfirmModal } from '../ConfirmModal';
 
 interface WideCardProps {
@@ -129,7 +129,8 @@ export const WideCard = ({
 				<div className='flex gap-1 pl-1'>
 					{showAdminActions &&
 						(!item.published ? (
-							<button
+							<Button
+								variant='ghost'
 								title={t(`buttons.publish${type}`)}
 								type='button'
 								onClick={() =>
@@ -137,12 +138,13 @@ export const WideCard = ({
 										onPublish?.(item.slug),
 									)
 								}
-								className='bg-white/90 hover:bg-green-50 border border-gray-200 text-gray-600 hover:text-green-600 px-3 py-1 rounded-lg text-xs font-medium transition'
+								className='bg-white/90! hover:bg-green-50! border-gray-200! text-gray-600! hover:text-green-600! px-3 py-1 rounded-lg text-xs font-medium'
 							>
 								<BiShow size={16} />
-							</button>
+							</Button>
 						) : (
-							<button
+							<Button
+								variant='ghost'
 								title={t(`buttons.unpublish${type}`)}
 								type='button'
 								onClick={() =>
@@ -152,10 +154,10 @@ export const WideCard = ({
 										'delete',
 									)
 								}
-								className='bg-white/90 hover:bg-gray-400 border border-gray-200 text-gray-600 hover:text-white px-3 py-1 rounded-lg text-xs font-medium transition'
+								className='bg-white/90! hover:bg-gray-400! border-gray-200! text-gray-600! hover:text-white! px-3 py-1 rounded-lg text-xs font-medium'
 							>
 								<BiSolidHide size={16} />
-							</button>
+							</Button>
 						))}
 					<Link
 						title={t(`buttons.edit${type}`)}
@@ -164,8 +166,9 @@ export const WideCard = ({
 					>
 						<FaPencilRuler size={16} />
 					</Link>
-					<button
+					<Button
 						type='button'
+						variant='ghost'
 						title={t(`buttons.delete${type}`)}
 						onClick={() =>
 							confirm(
@@ -174,10 +177,10 @@ export const WideCard = ({
 								'delete',
 							)
 						}
-						className='bg-white/90 hover:bg-red-50 border border-gray-200 text-gray-600 hover:text-red-600 px-3 py-1 rounded-lg text-xs font-medium transition'
+						className='bg-white/90! hover:bg-red-50! border-gray-200! text-gray-600! hover:text-red-600! px-3 py-1 rounded-lg text-xs font-medium'
 					>
 						<FaRegTrashAlt size={16} />
-					</button>
+					</Button>
 				</div>
 			)}
 		</div>

@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '@/shared/ui/Button';
+
 const AMOUNTS = [100, 300, 500, 1000];
 
 export const DonateWidget = () => {
@@ -32,27 +34,21 @@ export const DonateWidget = () => {
 			<h3 className='font-bold text-lg'>{t('labels.helpTheProject')}</h3>
 			<div className='flex gap-2 flex-wrap'>
 				{AMOUNTS.map((a) => (
-					<button
+					<Button
 						key={a}
 						type='button'
 						onClick={() => setAmount(a)}
-						className={`px-4 py-2 rounded-xl border transition ${
-							amount === a
-								? 'bg-blue-500 text-white border-blue-500'
-								: 'bg-white border-gray-200 hover:border-blue-300'
-						}`}
+						variant='white'
+						isActive={amount === a}
+						disabled={loading}
 					>
 						{a} ₽
-					</button>
+					</Button>
 				))}
 			</div>
-			<button
-				onClick={handleDonate}
-				disabled={loading}
-				className='bg-blue-500 text-white px-6 py-3 rounded-2xl hover:bg-blue-600 active:bg-blue-400 disabled:opacity-50 transition'
-			>
+			<Button onClick={handleDonate} disabled={loading}>
 				{loading ? t('buttons.redirect') : `${t('buttons.donate')} ${amount} ₽`}
-			</button>
+			</Button>
 			<p className='text-xs text-gray-400 text-center'>
 				Принимаем Мир, Visa, Mastercard, СБП, ЮMoney
 			</p>

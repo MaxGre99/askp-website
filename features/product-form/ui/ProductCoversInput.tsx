@@ -9,6 +9,7 @@ import {
 	useDeleteProductCoverMutation,
 	useUploadProductCoverMutation,
 } from '@/entities/product-images';
+import { Button } from '@/shared/ui/Button';
 
 const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 
@@ -59,28 +60,31 @@ const ImageRow = ({
 
 	return (
 		<div className='flex flex-col gap-2 p-3 border border-gray-200 rounded-xl'>
-			<div className='flex gap-1 text-sm'>
-				<button
+			<div className='flex gap-1 items-center'>
+				<Button
+					variant='white'
 					type='button'
 					onClick={() => setMode('url')}
-					className={`px-3 py-1 rounded-lg ${mode === 'url' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
+					className={`px-3 py-1 h-fit rounded-lg text-sm ${mode === 'url' && 'bg-blue-500! text-white'}`}
 				>
 					{t('buttons.byUrl')}
-				</button>
-				<button
+				</Button>
+				<Button
+					variant='white'
 					type='button'
 					onClick={() => setMode('upload')}
-					className={`px-3 py-1 rounded-lg ${mode === 'upload' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
+					className={`px-3 py-1 h-fit rounded-lg text-sm ${mode === 'upload' && 'bg-blue-500! text-white'}`}
 				>
 					{t('buttons.byFile')}
-				</button>
-				<button
+				</Button>
+				<Button
+					variant='white'
 					type='button'
 					onClick={handleDelete}
-					className='ml-auto text-red-500 hover:text-red-700 px-2 text-xs'
+					className='ml-auto px-3 py-1 h-fit! text-red-500 hover:text-red-700 px-2 rounded-lg  text-xs'
 				>
 					{t('buttons.delete')}
-				</button>
+				</Button>
 			</div>
 
 			{mode === 'url' ? (
@@ -140,13 +144,14 @@ export const ProductCoversInput = () => {
 								onRemove={remove}
 							/>
 						))}
-						<button
+						<Button
+							variant='ghost'
 							type='button'
 							onClick={() => push('')}
-							className='self-start text-sm text-blue-500 hover:text-blue-700'
+							className='self-start text-sm text-blue-500! hover:text-blue-700!'
 						>
 							+ {t('buttons.addImage')}
-						</button>
+						</Button>
 					</div>
 				)}
 			</FieldArray>

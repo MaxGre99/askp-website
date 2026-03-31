@@ -5,6 +5,8 @@ import { useRef, useState } from 'react';
 import { useField } from 'formik';
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '../Button';
+
 interface Props {
 	name: string;
 	label: string;
@@ -54,20 +56,22 @@ export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 			<div className='flex items-center justify-between'>
 				<label>{label}</label>
 				<div className='flex gap-1 text-sm'>
-					<button
+					<Button
+						variant='white'
 						type='button'
 						onClick={() => setMode('url')}
-						className={`px-3 py-1 rounded-lg ${mode === 'url' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
+						className={`px-3 py-1 rounded-lg ${mode === 'url' && 'bg-blue-500! text-white'}`}
 					>
 						{t('buttons.byUrl')}
-					</button>
-					<button
+					</Button>
+					<Button
+						variant='white'
 						type='button'
 						onClick={() => setMode('upload')}
-						className={`px-3 py-1 rounded-lg ${mode === 'upload' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
+						className={`px-3 py-1 rounded-lg ${mode === 'upload' && 'bg-blue-500! text-white'}`}
 					>
 						{t('buttons.byFile')}
-					</button>
+					</Button>
 				</div>
 			</div>
 
@@ -102,13 +106,14 @@ export const ImageInput = ({ name, label, onUpload, onDelete }: Props) => {
 						alt='preview'
 						className='w-full object-fill rounded-lg'
 					/>
-					<button
+					<Button
+						variant='ghost'
 						type='button'
 						onClick={handleDeleteCover}
-						className='absolute top-1 right-1 bg-black/50 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-black/80 text-xs'
+						className='absolute top-1 right-1 bg-black/50! text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-black/80! text-xs'
 					>
 						✕
-					</button>
+					</Button>
 				</div>
 			)}
 		</div>

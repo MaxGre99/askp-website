@@ -36,7 +36,10 @@ export const useCreateProductForm = () => {
 		try {
 			const trimmed = trimStrings(values);
 
-			const product = await createProduct(trimmed).unwrap();
+			const product = await createProduct({
+				...trimmed,
+				images: trimmed.images.filter(Boolean),
+			}).unwrap();
 
 			const usedUrls = extractImageUrls(trimmed.description);
 			const orphanedUrls = [...uploadedDescriptionUrls.current].filter(

@@ -62,7 +62,7 @@ export const useEditNewsForm = () => {
 
 			const updated = await updateNews({
 				slug: slug as string,
-				body: { ...trimmed, image: trimmed.image || null },
+				body: { ...trimmed, image: newImage },
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали

@@ -21,11 +21,13 @@ export const Button = ({
 	const isWhite = variant === 'white';
 
 	const baseClasses = clsx(
-		'flex items-center justify-center gap-2 cursor-pointer transition-all duration-200 disabled:opacity-50 p-3 rounded-2xl font-inter text-base',
-		isBlue && 'bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white',
-		isGhost && 'hover:bg-white/15 active:bg-white/25 text-white',
+		'flex items-center justify-center gap-2 cursor-pointer transition-all duration-200 disabled:opacity-50 p-3 rounded-2xl font-inter text-base border',
+		isBlue &&
+			'bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white border-blue-500',
+		isGhost &&
+			'hover:bg-white/15 active:bg-white/25 text-white border-white/50',
 		isWhite &&
-			'border border-transparent bg-white text-blue-600 hover:bg-gray-200 active:bg-gray-100',
+			'border border-gray-300 bg-white text-blue-600 hover:bg-gray-200 active:bg-gray-100',
 		isActive &&
 			(isBlue
 				? 'bg-blue-600!'

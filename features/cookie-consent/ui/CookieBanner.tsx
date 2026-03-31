@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '@/shared/ui/Button';
+
 import { useCookieConsent } from '../model/useCookieConsent';
 
 export const CookieBanner = () => {
@@ -34,12 +36,12 @@ export const CookieBanner = () => {
 					</Link>
 					.
 				</p>
-				<button
+				<Button
 					onClick={accept}
-					className='shrink-0 bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 active:bg-blue-400 transition-colors text-sm'
+					// className='shrink-0 bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 active:bg-blue-400 transition-colors text-sm'
 				>
 					{t('buttons.accept')}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

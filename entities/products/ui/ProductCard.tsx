@@ -9,6 +9,7 @@ import { MdImageNotSupported } from 'react-icons/md';
 import { useGetMeQuery } from '@/entities/users';
 import { useConfirm } from '@/shared/hooks/useConfirmModal';
 import { stripHtml } from '@/shared/lib/stripHtml';
+import { Button } from '@/shared/ui/Button';
 import { ConfirmModal } from '@/shared/ui/ConfirmModal';
 
 import {
@@ -75,7 +76,8 @@ export const ProductCard = ({ product }: { product: Product }) => {
 			{showAdminActions && (
 				<div className='flex gap-1 pl-1'>
 					{!product.published ? (
-						<button
+						<Button
+							variant='ghost'
 							title={t('buttons.publishProduct')}
 							type='button'
 							onClick={() =>
@@ -83,12 +85,13 @@ export const ProductCard = ({ product }: { product: Product }) => {
 									publishProduct(product.slug),
 								)
 							}
-							className='bg-white/90 hover:bg-green-50 border border-gray-200 text-gray-600 hover:text-green-600 px-3 py-1 rounded-lg text-xs font-medium transition'
+							className='bg-white/90! hover:bg-green-50! border-gray-200! text-gray-600! hover:text-green-600! px-3 py-1 rounded-lg text-xs font-medium'
 						>
 							<BiShow size={16} />
-						</button>
+						</Button>
 					) : (
-						<button
+						<Button
+							variant='ghost'
 							title={t('buttons.unpublishProduct')}
 							type='button'
 							onClick={() =>
@@ -98,10 +101,10 @@ export const ProductCard = ({ product }: { product: Product }) => {
 									'delete',
 								)
 							}
-							className='bg-white/90 hover:bg-gray-400 border border-gray-200 text-gray-600 hover:text-white px-3 py-1 rounded-lg text-xs font-medium transition'
+							className='bg-white/90! hover:bg-gray-400! border-gray-200! text-gray-600! hover:text-white! px-3 py-1 rounded-lg text-xs font-medium'
 						>
 							<BiSolidHide size={16} />
-						</button>
+						</Button>
 					)}
 					<Link
 						title={t('buttons.editProduct')}
@@ -110,7 +113,8 @@ export const ProductCard = ({ product }: { product: Product }) => {
 					>
 						<FaPencilRuler size={16} />
 					</Link>
-					<button
+					<Button
+						variant='ghost'
 						type='button'
 						title={t('buttons.deleteProduct')}
 						onClick={() =>
@@ -120,10 +124,10 @@ export const ProductCard = ({ product }: { product: Product }) => {
 								'delete',
 							)
 						}
-						className='bg-white/90 hover:bg-red-50 border border-gray-200 text-gray-600 hover:text-red-600 px-3 py-1 rounded-lg text-xs font-medium transition'
+						className='bg-white/90! hover:bg-red-50! border-gray-200! text-gray-600! hover:text-red-600! px-3 py-1 rounded-lg text-xs font-medium'
 					>
 						<FaRegTrashAlt size={16} />
-					</button>
+					</Button>
 				</div>
 			)}
 		</div>
