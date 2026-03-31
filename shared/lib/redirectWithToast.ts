@@ -4,7 +4,7 @@ export const redirectWithToast = (
 	router: AppRouterInstance,
 	path: string,
 	message: string,
-	type: 'error' | 'info' | 'success' = 'error',
+	type: 'error' | 'info' | 'success' | 'warning' = 'error',
 ) => {
 	sessionStorage.setItem('redirect_toast', JSON.stringify({ message, type }));
 	router.replace(path);

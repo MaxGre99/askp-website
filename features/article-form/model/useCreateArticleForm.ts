@@ -7,6 +7,7 @@ import { useDeleteArticleImageMutation } from '@/entities/article-images';
 import { useCreateArticleMutation } from '@/entities/articles';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createArticleSchema } from './schema';
@@ -56,7 +57,12 @@ export const useCreateArticleForm = () => {
 				orphanedUrls.map((url) => deleteArticleImage(url)),
 			);
 
-			router.push(`/articles/${article.slug}`);
+			redirectWithToast(
+				router,
+				`/articles/${article.slug}`,
+				t('notifications.createArticleSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

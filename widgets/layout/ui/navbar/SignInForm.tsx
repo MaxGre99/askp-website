@@ -1,5 +1,8 @@
+import { Dispatch, SetStateAction, useState } from 'react';
+
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { BiShow, BiSolidHide } from 'react-icons/bi';
 import * as Yup from 'yup';
 
 import { useSignInMutation } from '@/entities/users';
@@ -16,9 +19,12 @@ interface FormValues {
 export const SignInForm = ({
 	setShowMenu,
 }: {
-	setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+	setShowMenu: Dispatch<SetStateAction<boolean>>;
 }) => {
 	const { t } = useTranslation();
+
+	const [showPassword, setShowPassword] = useState(false);
+
 	const [signIn] = useSignInMutation();
 
 	const validationSchema = Yup.object({
@@ -54,15 +60,34 @@ export const SignInForm = ({
 						type='email'
 						placeholder='Email'
 						required
+						autoComplete='email'
 					/>
 
-					<FormField
-						name='password'
-						label={t('labels.password')}
-						type='password'
-						placeholder={t('placeholders.password')}
-						required
-					/>
+					<div className='relative'>
+						<FormField
+							name='password'
+							label={t('labels.password')}
+							type={showPassword ? 'text' : 'password'}
+							placeholder={t('placeholders.password')}
+							required
+							autoComplete='current-password'
+							className='pr-10'
+						/>
+
+						<Button
+							title={
+								showPassword
+									? t('buttons.hidePassword')
+									: t('buttons.showPassword')
+							}
+							variant='ghost'
+							type='button'
+							onClick={() => setShowPassword((p) => !p)}
+							className='absolute right-3 top-[37px] text-sm text-gray-500! p-0!'
+						>
+							{showPassword ? <BiSolidHide size={16} /> : <BiShow size={16} />}
+						</Button>
+					</div>
 
 					<label className='flex items-center gap-2 text-sm'>
 						<input

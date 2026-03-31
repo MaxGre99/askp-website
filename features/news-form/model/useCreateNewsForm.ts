@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useCreateNewsMutation } from '@/entities/news';
 import { useDeleteNewsImageMutation } from '@/entities/news-images';
-// import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createNewsSchema } from './schema';
@@ -53,7 +53,12 @@ export const useCreateNewsForm = () => {
 			);
 			await Promise.allSettled(orphanedUrls.map((url) => deleteNewsImage(url)));
 
-			router.push(`/news/${news.slug}`);
+			redirectWithToast(
+				router,
+				`/news/${news.slug}`,
+				t('notifications.createNewsSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

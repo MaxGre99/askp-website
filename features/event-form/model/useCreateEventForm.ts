@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useDeleteEventImageMutation } from '@/entities/event-images';
 import { useCreateEventMutation } from '@/entities/events';
-// import { getApiErrorMessage } from '@/shared/api';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createEventSchema } from './schema';
@@ -56,7 +56,12 @@ export const useCreateEventForm = () => {
 				orphanedUrls.map((url) => deleteEventImage(url)),
 			);
 
-			router.push(`/events/${event.slug}`);
+			redirectWithToast(
+				router,
+				`/events/${event.slug}`,
+				t('notifications.createEventSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

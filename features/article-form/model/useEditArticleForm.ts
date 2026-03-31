@@ -14,6 +14,7 @@ import {
 import { useAuthorGuard } from '@/shared/hooks/useAuthorGuard';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createArticleSchema } from './schema';
@@ -87,7 +88,12 @@ export const useEditArticleForm = () => {
 				[...removedUrls, ...orphanedUrls].map((url) => deleteArticleImage(url)),
 			);
 
-			router.push(`/articles/${updated.slug}`);
+			redirectWithToast(
+				router,
+				`/articles/${updated.slug}`,
+				t('notifications.editArticleSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

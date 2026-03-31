@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { BiShow, BiSolidHide } from 'react-icons/bi';
 import * as Yup from 'yup';
 
 import { useSignUpMutation } from '@/entities/users';
@@ -21,7 +22,7 @@ export const SignUpForm = () => {
 			.required(t('validationErrors.required.email')),
 
 		password: Yup.string()
-			.min(6, t('validationErrors.invalid.password'))
+			.min(6, t('validationErrors.min.password'))
 			.required(t('validationErrors.required.password')),
 
 		firstName: Yup.string().required(t('validationErrors.required.firstName')),
@@ -31,6 +32,7 @@ export const SignUpForm = () => {
 
 	const [signUp, { isLoading }] = useSignUpMutation();
 	const [success, setSuccess] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
 	if (success) {
 		return (
@@ -76,15 +78,34 @@ export const SignUpForm = () => {
 					type='email'
 					placeholder={t('placeholders.email')}
 					required
+					autoComplete='email'
 				/>
 
-				<FormField<SignUpFormValues>
-					name='password'
-					label={t('labels.password')}
-					type='password'
-					placeholder={t('placeholders.password')}
-					required
-				/>
+				<div className='relative'>
+					<FormField<SignUpFormValues>
+						name='password'
+						label={t('labels.password')}
+						type={showPassword ? 'text' : 'password'}
+						placeholder={t('placeholders.password')}
+						required
+						autoComplete='new-password'
+						className='pr-10'
+					/>
+
+					<Button
+						title={
+							showPassword
+								? t('buttons.hidePassword')
+								: t('buttons.showPassword')
+						}
+						variant='ghost'
+						type='button'
+						onClick={() => setShowPassword((p) => !p)}
+						className='absolute right-3 top-[37px] text-sm text-gray-500! p-0!'
+					>
+						{showPassword ? <BiSolidHide size={16} /> : <BiShow size={16} />}
+					</Button>
+				</div>
 
 				<div className='grid grid-cols-2 gap-4'>
 					<FormField<SignUpFormValues>

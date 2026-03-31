@@ -9,7 +9,20 @@ const ru = {
 				'Заявка отправлена. Аккаунт станет активным после одобрения администратора.',
 			empty: 'Тут пока ничего нет :(',
 			signedUpToEvent: 'Вы успешно зарегистрированы на событие',
+			resetPasswordEmailSent: 'Письмо для сброса пароля отправлено',
+			passwordResetSuccess:
+				'Пароль успешно сброшен. Теперь вы можете войти с новым паролем',
 			// signingError: 'Ошибка регистрации',
+			createArticleSuccess: 'Статья успешно добавлена',
+			editArticleSuccess: 'Статья успешно отредактирована',
+			createDonaterSuccess: 'Меценат успешно добавлен',
+			editDonaterSuccess: 'Меценат успешно отредактирован',
+			createEventSuccess: 'Событие успешно добавлено',
+			editEventSuccess: 'Событие успешно отредактировано',
+			createNewsSuccess: 'Новость успешно добавлена',
+			editNewsSuccess: 'Новость успешно отредактирована',
+			createProductSuccess: 'Товар успешно добавлен',
+			editProductSuccess: 'Товар успешно отредактирован',
 		},
 		navbar: {
 			home: 'Главная',
@@ -154,6 +167,9 @@ const ru = {
 			contacts: 'Контакты',
 			signUp: 'Регистрация',
 			perPage: 'на стр.',
+			emailToResetPassword: 'Почта для восстановления',
+			newPassword: 'Новый пароль',
+			repeatPassword: 'Повторите пароль',
 		},
 		placeholders: {
 			titleFilter: 'Поиск по заголовку',
@@ -265,6 +281,10 @@ const ru = {
 			save: 'Сохранить',
 			editProfile: 'Редактировать профиль',
 			creating: 'Создание...',
+			showPassword: 'Показать пароль',
+			hidePassword: 'Скрыть пароль',
+			forgotPassword: 'Забыли пароль',
+			resetPassword: 'Сбросить пароль',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',
@@ -281,6 +301,7 @@ const ru = {
 				email: 'Email обязателен',
 				phone: 'Номер обязателен',
 				password: 'Пароль обязателен',
+				confirmPassword: 'Подтверждение пароля обязательно',
 				title: 'Заголовок обязателен',
 				content: 'Содержание обязательно',
 				description: 'Описание обязательно',
@@ -291,11 +312,12 @@ const ru = {
 			},
 			invalid: {
 				email: 'Некорретный email',
-				password: 'Минимум 6 символов',
 				url: 'Невалидный URL',
+				passwordsDontMatch: 'Пароли не совпадают',
 			},
 			min: {
 				price: 'Минимальная цена 1 ₽',
+				password: 'Минимум 6 символов',
 			},
 		},
 		backendErrors: {
@@ -365,6 +387,7 @@ const ru = {
 			incorrectFileType: 'Разрешены только JPG, PNG и WebP',
 			fileTooLarge: 'Максимальный размер 3MB',
 			avatarUploadFailed: 'Ошибка загрузки аватара',
+			invalidLink: 'Некорректная ссылка',
 		},
 	},
 };

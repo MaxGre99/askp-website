@@ -10,6 +10,7 @@ import {
 } from '@/entities/news-images';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createNewsSchema } from './schema';
@@ -81,7 +82,12 @@ export const useEditNewsForm = () => {
 				[...removedUrls, ...orphanedUrls].map((url) => deleteNewsImage(url)),
 			);
 
-			router.push(`/news/${updated.slug}`);
+			redirectWithToast(
+				router,
+				`/news/${updated.slug}`,
+				t('notifications.editNewsSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

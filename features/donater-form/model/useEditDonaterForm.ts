@@ -9,6 +9,7 @@ import {
 	useUpdateDonaterMutation,
 } from '@/entities/donaters';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createDonaterSchema } from './schema';
@@ -54,7 +55,12 @@ export const useEditDonaterForm = () => {
 				body: { ...trimmed, image: newImage },
 			}).unwrap();
 
-			router.push('/donate');
+			redirectWithToast(
+				router,
+				'/donate',
+				t('notifications.editDonaterSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

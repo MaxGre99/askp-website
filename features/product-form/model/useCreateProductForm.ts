@@ -7,6 +7,7 @@ import { useDeleteProductImageMutation } from '@/entities/product-images';
 import { useCreateProductMutation } from '@/entities/products';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { productSchema } from './schema';
@@ -51,7 +52,12 @@ export const useCreateProductForm = () => {
 				orphanedUrls.map((url) => deleteProductImage(url)),
 			);
 
-			router.push(`/shop/${product.slug}`);
+			redirectWithToast(
+				router,
+				`/shop/${product.slug}`,
+				t('notifications.createProductSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

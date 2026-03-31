@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCreateDonaterMutation } from '@/entities/donaters';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createDonaterSchema } from './schema';
@@ -26,7 +27,12 @@ export const useCreateDonaterForm = () => {
 				image: trimmed.image || null,
 			}).unwrap();
 
-			router.push('/donate');
+			redirectWithToast(
+				router,
+				'/donate',
+				t('notifications.createDonaterSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

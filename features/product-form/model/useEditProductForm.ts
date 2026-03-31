@@ -13,6 +13,7 @@ import {
 } from '@/entities/products';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { productSchema } from './schema';
@@ -83,7 +84,12 @@ export const useEditProductForm = () => {
 				[...removedUrls, ...orphanedUrls].map((url) => deleteProductImage(url)),
 			);
 
-			router.push(`/shop/${updated.slug}`);
+			redirectWithToast(
+				router,
+				`/shop/${updated.slug}`,
+				t('notifications.editProductSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

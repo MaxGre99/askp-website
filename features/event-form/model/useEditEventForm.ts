@@ -11,6 +11,7 @@ import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
 import { extractImageUrls } from '@/shared/lib/extractImageUrls';
 import { formatForDatetimeLocal } from '@/shared/lib/formatForDatetimeLocal';
 import { handleApiError } from '@/shared/lib/handleApiError';
+import { redirectWithToast } from '@/shared/lib/redirectWithToast';
 import { trimStrings } from '@/shared/lib/trimStrings';
 
 import { createEventSchema } from './schema';
@@ -83,7 +84,12 @@ export const useEditEventForm = () => {
 				[...removedUrls, ...orphanedUrls].map((url) => deleteEventImage(url)),
 			);
 
-			router.push(`/events/${updated.slug}`);
+			redirectWithToast(
+				router,
+				`/events/${updated.slug}`,
+				t('notifications.editEventSuccess'),
+				'success',
+			);
 		} catch (err) {
 			handleApiError(err);
 		}

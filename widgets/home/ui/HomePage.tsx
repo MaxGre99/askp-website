@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { useGetAllEventsQuery } from '@/entities/events';
 import { useGetAllNewsQuery } from '@/entities/news';
 import { useGetAllProfilesQuery } from '@/entities/profiles';
-import { useRedirectToast } from '@/shared/hooks/useRedirectToast';
 
 import { HomeEvents } from './HomeEvents';
 import { HomeFeedback } from './HomeFeedback';
@@ -13,8 +12,6 @@ import { HomeNewsSlider } from './HomeNewsSlider';
 import { HomeSpecialistsSlider } from './HomeSpecialistsSlider';
 
 export const HomePage = () => {
-	useRedirectToast();
-
 	const { data: newsData, isError: isNewsError } = useGetAllNewsQuery({
 		page: 1,
 		pageSize: 10,

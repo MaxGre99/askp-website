@@ -9,6 +9,7 @@ interface FormFieldProps<Values extends object = object> {
 	required?: boolean;
 	className?: string;
 	labelClassname?: string;
+	autoComplete?: string;
 }
 
 export const FormField = <Values extends object>({
@@ -20,6 +21,7 @@ export const FormField = <Values extends object>({
 	required,
 	className,
 	labelClassname,
+	autoComplete,
 }: FormFieldProps<Values>) => {
 	const { errors, touched /* , values, setFieldValue */ } =
 		useFormikContext<Values>();
@@ -54,6 +56,7 @@ export const FormField = <Values extends object>({
 				as={as}
 				placeholder={placeholder}
 				className={`input ${hasError ? 'ring-2 ring-red-400 border-transparent' : ''} ${className ? className : ''}`}
+				autoComplete={autoComplete}
 			/>
 			{/* )} */}
 

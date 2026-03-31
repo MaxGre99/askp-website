@@ -17,7 +17,12 @@ export const productsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllProducts: builder.query<
 			{ products: Product[]; total: number },
-			{ page: number; query?: string; pageSize?: number; showAll?: boolean }
+			{
+				page: number;
+				query?: string;
+				pageSize?: number;
+				showAll?: boolean | null;
+			}
 		>({
 			query: ({ page, query, pageSize = 8, showAll }) => {
 				const params = new URLSearchParams();

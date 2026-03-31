@@ -26,6 +26,8 @@ model User {
   articles      Article[]
   profile       Profile?
 
+   passwordResetTokens PasswordResetToken[]
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -194,4 +196,14 @@ enum OrderStatus {
   CONFIRMING
   PAID
   CANCELLED
+}
+
+// ВОССТАНОВЛЕНИЕ ПАРОЛЯ
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expires   DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

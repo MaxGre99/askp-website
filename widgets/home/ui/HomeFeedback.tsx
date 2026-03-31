@@ -26,7 +26,7 @@ export const HomeFeedback = () => {
 
 				<Button
 					onClick={() => setType('cooperation')}
-					className='relative z-10 px-6 py-3 text-white font-medium w-1/2! h-fit! font-inter text-lg hover:bg-transparent!'
+					className='relative z-10 px-6 py-3 text-white font-medium w-1/2! h-fit! font-inter text-lg hover:bg-transparent! border-0!'
 					variant='ghost'
 				>
 					{t('feedbackForm.buttons.cooperation')}
@@ -34,7 +34,7 @@ export const HomeFeedback = () => {
 
 				<Button
 					onClick={() => setType('consultation')}
-					className='relative z-10 px-6 py-3 text-white font-medium w-1/2 h-fit! font-inter text-lg hover:bg-transparent!'
+					className='relative z-10 px-6 py-3 text-white font-medium w-1/2 h-fit! font-inter text-lg hover:bg-transparent! border-0!'
 					variant='ghost'
 				>
 					{t('feedbackForm.buttons.consultation')}

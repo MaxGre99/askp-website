@@ -12,19 +12,27 @@ import { useGetProfileQuery } from '@/entities/profiles';
 import { useGetMeQuery, useSignOutMutation } from '@/entities/users';
 import { getDisplayName } from '@/shared/lib/getDisplayName';
 import { Button } from '@/shared/ui/Button';
+import { EmailToResetPassword } from '@/widgets/email-to-reset-password';
 
 import { SignInForm } from './SignInForm';
 
 export const AccountBlock = () => {
 	const pathname = usePathname();
+
 	const { t } = useTranslation();
+
 	const [showMenu, setShowMenu] = useState(false);
 
+	const [mode, setMode] = useState<'login' | 'reset'>('login');
+
 	const { data: user } = useGetMeQuery();
+
 	const [signOut] = useSignOutMutation();
+
 	const { data: avatar } = useGetAvatarQuery(user?.id as string, {
 		skip: !user?.id,
 	});
+
 	const { data: profile } = useGetProfileQuery(user?.id as string, {
 		skip: !user?.id,
 	});
@@ -86,8 +94,30 @@ export const AccountBlock = () => {
 								</Button>
 							</div>
 						</div>
+					) : mode === 'reset' ? (
+						<>
+							<EmailToResetPassword setShowMenu={setShowMenu} />
+							<Button
+								variant='ghost'
+								type='button'
+								onClick={() => setMode('login')}
+								className='text-sm text-gray-500! mx-auto mt-2 p-0!'
+							>
+								Назад
+							</Button>
+						</>
 					) : (
-						<SignInForm setShowMenu={setShowMenu} />
+						<>
+							<SignInForm setShowMenu={setShowMenu} />
+							<Button
+								variant='ghost'
+								type='button'
+								onClick={() => setMode('reset')}
+								className='text-sm text-blue-500! mx-auto mt-2 p-0!'
+							>
+								{t('buttons.forgotPassword')}?
+							</Button>
+						</>
 					)}
 				</div>
 			)}

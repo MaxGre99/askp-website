@@ -5,10 +5,11 @@ import { SignInDto, SignUpDto } from '../model/authTypes';
 
 export const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		getMe: builder.query<User, void>({
+		getMe: builder.query<User | null, void>({
 			query: () => '/auth/me',
 			providesTags: ['Me'],
 		}),
+
 		signUp: builder.mutation<User, SignUpDto>({
 			query: (body) => ({
 				url: '/auth/sign-up',
@@ -39,9 +40,32 @@ export const authApi = baseApi.injectEndpoints({
 			async onQueryStarted(_, { dispatch, queryFulfilled }) {
 				try {
 					await queryFulfilled;
-					dispatch(baseApi.util.resetApiState());
+
+					// сразу убираем пользователя
+					dispatch(
+						authApi.util.updateQueryData('getMe', undefined, () => null),
+					);
 				} catch {}
 			},
+		}),
+
+		resetPassword: builder.mutation<{ ok: true }, { email: string }>({
+			query: ({ email }) => ({
+				url: '/auth/reset-password',
+				method: 'POST',
+				body: { email },
+			}),
+		}),
+
+		confirmPassword: builder.mutation<
+			{ ok: true },
+			{ token: string; password: string }
+		>({
+			query: ({ token, password }) => ({
+				url: '/auth/reset-password/confirm',
+				method: 'POST',
+				body: { token, password },
+			}),
 		}),
 	}),
 });
@@ -51,4 +75,6 @@ export const {
 	useSignUpMutation,
 	useSignInMutation,
 	useSignOutMutation,
+	useResetPasswordMutation,
+	useConfirmPasswordMutation,
 } = authApi;

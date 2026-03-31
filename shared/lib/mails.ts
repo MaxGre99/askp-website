@@ -243,3 +243,33 @@ export const sendApprovalEmail = async (params: {
         `),
 	});
 };
+
+export const sendResetPasswordEmail = async (params: {
+	email: string;
+	link: string;
+}) => {
+	await transporter.sendMail({
+		from: `"АСКП" <${process.env.SMTP_USER}>`,
+		to: params.email,
+		subject: 'Восстановление пароля',
+		html: baseLayout(`
+			<p>Для сброса пароля перейдите по ссылке:</p>
+
+			<a href="${params.link}" 
+				style="display:inline-block;padding:10px 16px;background:#1a3a5c;color:white;border-radius:6px;">
+				Сбросить пароль
+			</a>
+
+			<p style="margin-top:16px;font-size:12px;color:#888;">
+				Ссылка действительна 30 минут
+			</p>
+
+             <p style="font-size: 14px; color: #888; line-height: 1.6; margin-top: 24px;">
+                Если у вас возникнут вопросы, мы всегда готовы помочь —
+                <a href="mailto:${process.env.FEEDBACK_EMAIL}" style="color: #1a3a5c;">
+                    ${process.env.FEEDBACK_EMAIL}
+                </a>
+            </p>
+		`),
+	});
+};

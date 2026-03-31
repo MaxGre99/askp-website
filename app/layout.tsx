@@ -10,6 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
+import { ClientToasts } from './ClientToasts';
 import { Providers } from './providers';
 
 import './globals.css';
@@ -48,6 +49,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<div id='modal-root' />
 					<ToastContainer />
 					<CookieBanner />
+					<ClientToasts />
 
 					<div className='flex flex-col gap-3 min-h-[100svh]'>
 						<header className='z-5'>

@@ -17,7 +17,7 @@ export const DonatersCard = ({
 	showAdminActions,
 }: {
 	donater: Donater;
-	showAdminActions?: boolean;
+	showAdminActions?: boolean | null;
 }) => {
 	const { t } = useTranslation();
 

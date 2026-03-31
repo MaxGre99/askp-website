@@ -76,8 +76,8 @@ export const AvatarEditorModal = ({
 	const modalRoot = document.getElementById('modal-root');
 
 	return createPortal(
-		<div className='fixed inset-0 bg-blue-500/60 backdrop-blur-2xl flex items-center justify-center z-50'>
-			<div className='bg-white rounded-2xl p-6 min-w-[40svw] w-fit max-h-[95svh] overflow-auto'>
+		<div className='fixed inset-0 bg-blue-500/60 backdrop-blur-2xl flex items-center justify-center z-50 p-4'>
+			<div className='bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[95svh] overflow-y-auto overflow-x-hidden'>
 				<h2 className='text-xl font-semibold mb-3'>{t('labels.editAvatar')}</h2>
 
 				<div className='flex flex-col items-start gap-3'>
@@ -103,21 +103,27 @@ export const AvatarEditorModal = ({
 							<p className='text-sm'>{Math.round(scale * 100)}%</p>
 						</div>
 
-						{/* Редактор аватара */}
-						<AvatarEditor
-							ref={editorRef}
-							image={image}
-							width={400}
-							height={400}
-							border={50}
-							borderRadius={16}
-							scale={scale}
-							rotate={rotate}
-							color={[255, 255, 255, 0.6]}
-							style={{ maxWidth: '100%', height: 'auto', borderRadius: '16px' }}
-							onImageChange={handleImageChange} // Важно! Этот колбэк вызывается при перетаскивании
-							onImageReady={updatePreview} // Вызывается когда изображение загружено
-						/>
+						<div className='flex items-center justify-center gap-5 w-full overflow-hidden'>
+							{/* Редактор аватара */}
+							<AvatarEditor
+								ref={editorRef}
+								image={image}
+								width={400}
+								height={400}
+								border={50}
+								borderRadius={16}
+								scale={scale}
+								rotate={rotate}
+								color={[255, 255, 255, 0.6]}
+								style={{
+									maxWidth: '100%',
+									height: 'auto',
+									borderRadius: '16px',
+								}}
+								onImageChange={handleImageChange} // Важно! Этот колбэк вызывается при перетаскивании
+								onImageReady={updatePreview} // Вызывается когда изображение загружено
+							/>
+						</div>
 
 						{/* Контролы поворота */}
 						<div className='flex flex-col items-center gap-2'>
