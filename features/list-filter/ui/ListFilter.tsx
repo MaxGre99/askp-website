@@ -1,7 +1,10 @@
 import { usePathname } from 'next/navigation';
 
+import { useTranslation } from 'react-i18next';
 import { FaSearch } from 'react-icons/fa';
+import Select, { SingleValue } from 'react-select';
 
+import { reactSelectStyles } from '@/shared/lib/reactSelectStyles';
 import { Button } from '@/shared/ui/Button';
 
 type Props = {
@@ -24,6 +27,8 @@ export const ListFilter = ({
 	pageSize,
 	onPageSizeChange,
 }: Props) => {
+	const { t } = useTranslation();
+
 	const pathname = usePathname();
 	const isAccountPage = pathname.includes('/account/');
 
@@ -42,15 +47,22 @@ export const ListFilter = ({
 				</Button>
 			</div>
 
-			<select
-				value={pageSize}
-				onChange={(e) => onPageSizeChange(Number(e.target.value))}
-				className='input w-24'
-			>
-				<option value={4}>4</option>
-				<option value={8}>8</option>
-				<option value={12}>12</option>
-			</select>
+			<Select
+				options={[
+					{ label: `4 ${t('labels.perPage')}`, value: '4' },
+					{ label: `8 ${t('labels.perPage')}`, value: '8' },
+					{ label: `12 ${t('labels.perPage')}`, value: '12' },
+				]}
+				value={{
+					label: `${String(pageSize)} ${t('labels.perPage')}`,
+					value: String(pageSize),
+				}}
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				onChange={(option: SingleValue<any>) => {
+					if (option) onPageSizeChange(Number(option.value));
+				}}
+				styles={reactSelectStyles}
+			/>
 		</div>
 	);
 };

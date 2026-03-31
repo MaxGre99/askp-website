@@ -153,6 +153,7 @@ const ru = {
 			fullBio: 'Подробно о себе',
 			contacts: 'Контакты',
 			signUp: 'Регистрация',
+			perPage: 'на стр.',
 		},
 		placeholders: {
 			titleFilter: 'Поиск по заголовку',
@@ -173,6 +174,9 @@ const ru = {
 			name: 'Введите название',
 			description: 'Введите описание',
 			title: 'Введите заголовок',
+			gender: 'Выберите пол',
+			martialStatus: 'Выберите семейное положение',
+			languages: 'Выберите язык/языки',
 		},
 		buttons: {
 			find: 'Поиск',

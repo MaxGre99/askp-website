@@ -1,6 +1,8 @@
 import { useField } from 'formik';
 import Select, { MultiValue, SingleValue } from 'react-select';
 
+import { reactSelectStyles } from '@/shared/lib/reactSelectStyles';
+
 export const FormikSelect = ({
 	name,
 	options,
@@ -42,6 +44,7 @@ export const FormikSelect = ({
 				}}
 				placeholder={placeholder}
 				isMulti={isMulti}
+				styles={reactSelectStyles}
 			/>
 			{meta.touched && meta.error && (
 				<p className='text-red-500 text-sm'>{meta.error}</p>

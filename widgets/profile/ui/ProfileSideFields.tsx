@@ -44,6 +44,7 @@ export const ProfileSideFields = ({ profile, isEditing }: Props) => {
 						label={t(`labels.${label}`)}
 						options={options[label as keyof typeof options] || []}
 						isMulti={label === 'languages'}
+						placeholder={t(`placeholders.${label}`)}
 					/>
 				) : (
 					<div key={label}>
