@@ -5,7 +5,10 @@ import { Profile } from '@/entities/profiles';
 
 export const ProfileCard = ({ profile }: { profile: Profile }) => {
 	return (
-		<Link href={`/specialists/${profile.userId}`}>
+		<Link
+			href={`/specialists/${profile.userId}`}
+			className='flex justify-center'
+		>
 			<div className='bg-white rounded-2xl backdrop-blur-2xl max-w-[280px] max-h-[524px] w-[280px] h-[524px] flex flex-col gap-2 items-center p-3 transition hover:scale-[1.01]'>
 				<div className='min-w-[256px] min-h-[256px] w-[256px] h-[256px] rounded-2xl flex items-center justify-center border border-gray-200'>
 					<Avatar src={profile.avatarUrl} className='rounded-2xl' />

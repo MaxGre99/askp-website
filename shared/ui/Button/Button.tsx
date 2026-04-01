@@ -25,7 +25,7 @@ export const Button = ({
 		isBlue &&
 			'bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white border-blue-500',
 		isGhost &&
-			'hover:bg-white/15 active:bg-white/25 text-white border-white/50',
+			'hover:bg-white/15 active:bg-white/25 text-white border-white/30',
 		isWhite &&
 			'border border-gray-300 bg-white text-blue-600 hover:bg-gray-200 active:bg-gray-100',
 		isActive &&

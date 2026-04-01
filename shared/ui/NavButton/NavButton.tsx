@@ -13,7 +13,7 @@ export const NavButton = ({ href, children, className }: NavButtonProps) => {
 	const pathname = usePathname();
 
 	const baseClasses =
-		'flex items-center justify-center hover:bg-white/15 hover:cursor-pointer active:bg-white/20 transition-all duration-200 text-2xl text-white font-oswald p-4 rounded-2xl';
+		'flex items-center justify-center hover:bg-white/15 hover:cursor-pointer active:bg-white/20 transition-all duration-200 text-2xl text-white text-center font-oswald p-4 rounded-2xl w-full';
 
 	const isActive =
 		href === '/'

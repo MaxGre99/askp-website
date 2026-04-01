@@ -285,6 +285,7 @@ const ru = {
 			hidePassword: 'Скрыть пароль',
 			forgotPassword: 'Забыли пароль',
 			resetPassword: 'Сбросить пароль',
+			back: 'Назад',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',

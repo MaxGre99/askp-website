@@ -110,7 +110,7 @@ export const FeedbackForm = ({
 				}
 			}}
 		>
-			<Form className='flex flex-col w-1/2 rounded-2xl backdrop-blur-2xl bg-white/80 p-6'>
+			<Form className='flex flex-col w-full rounded-2xl backdrop-blur-2xl bg-white/80 p-6 md:w-[75%] lg:w-[60%] xl:w-1/2'>
 				<div className='grid grid-cols-2 gap-4'>
 					<FormField
 						name='name'

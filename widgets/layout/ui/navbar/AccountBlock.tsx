@@ -66,18 +66,20 @@ export const AccountBlock = () => {
 			</Button>
 
 			{showMenu && (
-				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 z-50 min-w-[256px]'>
+				<div className='absolute top-full right-0 mt-2 bg-white shadow-lg rounded-2xl p-4 z-50 min-w-[256px] w-fit max-w-[calc(100svw-24px)]'>
 					{user ? (
 						<div className='flex items-center gap-6'>
 							<div className='rounded-[50%] bg-gray-50 min-w-[64px] min-h-[64px] w-[64px] h-[64px] flex items-center justify-center border-gray-200 border overflow-hidden'>
 								<Avatar src={avatar?.url} size={48} />
 							</div>
 
-							<div className='flex flex-col gap-1 text-black'>
-								<p className='text-nowrap'>{getDisplayName(profile, user)}</p>
+							<div className='flex flex-col gap-3 text-black'>
+								<p className='md:text-nowrap'>
+									{getDisplayName(profile, user)}
+								</p>
 								<Link
 									href={'/account'}
-									className='flex gap-1 items-center hover:underline'
+									className='flex gap-1 items-center text-blue-600 hover:underline'
 								>
 									<FaHouseUser />
 									<p className='text-nowrap'>{t('account.title')}</p>
@@ -103,7 +105,7 @@ export const AccountBlock = () => {
 								onClick={() => setMode('login')}
 								className='text-sm text-gray-500! mx-auto mt-2 p-0!'
 							>
-								Назад
+								{t('buttons.back')}
 							</Button>
 						</>
 					) : (

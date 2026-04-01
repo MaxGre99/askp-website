@@ -14,7 +14,7 @@ type Props = {
 export const HomeNewsSlider = ({ items }: Props) => {
 	const { t } = useTranslation();
 
-	const SLIDES_PER_VIEW = 3;
+	const SLIDES_PER_VIEW = 4;
 
 	// Дублируем пока не наберётся достаточно
 	const slides =
@@ -38,8 +38,8 @@ export const HomeNewsSlider = ({ items }: Props) => {
 						modules={[Autoplay]}
 						direction='horizontal'
 						loop
-						slidesPerView={SLIDES_PER_VIEW}
-						spaceBetween={20}
+						// slidesPerView={SLIDES_PER_VIEW}
+						// spaceBetween={20}
 						className='w-full px-5'
 						freeMode
 						speed={10000}
@@ -47,6 +47,30 @@ export const HomeNewsSlider = ({ items }: Props) => {
 							delay: 0,
 							disableOnInteraction: false,
 							pauseOnMouseEnter: true,
+						}}
+						breakpoints={{
+							0: {
+								slidesPerView: 1,
+							},
+							540: {
+								slidesPerView: 2,
+								spaceBetween: 150,
+							},
+							768: {
+								slidesPerView: 2,
+							},
+							912: {
+								slidesPerView: 3,
+								spaceBetween: 250,
+							},
+							1024: {
+								slidesPerView: 3,
+								spaceBetween: 150,
+							},
+							1440: {
+								slidesPerView: 4,
+								spaceBetween: 350,
+							},
 						}}
 					>
 						{slides.map((news, i) => (
@@ -57,7 +81,9 @@ export const HomeNewsSlider = ({ items }: Props) => {
 					</Swiper>
 
 					<div className='flex justify-end'>
-						<NavButton href='/news'>{t('buttons.showAll')}</NavButton>
+						<NavButton href='/news' className='w-fit!'>
+							{t('buttons.showAll')}
+						</NavButton>
 					</div>
 				</>
 			) : (

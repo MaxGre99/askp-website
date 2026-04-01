@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html lang='ru'>
+		<html lang='ru' className='w-full'>
 			<body
 				className={`${oswald.variable} ${inter.variable} antialiased min-w-full min-h-[100svh] mx-auto`}
 			>
@@ -56,7 +56,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 							<Navbar />
 						</header>
 
-						<main className='flex flex-1 flex-col items-center justify-center gap-6 p-6 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto'>
+						<main className='flex flex-1 flex-col items-center justify-center gap-6 p-4 rounded-2xl shadow-lg bg-white/10 backdrop-blur-2xl w-full max-w-[1440px] mx-auto xl:p-6'>
 							{children}
 						</main>
 

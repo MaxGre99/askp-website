@@ -33,7 +33,9 @@ export const HomeEvents = ({ items }: Props) => {
 						})}
 
 						<div className='flex justify-end'>
-							<NavButton href='/events'>{t('buttons.showAll')}</NavButton>
+							<NavButton href='/events' className='w-fit!'>
+								{t('buttons.showAll')}
+							</NavButton>
 						</div>
 					</>
 				) : (

@@ -37,8 +37,8 @@ export const HomeSpecialistsSlider = ({ items }: Props) => {
 						modules={[Autoplay]}
 						direction='horizontal'
 						loop
-						slidesPerView={SLIDES_PER_VIEW}
-						spaceBetween={200}
+						// slidesPerView={SLIDES_PER_VIEW}
+						// spaceBetween={200}
 						className='w-full px-5'
 						freeMode
 						speed={10000}
@@ -46,6 +46,32 @@ export const HomeSpecialistsSlider = ({ items }: Props) => {
 							delay: 0,
 							disableOnInteraction: false,
 							pauseOnMouseEnter: true,
+						}}
+						breakpoints={{
+							0: {
+								slidesPerView: 1,
+								spaceBetween: 0,
+							},
+							540: {
+								slidesPerView: 2,
+								spaceBetween: 100,
+							},
+							768: {
+								slidesPerView: 3,
+								spaceBetween: 150,
+							},
+							912: {
+								slidesPerView: 4,
+								spaceBetween: 275,
+							},
+							1024: {
+								slidesPerView: 4,
+								spaceBetween: 150,
+							},
+							1440: {
+								slidesPerView: 5,
+								spaceBetween: 150,
+							},
 						}}
 					>
 						{slides.map((profile, i) => (
@@ -56,7 +82,9 @@ export const HomeSpecialistsSlider = ({ items }: Props) => {
 					</Swiper>
 
 					<div className='flex justify-end'>
-						<NavButton href='/specialists'>{t('buttons.lookAll')}</NavButton>
+						<NavButton href='/specialists' className='w-fit!'>
+							{t('buttons.lookAll')}
+						</NavButton>
 					</div>
 				</>
 			) : (
