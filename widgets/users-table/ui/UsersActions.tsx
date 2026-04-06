@@ -37,7 +37,7 @@ export const UsersActions = ({
 									blockTypes.includes(type) ? 'delete' : 'confirm',
 								)
 							}
-							className={`h-9 w-9 rounded-lg p-0! border-transparent! ${color}`}
+							className={`h-9 w-9 rounded-lg p-0! border-transparent ${color}`}
 						>
 							<Icon size={18} />
 						</Button>

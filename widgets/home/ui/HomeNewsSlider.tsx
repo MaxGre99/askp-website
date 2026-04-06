@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { NewsCard, NewsType } from '@/entities/news';
+import { /* NewsCard, */ NewsType } from '@/entities/news';
 import { NavButton } from '@/shared/ui/NavButton';
+import { PreviewCard } from '@/shared/ui/PreviewCard';
 
 type Props = {
 	items: NewsType[];
@@ -75,7 +76,7 @@ export const HomeNewsSlider = ({ items }: Props) => {
 					>
 						{slides.map((news, i) => (
 							<SwiperSlide key={`${news.slug}-${i}`} className='p-1'>
-								<NewsCard news={news} type='news' />
+								<PreviewCard item={news} type='news' layout='vertical'/>
 							</SwiperSlide>
 						))}
 					</Swiper>

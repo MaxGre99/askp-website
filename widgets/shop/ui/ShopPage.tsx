@@ -65,7 +65,7 @@ export const ShopPage = () => {
 					<div className='flex flex-1 w-full flex-wrap gap-6'>
 						{isAdmin && (
 							<Link href='/shop/add'>
-								<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[320px] h-[368px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
+								<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[420px] h-[420px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
 									<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
 										<FaPlus size={32} />
 										<span className='font-oswald text-2xl tracking-wide'>
@@ -87,7 +87,7 @@ export const ShopPage = () => {
 				</>
 			) : isAdmin ? (
 				<Link href='/shop/add'>
-					<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[320px] h-[368px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
+					<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[420px] h-[420px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
 						<div className='flex flex-col flex-1 items-center justify-center gap-3 p-6 text-white/60 group-hover:text-white transition-colors'>
 							<FaPlus size={32} />
 							<span className='font-oswald text-2xl tracking-wide'>

@@ -19,23 +19,27 @@ import { stripHtml } from '@/shared/lib/stripHtml';
 import { Button } from '../Button';
 import { ConfirmModal } from '../ConfirmModal';
 
-interface WideCardProps {
-	index: number;
+type LayoutType = 'vertical' | 'horizontal';
+
+interface PreviewCardProps {
+	index?: number;
 	item: EventType | NewsType | Article;
 	type: 'events' | 'news' | 'articles';
+	layout?: LayoutType;
 	onDelete?: (slug: string) => void;
 	onPublish?: (slug: string) => void;
 	onUnpublish?: (slug: string) => void;
 }
 
-export const WideCard = ({
-	index,
+export const PreviewCard = ({
+	index = 0,
 	item,
 	type,
+	layout = 'horizontal',
 	onDelete,
 	onPublish,
 	onUnpublish,
-}: WideCardProps) => {
+}: PreviewCardProps) => {
 	const { data: user, isLoading: isLoadingUser } = useGetMeQuery();
 	const { t } = useTranslation();
 
@@ -45,9 +49,6 @@ export const WideCard = ({
 	const showActions = pathname.includes('/account/');
 	const showAdminActions = !isLoadingUser && user && user.role !== 'USER';
 
-	const isEven = index % 2 === 0;
-	// const type =
-	// 	'eventDate' in item ? 'events' : 'content' in item ? 'news' : 'articles';
 	const text =
 		'content' in item ? stripHtml(item.content) : stripHtml(item.description);
 	const localDateTime = new Date(
@@ -60,49 +61,86 @@ export const WideCard = ({
 		minute: '2-digit',
 	});
 
+	const isEven = index % 2 === 0;
+	const isHorizontal = layout === 'horizontal';
+
+	// На мобильных всегда вертикально, на больших экранах в зависимости от layout
+	const containerClasses = clsx(
+		'bg-white rounded-2xl overflow-hidden transition hover:scale-[1.01] flex',
+		showActions && 'border border-gray-300',
+		isHorizontal
+			? clsx(
+					'min-h-[200px] h-[200px] w-full',
+					isEven ? 'flex-row' : 'flex-row-reverse',
+				)
+			: clsx(
+					'flex-col min-w-[300px] w-[300px]',
+					showActions ? 'min-h-[396px] h-[396px]' : 'min-h-[368px] h-[368px]',
+					'md:min-w-[360px] md:w-[360px] md:min-h-[386px] md:h-[386px]',
+					'xl:min-w-[425px] xl:w-[425px] xl:min-h-[420px] xl:h-[420px]',
+				),
+	);
+
+	const imageContainerClasses = clsx(
+		'rounded-2xl flex items-center justify-center border-gray-200',
+		isHorizontal
+			? clsx('h-full min-w-[320px] w-[320px]', isEven ? 'border-r' : 'border-l')
+			: clsx(
+					'min-h-[180px] h-[180px] min-w-[300px] w-full border-b',
+					'md:min-h-[202px] md:h-[202px]',
+					'xl:min-h-[232px] xl:h-[232px]',
+				),
+	);
+
+	const imageClasses = clsx('object-fill rounded-2xl w-full h-full');
+
+	const contentClasses = clsx(
+		'flex flex-col flex-1 justify-between gap-2 min-w-0 min-h-0',
+		isHorizontal ? 'p-4' : 'p-3',
+	);
+
+	const textClasses = clsx('text-sm line-clamp-5');
+
+	const footerClasses = clsx(
+		'flex items-center flex-wrap',
+		isHorizontal
+			? 'gap-4 justify-start'
+			: `gap-1 mt-auto ${showActions && 'justify-center'}`,
+	);
+
 	return (
 		<div className='flex flex-col gap-1'>
 			<ConfirmModal {...confirmProps} />
-			<Link href={`/${type}/${item.slug}`}>
-				<article
-					className={clsx(
-						'bg-white rounded-2xl border border-gray-300 overflow-hidden transition hover:scale-[1.01] flex gap-2 h-[192px]',
-						isEven ? 'flex-row' : 'flex-row-reverse',
-					)}
-				>
-					<div
-						className={clsx(
-							'flex rounded-2xl h-full w-[320px] border-gray-200',
-							!item?.image && 'items-center justify-center',
-							isEven ? 'border-r' : 'border-l',
-						)}
-					>
+			<Link
+				href={`/${type}/${item.slug}`}
+				className={!isHorizontal ? 'flex justify-center' : ''}
+			>
+				<article className={containerClasses}>
+					{/* Image Section */}
+					<div className={imageContainerClasses}>
 						{item?.image ? (
-							<img
-								src={item.image}
-								alt='card-cover'
-								className='object-fill rounded-2xl w-full h-full'
-							/>
+							<img src={item.image} alt='card-cover' className={imageClasses} />
 						) : (
-							<MdImageNotSupported size={48} />
+							<MdImageNotSupported size={96} />
 						)}
 					</div>
 
-					<div className='p-4 flex flex-col justify-between flex-1'>
-						<div className='min-h-0 overflow-hidden'>
-							<h3 className='line-clamp-1 font-semibold text-lg'>
+					{/* Content Section */}
+					<div className={contentClasses}>
+						<div className='flex flex-col flex-1 gap-1'>
+							<h3 className='line-clamp-1 font-semibold text-ellipsis'>
 								{item.title}
 							</h3>
-							<p className='line-clamp-5 text-sm flex-1 min-h-0 text-elipsis '>
-								{text}
-							</p>
+							<p className={textClasses}>{text}</p>
 						</div>
-						<div className='flex items-center gap-4'>
+
+						{/* Footer with metadata and actions */}
+						<div className={footerClasses}>
 							<div className='flex items-center gap-4'>
 								{showActions && (
 									<span
 										className={clsx(
-											'w-fit px-2.5 py-1 rounded-full text-xs font-medium',
+											'w-fit px-2.5 py-1 rounded-full text-xs font-medium shrink-0',
 											item.published && 'bg-green-100 text-green-700',
 											!item.published && 'bg-gray-100 text-gray-600',
 										)}
@@ -125,6 +163,8 @@ export const WideCard = ({
 					</div>
 				</article>
 			</Link>
+
+			{/* Action Buttons */}
 			{showActions && (
 				<div className='flex gap-1 pl-1'>
 					{showAdminActions &&

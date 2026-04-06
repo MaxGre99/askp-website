@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
-import { WideCardsList } from '@/features/wide-cards-list';
+import { PreviewCardsList } from '@/features/preview-cards-list';
 import { handleApiError } from '@/shared/lib/handleApiError';
 import { Button } from '@/shared/ui/Button';
 import { Loader } from '@/shared/ui/Loader';
@@ -113,7 +113,7 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 
 			{items.length > 0 ? (
 				<>
-					<WideCardsList
+					<PreviewCardsList
 						items={items}
 						type={type}
 						{...((mode === 'my' || isAccountPage) && {

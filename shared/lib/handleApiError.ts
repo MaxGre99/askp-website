@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { toast } from 'react-toastify';
 
-import { getApiErrorMessage } from '@/shared/api';
+import { getApiErrorMessage } from './getApiErrorMessage';
 
 export const handleApiError = (err: unknown) => {
 	const code = getApiErrorMessage(err);

@@ -1,7 +1,8 @@
 import { Article } from '@/entities/articles';
 import { EventType } from '@/entities/events';
 import { NewsType } from '@/entities/news';
-import { WideCard } from '@/shared/ui/WideCard';
+import { useIsMobile } from '@/shared/hooks/useIsMobile';
+import { PreviewCard } from '@/shared/ui/PreviewCard';
 
 type Props = {
 	items: EventType[] | NewsType[] | Article[];
@@ -11,17 +12,19 @@ type Props = {
 	onUnpublish?: (slug: string) => void;
 };
 
-export const WideCardsList = ({
+export const PreviewCardsList = ({
 	items,
 	type,
 	onDelete,
 	onPublish,
 	onUnpublish,
 }: Props) => {
+	const isMobile = useIsMobile();
+
 	return (
 		<div className='flex flex-1 flex-col gap-4'>
 			{items.map((item, index) => (
-				<WideCard
+				<PreviewCard
 					key={item.slug}
 					item={item}
 					type={type}
@@ -29,6 +32,7 @@ export const WideCardsList = ({
 					onDelete={onDelete}
 					onPublish={onPublish}
 					onUnpublish={onUnpublish}
+					layout={isMobile ? 'vertical' : 'horizontal'}
 				/>
 			))}
 		</div>

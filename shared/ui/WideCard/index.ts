@@ -1,1 +1,0 @@
-export { WideCard } from './WideCard';
