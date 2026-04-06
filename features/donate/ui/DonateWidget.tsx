@@ -32,7 +32,7 @@ export const DonateWidget = () => {
 	return (
 		<div className='flex flex-col gap-4 p-6 bg-white rounded-2xl max-w-sm border border-gray-300'>
 			<h3 className='font-bold text-lg'>{t('labels.helpTheProject')}</h3>
-			<div className='flex gap-2 flex-wrap'>
+			<div className='flex gap-2 flex-wrap justify-center'>
 				{AMOUNTS.map((a) => (
 					<Button
 						key={a}

@@ -23,7 +23,7 @@ export const EditDonaterPage = () => {
 		return <Loader />;
 
 	return (
-		<div className='flex flex-col gap-2 items-center justify-center w-2xl bg-white rounded-2xl p-6'>
+		<div className='flex flex-col gap-2 items-center justify-center w-full md:max-w-2xl bg-white rounded-2xl p-6'>
 			<DonaterFormFields
 				title={t('buttons.editDonater')}
 				initialValues={initialValues}

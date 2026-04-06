@@ -20,7 +20,7 @@ export const AddDonaterPage = () => {
 	if (isLoading || isForbidden || isUnauthorized) return <Loader />;
 
 	return (
-		<div className='flex flex-col gap-2 items-center justify-center w-2xl bg-white rounded-2xl p-6'>
+		<div className='flex flex-col gap-2 items-center justify-center w-full max-w-2xl bg-white rounded-2xl p-6'>
 			<DonaterFormFields
 				title={t('buttons.addDonater')}
 				initialValues={initialValues}

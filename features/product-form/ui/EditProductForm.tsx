@@ -39,7 +39,7 @@ export const EditProductForm = () => {
 			enableReinitialize
 		>
 			{({ values, setFieldValue, isSubmitting, touched, errors }) => (
-				<Form className='flex flex-col gap-6 max-w-4xl mx-auto items-stretch'>
+				<Form className='flex flex-col gap-6 max-w-full mx-auto items-stretch'>
 					<FormField
 						name='name'
 						label={t('labels.name')}

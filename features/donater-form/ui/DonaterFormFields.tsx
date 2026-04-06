@@ -70,7 +70,7 @@ export const DonaterFormFields = ({
 			enableReinitialize={enableReinitialize}
 		>
 			{({ isSubmitting }) => (
-				<Form className='flex flex-col gap-6 max-w-2xl w-full'>
+				<Form className='flex flex-col gap-6 w-full'>
 					<h1 className='text-2xl font-bold'>{title}</h1>
 					<FormField
 						name='name'

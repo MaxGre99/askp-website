@@ -38,7 +38,7 @@ export const DonatersCard = ({
 			>
 				<Avatar src={donater.image} className='rounded-2xl' />
 			</div>
-			<h1>{donater.name}</h1>
+			<h2>{donater.name}</h2>
 			<p>{donater.description}</p>
 			{showAdminActions && (
 				<div className='flex gap-1 pl-1 absolute top-4 right-4'>

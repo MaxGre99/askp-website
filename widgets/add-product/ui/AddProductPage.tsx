@@ -15,7 +15,7 @@ export const AddProductPage = () => {
 	if (isLoading || isForbidden || isUnauthorized) return <Loader />;
 
 	return (
-		<div className='flex flex-col gap-6 items-center justify-center w-2xl bg-white rounded-2xl p-6'>
+		<div className='flex flex-col gap-6 items-center justify-center w-full md:max-w-2xl bg-white rounded-2xl p-6'>
 			<h1 className='text-2xl font-bold'>{t('buttons.addProduct')}</h1>
 			<CreateProductForm />
 		</div>

@@ -56,6 +56,20 @@ export const AvatarEditorModal = ({
 		updatePreview();
 	}, [updatePreview]);
 
+	const [editorSize, setEditorSize] = useState(400);
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (!isOpen) return;
+		const observer = new ResizeObserver(([entry]) => {
+			// отнимаем паддинги и слайдеры по бокам (2 * (24 + 20 + 24) ≈ 136)
+			const size = Math.min(400, entry.contentRect.width - 136);
+			setEditorSize(Math.max(180, size));
+		});
+		if (containerRef.current) observer.observe(containerRef.current);
+		return () => observer.disconnect();
+	}, [isOpen]);
+
 	if (!isOpen || !image) return null;
 
 	const handleSave = async () => {
@@ -77,114 +91,98 @@ export const AvatarEditorModal = ({
 
 	return createPortal(
 		<div className='fixed inset-0 bg-blue-500/60 backdrop-blur-2xl flex items-center justify-center z-50 p-4'>
-			<div className='bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[95svh] overflow-y-auto overflow-x-hidden'>
+			<div className='bg-white rounded-2xl p-4 md:p-6 w-full md:max-w-2xl md:max-h-[95svh] overflow-y-auto'>
 				<h2 className='text-xl font-semibold mb-3'>{t('labels.editAvatar')}</h2>
 
-				<div className='flex flex-col items-start gap-3'>
-					<div className='flex items-center justify-center gap-5 w-full'>
-						{/* Контролы масштаба */}
-						<div className='flex flex-col items-center gap-2'>
-							<BiZoomIn size={24} />
-							<div className='relative h-48 w-6'>
-								<input
-									type='range'
-									min='1'
-									max='3'
-									step='0.01'
-									value={scale}
-									onChange={(e) => setScale(parseFloat(e.target.value))}
-									className='absolute top-0 left-1/2 -translate-x-1/2 h-48 w-48 -rotate-90 accent-blue-500 cursor-pointer'
-									style={{
-										transformOrigin: '50% 50%',
-									}}
-								/>
-							</div>
-							<BiZoomOut size={24} />
-							<p className='text-sm'>{Math.round(scale * 100)}%</p>
-						</div>
+				<div className='flex flex-col items-center gap-4' ref={containerRef}>
+					{/* Редактор */}
+					<AvatarEditor
+						ref={editorRef}
+						image={image}
+						width={editorSize}
+						height={editorSize}
+						border={30}
+						borderRadius={16}
+						scale={scale}
+						rotate={rotate}
+						color={[255, 255, 255, 0.6]}
+						style={{ maxWidth: '100%', height: 'auto', borderRadius: '16px' }}
+						onImageChange={handleImageChange}
+						onImageReady={updatePreview}
+					/>
 
-						<div className='flex items-center justify-center gap-5 w-full overflow-hidden'>
-							{/* Редактор аватара */}
-							<AvatarEditor
-								ref={editorRef}
-								image={image}
-								width={400}
-								height={400}
-								border={50}
-								borderRadius={16}
-								scale={scale}
-								rotate={rotate}
-								color={[255, 255, 255, 0.6]}
-								style={{
-									maxWidth: '100%',
-									height: 'auto',
-									borderRadius: '16px',
-								}}
-								onImageChange={handleImageChange} // Важно! Этот колбэк вызывается при перетаскивании
-								onImageReady={updatePreview} // Вызывается когда изображение загружено
+					{/* Горизонтальные слайдеры */}
+					<div className='flex flex-col gap-2 w-full'>
+						<div className='flex items-center gap-2'>
+							<BiZoomOut size={20} />
+							<input
+								type='range'
+								min='1'
+								max='3'
+								step='0.01'
+								value={scale}
+								onChange={(e) => setScale(parseFloat(e.target.value))}
+								className='flex-1 accent-blue-500 cursor-pointer'
 							/>
+							<BiZoomIn size={20} />
+							<span className='text-xs w-10 text-right'>
+								{Math.round(scale * 100)}%
+							</span>
 						</div>
-
-						{/* Контролы поворота */}
-						<div className='flex flex-col items-center gap-2'>
-							<BiRotateRight size={24} />
-							<div className='relative h-48 w-6'>
-								<input
-									type='range'
-									min='0'
-									max='360'
-									step='1'
-									value={rotate}
-									onChange={(e) => setRotate(parseInt(e.target.value))}
-									className='absolute top-0 left-1/2 -translate-x-1/2 h-48 w-48 -rotate-90 accent-blue-500 cursor-pointer'
-									style={{
-										transformOrigin: '50% 50%',
-									}}
-								/>
-							</div>
-							<p className='text-sm'>{rotate}°</p>
+						<div className='flex items-center gap-2'>
+							<BiRotateRight size={20} className='-scale-x-100' />
+							<input
+								type='range'
+								min='0'
+								max='360'
+								step='1'
+								value={rotate}
+								onChange={(e) => setRotate(parseInt(e.target.value))}
+								className='flex-1 accent-blue-500 cursor-pointer'
+							/>
+							<BiRotateRight size={20} />
+							<span className='text-xs w-10 text-right'>{rotate}°</span>
 						</div>
 					</div>
 
-					{/* Превью для разных размеров */}
+					{/* Превью + кнопки */}
 					{previewUrls && (
-						<div className='flex items-center justify-center gap-15 w-full'>
-							<div className='flex flex-col gap-3 items-start justify-start'>
+						<div className='flex flex-col sm:flex-row items-center justify-between gap-4 w-full'>
+							<div className='flex flex-col gap-2'>
 								<p className='text-lg font-medium text-gray-700'>
 									{t('labels.preview')}:
 								</p>
-								<div className='flex gap-5 items-center'>
-									{/* Большой аватар (312x400) */}
+								<div className='flex gap-4 items-center'>
 									<div className='text-center'>
-										<div className='w-[256px] h-[256px] rounded-2xl overflow-hidden bg-gray-100'>
+										<div className='w-24 h-24 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-gray-100'>
 											<img
 												src={previewUrls.large}
 												alt='preview large'
 												className='w-full h-full object-cover'
 											/>
 										</div>
-										<span className='text-xs text-gray-500'>256x256</span>
+										<span className='text-xs text-gray-500'>256×256</span>
 									</div>
-
-									{/* Средний аватар (круглый) */}
 									<div className='text-center'>
-										<div className='w-16 h-16 rounded-full overflow-hidden bg-gray-100'>
+										<div className='w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden bg-gray-100'>
 											<img
 												src={previewUrls.medium}
 												alt='preview medium'
 												className='w-full h-full object-cover'
 											/>
 										</div>
-										<span className='text-xs text-gray-500'>
-											64x64 {t('labels.circle')}
-										</span>
+										<span className='text-xs text-gray-500'>64×64</span>
 									</div>
 								</div>
 							</div>
-							{/* Кнопки действий */}
-							<div className='flex flex-col gap-3 justify-end'>
-								<Button onClick={handleSave}>{t('buttons.save')}</Button>
-								<Button onClick={onClose}>{t('buttons.cancel')}</Button>
+
+							<div className='flex sm:flex-col gap-3 w-full sm:w-auto'>
+								<Button onClick={handleSave} className='flex-1 sm:flex-none'>
+									{t('buttons.save')}
+								</Button>
+								<Button onClick={onClose} className='flex-1 sm:flex-none'>
+									{t('buttons.cancel')}
+								</Button>
 							</div>
 						</div>
 					)}

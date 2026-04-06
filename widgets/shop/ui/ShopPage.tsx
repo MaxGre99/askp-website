@@ -47,7 +47,7 @@ export const ShopPage = () => {
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
-			<div className='flex justify-between items-center gap-3'>
+			<div className='flex justify-between items-center gap-3 flex-wrap'>
 				<h1 className='font-oswald text-white font-light'>Магазин</h1>
 				<ListFilter
 					value={draftQuery}
@@ -62,7 +62,7 @@ export const ShopPage = () => {
 
 			{data && data.products.length > 0 ? (
 				<>
-					<div className='flex flex-1 w-full flex-wrap gap-6'>
+					<div className='flex flex-1 w-full flex-wrap gap-6 justify-center'>
 						{isAdmin && (
 							<Link href='/shop/add'>
 								<article className='rounded-2xl flex flex-col min-w-[320px] w-[320px] min-h-[420px] h-[420px] border-6 border-dashed border-white/60 hover:border-white transition-all hover:scale-[1.01] cursor-pointer group'>
