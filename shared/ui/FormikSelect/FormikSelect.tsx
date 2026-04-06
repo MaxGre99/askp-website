@@ -1,7 +1,9 @@
 import { useField } from 'formik';
 import Select, { MultiValue, SingleValue } from 'react-select';
 
-import { reactSelectStyles } from '@/shared/lib/reactSelectStyles';
+import { getReactSelectStyles } from '@/shared/lib/getReactSelectStyles';
+
+type Option = { value: string; label: string };
 
 export const FormikSelect = ({
 	name,
@@ -18,34 +20,39 @@ export const FormikSelect = ({
 }) => {
 	const [field, meta, helpers] = useField(name);
 
+	const handleChange = (selected: SingleValue<Option> | MultiValue<Option>) => {
+		if (isMulti) {
+			helpers.setValue(
+				Array.isArray(selected) ? selected.map((o) => o.value) : [],
+			);
+		} else {
+			helpers.setValue(selected ? (selected as Option).value : null);
+		}
+	};
+
+	const commonProps = {
+		options,
+		placeholder,
+		onChange: handleChange,
+	};
+
 	return (
 		<div className='flex flex-col gap-1'>
 			<label className='font-bold'>{label}</label>
-			<Select
-				options={options}
-				value={
+			{isMulti ? (
+				<Select<Option, true>
+					{...commonProps}
 					isMulti
-						? options.filter((opt) => field.value?.includes(opt.value))
-						: options.find((opt) => opt.value === field.value) || null
-				}
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				onChange={(selected: SingleValue<any> | MultiValue<any>) => {
-					if (isMulti) {
-						// ← здесь точно массив
-						helpers.setValue(
-							Array.isArray(selected) ? selected.map((o) => o.value) : [],
-						);
-					} else {
-						// ← здесь одиночный объект
-						helpers.setValue(
-							selected ? (selected as { value: string }).value : null,
-						);
-					}
-				}}
-				placeholder={placeholder}
-				isMulti={isMulti}
-				styles={reactSelectStyles}
-			/>
+					value={options.filter((opt) => field.value?.includes(opt.value))}
+					styles={getReactSelectStyles<Option, true>()}
+				/>
+			) : (
+				<Select<Option, false>
+					{...commonProps}
+					value={options.find((opt) => opt.value === field.value) || null}
+					styles={getReactSelectStyles<Option, false>()}
+				/>
+			)}
 			{meta.touched && meta.error && (
 				<p className='text-red-500 text-sm'>{meta.error}</p>
 			)}

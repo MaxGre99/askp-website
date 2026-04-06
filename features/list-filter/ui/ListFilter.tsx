@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { FaSearch } from 'react-icons/fa';
 import Select, { SingleValue } from 'react-select';
 
-import { reactSelectStyles } from '@/shared/lib/reactSelectStyles';
+import { getReactSelectStyles } from '@/shared/lib/getReactSelectStyles';
 import { Button } from '@/shared/ui/Button';
+
+type Option = { value: string; label: string };
 
 type Props = {
 	value: string;
@@ -33,8 +35,8 @@ export const ListFilter = ({
 	const isAccountPage = pathname.includes('/account/');
 
 	return (
-		<div className='flex gap-4 items-center max-w-xl w-full'>
-			<div className='flex gap-2 flex-1'>
+		<div className='flex gap-4 items-center w-full flex-wrap justify-center md:flex-nowrap md:justify-end'>
+			<div className='flex gap-2 w-full md:w-fit'>
 				<input
 					value={value}
 					onChange={(e) => onChange(e.target.value)}
@@ -57,11 +59,10 @@ export const ListFilter = ({
 					label: `${String(pageSize)} ${t('labels.perPage')}`,
 					value: String(pageSize),
 				}}
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				onChange={(option: SingleValue<any>) => {
+				onChange={(option: SingleValue<Option>) => {
 					if (option) onPageSizeChange(Number(option.value));
 				}}
-				styles={reactSelectStyles}
+				styles={getReactSelectStyles<Option>()}
 			/>
 		</div>
 	);

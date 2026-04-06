@@ -21,7 +21,7 @@ export const Button = ({
 	const isWhite = variant === 'white';
 
 	const baseClasses = clsx(
-		'flex items-center justify-center gap-2 cursor-pointer transition-all duration-200 disabled:opacity-50 p-3 rounded-2xl font-inter text-base border',
+		'flex items-center justify-center gap-2 cursor-pointer transition-all duration-200 disabled:opacity-50 p-3 rounded-2xl font-inter text-base border text-center',
 		isBlue &&
 			'bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white border-blue-500',
 		isGhost &&

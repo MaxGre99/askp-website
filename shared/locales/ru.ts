@@ -193,6 +193,7 @@ const ru = {
 			gender: 'Выберите пол',
 			martialStatus: 'Выберите семейное положение',
 			languages: 'Выберите язык/языки',
+			selectTheTab: 'Выберите вкладку...',
 		},
 		buttons: {
 			find: 'Поиск',

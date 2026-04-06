@@ -89,9 +89,9 @@ export const ContentList = ({ type, mode, withAuthor, showAll }: Props) => {
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
-			<div className='flex justify-between items-center gap-3'>
+			<div className='flex justify-between items-center gap-3 w-full flex-wrap md:flex-nowrap'>
 				{mode === 'my' || isAccountPage ? (
-					<Button href={config.addHref}>
+					<Button href={config.addHref} className='w-full md:w-fit md:shrink-0'>
 						<FaPlus /> {t(config.addButtonKey)}
 					</Button>
 				) : (
