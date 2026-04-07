@@ -33,8 +33,8 @@ const Page = () => {
 	];
 
 	return (
-		<div className='flex flex-col gap-6 p-6 bg-white rounded-2xl'>
-			<h1 className='text-center self-center font-oswald font-light text-5xl'>
+		<div className='flex flex-col w-full gap-6 p-6 bg-white rounded-2xl'>
+			<h1 className='text-center self-center font-oswald font-light text-4xl'>
 				Политика использования файлов Cookie
 			</h1>
 
