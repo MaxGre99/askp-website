@@ -37,7 +37,7 @@ export const SpecialistPage = () => {
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6 bg-white rounded-2xl p-6'>
-			<div className='flex flex-row gap-6 items-center justify-between'>
+			<div className='flex flex-row gap-6 items-center justify-center flex-wrap'>
 				<div className='rounded-md bg-gray-100 w-[256px] h-[256px] flex items-center justify-center border border-gray-200 overflow-hidden'>
 					<Avatar src={profile?.avatarUrl} />
 				</div>

@@ -13,7 +13,7 @@ interface Props {
 
 export const ProfileMainBlock = ({ profile, isEditing }: Props) => {
 	return (
-		<div className='flex flex-row gap-6 items-center justify-between'>
+		<div className='flex flex-row gap-6 flex-wrap justify-center items-center'>
 			<AvatarUploadWithModal userId={profile?.userId} />
 
 			<div className='flex flex-1 flex-col gap-4'>

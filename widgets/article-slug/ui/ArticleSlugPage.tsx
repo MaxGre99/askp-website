@@ -27,13 +27,13 @@ export const ArticleSlugPage = () => {
 				<img
 					src={data.image}
 					alt='article-cover'
-					className='rounded-2xl w-full h-[720px]'
+					className='rounded-2xl w-full h-[300px] md:h-[360px] lg:h-[420px] xl:h-[720px]'
 					// width={500}
 					// height={100}
 				/>
 			)}
 			<div className='flex flex-col gap-6 p-6 flex-1 w-full'>
-				<h3 className='text-3xl text-center'>{data?.title}</h3>
+				<h3 className='text-3xl text-center break-all'>{data?.title}</h3>
 				<TipTapReadOnly content={data?.content ?? ''} noBorder />
 			</div>
 		</div>

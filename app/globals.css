@@ -237,3 +237,9 @@ body {
 	margin: 8px;
 	float: none;
 }
+
+.tiptap iframe {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+}
