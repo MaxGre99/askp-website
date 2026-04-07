@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
 import { ApiError } from '@/shared/api';
-import { getAuthUser } from '@/shared/lib/auth';
 import { deleteS3File } from '@/shared/lib/deleteS3File';
+import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 

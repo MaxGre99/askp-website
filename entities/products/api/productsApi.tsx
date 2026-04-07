@@ -1,17 +1,6 @@
 import { baseApi } from '@/shared/api';
 
-export interface Product {
-	id: string;
-	slug: string;
-	name: string;
-	description: string;
-	price: number;
-	images: string[];
-	published: boolean;
-	createdAt: string;
-	updatedAt: string;
-	contentLink?: string;
-}
+import { Product } from '../model/types';
 
 export const productsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({

@@ -1,4 +1,4 @@
-import { AllUsersTable } from '@/widgets/all-users-table';
+import { AllUsersTable } from '@/widgets/users-tables/all';
 
 const Page = () => {
 	return <AllUsersTable />;

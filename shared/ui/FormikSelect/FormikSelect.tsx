@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import Select, { MultiValue, SingleValue } from 'react-select';
 
-import { getReactSelectStyles } from '@/shared/lib/getReactSelectStyles';
+import { getReactSelectStyles } from '@/shared/lib/helpers';
 
 type Option = { value: string; label: string };
 

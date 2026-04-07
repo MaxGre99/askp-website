@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getAuthUser } from '@/shared/lib/auth';
+import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 

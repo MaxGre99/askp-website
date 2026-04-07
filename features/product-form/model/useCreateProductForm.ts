@@ -3,12 +3,15 @@ import { useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
-import { useDeleteProductImageMutation } from '@/entities/product-images';
 import { useCreateProductMutation } from '@/entities/products';
-import { extractImageUrls } from '@/shared/lib/extractImageUrls';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
-import { trimStrings } from '@/shared/lib/trimStrings';
+import { trimStrings } from '@/shared/lib/formatters';
+import {
+	extractImageUrls,
+	handleApiError,
+	redirectWithToast,
+} from '@/shared/lib/helpers';
+
+import { useDeleteProductImageMutation } from '../api/productImagesApi';
 
 import { productSchema } from './schema';
 

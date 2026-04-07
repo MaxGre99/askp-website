@@ -26,7 +26,7 @@ export const Avatar = ({ src, size = 64, className }: AvatarProps) => {
 					className={`w-full h-full object-contain ${className}`}
 				/>
 			) : (
-				<MdOutlineNoPhotography size={size} color='gray' />
+				<MdOutlineNoPhotography size={size} className='text-gray-300' />
 			)}
 		</>
 	);

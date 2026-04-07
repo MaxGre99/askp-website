@@ -4,10 +4,10 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 
 import { ApiError } from '@/shared/api';
-import { getAuthUser } from '@/shared/lib/auth';
-import { s3 } from '@/shared/lib/s3';
 
+import { getAuthUser } from './getAuthUser';
 import { handleRouteError } from './handleRouteError';
+import { s3 } from './s3';
 
 export const createContentImageHandler = (
 	bucket: string,

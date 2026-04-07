@@ -4,13 +4,14 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
-import {
-	useDeleteDonaterCoverMutation,
-	useUploadDonaterCoverMutation,
-} from '@/entities/donater-covers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { ImageInput } from '@/shared/ui/ImageInput';
+
+import {
+	useDeleteDonaterCoverMutation,
+	useUploadDonaterCoverMutation,
+} from '../api/donaterCoversApi';
 
 interface Props {
 	title: string;

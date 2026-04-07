@@ -1,10 +1,9 @@
 'use client';
 
 import { Profile } from '@/entities/profiles';
+import { ProfileMainFields, ProfileSideFields } from '@/features/profile';
 
 import { AvatarUploadWithModal } from './AvatarUploadBlockWithModal';
-import { ProfileMainFields } from './ProfileMainFields';
-import { ProfileSideFields } from './ProfileSideFields';
 
 interface Props {
 	profile?: Profile;

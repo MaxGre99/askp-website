@@ -1,6 +1,6 @@
 'use client';
 
-import { useRedirectToast } from '@/shared/hooks/useRedirectToast';
+import { useRedirectToast } from '@/shared/custom-hooks';
 
 export const ClientToasts = () => {
 	useRedirectToast();

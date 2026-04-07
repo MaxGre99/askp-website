@@ -3,11 +3,6 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import {
-	useDeleteArticleCoverMutation,
-	useUploadArticleCoverMutation,
-	useUploadArticleImageMutation,
-} from '@/entities/article-images';
 import { useGetMeQuery } from '@/entities/users';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
@@ -15,6 +10,11 @@ import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
 import { Loader } from '@/shared/ui/Loader';
 
+import {
+	useDeleteArticleCoverMutation,
+	useUploadArticleCoverMutation,
+	useUploadArticleImageMutation,
+} from '../api/articleImagesApi';
 import { useEditArticleForm } from '../model/useEditArticleForm';
 
 export const EditArticleForm = () => {

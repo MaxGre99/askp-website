@@ -1,4 +1,4 @@
-import { SpecialistPage } from '@/widgets/specialists-slug';
+import { SpecialistPage } from '@/widgets/specialists/specialists-slug';
 
 const Page = () => {
 	return <SpecialistPage />;

@@ -1,4 +1,4 @@
-import { EditEventPage } from '@/widgets/edit-event';
+import { EditEventPage } from '@/widgets/events/edit';
 
 const Page = () => {
 	return <EditEventPage />;

@@ -10,10 +10,11 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { Avatar, useGetAvatarQuery } from '@/entities/avatars';
 import { useGetProfileQuery } from '@/entities/profiles';
 import { useGetMeQuery, useSignOutMutation } from '@/entities/users';
-import { getDisplayName } from '@/shared/lib/getDisplayName';
 import { Button } from '@/shared/ui/Button';
-import { EmailToResetPassword } from '@/widgets/email-to-reset-password';
 
+import { getDisplayName } from '../../lib/getDisplayName';
+
+import { EmailToResetPassword } from './EmailToResetPassword';
 import { SignInForm } from './SignInForm';
 
 export const AccountBlock = () => {

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FaSearch } from 'react-icons/fa';
 import Select, { SingleValue } from 'react-select';
 
-import { getReactSelectStyles } from '@/shared/lib/getReactSelectStyles';
+import { getReactSelectStyles } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 
 type Option = { value: string; label: string };

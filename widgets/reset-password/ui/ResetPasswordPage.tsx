@@ -9,8 +9,7 @@ import { BiShow, BiSolidHide } from 'react-icons/bi';
 import * as Yup from 'yup';
 
 import { useConfirmPasswordMutation } from '@/entities/users';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
+import { handleApiError, redirectWithToast } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 // import { Prisma } from '@prisma/client';
 // import { ApiError } from '@/shared/api';
-import { getAuthUser } from '@/shared/lib/auth';
+import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { guardOwner } from '@/shared/lib/guardOwner';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';

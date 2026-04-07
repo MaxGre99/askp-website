@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
 import { ListFilter, useListFilter } from '@/features/list-filter';
-import { PreviewCardsList } from '@/features/preview-cards-list';
-import { handleApiError } from '@/shared/lib/handleApiError';
+import { PreviewCardsList } from '@/features/preview-cards';
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';

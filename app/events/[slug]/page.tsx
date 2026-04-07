@@ -1,4 +1,4 @@
-import { EventSlugPage } from '@/widgets/event-slug';
+import { EventSlugPage } from '@/widgets/events/slug';
 
 const Page = () => {
 	return <EventSlugPage />;

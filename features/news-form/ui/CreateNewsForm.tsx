@@ -3,16 +3,16 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import {
-	useDeleteNewsCoverMutation,
-	useUploadNewsCoverMutation,
-	useUploadNewsImageMutation,
-} from '@/entities/news-images';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
 
+import {
+	useDeleteNewsCoverMutation,
+	useUploadNewsCoverMutation,
+	useUploadNewsImageMutation,
+} from '../api/newsImagesApi';
 import { useCreateNewsForm } from '../model/useCreateNewsForm';
 
 export const CreateNewsForm = () => {

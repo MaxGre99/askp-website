@@ -6,12 +6,14 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
 
-import { ProductCard, useGetAllProductsQuery } from '@/entities/products';
+import { useGetAllProductsQuery } from '@/entities/products';
 import { useGetMeQuery } from '@/entities/users';
 import { ListFilter, useListFilter } from '@/features/list-filter';
-import { handleApiError } from '@/shared/lib/handleApiError';
+import { handleApiError } from '@/shared/lib/helpers';
 import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
+
+import { ProductCard } from './ProductCard';
 
 export const ShopPage = () => {
 	const { t } = useTranslation();

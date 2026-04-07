@@ -4,16 +4,14 @@ import { useField } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { Profile } from '@/entities/profiles';
-import { FormField } from '@/shared/ui/FormField';
-
 import {
+	ContactButton,
 	CONTACTS_CONFIG,
 	PHONE_REF_CONFIG,
 	PHONE_REF_ORDER,
-} from '../model/contacts-config';
-import { PROFILE_CONTACT_LABELS } from '../model/labels';
-
-import { ContactButton } from './ContactButton';
+	PROFILE_CONTACT_LABELS,
+} from '@/features/profile';
+import { FormField } from '@/shared/ui/FormField';
 
 interface Props {
 	profile?: Profile;

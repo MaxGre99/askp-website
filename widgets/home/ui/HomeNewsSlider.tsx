@@ -5,8 +5,8 @@ import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { /* NewsCard, */ NewsType } from '@/entities/news';
+import { PreviewCard } from '@/features/preview-cards';
 import { NavButton } from '@/shared/ui/NavButton';
-import { PreviewCard } from '@/shared/ui/PreviewCard';
 
 type Props = {
 	items: NewsType[];
@@ -76,7 +76,7 @@ export const HomeNewsSlider = ({ items }: Props) => {
 					>
 						{slides.map((news, i) => (
 							<SwiperSlide key={`${news.slug}-${i}`} className='p-1'>
-								<PreviewCard item={news} type='news' layout='vertical'/>
+								<PreviewCard item={news} type='news' layout='vertical' />
 							</SwiperSlide>
 						))}
 					</Swiper>

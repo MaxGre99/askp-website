@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { MdImageNotSupported } from 'react-icons/md';
 
-import { stripHtml } from '@/shared/lib/stripHtml';
+import { stripHtml } from '@/shared/lib/formatters';
 
 import { NewsType } from '../model/types';
 
@@ -26,7 +26,7 @@ export const NewsCard = ({ news, type }: NewsCard) => {
 					/>
 				) : (
 					<div className='rounded-2xl min-h-[180px] h-[180px] min-w-full flex items-center justify-center border-b border-gray-200 md:min-h-[202px] md:h-[202px] xl:min-h-[232px] xl:h-[232px]'>
-						<MdImageNotSupported size={96} color='gray' />
+						<MdImageNotSupported size={64} className='text-gray-300' />
 					</div>
 				)}
 				<div className='p-3 flex flex-col gap-1 justify-start items-start'>

@@ -1,4 +1,4 @@
-import { EditProductPage } from '@/widgets/edit-product';
+import { EditProductPage } from '@/widgets/products/edit';
 
 const Page = () => {
 	return <EditProductPage />;

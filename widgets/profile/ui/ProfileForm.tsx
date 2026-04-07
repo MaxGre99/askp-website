@@ -3,12 +3,12 @@
 import { Formik } from 'formik';
 import { Form } from 'formik';
 
+import { ProfileBioSection } from '@/features/profile';
 import { Loader } from '@/shared/ui/Loader';
 
 import { useProfileForm } from '../model/useProfileForm';
 
 import { ProfileActions } from './ProfileActions';
-import { ProfileBioSection } from './ProfileBioSection';
 import { ProfileContactsBlock } from './ProfileContactsBlock';
 import { ProfileMainBlock } from './ProfileMainBlock';
 

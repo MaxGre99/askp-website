@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 
-// import { Prisma } from '@prisma/client';
-import { getAuthUser } from '@/shared/lib/auth';
 import { deleteS3File } from '@/shared/lib/deleteS3File';
-import { extractImageUrls } from '@/shared/lib/extractImageUrls';
+import { slugify } from '@/shared/lib/formatters';
+// import { Prisma } from '@prisma/client';
+import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
+import { extractImageUrls } from '@/shared/lib/helpers';
 import { prisma } from '@/shared/lib/prisma';
-import { slugify } from '@/shared/lib/slugify';
 
 export const GET = async (
 	_req: Request,

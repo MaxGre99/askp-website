@@ -3,16 +3,16 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import {
-	useDeleteEventCoverMutation,
-	useUploadEventCoverMutation,
-	useUploadEventImageMutation,
-} from '@/entities/event-images';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { ImageInput } from '@/shared/ui/ImageInput';
 
+import {
+	useDeleteEventCoverMutation,
+	useUploadEventCoverMutation,
+	useUploadEventImageMutation,
+} from '../api/eventImagesApi';
 import { useCreateEventForm } from '../model/useCreateEventForm';
 
 export const CreateEventForm = () => {

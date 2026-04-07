@@ -2,8 +2,8 @@
 
 import { ReactNode } from 'react';
 
-import { useAccountGuard } from '@/shared/hooks/useAccountGuard';
-import { useIsMobile } from '@/shared/hooks/useIsMobile';
+import { useAccountGuard } from '@/features/account-guard';
+import { useIsMobile } from '@/shared/custom-hooks';
 import { Loader } from '@/shared/ui/Loader';
 import {
 	AccountSidebar,

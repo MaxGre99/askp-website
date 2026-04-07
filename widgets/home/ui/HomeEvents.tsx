@@ -5,11 +5,10 @@ import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { EventType } from '@/entities/events';
-import { PreviewCardsList } from '@/features/preview-cards-list';
-import { useIsMobile } from '@/shared/hooks/useIsMobile';
+import { PreviewCard } from '@/features/preview-cards';
+import { PreviewCardsList } from '@/features/preview-cards';
+import { useIsMobile } from '@/shared/custom-hooks';
 import { NavButton } from '@/shared/ui/NavButton';
-import { PreviewCard } from '@/shared/ui/PreviewCard';
-// import { PreviewCard } from '@/shared/ui/PreviewCard';
 
 type Props = {
 	items: EventType[];

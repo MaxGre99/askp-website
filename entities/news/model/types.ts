@@ -1,4 +1,4 @@
-import { AuthorWithProfile } from '@/shared/lib/getAuthorName';
+import { AuthorWithProfile } from '@/shared/custom-types';
 
 export type CreateNewsDto = {
 	title: string;

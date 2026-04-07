@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useDeleteProfileBioImageMutation } from '@/entities/profile-bio-images';
 import {
 	useGetMyProfileQuery,
 	useUpdateProfileMutation,
 } from '@/entities/profiles';
-import { extractImageUrls } from '@/shared/lib/extractImageUrls';
-import { formatDateForInput } from '@/shared/lib/formatDateForInput';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { localDateToISO } from '@/shared/lib/localDateToISO';
-import { trimStrings } from '@/shared/lib/trimStrings';
+import { useDeleteProfileBioImageMutation } from '@/features/profile';
+import {
+	formatDateForInput,
+	localDateToISO,
+	trimStrings,
+} from '@/shared/lib/formatters';
+import { extractImageUrls, handleApiError } from '@/shared/lib/helpers';
 
 import { editProfileSchema } from './schema';
 

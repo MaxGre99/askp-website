@@ -3,16 +3,18 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
+import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
+import { formatForDatetimeLocal, trimStrings } from '@/shared/lib/formatters';
+import {
+	extractImageUrls,
+	handleApiError,
+	redirectWithToast,
+} from '@/shared/lib/helpers';
+
 import {
 	useDeleteEventCoverMutation,
 	useDeleteEventImageMutation,
-} from '@/entities/event-images';
-import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
-import { extractImageUrls } from '@/shared/lib/extractImageUrls';
-import { formatForDatetimeLocal } from '@/shared/lib/formatForDatetimeLocal';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
-import { trimStrings } from '@/shared/lib/trimStrings';
+} from '../api/eventImagesApi';
 
 import { createEventSchema } from './schema';
 

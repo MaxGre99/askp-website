@@ -5,11 +5,12 @@ import { useRef, useState } from 'react';
 import { FieldArray, useField } from 'formik';
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '@/shared/ui/Button';
+
 import {
 	useDeleteProductCoverMutation,
 	useUploadProductCoverMutation,
-} from '@/entities/product-images';
-import { Button } from '@/shared/ui/Button';
+} from '../api/productImagesApi';
 
 const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 

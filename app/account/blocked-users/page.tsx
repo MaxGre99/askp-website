@@ -1,4 +1,4 @@
-import { BlockedUsersTable } from '@/widgets/blocked-users-table';
+import { BlockedUsersTable } from '@/widgets/users-tables/blocked';
 
 const Page = () => {
 	return <BlockedUsersTable />;

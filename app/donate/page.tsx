@@ -1,4 +1,4 @@
-import { DonatersList } from '@/widgets/donate';
+import { DonatersList } from '@/widgets/donaters/donate';
 
 const Page = () => {
 	return <DonatersList />;

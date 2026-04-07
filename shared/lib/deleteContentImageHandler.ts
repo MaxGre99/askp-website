@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 
 import { ApiError } from '@/shared/api';
-import { getAuthUser } from '@/shared/lib/auth';
-import { deleteS3File } from '@/shared/lib/deleteS3File';
 
+import { deleteS3File } from './deleteS3File';
+import { getAuthUser } from './getAuthUser';
 import { handleRouteError } from './handleRouteError';
 
 export const deleteContentImageHandler = (
@@ -24,7 +24,7 @@ export const deleteContentImageHandler = (
 			const key = url.slice(prefix.length);
 			if (!key.startsWith(`${user.id}/`)) throw new ApiError('forbidden', 403);
 
-			await deleteS3File(url, bucket); // ← вместо DeleteObjectCommand напрямую
+			await deleteS3File(url, bucket); // вместо DeleteObjectCommand напрямую
 
 			return NextResponse.json({ success: true });
 		} catch (err) {

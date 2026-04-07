@@ -1,4 +1,4 @@
-import { EditNewsPage } from '@/widgets/edit-news';
+import { EditNewsPage } from '@/widgets/news/edit';
 
 const Page = () => {
 	return <EditNewsPage />;

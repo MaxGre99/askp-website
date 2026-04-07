@@ -1,4 +1,4 @@
-import { AddProductPage } from '@/widgets/add-product';
+import { AddProductPage } from '@/widgets/products/add';
 
 const Page = () => {
 	return <AddProductPage />;

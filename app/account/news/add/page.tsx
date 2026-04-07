@@ -1,4 +1,4 @@
-import { AddNewsPage } from '@/widgets/add-news';
+import { AddNewsPage } from '@/widgets/news/add';
 
 const Page = () => {
 	return <AddNewsPage />;

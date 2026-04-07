@@ -1,4 +1,4 @@
-import { AddArticlePage } from '@/widgets/add-article';
+import { AddArticlePage } from '@/widgets/articles/add';
 
 const Page = () => {
 	return <AddArticlePage />;

@@ -5,7 +5,7 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 
 import { ApiError } from '@/shared/api';
-import { getAuthUser } from '@/shared/lib/auth';
+import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
 import { s3 } from '@/shared/lib/s3';

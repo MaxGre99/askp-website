@@ -4,14 +4,17 @@ import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { useGetNewsQuery, useUpdateNewsMutation } from '@/entities/news';
+import { trimStrings } from '@/shared/lib/formatters';
+import {
+	extractImageUrls,
+	handleApiError,
+	redirectWithToast,
+} from '@/shared/lib/helpers';
+
 import {
 	useDeleteNewsCoverMutation,
 	useDeleteNewsImageMutation,
-} from '@/entities/news-images';
-import { extractImageUrls } from '@/shared/lib/extractImageUrls';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
-import { trimStrings } from '@/shared/lib/trimStrings';
+} from '../api/newsImagesApi';
 
 import { createNewsSchema } from './schema';
 

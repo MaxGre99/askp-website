@@ -1,4 +1,4 @@
-import { ProductSlugPage } from '@/widgets/product-slug';
+import { ProductSlugPage } from '@/widgets/products/slug';
 
 const Page = () => {
 	return <ProductSlugPage />;

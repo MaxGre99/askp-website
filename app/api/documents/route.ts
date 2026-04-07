@@ -2,7 +2,7 @@
 
 // import { PutObjectCommand } from '@aws-sdk/client-s3';
 
-// import { getAuthUser } from '@/shared/lib/auth';
+// import { getAuthUser } from '@/shared/lib/getAuthUser';
 // import { s3 } from '@/shared/lib/s3';
 
 // export const POST = async (req: Request) => {

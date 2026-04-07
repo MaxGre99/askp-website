@@ -4,20 +4,23 @@ import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import {
-	useDeleteArticleCoverMutation,
-	useDeleteArticleImageMutation,
-} from '@/entities/article-images';
-import {
 	useGetArticleQuery,
 	useUpdateArticleMutation,
 } from '@/entities/articles';
-import { useAuthorGuard } from '@/shared/hooks/useAuthorGuard';
-import { extractImageUrls } from '@/shared/lib/extractImageUrls';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
-import { trimStrings } from '@/shared/lib/trimStrings';
+import { trimStrings } from '@/shared/lib/formatters';
+import {
+	extractImageUrls,
+	handleApiError,
+	redirectWithToast,
+} from '@/shared/lib/helpers';
+
+import {
+	useDeleteArticleCoverMutation,
+	useDeleteArticleImageMutation,
+} from '../api/articleImagesApi';
 
 import { createArticleSchema } from './schema';
+import { useAuthorGuard } from './useAuthorGuard';
 
 const MINIO_PUBLIC_URL = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL;
 

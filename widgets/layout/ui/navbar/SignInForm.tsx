@@ -6,7 +6,7 @@ import { BiShow, BiSolidHide } from 'react-icons/bi';
 import * as Yup from 'yup';
 
 import { useSignInMutation } from '@/entities/users';
-import { handleApiError } from '@/shared/lib/handleApiError';
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 

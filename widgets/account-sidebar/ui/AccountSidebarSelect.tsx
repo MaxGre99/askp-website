@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Select, { SingleValue } from 'react-select';
 
 import { useGetMeQuery } from '@/entities/users';
-import { getReactSelectStyles } from '@/shared/lib/getReactSelectStyles';
+import { getReactSelectStyles } from '@/shared/lib/helpers';
 
 import { accountSidebarConfig } from '../model/sidebar-config';
 

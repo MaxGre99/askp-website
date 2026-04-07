@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
+import { slugify } from '@/shared/lib/formatters';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
-import { slugify } from '@/shared/lib/slugify';
 
 export const GET = async (
 	_req: Request,

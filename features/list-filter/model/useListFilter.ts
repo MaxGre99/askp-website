@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { updateQuery } from '@/shared/lib/updateQuery';
+import { updateQuery } from '@/shared/lib/helpers';
 
 const DEFAULT_PAGE_SIZE = 4;
 

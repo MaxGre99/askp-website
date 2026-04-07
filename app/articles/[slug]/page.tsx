@@ -1,4 +1,4 @@
-import { ArticleSlugPage } from '@/widgets/article-slug';
+import { ArticleSlugPage } from '@/widgets/articles/slug';
 
 const Page = () => {
 	return <ArticleSlugPage />;

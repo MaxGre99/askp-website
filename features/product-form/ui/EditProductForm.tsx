@@ -3,12 +3,12 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import { useUploadProductImageMutation } from '@/entities/product-images';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
 import { Loader } from '@/shared/ui/Loader';
 
+import { useUploadProductImageMutation } from '../api/productImagesApi';
 import { useEditProductForm } from '../model/useEditProductForm';
 
 import { ProductCoversInput } from './ProductCoversInput';

@@ -1,4 +1,4 @@
-import { AddEventPage } from '@/widgets/add-event';
+import { AddEventPage } from '@/widgets/events/add';
 
 const Page = () => {
 	return <AddEventPage />;

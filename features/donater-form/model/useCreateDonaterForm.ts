@@ -3,9 +3,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateDonaterMutation } from '@/entities/donaters';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
-import { trimStrings } from '@/shared/lib/trimStrings';
+import { trimStrings } from '@/shared/lib/formatters';
+import { handleApiError, redirectWithToast } from '@/shared/lib/helpers';
 
 import { createDonaterSchema } from './schema';
 

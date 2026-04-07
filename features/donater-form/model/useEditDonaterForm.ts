@@ -3,14 +3,14 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
 
-import { useDeleteDonaterCoverMutation } from '@/entities/donater-covers';
 import {
 	useGetDonaterQuery,
 	useUpdateDonaterMutation,
 } from '@/entities/donaters';
-import { handleApiError } from '@/shared/lib/handleApiError';
-import { redirectWithToast } from '@/shared/lib/redirectWithToast';
-import { trimStrings } from '@/shared/lib/trimStrings';
+import { trimStrings } from '@/shared/lib/formatters';
+import { handleApiError, redirectWithToast } from '@/shared/lib/helpers';
+
+import { useDeleteDonaterCoverMutation } from '../api/donaterCoversApi';
 
 import { createDonaterSchema } from './schema';
 

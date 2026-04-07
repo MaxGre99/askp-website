@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 import { Prisma } from '@prisma/client';
 
-import { getAuthUser } from '@/shared/lib/auth';
+import { slugify } from '@/shared/lib/formatters';
+import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import { prisma } from '@/shared/lib/prisma';
-import { slugify } from '@/shared/lib/slugify';
 
 export const GET = async (req: Request) => {
 	try {

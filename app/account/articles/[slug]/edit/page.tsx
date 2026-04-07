@@ -1,4 +1,4 @@
-import { EditArticlePage } from '@/widgets/edit-article';
+import { EditArticlePage } from '@/widgets/articles/edit';
 
 const Page = () => {
 	return <EditArticlePage />;

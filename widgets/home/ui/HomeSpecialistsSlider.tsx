@@ -3,9 +3,8 @@ import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Profile } from '@/entities/profiles';
+import { ProfileCard } from '@/features/profile-card';
 import { NavButton } from '@/shared/ui/NavButton';
-
-import { ProfileCard } from './ProfileCard';
 
 type Props = {
 	items: Profile[];

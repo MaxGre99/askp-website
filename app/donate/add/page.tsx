@@ -1,4 +1,4 @@
-import { AddDonaterPage } from '@/widgets/add-donater';
+import { AddDonaterPage } from '@/widgets/donaters/add-donater';
 
 const Page = () => {
 	return <AddDonaterPage />;

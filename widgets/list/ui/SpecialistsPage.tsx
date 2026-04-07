@@ -1,0 +1,82 @@
+'use client';
+
+import { useEffect } from 'react';
+
+import { useTranslation } from 'react-i18next';
+
+import { ListFilter, useListFilter } from '@/features/list-filter';
+import { ProfileCard } from '@/features/profile-card';
+import { handleApiError } from '@/shared/lib/helpers';
+import { Loader } from '@/shared/ui/Loader';
+import { Pagination } from '@/shared/ui/Pagination';
+
+import { useAllProfilesList } from '../model/useAllProfilesList';
+
+export const SpecialistsPage = () => {
+	const { t } = useTranslation();
+
+	const {
+		page,
+		query,
+		pageSize,
+		draftQuery,
+		setDraftQuery,
+		applyFilter,
+		changePage,
+		changePageSize,
+	} = useListFilter();
+
+	const { data, isLoading, isError, error } = useAllProfilesList(
+		page,
+		query,
+		pageSize,
+	);
+
+	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
+
+	useEffect(() => {
+		if (isError) handleApiError(error);
+	}, [isError, error]);
+
+	if (isLoading) return <Loader />;
+
+	return (
+		<div className='flex flex-1 w-full flex-col gap-6'>
+			<div className='flex justify-between items-center gap-3 flex-wrap'>
+				<h1 className='font-oswald text-white font-light'>
+					{t('specialists.pageTitle')}
+				</h1>
+
+				<ListFilter
+					value={draftQuery}
+					onChange={setDraftQuery}
+					onSubmit={applyFilter}
+					placeholder={t('placeholders.displayNameFilter')}
+					buttonText={t('buttons.find')}
+					pageSize={pageSize}
+					onPageSizeChange={changePageSize}
+				/>
+			</div>
+
+			{data && data.profiles.length > 0 ? (
+				<>
+					<div className='flex flex-1 w-full flex-wrap gap-8 justify-center items-center'>
+						{data.profiles.map((profile) => (
+							<ProfileCard key={profile.userId} profile={profile} />
+						))}
+					</div>
+
+					<Pagination
+						currentPage={page}
+						totalPages={totalPages}
+						onPageChange={changePage}
+					/>
+				</>
+			) : (
+				<p className='font-oswald flex flex-1 w-full items-center justify-center mb-6 text-white text-3xl'>
+					{t('notifications.empty')}
+				</p>
+			)}
+		</div>
+	);
+};
