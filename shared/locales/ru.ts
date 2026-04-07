@@ -23,6 +23,12 @@ const ru = {
 			editNewsSuccess: 'Новость успешно отредактирована',
 			createProductSuccess: 'Товар успешно добавлен',
 			editProductSuccess: 'Товар успешно отредактирован',
+			userapprove: 'Пользователь подтверждён',
+			userreject: 'Пользователю отказано',
+			userblock: 'Пользователь заблокирован',
+			userunblock: 'Пользователь разблокирован',
+			usersetAdmin: 'Пользователь назначен администратором',
+			usersetUser: 'Администратор понижен до пользователя',
 		},
 		navbar: {
 			home: 'Главная',

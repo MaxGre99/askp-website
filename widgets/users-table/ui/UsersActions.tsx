@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { useConfirm } from '@/shared/hooks/useConfirmModal';
 import { Button } from '@/shared/ui/Button';
@@ -33,7 +34,10 @@ export const UsersActions = ({
 							onClick={() =>
 								confirm(
 									t(`buttons.${type}`),
-									() => actions[type](id),
+									async () => {
+										await actions[type](id);
+										toast.success(t(`notifications.user${type}`));
+									},
 									blockTypes.includes(type) ? 'delete' : 'confirm',
 								)
 							}
