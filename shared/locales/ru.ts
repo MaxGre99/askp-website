@@ -46,6 +46,7 @@ const ru = {
 			donate: 'Помощь проекту',
 		},
 		sidebar: {
+			navigation: 'Навигация по личному кабинету',
 			profile: 'Профиль',
 			myNews: 'Мои новости',
 			myEvents: 'Мои события',
@@ -293,6 +294,11 @@ const ru = {
 			forgotPassword: 'Забыли пароль',
 			resetPassword: 'Сбросить пароль',
 			back: 'Назад',
+			scrollToTop: 'Наверх',
+			menu: 'Меню',
+			becomeAnAssociate: 'Стать членом Ассоциации',
+			toKnowAboutNewsAndEvents: 'Узнать о новостях и актуальных  мероприятиях',
+			contactUs: 'Связаться с нами',
 		},
 		feedbackForm: {
 			title: 'Форма обратной связи',

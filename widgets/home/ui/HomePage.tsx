@@ -29,6 +29,16 @@ export const HomePage = () => {
 		if (isProfilesError) console.error('Failed to load profiles');
 	}, [isNewsError, isEventsError, isProfilesError]);
 
+	useEffect(() => {
+		if (newsData && eventsData && profilesData) {
+			const hash = window.location.hash;
+			if (hash) {
+				const el = document.querySelector(hash);
+				el?.scrollIntoView({ behavior: 'smooth' });
+			}
+		}
+	}, [newsData, eventsData, profilesData]);
+
 	return (
 		<>
 			{newsData && <HomeNewsSlider items={newsData.news} />}

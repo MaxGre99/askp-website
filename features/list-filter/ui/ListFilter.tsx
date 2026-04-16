@@ -42,6 +42,7 @@ export const ListFilter = ({
 					onChange={(e) => onChange(e.target.value)}
 					placeholder={placeholder}
 					className='input flex-1'
+					onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
 				/>
 				<Button variant={isAccountPage ? 'blue' : 'white'} onClick={onSubmit}>
 					<FaSearch />

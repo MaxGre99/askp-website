@@ -202,7 +202,7 @@ const MenuBar = ({
 			<div className='w-px bg-gray-300 mx-1' />
 
 			{/* Медиа */}
-			<ToolbarButton onClick={addImage} title='Изображение'>
+			<ToolbarButton onClick={addImage} title={t('buttons.addImage')}>
 				<FaRegImage />
 			</ToolbarButton>
 

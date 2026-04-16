@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useGetProductQuery } from '@/entities/products';
 import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
+import { EmailLink } from '@/shared/ui/EmailLink';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
@@ -154,16 +156,53 @@ export const ProductSlugPage = () => {
 							</span>
 						</div>
 
-						<Button className='hover:shadow-lg hover:shadow-blue-500/25'>
+						<Button
+							className='hover:shadow-lg hover:shadow-blue-500/25'
+							href={
+								process.env.NEXT_PUBLIC_VK_URL ??
+								'https://vk.com/askp_association'
+							}
+							target='_blank'
+							rel='noopener noreferrer'
+						>
 							<FiShoppingBag size={20} />
 							{t('buttons.buy')}
 						</Button>
 
-						<div className='flex flex-col gap-2 p-4 bg-blue-50 rounded-xl text-sm text-blue-700'>
-							<p>✓ {t('labels.instantAccess')}</p>
+						<ol className='flex flex-col gap-2 p-4 bg-blue-50 rounded-xl text-sm text-blue-700 list-decimal list-outside pl-8'>
+							{/* <p>✓ {t('labels.instantAccess')}</p>
 							<p>✓ {t('labels.productLinkToEmail')}</p>
-							<p>✓ {t('labels.accessToMaterials')}</p>
-						</div>
+							<p>✓ {t('labels.accessToMaterials')}</p> */}
+							<li>Для покупки нажмите на кнопку &quot;Купить&quot;</li>
+							<li>
+								Вы будете перенаправлены в{' '}
+								<a
+									href={process.env.NEXT_PUBLIC_VK_URL}
+									target='_blank'
+									rel='noopener noreferrer'
+									className='text-violet-700 hover:text-violet-800 hover:underline active:text-violet-900'
+								>
+									группу ВКонтакте
+								</a>
+							</li>
+							<li>
+								Свяжитесь с нами в данной группе для получения доступа к курсу
+							</li>
+							<li>
+								Также возможно связаться с нами через{' '}
+								<Link
+									href='/#feedback'
+									className='text-violet-700 hover:text-violet-800 hover:underline active:text-violet-900'
+								>
+									форму обратной связи
+								</Link>{' '}
+								на главной странице или посредством{' '}
+								<EmailLink
+									title='электронной почты'
+									className='text-violet-700 hover:text-violet-800 hover:underline active:text-violet-900'
+								/>
+							</li>
+						</ol>
 					</div>
 				</div>
 			</div>

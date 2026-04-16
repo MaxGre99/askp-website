@@ -2,11 +2,27 @@ import Link from 'next/link';
 
 import clsx from 'clsx';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type BaseProps = {
 	isActive?: boolean;
 	variant?: 'blue' | 'ghost' | 'white';
-	href?: string;
-}
+	className?: string;
+	children?: React.ReactNode;
+};
+
+type AsButton = BaseProps &
+	React.ButtonHTMLAttributes<HTMLButtonElement> & {
+		href?: undefined;
+		target?: undefined;
+		rel?: undefined;
+	};
+
+type AsLink = BaseProps & {
+	href: string;
+	target?: string;
+	rel?: string;
+};
+
+type ButtonProps = AsButton | AsLink;
 
 export const Button = ({
 	className,
@@ -40,15 +56,16 @@ export const Button = ({
 	);
 
 	if (href) {
+		const { target, rel } = props as AsLink;
 		return (
-			<Link href={href} className={baseClasses}>
+			<Link href={href} target={target} rel={rel} className={baseClasses}>
 				{children}
 			</Link>
 		);
 	}
 
 	return (
-		<button className={baseClasses} {...props}>
+		<button className={baseClasses} {...(props as AsButton)}>
 			{children}
 		</button>
 	);

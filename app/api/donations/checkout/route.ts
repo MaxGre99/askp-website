@@ -1,44 +1,44 @@
-import { NextResponse } from 'next/server';
+// import { NextResponse } from 'next/server';
 
-import { v4 as uuid } from 'uuid';
+// import { v4 as uuid } from 'uuid';
 
-import { ApiError } from '@/shared/api';
-import { handleRouteError } from '@/shared/lib/handleRouteError';
-import { yookassa } from '@/shared/lib/yookassa';
+// import { ApiError } from '@/shared/api';
+// import { handleRouteError } from '@/shared/lib/handleRouteError';
+// import { yookassa } from '@/shared/lib/yookassa';
 
-const AMOUNTS = [100, 300, 500, 1000]; // допустимые суммы
+// const AMOUNTS = [100, 300, 500, 1000]; // допустимые суммы
 
-export const POST = async (req: Request) => {
-	try {
-		const { amount } = await req.json();
+// export const POST = async (req: Request) => {
+// 	try {
+// 		const { amount } = await req.json();
 
-		// Валидация суммы на сервере — не доверяем клиенту
-		if (!AMOUNTS.includes(amount)) {
-			throw new ApiError('invalid_amount', 400);
-		}
+// 		// Валидация суммы на сервере — не доверяем клиенту
+// 		if (!AMOUNTS.includes(amount)) {
+// 			throw new ApiError('invalid_amount', 400);
+// 		}
 
-		const payment = await yookassa.createPayment(
-			{
-				amount: {
-					value: String(amount),
-					currency: 'RUB',
-				},
-				confirmation: {
-					type: 'redirect',
-					return_url: `${process.env.NEXT_PUBLIC_URL}/donate/success`,
-				},
-				capture: true,
-				description: 'Донат проекту',
-			},
-			uuid(), // idempotency key — защита от дублей при сетевых сбоях
-		);
+// 		const payment = await yookassa.createPayment(
+// 			{
+// 				amount: {
+// 					value: String(amount),
+// 					currency: 'RUB',
+// 				},
+// 				confirmation: {
+// 					type: 'redirect',
+// 					return_url: `${process.env.NEXT_PUBLIC_URL}/donate/success`,
+// 				},
+// 				capture: true,
+// 				description: 'Донат проекту',
+// 			},
+// 			uuid(), // idempotency key — защита от дублей при сетевых сбоях
+// 		);
 
-		return NextResponse.json({ url: payment.confirmation.confirmation_url });
-	} catch (err) {
-		return handleRouteError(err, 'CREATE_PAYMENT_ERROR');
-		// return NextResponse.json(
-		// 	{ error: 'failed_to_create_payment' },
-		// 	{ status: 500 },
-		// );
-	}
-};
+// 		return NextResponse.json({ url: payment.confirmation.confirmation_url });
+// 	} catch (err) {
+// 		return handleRouteError(err, 'CREATE_PAYMENT_ERROR');
+// 		// return NextResponse.json(
+// 		// 	{ error: 'failed_to_create_payment' },
+// 		// 	{ status: 500 },
+// 		// );
+// 	}
+// };

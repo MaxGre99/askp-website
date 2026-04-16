@@ -45,6 +45,7 @@ export const AccountSidebarSelect = () => {
 
 	return (
 		<Select<Option>
+			aria-label={t('sidebar.navigation')}
 			options={options}
 			value={current}
 			onChange={(opt: SingleValue<Option>) => opt && router.push(opt.value)}

@@ -48,13 +48,12 @@ export const Navbar = () => {
 				<Button
 					className='text-white text-3xl px-4 w-full font-oswald xl:hidden '
 					onClick={() => setOpen((v) => !v)}
-					aria-label='Toggle menu'
 					aria-expanded={open}
 					aria-controls='mobile-menu'
 					variant='ghost'
 				>
 					<TiThMenu />
-					Меню
+					{t('buttons.menu')}
 				</Button>
 				<AccountBlock />
 			</div>

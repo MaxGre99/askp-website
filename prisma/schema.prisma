@@ -171,32 +171,32 @@ model Product {
   images      String[] // массив URL для слайдера
   published   Boolean  @default(false)
 
-  orders      Order[]
+//   orders      Order[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model Order {
-  id            String      @id @default(uuid())
-  orderNumber   String      @unique
-  email         String
-  fullName      String
-  phone         String?
-  productId     String
-  product       Product     @relation(fields: [productId], references: [id])
-  status        OrderStatus @default(PENDING)
-  amount        Int
-  paidAt        DateTime?
-  createdAt     DateTime    @default(now())
-}
+// model Order {
+//   id            String      @id @default(uuid())
+//   orderNumber   String      @unique
+//   email         String
+//   fullName      String
+//   phone         String?
+//   productId     String
+//   product       Product     @relation(fields: [productId], references: [id])
+//   status        OrderStatus @default(PENDING)
+//   amount        Int
+//   paidAt        DateTime?
+//   createdAt     DateTime    @default(now())
+// }
 
-enum OrderStatus {
-  PENDING
-  CONFIRMING
-  PAID
-  CANCELLED
-}
+// enum OrderStatus {
+//   PENDING
+//   CONFIRMING
+//   PAID
+//   CANCELLED
+// }
 
 // ВОССТАНОВЛЕНИЕ ПАРОЛЯ
 

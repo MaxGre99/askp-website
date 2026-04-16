@@ -4,6 +4,7 @@ import { Inter, Oswald } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 
 import { CookieBanner } from '@/features/cookie-consent';
+import { ScrollToTop } from '@/shared/ui/ScrollToTop';
 import { Footer, Navbar } from '@/widgets/layout';
 
 import 'swiper/css/pagination';
@@ -50,6 +51,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<ToastContainer />
 					<CookieBanner />
 					<ClientToasts />
+					<ScrollToTop />
 
 					<div className='flex flex-col gap-3 min-h-[100svh]'>
 						<header className='z-5'>
