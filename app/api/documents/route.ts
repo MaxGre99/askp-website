@@ -29,3 +29,5 @@
 // 		url: `${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/documents/${fileName}`,
 // 	});
 // };
+
+export {};

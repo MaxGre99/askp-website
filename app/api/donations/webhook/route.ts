@@ -33,3 +33,5 @@
 // 		// return NextResponse.json({ error: 'webhook_error' }, { status: 500 });
 // 	}
 // };
+
+export {};
