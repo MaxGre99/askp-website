@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Inter, Oswald } from 'next/font/google';
 
@@ -86,8 +87,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<div id='modal-root' />
 					<ToastContainer />
 					<CookieBanner />
-					<ClientToasts />
 					<ScrollToTop />
+					<Suspense fallback={null}>
+						<ClientToasts />
+					</Suspense>
 
 					<div className='flex flex-col gap-3 min-h-[100svh]'>
 						<header className='z-5'>
