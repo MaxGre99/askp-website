@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 
+import { Loader } from '@/shared/ui/Loader';
 import { ShopPage } from '@/widgets/shop';
 
 export const metadata: Metadata = {
@@ -9,7 +11,11 @@ export const metadata: Metadata = {
 };
 
 const Page = () => {
-	return <ShopPage />;
+	return (
+		<Suspense fallback={<Loader />}>
+			<ShopPage />
+		</Suspense>
+	);
 };
 
 export default Page;

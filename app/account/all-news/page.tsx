@@ -1,7 +1,14 @@
+import { Suspense } from 'react';
+
+import { Loader } from '@/shared/ui/Loader';
 import { ContentList } from '@/widgets/content-list';
 
 const Page = () => {
-	return <ContentList type='news' mode='all' withAuthor showAll />;
+	return (
+		<Suspense fallback={<Loader />}>
+			<ContentList type='news' mode='all' withAuthor showAll />
+		</Suspense>
+	);
 };
 
 export default Page;
