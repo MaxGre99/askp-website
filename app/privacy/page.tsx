@@ -1,3 +1,10 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Политика конфиденциальности',
+	robots: { index: false, follow: false },
+};
+
 const Page = () => {
 	return (
 		<div className='flex flex-col w-full gap-6 items-start justify-start p-6 bg-white rounded-2xl'>

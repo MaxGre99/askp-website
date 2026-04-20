@@ -1,4 +1,11 @@
+import { Metadata } from 'next';
+
 import { EmailLink } from '@/shared/ui/EmailLink';
+
+export const metadata: Metadata = {
+	title: 'Куки',
+	robots: { index: false, follow: false },
+};
 
 const Page = () => {
 	const cookiesData = [

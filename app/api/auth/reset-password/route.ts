@@ -44,7 +44,7 @@ export const POST = async (req: Request) => {
 			},
 		});
 
-		const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${rawToken}`;
+		const resetLink = `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password?token=${rawToken}`;
 
 		await sendResetPasswordEmail({
 			email: user.email,

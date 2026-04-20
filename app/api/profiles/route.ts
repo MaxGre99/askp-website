@@ -15,7 +15,8 @@ export const GET = async (req: Request) => {
 			Math.max(1, Number(url.searchParams.get('pageSize') ?? 4)),
 		);
 
-		const base = {
+		const base: Prisma.ProfileWhereInput = {
+			user: { status: 'ACTIVE' },
 			AND: [
 				{ avatarUrl: { not: null } },
 				{ displayName: { not: null } },
@@ -40,14 +41,17 @@ export const GET = async (req: Request) => {
 			orderBy: { createdAt: 'desc' },
 			skip: (page - 1) * pageSize,
 			take: pageSize,
+			select: {
+				userId: true,
+				avatarUrl: true,
+				displayName: true,
+				city: true,
+				shortBio: true,
+			},
 		});
 
 		return NextResponse.json({ profiles, total });
 	} catch (err) {
 		return handleRouteError(err, 'GET_PROFILES_ERROR');
-		// return NextResponse.json(
-		// 	{ error: 'failed_to_fetch_profiles' },
-		// 	{ status: 500 },
-		// );
 	}
 };

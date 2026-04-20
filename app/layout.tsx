@@ -4,6 +4,7 @@ import { Inter, Oswald } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 
 import { CookieBanner } from '@/features/cookie-consent';
+import { ClientToasts } from '@/shared/ui/ClientToasts';
 import { ScrollToTop } from '@/shared/ui/ScrollToTop';
 import { Footer, Navbar } from '@/widgets/layout';
 
@@ -11,7 +12,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
-import { ClientToasts } from './ClientToasts';
 import { Providers } from './providers';
 
 import './globals.css';
@@ -30,13 +30,49 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: 'АСКП | "Ассоциация Семейного Консультирования и Психотерапии"',
+	title: {
+		default: 'АСКП — Ассоциация Семейного Консультирования и Психотерапии',
+		template: '%s | АСКП',
+	},
 	description:
-		'Профессиональное Психологическое Объединение АСКП "Ассоциация Семейного Консультирования и Психотерапии"',
+		'Профессиональное объединение специалистов в области семейного консультирования и психотерапии. Новости, события, статьи, каталог специалистов.',
+
+	metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+
+	openGraph: {
+		type: 'website',
+		locale: 'ru_RU',
+		siteName: 'АСКП',
+		title: 'АСКП — Ассоциация Семейного Консультирования и Психотерапии',
+		description:
+			'Профессиональное объединение специалистов в области семейного консультирования и психотерапии.',
+		images: [
+			{
+				url: '/og-default.jpg',
+				width: 1200,
+				height: 630,
+				alt: 'АСКП',
+			},
+		],
+	},
+
+	twitter: {
+		card: 'summary_large_image',
+		title: 'АСКП — Ассоциация Семейного Консультирования и Психотерапии',
+		description:
+			'Профессиональное объединение специалистов в области семейного консультирования и психотерапии.',
+		images: ['/og-default.jpg'],
+	},
+
 	icons: {
 		icon: '/favicon.png',
 		shortcut: '/favicon.png',
 		apple: '/favicon.png',
+	},
+
+	robots: {
+		index: true,
+		follow: true,
 	},
 };
 

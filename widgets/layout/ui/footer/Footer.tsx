@@ -34,7 +34,7 @@ export const Footer = () => {
 							{process.env.NEXT_PUBLIC_CONTACT_PHONE}
 						</a>
 					</div>
-					<div className='flex items-center justify-center gap-3 text-2xl text-white hover:text-cyan-300 active:text-cyan-200 md:w-[calc(50%-8px)] md:mr-[18px] lg:mr-0 lg:w-full'>
+					<div className='flex items-center justify-center gap-3 text-xl text-white hover:text-cyan-300 active:text-cyan-200 md:w-[calc(50%-8px)] md:mr-[18px] lg:mr-0 lg:w-full'>
 						<FaEnvelope />
 						<EmailLink className='text-white hover:text-cyan-300 active:text-cyan-200' />
 					</div>
