@@ -1,29 +1,33 @@
+'use client';
+
+import { useState } from 'react';
+
 import { SignUpForm } from './SignUpForm';
 import { steps } from './signUpInfo';
 
 export const SignUpPage = () => {
 	// Временно — только для загрузки файлов
-	// const [uploading, setUploading] = useState(false);
-	// const [urls, setUrls] = useState<string[]>([]);
+	const [uploading, setUploading] = useState(false);
+	const [urls, setUrls] = useState<string[]>([]);
 
-	// const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const files = Array.from(e.target.files ?? []);
-	// 	setUploading(true);
-	// 	const results = await Promise.all(
-	// 		files.map(async (file) => {
-	// 			const formData = new FormData();
-	// 			formData.append('file', file);
-	// 			const res = await fetch('/api/documents', {
-	// 				method: 'POST',
-	// 				body: formData,
-	// 			});
-	// 			const data = await res.json();
-	// 			return data.url;
-	// 		}),
-	// 	);
-	// 	setUrls(results);
-	// 	setUploading(false);
-	// };
+	const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const files = Array.from(e.target.files ?? []);
+		setUploading(true);
+		const results = await Promise.all(
+			files.map(async (file) => {
+				const formData = new FormData();
+				formData.append('file', file);
+				const res = await fetch('/api/documents', {
+					method: 'POST',
+					body: formData,
+				});
+				const data = await res.json();
+				return data.url;
+			}),
+		);
+		setUrls(results);
+		setUploading(false);
+	};
 
 	return (
 		<div className='flex flex-1 w-full flex-col items-center justify-center gap-6'>

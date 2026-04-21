@@ -15,7 +15,7 @@ export const steps: { text: ReactNode; sub?: ReactNode[] }[] = [
 			<>
 				Ознакомиться с{' '}
 				<a
-					href='http://localhost:9000/documents/Ustav_ASKP.pdf'
+					href={`${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/documents/Ustav_ASKP.pdf`}
 					target='_blank'
 					className='text-blue-500 hover:underline'
 				>
@@ -30,7 +30,7 @@ export const steps: { text: ReactNode; sub?: ReactNode[] }[] = [
 			<>
 				Ознакомиться с{' '}
 				<a
-					href='http://localhost:9000/documents/Etitcheskiy_kodex_ASKP.pdf'
+					href={`${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/documents/Etitcheskiy_kodex_ASKP.pdf`}
 					target='_blank'
 					className='text-blue-500 hover:underline'
 				>
@@ -45,7 +45,7 @@ export const steps: { text: ReactNode; sub?: ReactNode[] }[] = [
 			<>
 				Ознакомиться с{' '}
 				<a
-					href='http://localhost:9000/documents/PRIKAZ_3_urovni_Chlenstva.pdf'
+					href={`${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/documents/PRIKAZ_3_urovni_Chlenstva.pdf`}
 					target='_blank'
 					className='text-blue-500 hover:underline'
 				>
@@ -60,7 +60,7 @@ export const steps: { text: ReactNode; sub?: ReactNode[] }[] = [
 			<>
 				Заполнить{' '}
 				<a
-					href='http://localhost:9000/documents/Zayavlenie_na_vstuplenie_ASKP.pdf'
+					href={`${process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL}/documents/Zayavlenie_na_vstuplenie_ASKP.pdf`}
 					target='_blank'
 					className='text-blue-500 hover:underline'
 				>
