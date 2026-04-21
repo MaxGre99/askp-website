@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { FieldArray, useField } from 'formik';
 import { useTranslation } from 'react-i18next';
 
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 
 import {
@@ -37,16 +38,26 @@ const ImageRow = ({
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
+
 		setUploading(true);
+
+		const oldValue = value;
+
 		try {
-			if (value && value.startsWith(MINIO_PUBLIC_URL!)) {
-				await deleteProductCover(value).unwrap().catch(console.error);
-			}
 			const formData = new FormData();
 			formData.append('file', file);
+
 			const { url } = await uploadProductCover(formData).unwrap();
+
 			onChange(index, url);
 			setMode('url');
+
+			// удаляем СТАРУЮ только после успешной загрузки
+			if (oldValue && oldValue.startsWith(MINIO_PUBLIC_URL!)) {
+				await deleteProductCover(oldValue).unwrap().catch(console.error);
+			}
+		} catch (err) {
+			handleApiError(err);
 		} finally {
 			setUploading(false);
 		}
@@ -54,7 +65,11 @@ const ImageRow = ({
 
 	const handleDelete = async () => {
 		if (value && value.startsWith(MINIO_PUBLIC_URL!)) {
-			await deleteProductCover(value).unwrap().catch(console.error);
+			try {
+				await deleteProductCover(value).unwrap();
+			} catch (err) {
+				handleApiError(err);
+			}
 		}
 		onRemove(index);
 	};

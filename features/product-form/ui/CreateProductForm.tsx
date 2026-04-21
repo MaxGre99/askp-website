@@ -3,6 +3,7 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
@@ -21,11 +22,16 @@ export const CreateProductForm = () => {
 	const [uploadProductImage] = useUploadProductImageMutation();
 
 	const handleUploadProductImage = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		const { url } = await uploadProductImage(formData).unwrap();
-		trackUploadedUrl(url);
-		return url;
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const { url } = await uploadProductImage(formData).unwrap();
+			trackUploadedUrl(url);
+			return url;
+		} catch (err) {
+			handleApiError(err);
+			return '';
+		}
 	};
 
 	return (

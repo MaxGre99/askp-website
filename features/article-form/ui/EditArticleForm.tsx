@@ -4,6 +4,7 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { useGetMeQuery } from '@/entities/users';
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
@@ -31,22 +32,36 @@ export const EditArticleForm = () => {
 	const [deleteArticleCover] = useDeleteArticleCoverMutation();
 
 	const handleUploadImage = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		const { url } = await uploadArticleImage(formData).unwrap();
-		trackUploadedUrl(url);
-		return url;
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const { url } = await uploadArticleImage(formData).unwrap();
+			trackUploadedUrl(url);
+			return url;
+		} catch (err) {
+			handleApiError(err);
+			return '';
+		}
 	};
 
 	const handleUploadCover = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		const { url } = await uploadArticleCover(formData).unwrap();
-		return url;
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const { url } = await uploadArticleCover(formData).unwrap();
+			return url;
+		} catch (err) {
+			handleApiError(err);
+			return '';
+		}
 	};
 
 	const handleDeleteCover = async (url: string) => {
-		await deleteArticleCover(url);
+		try {
+			await deleteArticleCover(url);
+		} catch (err) {
+			handleApiError(err);
+		}
 	};
 
 	if (isLoading) return <Loader />;

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useGetAvatarQuery, useUploadAvatarMutation } from '@/entities/avatars';
+import { handleApiError } from '@/shared/lib/helpers';
 
 const MAX_SIZE = 3 * 1024 * 1024;
 
@@ -37,8 +38,9 @@ export const useAvatarUpload = (userId?: string) => {
 			await uploadAvatar(formData).unwrap();
 			setSelectedFile(null);
 		} catch (e) {
-			console.error(e);
-			toast(t('errors.avatarUploadFailed'), { type: 'error' });
+			handleApiError(e);
+			// console.error(e);
+			// toast(t('errors.avatarUploadFailed'), { type: 'error' });
 		}
 	};
 

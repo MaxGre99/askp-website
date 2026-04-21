@@ -3,6 +3,7 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { FormikTipTapField } from '@/shared/ui/FormikTipTapField';
@@ -26,22 +27,36 @@ export const CreateNewsForm = () => {
 	const [deleteNewsCover] = useDeleteNewsCoverMutation();
 
 	const handleUploadImage = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		const { url } = await uploadNewsImage(formData).unwrap();
-		trackUploadedUrl(url);
-		return url;
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const { url } = await uploadNewsImage(formData).unwrap();
+			trackUploadedUrl(url);
+			return url;
+		} catch (err) {
+			handleApiError(err);
+			return '';
+		}
 	};
 
 	const handleUploadCover = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		const { url } = await uploadNewsCover(formData).unwrap();
-		return url;
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const { url } = await uploadNewsCover(formData).unwrap();
+			return url;
+		} catch (err) {
+			handleApiError(err);
+			return '';
+		}
 	};
 
 	const handleDeleteCover = async (url: string) => {
-		await deleteNewsCover(url);
+		try {
+			await deleteNewsCover(url);
+		} catch (err) {
+			handleApiError(err);
+		}
 	};
 
 	return (

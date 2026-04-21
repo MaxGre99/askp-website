@@ -4,6 +4,7 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
 import { ImageInput } from '@/shared/ui/ImageInput';
@@ -53,14 +54,23 @@ export const DonaterFormFields = ({
 	const [deleteDonaterImage] = useDeleteDonaterCoverMutation();
 
 	const handleUploadDonaterCover = async (file: File) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		const { url } = await uploadDonaterImage(formData).unwrap();
-		return url;
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const { url } = await uploadDonaterImage(formData).unwrap();
+			return url;
+		} catch (err) {
+			handleApiError(err);
+			return '';
+		}
 	};
 
 	const handleDeleteDonaterCover = async (url: string) => {
-		await deleteDonaterImage(url);
+		try {
+			await deleteDonaterImage(url);
+		} catch (err) {
+			handleApiError(err);
+		}
 	};
 
 	return (

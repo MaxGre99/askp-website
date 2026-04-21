@@ -23,7 +23,7 @@ export const createContentImageHandler = (
 				throw new ApiError('invalid_mime_type', 400);
 
 			const buffer = Buffer.from(await file.arrayBuffer());
-			if (buffer.byteLength > 5 * 1024 * 1024)
+			if (buffer.byteLength > 3 * 1024 * 1024)
 				throw new ApiError('file_too_large', 400);
 
 			const processed = await sharp(buffer)
