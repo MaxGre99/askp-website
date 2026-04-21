@@ -31,7 +31,7 @@ export const SignUpPage = () => {
 
 	return (
 		<div className='flex flex-1 w-full flex-col items-center justify-center gap-6'>
-			{/* <div className='p-4 bg-yellow-50 border border-yellow-200 rounded-xl'>
+			<div className='p-4 bg-yellow-50 border border-yellow-200 rounded-xl'>
 				<input type='file' accept='.pdf' multiple onChange={handleUpload} />
 				{uploading && <p>Загрузка...</p>}
 				{urls.map((url) => (
@@ -39,7 +39,7 @@ export const SignUpPage = () => {
 						<a href={url}>{url}</a>
 					</p>
 				))}
-			</div> */}
+			</div>
 			<section className='bg-white rounded-2xl p-6 w-full max-w-5xl shadow-sm'>
 				<h3 className='text-xl text-center font-bold mb-6'>
 					Чек-лист: Вступление в АСКП
