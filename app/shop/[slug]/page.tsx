@@ -6,10 +6,12 @@ import { ProductSlugPage } from '@/widgets/products/slug';
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+	const { slug } = await params;
+
 	const product = await prisma.product.findUnique({
-		where: { slug: params.slug },
+		where: { slug },
 		select: { name: true, description: true, images: true, price: true },
 	});
 
@@ -21,14 +23,14 @@ export async function generateMetadata({
 		openGraph: {
 			title: `${product.name} | АСКП`,
 			description: product.description.slice(0, 160),
-			url: `/shop/${params.slug}`,
+			url: `/shop/${slug}`,
 			type: 'website',
 			images: product.images[0]
 				? [{ url: product.images[0], width: 1200, height: 630 }]
 				: undefined,
 		},
 		alternates: {
-			canonical: `/shop/${params.slug}`,
+			canonical: `/shop/${slug}`,
 		},
 	};
 }

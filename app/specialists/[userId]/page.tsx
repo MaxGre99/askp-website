@@ -6,10 +6,12 @@ import { SpecialistPage } from '@/widgets/specialists/specialists-slug';
 export async function generateMetadata({
 	params,
 }: {
-	params: { userId: string };
+	params: Promise<{ userId: string }>;
 }): Promise<Metadata> {
+	const { userId } = await params;
+
 	const profile = await prisma.profile.findUnique({
-		where: { userId: params.userId },
+		where: { userId },
 		select: { displayName: true, shortBio: true, avatarUrl: true, city: true },
 	});
 
@@ -23,13 +25,13 @@ export async function generateMetadata({
 		openGraph: {
 			title: `${profile.displayName} | АСКП`,
 			description: profile.shortBio?.slice(0, 160),
-			url: `/specialists/${params.userId}`,
+			url: `/specialists/${userId}`,
 			images: profile.avatarUrl
 				? [{ url: profile.avatarUrl, width: 800, height: 800 }]
 				: undefined,
 		},
 		alternates: {
-			canonical: `/specialists/${params.userId}`,
+			canonical: `/specialists/${userId}`,
 		},
 	};
 }

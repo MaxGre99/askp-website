@@ -6,10 +6,12 @@ import { ArticleSlugPage } from '@/widgets/articles/slug';
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+	const { slug } = await params;
+
 	const item = await prisma.article.findUnique({
-		where: { slug: params.slug },
+		where: { slug },
 		select: {
 			title: true,
 			content: true,
@@ -30,7 +32,7 @@ export async function generateMetadata({
 		openGraph: {
 			title: item.title,
 			description,
-			url: `/articles/${params.slug}`,
+			url: `/articles/${slug}`,
 			type: 'article',
 			publishedTime: item.createdAt.toISOString(),
 			modifiedTime: item.updatedAt.toISOString(),
@@ -45,7 +47,7 @@ export async function generateMetadata({
 			images: item.image ? [item.image] : undefined,
 		},
 		alternates: {
-			canonical: `/articles/${params.slug}`,
+			canonical: `/articles/${slug}`,
 		},
 	};
 }
