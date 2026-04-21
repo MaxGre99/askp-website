@@ -42,7 +42,7 @@ export const SpecialistsPage = () => {
 
 	return (
 		<div className='flex flex-1 w-full flex-col gap-6'>
-			<div className='flex justify-between items-center gap-3 flex-wrap'>
+			<div className='flex justify-between items-center gap-3 w-full flex-wrap md:flex-nowrap'>
 				<h1 className='font-oswald text-white font-light'>
 					{t('specialists.pageTitle')}
 				</h1>

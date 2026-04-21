@@ -30,13 +30,17 @@ const inter = Inter({
 	display: 'swap',
 });
 
+const title = 'АСКП — Ассоциация Семейного Консультирования и Психотерапии';
+
+const description =
+	'Профессиональное объединение специалистов в области семейного консультирования и психотерапии. Новости, события, статьи, каталог специалистов.';
+
 export const metadata: Metadata = {
 	title: {
-		default: 'АСКП — Ассоциация Семейного Консультирования и Психотерапии',
+		default: title,
 		template: '%s | АСКП',
 	},
-	description:
-		'Профессиональное объединение специалистов в области семейного консультирования и психотерапии. Новости, события, статьи, каталог специалистов.',
+	description,
 
 	metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
 
@@ -44,12 +48,11 @@ export const metadata: Metadata = {
 		type: 'website',
 		locale: 'ru_RU',
 		siteName: 'АСКП',
-		title: 'АСКП — Ассоциация Семейного Консультирования и Психотерапии',
-		description:
-			'Профессиональное объединение специалистов в области семейного консультирования и психотерапии.',
+		title,
+		description,
 		images: [
 			{
-				url: '/og-default.jpg',
+				url: '/og-default.png',
 				width: 1200,
 				height: 630,
 				alt: 'АСКП',
@@ -59,10 +62,9 @@ export const metadata: Metadata = {
 
 	twitter: {
 		card: 'summary_large_image',
-		title: 'АСКП — Ассоциация Семейного Консультирования и Психотерапии',
-		description:
-			'Профессиональное объединение специалистов в области семейного консультирования и психотерапии.',
-		images: ['/og-default.jpg'],
+		title,
+		description,
+		images: ['/og-default.png'],
 	},
 
 	icons: {
