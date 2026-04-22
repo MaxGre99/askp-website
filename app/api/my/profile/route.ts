@@ -9,36 +9,46 @@ export const GET = async () => {
 	try {
 		const authUser = await getAuthUser();
 
-		// ленивое создание профиля
 		const profile = await prisma.profile.findUnique({
 			where: { userId: authUser.id },
 			include: {
 				user: {
-					select: { membershipLevel: true },
+					select: {
+						membershipLevel: true,
+						// membershipRank: true,
+					},
 				},
 			},
 		});
 
+		// ленивое создание профиля
 		if (!profile) {
-			await prisma.profile.create({
+			const newProfile = await prisma.profile.create({
 				data: { userId: authUser.id },
+				include: {
+					user: {
+						select: {
+							membershipLevel: true,
+							// membershipRank: true,
+						},
+					},
+				},
 			});
 
-			return NextResponse.json({ membershipLevel: null });
+			return NextResponse.json({
+				...newProfile,
+				membershipLevel: newProfile.user.membershipLevel,
+				// membershipRank: newProfile.user.membershipRank,
+			});
 		}
 
 		return NextResponse.json({
 			...profile,
 			membershipLevel: profile.user.membershipLevel,
+			// membershipRank: profile.user.membershipRank,
 		});
 	} catch (err) {
 		return handleRouteError(err, 'GET_PROFILE_ERROR');
-		// if (err instanceof ApiError)
-		// 	return NextResponse.json({ error: err.message }, { status: err.status });
-		// return NextResponse.json(
-		// 	{ error: 'internal_server_error' },
-		// 	{ status: 500 },
-		// );
 	}
 };
 

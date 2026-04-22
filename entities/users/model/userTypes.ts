@@ -11,8 +11,7 @@ export type User = {
 		| 'SPECIALIST'
 		| 'PSYCHOLOGIST_PRACTITIONER'
 		| 'BEGINNER_SPECIALIST'
-		| 'PARTNER'
-		| null;
+		| 'PARTNER';
 };
 
 export type UserWithCreatedAt = User & {

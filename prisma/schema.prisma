@@ -20,8 +20,8 @@ model User {
   approvedBy    String?
   approver      User?      @relation("UserApprovals", fields: [approvedBy], references: [id])
   approvedUsers User[]     @relation("UserApprovals")
-  membershipLevel MembershipLevel?
-  membershipRank  Int      @default(999)
+  membershipLevel MembershipLevel
+  membershipRank  Int
 
   news          News[]
   events        Event[]

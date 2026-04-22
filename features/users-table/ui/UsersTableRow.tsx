@@ -62,11 +62,9 @@ export const UsersTableRow = ({ user, actions }: UsersTableRowProps) => {
 			<td className='px-4 py-3'>
 				<Select
 					options={membershipOptions}
-					value={
-						user.membershipLevel
-							? membershipOptions.find((o) => o.value === user.membershipLevel)
-							: null
-					}
+					value={membershipOptions.find(
+						(o) => o.value === user.membershipLevel,
+					)}
 					onChange={handleMembershipLevelChange}
 					styles={getReactSelectStyles<Option>()}
 					placeholder={t('labels.selectMembershipLevel')}

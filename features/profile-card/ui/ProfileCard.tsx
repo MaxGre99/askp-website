@@ -18,18 +18,15 @@ export const ProfileCard = ({ profile }: { profile: Profile }) => {
 					<Avatar src={profile.avatarUrl} className='rounded-2xl' />
 				</div>
 				<div className='flex flex-1 w-full flex-col gap-2 justify-start items-center text-center wrap-anywhere overflow-hidden'>
-					<p className='font-bold text-ellipsis max-w-full'>
-						{profile.displayName}
-					</p>
+					<p className='font-bold w-full'>{profile.displayName}</p>
 					{profile.membershipLevel && (
-						<p className='text-ellipsis max-w-full'>
-							{t(`labels.${profile.membershipLevel}`)}
-						</p>
+						<p className='w-full'>{t(`labels.${profile.membershipLevel}`)}</p>
 					)}
-					<p className='font-bold text-ellipsis max-w-full'>
-						г. {profile.city}
-					</p>
-					<p className='line-clamp-5 flex-1'>{profile.shortBio}</p>
+					<p className='font-bold w-full'>г. {profile.city}</p>
+
+					<div className='flex-1 w-full overflow-hidden'>
+						<p className='line-clamp-5'>{profile.shortBio}</p>
+					</div>
 				</div>
 			</div>
 		</Link>
