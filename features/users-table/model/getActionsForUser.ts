@@ -16,7 +16,7 @@ export const getActionsForUser = (
 	}
 
 	if (status === 'ACTIVE') {
-		actions.push('block', 'reject');
+		actions.push('block', 'reject', 'deleteUser');
 		if (role === 'ADMIN') actions.push('setUser');
 		if (role === 'USER') actions.push('setAdmin');
 	}
@@ -26,7 +26,7 @@ export const getActionsForUser = (
 	}
 
 	if (status === 'REJECTED') {
-		actions.push('approve', 'block');
+		actions.push('approve', 'block', 'deleteUser');
 	}
 
 	return actions;

@@ -28,7 +28,7 @@ model User {
   articles      Article[]
   profile       Profile?
 
-   passwordResetTokens PasswordResetToken[]
+  passwordResetTokens PasswordResetToken[]
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

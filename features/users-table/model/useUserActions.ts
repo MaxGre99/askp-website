@@ -1,6 +1,7 @@
 import {
 	useApproveUserMutation,
 	useBlockUserMutation,
+	useDeleteUserMutation,
 	useRejectUserMutation,
 	useSetAdminUserMutation,
 	useSetUserMutation,
@@ -14,6 +15,7 @@ export const useUserActions = () => {
 	const [unblock] = useUnblockUserMutation();
 	const [setAdmin] = useSetAdminUserMutation();
 	const [setUser] = useSetUserMutation();
+	const [deleteUser] = useDeleteUserMutation();
 
 	return {
 		approve,
@@ -22,5 +24,6 @@ export const useUserActions = () => {
 		unblock,
 		setAdmin,
 		setUser,
+		deleteUser,
 	};
 };

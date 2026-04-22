@@ -1,4 +1,5 @@
 import { IconType } from 'react-icons';
+import { FaRegTrashAlt } from 'react-icons/fa';
 import {
 	RiUserFollowFill,
 	RiUserForbidFill,
@@ -14,7 +15,8 @@ export type UserAction =
 	| 'block'
 	| 'unblock'
 	| 'setAdmin'
-	| 'setUser';
+	| 'setUser'
+	| 'deleteUser';
 
 export const USER_ACTIONS: Record<
 	UserAction,
@@ -41,5 +43,9 @@ export const USER_ACTIONS: Record<
 		icon: RiUserMinusFill,
 		color:
 			'bg-transparent! text-blue-500! border border-dashed! border-blue-500! hover:text-blue-600!',
+	},
+	deleteUser: {
+		icon: FaRegTrashAlt,
+		color: 'bg-black! hover:bg-gray-600!',
 	},
 };

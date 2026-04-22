@@ -19,13 +19,17 @@ export const UsersActions = ({
 	const actions = useUserActions();
 	const { confirmProps, confirm } = useConfirmModal();
 
-	const blockTypes = ['reject', 'block', 'setUser'];
+	const blockTypes = ['reject', 'block', 'setUser', 'deleteUser'];
+
+	const sortedTypes = [...types].sort((a, b) =>
+		a === 'deleteUser' ? 1 : b === 'deleteUser' ? -1 : 0,
+	);
 
 	return (
 		<>
 			<ConfirmModal {...confirmProps} />
 			<div className='flex gap-2'>
-				{types.map((type) => {
+				{sortedTypes.map((type) => {
 					const { icon: Icon, color } = USER_ACTIONS[type];
 					return (
 						<Button

@@ -72,6 +72,13 @@ export const userApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ['Users'],
 		}),
+		deleteUser: builder.mutation<void, string>({
+			query: (id) => ({
+				url: `/users/${id}/delete`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Users'],
+		}),
 	}),
 });
 
@@ -86,4 +93,5 @@ export const {
 	useUnblockUserMutation,
 	useSetUserMutation,
 	useSetUserMembershipLevelMutation,
+	useDeleteUserMutation,
 } = userApi;
