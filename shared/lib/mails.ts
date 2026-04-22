@@ -179,16 +179,18 @@ export const sendNewApplicationEmailToAdmin = async (params: {
 	firstName: string;
 	lastName: string;
 	email: string;
+	membershipLevel: string;
 }) => {
 	await transporter.sendMail({
 		from: `"АСКП — Система" <${process.env.SMTP_USER}>`,
 		to: process.env.FEEDBACK_EMAIL,
-		subject: `Новая заявка — ${params.firstName} ${params.lastName}`,
+		subject: `Новая заявка — ${params.firstName} ${params.lastName} — ${params.membershipLevel}`,
 		html: baseLayout(`
             <h2 style="font-size: 18px; margin: 0 0 24px;">Новая заявка на вступление</h2>
             <table style="width: 100%; border-collapse: collapse;">
                 ${row('Имя', `${params.firstName} ${params.lastName}`)}
                 ${row('Email', params.email, `mailto:${params.email}`)}
+                ${row('Уровень членства', `${params.membershipLevel}`)}
             </table>
             <div style="margin-top: 28px; padding: 16px 20px; background: #fff8e1;
                 border-left: 3px solid #f0a500; border-radius: 0 8px 8px 0;">

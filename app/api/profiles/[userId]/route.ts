@@ -14,9 +14,19 @@ export const GET = async (
 	try {
 		const { userId } = await params;
 
-		const profile = await prisma.profile.findUnique({ where: { userId } });
+		const profile = await prisma.profile.findUnique({
+			where: { userId },
+			include: {
+				user: {
+					select: { membershipLevel: true },
+				},
+			},
+		});
 
-		return NextResponse.json(profile);
+		return NextResponse.json({
+			...profile,
+			membershipLevel: profile?.user.membershipLevel ?? null,
+		});
 	} catch (err) {
 		return handleRouteError(err, 'GET_PROFILE_BY_USER_ID_ERROR');
 		// return NextResponse.json(

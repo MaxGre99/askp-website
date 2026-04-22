@@ -35,12 +35,12 @@ export const ProductCard = ({ product }: { product: Product }) => {
 			<ConfirmModal {...confirmProps} />
 			<Link href={`/shop/${product.slug}`}>
 				<article className='bg-white rounded-2xl overflow-hidden transition hover:scale-[1.01] flex flex-col min-w-[320px] w-[320px] min-h-[420px] h-[420px]'>
-					<div className='w-full min-h-[226px] flex items-center justify-center rounded-2xl border-b border-gray-200'>
+					<div className='w-full aspect-[4/3] overflow-hidden rounded-2xl border-b border-gray-200 flex items-center justify-center'>
 						{product.images[0] ? (
 							<img
 								src={product.images[0]}
 								alt={product.name}
-								className='w-full h-full object-fill rounded-2xl'
+								className='w-full h-full object-cover'
 							/>
 						) : (
 							<MdImageNotSupported size={64} className='text-gray-300' />

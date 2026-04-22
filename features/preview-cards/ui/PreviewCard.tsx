@@ -69,41 +69,53 @@ export const PreviewCard = ({
 		showActions && 'border border-gray-300',
 		isHorizontal
 			? clsx(
-					'min-h-[200px] h-[200px] w-full',
+					'min-h-[250px] h-[250px] w-full',
 					isEven ? 'flex-row' : 'flex-row-reverse',
 				)
 			: clsx(
-					'flex-col min-w-[300px] w-[300px]',
-					showActions ? 'min-h-[396px] h-[396px]' : 'min-h-[368px] h-[368px]',
-					'md:min-w-[360px] md:w-[360px] md:min-h-[386px] md:h-[386px]',
-					'xl:min-w-[425px] xl:w-[425px] xl:min-h-[420px] xl:h-[420px]',
+					'flex-col min-w-[320px] w-[320px]',
+					showActions ? 'min-h-[425px] h-[425px]' : 'min-h-[450px] h-[450px]',
+					'md:min-w-[360px] md:w-[360px] md:min-h-[475px] md:h-[475px]',
+					'xl:min-w-[425px] xl:w-[425px] xl:min-h-[525px] xl:h-[525px]',
 				),
 	);
+
+	// const imageContainerClasses = clsx(
+	// 	'rounded-2xl flex items-center justify-center border-gray-200',
+	// 	isHorizontal
+	// 		? clsx('h-full min-w-[320px] w-[320px]', isEven ? 'border-r' : 'border-l')
+	// 		: clsx(
+	// 				'min-h-[180px] h-[180px] min-w-[300px] w-full border-b',
+	// 				'md:min-h-[202px] md:h-[202px]',
+	// 				'xl:min-h-[232px] xl:h-[232px]',
+	// 			),
+	// );
 
 	const imageContainerClasses = clsx(
-		'rounded-2xl flex items-center justify-center border-gray-200',
+		'w-full aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center border-gray-200',
 		isHorizontal
-			? clsx('h-full min-w-[320px] w-[320px]', isEven ? 'border-r' : 'border-l')
-			: clsx(
-					'min-h-[180px] h-[180px] min-w-[300px] w-full border-b',
-					'md:min-h-[202px] md:h-[202px]',
-					'xl:min-h-[232px] xl:h-[232px]',
-				),
+			? clsx(
+					'h-full min-w-[320px] max-w-[320px]',
+					isEven ? 'border-r' : 'border-l',
+				)
+			: clsx('border-b'),
 	);
 
-	const imageClasses = clsx('object-fill rounded-2xl w-full h-full');
+	// const imageClasses = clsx('object-fill rounded-2xl w-full h-full');
+
+	const imageClasses = clsx('w-full h-full rounded-2xl object-cover');
 
 	const contentClasses = clsx(
 		'flex flex-col flex-1 justify-between gap-2 min-w-0 min-h-0',
 		isHorizontal ? 'p-4' : 'p-3',
 	);
 
-	const textClasses = clsx('text-sm line-clamp-5');
+	const textClasses = clsx('text-sm line-clamp-6');
 
 	const footerClasses = clsx(
-		'flex items-center flex-wrap',
+		'flex flex-col items-center',
 		isHorizontal
-			? 'gap-4 justify-start'
+			? 'gap-1 justify-start items-start lg:justify-center xl:justify-start'
 			: `gap-1 mt-auto ${showActions && 'justify-center'}`,
 	);
 
@@ -135,7 +147,18 @@ export const PreviewCard = ({
 
 						{/* Footer with metadata and actions */}
 						<div className={footerClasses}>
-							<div className='flex items-center gap-4'>
+							<span className='text-xs shrink-0 text-gray-600'>
+								{'eventDate' in item && `${t('labels.eventDate')}:`}{' '}
+								{localDateTime}
+							</span>
+							<div
+								className={`flex items-center ${isHorizontal ? 'justify-start text-start' : 'justify-center text-center'} gap-1 flex-wrap`}
+							>
+								{'author' in item && item.author && (
+									<span className='text-xs shrink-0 text-gray-600 text-wrap max-w-full'>
+										{t('labels.author')}: {getAuthorName(item.author)}
+									</span>
+								)}
 								{showActions && (
 									<span
 										className={clsx(
@@ -149,15 +172,7 @@ export const PreviewCard = ({
 										)}
 									</span>
 								)}
-								<span className='text-xs shrink-0 text-gray-600'>
-									{localDateTime}
-								</span>
 							</div>
-							{'author' in item && item.author && (
-								<span className='text-xs shrink-0 text-gray-600'>
-									{getAuthorName(item.author)}
-								</span>
-							)}
 						</div>
 					</div>
 				</article>

@@ -4,13 +4,12 @@ import { useEffect } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { useGetAllProfilesQuery } from '@/entities/profiles';
 import { ListFilter, useListFilter } from '@/features/list-filter';
 import { ProfileCard } from '@/features/profile-card';
 import { handleApiError } from '@/shared/lib/helpers';
 import { Loader } from '@/shared/ui/Loader';
 import { Pagination } from '@/shared/ui/Pagination';
-
-import { useAllProfilesList } from '../model/useAllProfilesList';
 
 export const SpecialistsPage = () => {
 	const { t } = useTranslation();
@@ -26,11 +25,11 @@ export const SpecialistsPage = () => {
 		changePageSize,
 	} = useListFilter();
 
-	const { data, isLoading, isError, error } = useAllProfilesList(
+	const { data, isLoading, isError, error } = useGetAllProfilesQuery({
 		page,
 		query,
 		pageSize,
-	);
+	});
 
 	const totalPages = data ? Math.ceil(data.total / pageSize) : 1;
 

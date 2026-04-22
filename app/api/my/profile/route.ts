@@ -10,17 +10,27 @@ export const GET = async () => {
 		const authUser = await getAuthUser();
 
 		// ленивое создание профиля
-		let profile = await prisma.profile.findUnique({
+		const profile = await prisma.profile.findUnique({
 			where: { userId: authUser.id },
+			include: {
+				user: {
+					select: { membershipLevel: true },
+				},
+			},
 		});
 
 		if (!profile) {
-			profile = await prisma.profile.create({
+			await prisma.profile.create({
 				data: { userId: authUser.id },
 			});
+
+			return NextResponse.json({ membershipLevel: null });
 		}
 
-		return NextResponse.json(profile);
+		return NextResponse.json({
+			...profile,
+			membershipLevel: profile.user.membershipLevel,
+		});
 	} catch (err) {
 		return handleRouteError(err, 'GET_PROFILE_ERROR');
 		// if (err instanceof ApiError)

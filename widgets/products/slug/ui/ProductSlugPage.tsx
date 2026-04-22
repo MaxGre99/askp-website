@@ -70,14 +70,14 @@ export const ProductSlugPage = () => {
 											prevEl: '.product-prev',
 										}}
 										pagination={{ clickable: true }}
-										className='w-full aspect-video'
+										className='w-full aspect-[4/3]'
 									>
 										{product.images.map((img, i) => (
 											<SwiperSlide key={i}>
 												<img
 													src={img}
 													alt={`${product.name} — фото ${i + 1}`}
-													className='w-full h-full object-fill'
+													className='w-full h-full object-cover'
 												/>
 											</SwiperSlide>
 										))}

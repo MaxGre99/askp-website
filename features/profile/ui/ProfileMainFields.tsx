@@ -14,6 +14,7 @@ interface Props {
 
 export const ProfileMainFields = ({ profile, isEditing, observer }: Props) => {
 	const { t } = useTranslation();
+
 	const labels = observer
 		? PROFILE_MAIN_LABELS.filter(
 				(label) =>
@@ -33,7 +34,7 @@ export const ProfileMainFields = ({ profile, isEditing, observer }: Props) => {
 						label={t(`labels.${label}`)}
 						placeholder={t(`labels.${label}`)}
 						type={label === 'birthDate' ? 'date' : 'text'}
-						required
+						required={label === 'firstName' || label === 'lastName'}
 					/>
 				) : (
 					<div key={label}>
@@ -51,6 +52,10 @@ export const ProfileMainFields = ({ profile, isEditing, observer }: Props) => {
 					</div>
 				),
 			)}
+			<div>
+				<strong>{t('labels.membershipLevel')}:</strong>{' '}
+				{t(`labels.${profile?.membershipLevel}`) || '—'}
+			</div>
 		</>
 	);
 };

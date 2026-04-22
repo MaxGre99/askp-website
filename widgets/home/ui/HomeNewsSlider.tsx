@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { /* NewsCard, */ NewsType } from '@/entities/news';
+import { NewsType } from '@/entities/news';
 import { PreviewCard } from '@/features/preview-cards';
 import { NavButton } from '@/shared/ui/NavButton';
 
@@ -15,7 +15,7 @@ type Props = {
 export const HomeNewsSlider = ({ items }: Props) => {
 	const { t } = useTranslation();
 
-	const SLIDES_PER_VIEW = 4;
+	const SLIDES_PER_VIEW = 5;
 
 	// Дублируем пока не наберётся достаточно
 	const slides =

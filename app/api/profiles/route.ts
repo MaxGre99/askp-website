@@ -38,7 +38,11 @@ export const GET = async (req: Request) => {
 		const total = await prisma.profile.count({ where });
 		const profiles = await prisma.profile.findMany({
 			where,
-			orderBy: { createdAt: 'desc' },
+			orderBy: {
+				user: {
+					membershipRank: 'asc',
+				},
+			},
 			skip: (page - 1) * pageSize,
 			take: pageSize,
 			select: {
@@ -47,10 +51,18 @@ export const GET = async (req: Request) => {
 				displayName: true,
 				city: true,
 				shortBio: true,
+				user: {
+					select: { membershipLevel: true },
+				},
 			},
 		});
 
-		return NextResponse.json({ profiles, total });
+		const result = profiles.map(({ user, ...profile }) => ({
+			...profile,
+			membershipLevel: user.membershipLevel,
+		}));
+
+		return NextResponse.json({ profiles: result, total });
 	} catch (err) {
 		return handleRouteError(err, 'GET_PROFILES_ERROR');
 	}

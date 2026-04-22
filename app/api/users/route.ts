@@ -17,6 +17,7 @@ export const GET = async () => {
 				role: true,
 				status: true,
 				createdAt: true,
+				membershipLevel: true,
 			},
 			orderBy: { createdAt: 'desc' },
 		});

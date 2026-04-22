@@ -12,6 +12,7 @@ import { handleApiError } from '@/shared/lib/helpers';
 import { SignUpFormValues } from '@/shared/schemas';
 import { Button } from '@/shared/ui/Button';
 import { FormField } from '@/shared/ui/FormField';
+import { FormikSelect } from '@/shared/ui/FormikSelect';
 
 export const SignUpForm = () => {
 	const { t } = useTranslation();
@@ -28,7 +29,22 @@ export const SignUpForm = () => {
 		firstName: Yup.string().required(t('validationErrors.required.firstName')),
 
 		lastName: Yup.string().required(t('validationErrors.required.lastName')),
+
+		membershipLevel: Yup.string().required(
+			t('validationErrors.required.membershipLevel'),
+		),
 	});
+
+	const membershipOptions = [
+		{ value: 'EXPERT', label: t('labels.EXPERT') },
+		{ value: 'SPECIALIST', label: t('labels.SPECIALIST') },
+		{
+			value: 'PSYCHOLOGIST_PRACTITIONER',
+			label: t('labels.PSYCHOLOGIST_PRACTITIONER'),
+		},
+		{ value: 'BEGINNER_SPECIALIST', label: t('labels.BEGINNER_SPECIALIST') },
+		{ value: 'PARTNER', label: t('labels.PARTNER') },
+	];
 
 	const [signUp, { isLoading }] = useSignUpMutation();
 	const [success, setSuccess] = useState(false);
@@ -107,7 +123,7 @@ export const SignUpForm = () => {
 					</Button>
 				</div>
 
-				<div className='grid grid-cols-2 gap-4'>
+				<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
 					<FormField<SignUpFormValues>
 						name='firstName'
 						label={t('labels.firstName')}
@@ -122,6 +138,14 @@ export const SignUpForm = () => {
 						required
 					/>
 				</div>
+
+				<FormikSelect
+					name='membershipLevel'
+					label={t('labels.membershipLevel')}
+					options={membershipOptions}
+					placeholder={t('labels.selectMembershipLevel')}
+					menuPlacement='top'
+				/>
 
 				<Button type='submit' disabled={isLoading}>
 					{isLoading ? t('buttons.creating') : t('buttons.signUp')}

@@ -24,13 +24,13 @@ export const NewsSlugPage = () => {
 	return (
 		<div className='flex flex-1 flex-col w-full justify-start items-center bg-white rounded-2xl'>
 			{data?.image && (
-				<img
-					src={data.image}
-					alt='news-cover'
-					className='rounded-2xl w-full h-[300px] md:h-[360px] lg:h-[420px] xl:h-[720px]'
-					// width={500}
-					// height={100}
-				/>
+				<div className='w-full aspect-4/3 overflow-hidden rounded-2xl'>
+					<img
+						src={data.image}
+						alt='news-cover'
+						className='w-full h-full object-cover'
+					/>
+				</div>
 			)}
 			<div className='flex flex-col gap-6 p-6 flex-1 w-full'>
 				<h3 className='text-3xl text-center break-all'>{data?.title}</h3>

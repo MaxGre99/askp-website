@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 
 import { ApiError } from '@/shared/api';
+import { MEMBERSHIP_RANK } from '@/shared/custom-types';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
 import {
 	sendNewApplicationEmailToAdmin,
@@ -13,9 +14,10 @@ import { prisma } from '@/shared/lib/prisma';
 
 export const POST = async (req: Request) => {
 	try {
-		const { email, password, firstName, lastName } = await req.json();
+		const { email, password, firstName, lastName, membershipLevel } =
+			await req.json();
 
-		if (!email || !password || !firstName || !lastName)
+		if (!email || !password || !firstName || !lastName || !membershipLevel)
 			throw new ApiError('required_fields', 400);
 
 		const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -32,6 +34,10 @@ export const POST = async (req: Request) => {
 				lastName,
 				role: 'USER',
 				status: 'PENDING',
+
+				membershipLevel,
+				membershipRank:
+					MEMBERSHIP_RANK[membershipLevel as keyof typeof MEMBERSHIP_RANK],
 			},
 			select: {
 				id: true,
@@ -39,8 +45,18 @@ export const POST = async (req: Request) => {
 				firstName: true,
 				lastName: true,
 				status: true,
+				membershipLevel: true,
+				// membershipRank: true,
 			},
 		});
+
+		const membershipLevelLabel = {
+			EXPERT: 'Эксперт АСКП',
+			SPECIALIST: 'Специалист АСКП',
+			PSYCHOLOGIST_PRACTITIONER: 'Психолог-практик АСКП',
+			BEGINNER_SPECIALIST: 'Начинающий специалист АСКП',
+			PARTNER: 'Партнёр АСКП',
+		};
 
 		await Promise.allSettled([
 			sendRegistrationEmailToUser({
@@ -52,6 +68,10 @@ export const POST = async (req: Request) => {
 				firstName: user.firstName,
 				lastName: user.lastName,
 				email: user.email,
+				membershipLevel:
+					membershipLevelLabel[
+						user.membershipLevel as keyof typeof membershipLevelLabel
+					] || (user.membershipLevel as string),
 			}),
 		]);
 

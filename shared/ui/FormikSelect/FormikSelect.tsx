@@ -11,11 +11,13 @@ export const FormikSelect = ({
 	isMulti = false,
 	placeholder,
 	label,
+	menuPlacement = 'auto',
 }: {
 	name: string;
 	options: { value: string; label: string }[];
 	isMulti?: boolean;
 	placeholder?: string;
+	menuPlacement: 'auto' | 'top' | 'bottom';
 	label: string;
 }) => {
 	const [field, meta, helpers] = useField(name);
@@ -45,12 +47,14 @@ export const FormikSelect = ({
 					isMulti
 					value={options.filter((opt) => field.value?.includes(opt.value))}
 					styles={getReactSelectStyles<Option, true>()}
+					menuPlacement={menuPlacement}
 				/>
 			) : (
 				<Select<Option, false>
 					{...commonProps}
 					value={options.find((opt) => opt.value === field.value) || null}
 					styles={getReactSelectStyles<Option, false>()}
+					menuPlacement={menuPlacement}
 				/>
 			)}
 			{meta.touched && meta.error && (

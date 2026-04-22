@@ -20,6 +20,8 @@ model User {
   approvedBy    String?
   approver      User?      @relation("UserApprovals", fields: [approvedBy], references: [id])
   approvedUsers User[]     @relation("UserApprovals")
+  membershipLevel MembershipLevel?
+  membershipRank  Int      @default(999)
 
   news          News[]
   events        Event[]
@@ -39,10 +41,20 @@ enum UserRole {
 }
 
 enum UserStatus {
-  PENDING // зарегистрировался, ждёт одобрения
-  ACTIVE // одобрен
-  REJECTED // отклонён
-  BLOCKED // заблокирован позже
+  PENDING
+  ACTIVE
+  REJECTED
+  BLOCKED
+}
+
+enum MembershipLevel {
+  PRESIDENT
+  VICE_PRESIDENT
+  EXPERT
+  SPECIALIST
+  PSYCHOLOGIST_PRACTITIONER
+  BEGINNER_SPECIALIST
+  PARTNER
 }
 
 // НОВОСТИ

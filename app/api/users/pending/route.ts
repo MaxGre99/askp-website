@@ -17,6 +17,7 @@ export const GET = async () => {
 				lastName: true,
 				createdAt: true,
 				status: true,
+				membershipLevel: true,
 			},
 			orderBy: { createdAt: 'asc' },
 		});

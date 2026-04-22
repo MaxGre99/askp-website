@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { prisma } from '@/shared/lib/prisma';
-import { SpecialistPage } from '@/widgets/specialists/specialists-slug';
+import { SpecialistPage } from '@/widgets/specialists/slug';
 
 export async function generateMetadata({
 	params,

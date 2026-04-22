@@ -1,9 +1,13 @@
 import Link from 'next/link';
 
+import { useTranslation } from 'react-i18next';
+
 import { Avatar } from '@/entities/avatars';
 import { Profile } from '@/entities/profiles';
 
 export const ProfileCard = ({ profile }: { profile: Profile }) => {
+	const { t } = useTranslation();
+
 	return (
 		<Link
 			href={`/specialists/${profile.userId}`}
@@ -17,10 +21,15 @@ export const ProfileCard = ({ profile }: { profile: Profile }) => {
 					<p className='font-bold text-ellipsis max-w-full'>
 						{profile.displayName}
 					</p>
+					{profile.membershipLevel && (
+						<p className='text-ellipsis max-w-full'>
+							{t(`labels.${profile.membershipLevel}`)}
+						</p>
+					)}
 					<p className='font-bold text-ellipsis max-w-full'>
 						г. {profile.city}
 					</p>
-					<p className='line-clamp-6 flex-1'>{profile.shortBio}</p>
+					<p className='line-clamp-5 flex-1'>{profile.shortBio}</p>
 				</div>
 			</div>
 		</Link>

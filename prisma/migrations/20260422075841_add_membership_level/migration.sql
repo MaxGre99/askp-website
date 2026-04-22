@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "MembershipLevel" AS ENUM ('PRESIDENT', 'VICE_PRESIDENT', 'EXPERT', 'SPECIALIST', 'PSYCHOLOGIST_PRACTITIONER', 'BEGINNER_SPECIALIST', 'PARTNER');
+
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "membershipLevel" "MembershipLevel";

@@ -22,4 +22,5 @@ export interface Profile {
 	vkUrl: string | null;
 	website: string | null;
 	phoneRefs: PhoneRefs[] | null;
+	membershipLevel: string | null;
 }

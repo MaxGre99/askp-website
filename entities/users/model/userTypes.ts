@@ -4,6 +4,15 @@ export type User = {
 	firstName: string;
 	lastName: string;
 	role: 'OWNER' | 'ADMIN' | 'USER';
+	membershipLevel:
+		| 'PRESIDENT'
+		| 'VICE_PRESIDENT'
+		| 'EXPERT'
+		| 'SPECIALIST'
+		| 'PSYCHOLOGIST_PRACTITIONER'
+		| 'BEGINNER_SPECIALIST'
+		| 'PARTNER'
+		| null;
 };
 
 export type UserWithCreatedAt = User & {

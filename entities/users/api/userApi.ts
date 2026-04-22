@@ -61,6 +61,17 @@ export const userApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: ['Users'],
 		}),
+		setUserMembershipLevel: builder.mutation<
+			void,
+			{ id: string; level: string }
+		>({
+			query: ({ id, level }) => ({
+				url: `/users/${id}/membership-level`,
+				method: 'POST',
+				body: { level },
+			}),
+			invalidatesTags: ['Users'],
+		}),
 	}),
 });
 
@@ -74,4 +85,5 @@ export const {
 	useSetAdminUserMutation,
 	useUnblockUserMutation,
 	useSetUserMutation,
+	useSetUserMembershipLevelMutation,
 } = userApi;

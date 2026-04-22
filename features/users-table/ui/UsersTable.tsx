@@ -38,6 +38,9 @@ export const UsersTable = ({ data, loading, emptyText, renderRow }: Props) => {
 						<th className='text-left px-4 py-3'>{t('labels.firstName')}</th>
 						<th className='text-left px-4 py-3'>{t('labels.lastName')}</th>
 						<th className='text-left px-4 py-3'>{t('labels.date')}</th>
+						<th className='text-left px-4 py-3 min-w-[310px]!'>
+							{t('labels.membershipLevel')}
+						</th>
 						{'role' in data[0] && (
 							<th className='text-left px-4 py-3'>{t('labels.role')}</th>
 						)}

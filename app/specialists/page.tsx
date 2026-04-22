@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 
 import { Loader } from '@/shared/ui/Loader';
-import { SpecialistsPage } from '@/widgets/list';
+import { SpecialistsPage } from '@/widgets/specialists/list';
 
 export const metadata: Metadata = {
 	title: 'Специалисты',
