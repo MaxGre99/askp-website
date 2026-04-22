@@ -7,18 +7,18 @@ type Option = { value: string; label: string };
 
 export const FormikSelect = ({
 	name,
-	options,
-	isMulti = false,
-	placeholder,
 	label,
+	options,
+	placeholder,
+	isMulti = false,
 	menuPlacement = 'auto',
 }: {
 	name: string;
-	options: { value: string; label: string }[];
-	isMulti?: boolean;
-	placeholder?: string;
-	menuPlacement: 'auto' | 'top' | 'bottom';
 	label: string;
+	options: { value: string; label: string }[];
+	placeholder?: string;
+	isMulti?: boolean;
+	menuPlacement?: 'auto' | 'top' | 'bottom';
 }) => {
 	const [field, meta, helpers] = useField(name);
 
