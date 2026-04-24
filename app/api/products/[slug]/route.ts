@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 
+import { deleteS3File } from '@/shared/lib/deleteS3File';
 import { slugify } from '@/shared/lib/formatters';
 // import { Prisma } from '@prisma/client';
 import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
+import { extractImageUrls } from '@/shared/lib/helpers';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async (
@@ -93,14 +95,27 @@ export const DELETE = async (
 
 		const { slug } = await params;
 
+		const product = await prisma.product.findUnique({ where: { slug } });
+		if (!product)
+			return NextResponse.json({ error: 'not_found' }, { status: 404 });
+
+		await Promise.allSettled([
+			...product.images
+				.filter((url) =>
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+				)
+				.map((url) => deleteS3File(url, 'product-covers')),
+			...extractImageUrls(product.description)
+				.filter((url) =>
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+				)
+				.map((url) => deleteS3File(url, 'product-images')),
+		]);
+
 		await prisma.product.delete({ where: { slug } });
 
 		return NextResponse.json({ ok: true });
 	} catch (err) {
 		return handleRouteError(err, 'DELETE_PRODUCT_ERROR');
-		// return NextResponse.json(
-		// 	{ error: 'failed_to_delete_product' },
-		// 	{ status: 500 },
-		// );
 	}
 };

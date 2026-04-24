@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 
+import { deleteS3File } from '@/shared/lib/deleteS3File';
 import { slugify } from '@/shared/lib/formatters';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
+import { extractImageUrls } from '@/shared/lib/helpers';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async (
@@ -70,23 +72,32 @@ export const PATCH = async (
 
 export const DELETE = async (
 	_req: Request,
-	{
-		params,
-	}: {
-		params: Promise<{ slug: string }>;
-	},
+	{ params }: { params: Promise<{ slug: string }> },
 ) => {
 	try {
 		const { slug } = await params;
+
+		const article = await prisma.article.findUnique({ where: { slug } });
+		if (!article)
+			return NextResponse.json({ error: 'not_found' }, { status: 404 });
+
+		if (article.image?.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!)) {
+			await deleteS3File(article.image, 'article-covers').catch(console.error);
+		}
+
+		const contentImageUrls = extractImageUrls(article.content);
+		await Promise.allSettled(
+			contentImageUrls
+				.filter((url) =>
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+				)
+				.map((url) => deleteS3File(url, 'article-images')),
+		);
 
 		await prisma.article.delete({ where: { slug } });
 
 		return NextResponse.json({ ok: true });
 	} catch (err) {
 		return handleRouteError(err, 'DELETE_ARTICLE_ERROR');
-		// return NextResponse.json(
-		// 	{ error: 'failed_to_delete_article' },
-		// 	{ status: 500 },
-		// );
 	}
 };

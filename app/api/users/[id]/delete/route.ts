@@ -123,7 +123,11 @@ export const DELETE = async (
 
 		// Параллельно: чистим S3 и удаляем пользователя (каскад подчистит БД)
 		await Promise.all([
-			...uniqueUrls.map(deleteFromS3),
+			...uniqueUrls
+				.filter((url) =>
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+				)
+				.map(deleteFromS3),
 			prisma.user.delete({ where: { id: userId } }),
 		]);
 

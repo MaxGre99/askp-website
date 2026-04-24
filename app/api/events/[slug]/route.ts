@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 
+import { deleteS3File } from '@/shared/lib/deleteS3File';
 import { slugify } from '@/shared/lib/formatters';
 import { getAuthUser } from '@/shared/lib/getAuthUser';
 import { handleRouteError } from '@/shared/lib/handleRouteError';
+import { extractImageUrls } from '@/shared/lib/helpers';
 import { prisma } from '@/shared/lib/prisma';
 
 export const GET = async (
@@ -61,25 +63,34 @@ export const PATCH = async (
 
 export const DELETE = async (
 	_req: Request,
-	{
-		params,
-	}: {
-		params: Promise<{ slug: string }>;
-	},
+	{ params }: { params: Promise<{ slug: string }> },
 ) => {
 	try {
 		await getAuthUser('ADMIN');
 
 		const { slug } = await params;
 
+		const event = await prisma.event.findUnique({ where: { slug } });
+		if (!event)
+			return NextResponse.json({ error: 'not_found' }, { status: 404 });
+
+		if (event.image?.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!)) {
+			await deleteS3File(event.image, 'event-covers').catch(console.error);
+		}
+
+		const descImageUrls = extractImageUrls(event.description);
+		await Promise.allSettled(
+			descImageUrls
+				.filter((url) =>
+					url.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!),
+				)
+				.map((url) => deleteS3File(url, 'event-images')),
+		);
+
 		await prisma.event.delete({ where: { slug } });
 
 		return NextResponse.json({ ok: true });
 	} catch (err) {
 		return handleRouteError(err, 'DELETE_EVENT_ERROR');
-		// return NextResponse.json(
-		// 	{ error: 'failed_to_delete_event' },
-		// 	{ status: 500 },
-		// );
 	}
 };

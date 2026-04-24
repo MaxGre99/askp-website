@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useConfirmModal } from '@/shared/custom-hooks';
+import { handleApiError } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { ConfirmModal } from '@/shared/ui/ConfirmModal';
 
@@ -39,8 +40,12 @@ export const UsersActions = ({
 								confirm(
 									t(`buttons.${type}`),
 									async () => {
-										await actions[type](id);
-										toast.success(t(`notifications.user${type}`));
+										try {
+											await actions[type](id);
+											toast.success(t(`notifications.user${type}`));
+										} catch (err) {
+											handleApiError(err);
+										}
 									},
 									blockTypes.includes(type) ? 'delete' : 'confirm',
 								)

@@ -58,7 +58,7 @@ export const DELETE = async (
 
 		if (!donater) throw new ApiError('not_found', 404);
 
-		if (donater.image) {
+		if (donater.image?.startsWith(process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL!)) {
 			await deleteS3File(donater.image, 'donater-covers').catch(console.error);
 		}
 
