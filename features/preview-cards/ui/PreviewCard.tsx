@@ -74,7 +74,7 @@ export const PreviewCard = ({
 				)
 			: clsx(
 					'flex-col min-w-[320px] w-[320px]',
-					showActions ? 'min-h-[425px] h-[425px]' : 'min-h-[450px] h-[450px]',
+					showActions ? 'min-h-[485px] h-[485px]' : 'min-h-[460px] h-[460px]',
 					'md:min-w-[360px] md:w-[360px] md:min-h-[475px] md:h-[475px]',
 					'xl:min-w-[425px] xl:w-[425px] xl:min-h-[525px] xl:h-[525px]',
 				),

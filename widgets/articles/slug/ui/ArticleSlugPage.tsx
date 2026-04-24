@@ -3,13 +3,17 @@
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
+import { useTranslation } from 'react-i18next';
+
 import { useGetArticleQuery } from '@/entities/articles';
+import { getAuthorName } from '@/shared/lib/formatters';
 import { handleApiError } from '@/shared/lib/helpers';
 import { Loader } from '@/shared/ui/Loader';
 import { TipTapReadOnly } from '@/shared/ui/TipTapReadOnly';
 
 export const ArticleSlugPage = () => {
 	const { slug } = useParams();
+	const { t } = useTranslation();
 
 	const { data, isLoading, isError, error } = useGetArticleQuery(
 		(slug as string)!,
@@ -35,6 +39,24 @@ export const ArticleSlugPage = () => {
 			<div className='flex flex-col gap-6 p-6 flex-1 w-full'>
 				<h3 className='text-3xl text-center break-all'>{data?.title}</h3>
 				<TipTapReadOnly content={data?.content ?? ''} noBorder />
+				<div className='flex items-end flex-col gap-1 italic text-gray-700'>
+					{data?.author && (
+						<h5>
+							{t('labels.author')}: {getAuthorName(data.author)}
+						</h5>
+					)}
+					{data?.updatedAt && (
+						<h5>
+							{new Date(data.updatedAt).toLocaleString('ru-RU', {
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+								hour: '2-digit',
+								minute: '2-digit',
+							})}
+						</h5>
+					)}
+				</div>
 			</div>
 		</div>
 	);

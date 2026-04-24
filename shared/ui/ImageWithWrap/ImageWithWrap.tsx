@@ -6,21 +6,19 @@ export const ImageWithWrap = Image.extend({
 	addAttributes() {
 		return {
 			...this.parent?.(),
-
 			wrap: {
 				default: 'none',
 				parseHTML: (element) => element.getAttribute('data-wrap') || 'none',
-				renderHTML: (attributes) => {
-					return {
-						'data-wrap': attributes.wrap,
-					};
-				},
+				renderHTML: (attributes) => ({
+					'data-wrap': attributes.wrap,
+				}),
 			},
 		};
 	},
 
 	addCommands() {
 		return {
+			...this.parent?.(),
 			setImageWrap:
 				(wrap) =>
 				({ commands }) => {

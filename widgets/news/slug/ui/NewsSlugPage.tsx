@@ -35,6 +35,19 @@ export const NewsSlugPage = () => {
 			<div className='flex flex-col gap-6 p-6 flex-1 w-full'>
 				<h3 className='text-3xl text-center break-all'>{data?.title}</h3>
 				<TipTapReadOnly content={data?.content ?? ''} noBorder />
+				{data?.updatedAt && (
+					<div className='flex justify-end italic text-gray-700'>
+						<h5>
+							{new Date(data.updatedAt).toLocaleString('ru-RU', {
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+								hour: '2-digit',
+								minute: '2-digit',
+							})}
+						</h5>
+					</div>
+				)}
 			</div>
 		</div>
 	);
