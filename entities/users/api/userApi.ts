@@ -70,7 +70,13 @@ export const userApi = baseApi.injectEndpoints({
 				method: 'POST',
 				body: { level },
 			}),
-			invalidatesTags: ['Users'],
+			invalidatesTags: (_result, _error, { id }) => [
+				'Users',
+				{ type: 'Profiles', id }, // карточка конкретного профиля
+				'Profiles', // список профилей
+				{ type: 'MyProfile', id }, // на случай если это свой профиль
+				'MyProfile',
+			],
 		}),
 		deleteUser: builder.mutation<void, string>({
 			query: (id) => ({
