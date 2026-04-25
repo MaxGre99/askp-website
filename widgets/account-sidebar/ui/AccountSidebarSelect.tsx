@@ -55,7 +55,7 @@ export const AccountSidebarSelect = () => {
 				control: (base) => ({
 					...base,
 					borderRadius: '1rem',
-					minHeight: '56px', // или любое нужное значение
+					minHeight: '56px',
 					padding: '4px 4px',
 				}),
 			}}

@@ -55,6 +55,7 @@ enum MembershipLevel {
   PSYCHOLOGIST_PRACTITIONER
   BEGINNER_SPECIALIST
   PARTNER
+  SEEKER
 }
 
 // НОВОСТИ

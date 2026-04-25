@@ -30,5 +30,12 @@ export function getReactSelectStyles<
 				backgroundColor: '#e5e7eb',
 			},
 		}),
+		dropdownIndicator: (base, state) => ({
+			...base,
+			transition: 'transform 0.2s ease',
+			transform: state.selectProps.menuIsOpen
+				? 'rotate(180deg)'
+				: 'rotate(0deg)',
+		}),
 	};
 }

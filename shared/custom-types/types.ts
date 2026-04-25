@@ -12,6 +12,7 @@ export const MEMBERSHIP_RANK: Record<MembershipLevel, number> = {
 	PSYCHOLOGIST_PRACTITIONER: 4,
 	BEGINNER_SPECIALIST: 5,
 	PARTNER: 6,
+	SEEKER: 7,
 };
 
 export type MembershipLevel =
@@ -21,4 +22,5 @@ export type MembershipLevel =
 	| 'SPECIALIST'
 	| 'PSYCHOLOGIST_PRACTITIONER'
 	| 'BEGINNER_SPECIALIST'
-	| 'PARTNER';
+	| 'PARTNER'
+	| 'SEEKER';

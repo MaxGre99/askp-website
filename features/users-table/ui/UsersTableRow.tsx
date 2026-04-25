@@ -40,6 +40,7 @@ export const UsersTableRow = ({ user, actions }: UsersTableRowProps) => {
 		},
 		{ value: 'BEGINNER_SPECIALIST', label: t('labels.BEGINNER_SPECIALIST') },
 		{ value: 'PARTNER', label: t('labels.PARTNER') },
+		{ value: 'SEEKER', label: t('labels.SEEKER') },
 	];
 
 	const handleMembershipLevelChange = async (option: SingleValue<Option>) => {

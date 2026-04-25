@@ -56,6 +56,7 @@ export const POST = async (req: Request) => {
 			PSYCHOLOGIST_PRACTITIONER: 'Психолог-практик АСКП',
 			BEGINNER_SPECIALIST: 'Начинающий специалист АСКП',
 			PARTNER: 'Партнёр АСКП',
+			SEEKER: 'Искатель',
 		};
 
 		await Promise.allSettled([
