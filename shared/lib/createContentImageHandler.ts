@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { UserRole } from '@prisma/client';
 import sharp from 'sharp';
 
 import { ApiError } from '@/shared/api';
@@ -9,10 +10,7 @@ import { getAuthUser } from './getAuthUser';
 import { handleRouteError } from './handleRouteError';
 import { s3 } from './s3';
 
-export const createContentImageHandler = (
-	bucket: string,
-	type: 'OWNER' | 'ADMIN' | 'USER' = 'USER',
-) => {
+export const createContentImageHandler = (bucket: string, type?: UserRole) => {
 	return async (req: Request) => {
 		try {
 			const user = await getAuthUser(type);

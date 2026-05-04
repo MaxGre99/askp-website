@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server';
 
+import { UserRole } from '@prisma/client';
+
 import { ApiError } from '@/shared/api';
 
 import { deleteS3File } from './deleteS3File';
 import { getAuthUser } from './getAuthUser';
 import { handleRouteError } from './handleRouteError';
 
-export const deleteContentImageHandler = (
-	bucket: string,
-	type: 'OWNER' | 'ADMIN' | 'USER' = 'USER',
-) => {
+export const deleteContentImageHandler = (bucket: string, type?: UserRole) => {
 	return async (req: Request) => {
 		try {
 			const user = await getAuthUser(type);
