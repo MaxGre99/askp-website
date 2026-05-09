@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Profile } from '@/entities/profiles';
 import { PROFILE_MAIN_LABELS } from '@/features/profile/model/labels';
+import { formatUTCDateOnly } from '@/shared/lib/formatters';
 import { FormField } from '@/shared/ui/FormField';
 
 interface Props {
@@ -46,7 +47,7 @@ export const ProfileMainFields = ({ profile, isEditing, observer }: Props) => {
 						</strong>{' '}
 						{label === 'birthDate'
 							? profile?.birthDate
-								? new Date(profile.birthDate).toLocaleDateString('ru-RU')
+								? formatUTCDateOnly(profile?.birthDate)
 								: '—'
 							: (profile?.[label as keyof Profile] as string) || '—'}
 					</div>

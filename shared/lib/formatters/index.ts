@@ -1,7 +1,10 @@
 export { formatDateForInput } from './formatDateForInput';
-export { formatForDatetimeLocal } from './formatForDatetimeLocal';
+// export { formatForDatetimeLocal } from './formatForDatetimeLocal';
+export { formatForMoscowInput } from './formatForMoscowInput';
 export { getAuthorName } from './getAuthorName';
-export { localDateToISO } from './localDateToISO';
+// export { localDateToISO } from './localDateToISO';
+export { formatUTCDateOnly } from './formatUTCDateOnly';
 export { slugify } from './slugify';
 export { stripHtml } from './stripHtml';
+export { toMoscowISO } from './toMoscowISO';
 export { trimStrings } from './trimStrings';

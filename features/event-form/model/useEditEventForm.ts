@@ -4,7 +4,12 @@ import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
-import { formatForDatetimeLocal, trimStrings } from '@/shared/lib/formatters';
+import {
+	// formatForDatetimeLocal,
+	formatForMoscowInput,
+	toMoscowISO,
+	trimStrings,
+} from '@/shared/lib/formatters';
 import {
 	extractImageUrls,
 	handleApiError,
@@ -43,7 +48,7 @@ export const useEditEventForm = () => {
 		title: event?.title ?? '',
 		description: event?.description ?? '',
 		image: event?.image ?? '',
-		eventDate: formatForDatetimeLocal(event?.eventDate), // ← было event?.eventDate ?? ''
+		eventDate: formatForMoscowInput(event?.eventDate),
 		published: event?.published ?? true,
 	};
 
@@ -67,7 +72,11 @@ export const useEditEventForm = () => {
 
 			const updated = await updateEvent({
 				slug: slug as string,
-				body: { ...trimmed, image: newImage },
+				body: {
+					...trimmed,
+					image: newImage,
+					eventDate: toMoscowISO(trimmed.eventDate),
+				},
 			}).unwrap();
 
 			// Удаляем картинки которые были в оригинале но пропали

@@ -77,7 +77,7 @@ export const CreateEventForm = () => {
 
 					<FormField
 						name='eventDate'
-						label={t('labels.eventDate')}
+						label={`${t('labels.eventDate')} (${t('labels.moscowTime')})`}
 						type='datetime-local'
 						required
 						labelClassname='text-[16px]'

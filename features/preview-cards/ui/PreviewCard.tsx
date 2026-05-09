@@ -50,15 +50,26 @@ export const PreviewCard = ({
 
 	const text =
 		'content' in item ? stripHtml(item.content) : stripHtml(item.description);
-	const localDateTime = new Date(
-		'eventDate' in item ? item.eventDate : item.updatedAt,
-	).toLocaleString('ru-RU', {
-		year: 'numeric',
-		month: 'numeric',
-		day: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-	});
+
+	const localDateTime =
+		'eventDate' in item
+			? new Date(item.eventDate).toLocaleString('ru-RU', {
+					timeZone: 'Europe/Moscow',
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+					hour: '2-digit',
+					minute: '2-digit',
+				})
+			: new Date(item.updatedAt).toLocaleString('ru-RU', {
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+					hour: '2-digit',
+					minute: '2-digit',
+				});
+
+	const isMoscowTime = 'eventDate' in item;
 
 	const isEven = index % 2 === 0;
 	const isHorizontal = layout === 'horizontal';
@@ -149,7 +160,7 @@ export const PreviewCard = ({
 						<div className={footerClasses}>
 							<span className='text-xs shrink-0 text-gray-600'>
 								{'eventDate' in item && `${t('labels.eventDate')}:`}{' '}
-								{localDateTime}
+								{localDateTime} {isMoscowTime && t('labels.moscowTime')}
 							</span>
 							<div
 								className={`flex items-center ${isHorizontal ? 'justify-start text-start' : 'justify-center text-center'} gap-1 flex-wrap`}

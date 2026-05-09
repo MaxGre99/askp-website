@@ -18,7 +18,7 @@ const baseLayout = (content: string) => `
     <div style="padding: 32px; border: 1px solid #e8e8e8; border-top: none; border-radius: 0 0 8px 8px;">
         ${content}
         <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #aaa;">
-            Это автоматическое уведомление от системы АСКП &nbsp;·&nbsp; ${new Date().toLocaleString('ru-RU')}
+            Это автоматическое уведомление от системы АСКП &nbsp;·&nbsp; ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })} МСК
         </div>
     </div>
 </div>

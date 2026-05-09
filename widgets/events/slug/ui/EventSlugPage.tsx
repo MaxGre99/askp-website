@@ -46,12 +46,14 @@ export const EventSlugPage = () => {
 							{t('labels.eventDate')}:<br />
 							<span className='font-bold'>
 								{new Date(data.eventDate).toLocaleString('ru-RU', {
+									timeZone: 'Europe/Moscow',
 									year: 'numeric',
 									month: 'numeric',
 									day: 'numeric',
 									hour: '2-digit',
 									minute: '2-digit',
-								})}
+								})}{' '}
+								{t('labels.moscowTime')}
 							</span>
 						</h5>
 					)}

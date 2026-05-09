@@ -9,7 +9,7 @@ import {
 import { useDeleteProfileBioImageMutation } from '@/features/profile';
 import {
 	formatDateForInput,
-	localDateToISO,
+	// localDateToISO,
 	trimStrings,
 } from '@/shared/lib/formatters';
 import { extractImageUrls, handleApiError } from '@/shared/lib/helpers';
@@ -52,7 +52,7 @@ export const useProfileForm = () => {
 			const trimmed = trimStrings(values);
 			const submitValues = {
 				...trimmed,
-				birthDate: trimmed.birthDate ? localDateToISO(trimmed.birthDate) : null,
+				birthDate: trimmed.birthDate || null,
 			};
 
 			await updateProfile(submitValues).unwrap();

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateEventMutation } from '@/entities/events';
-import { trimStrings } from '@/shared/lib/formatters';
+import { toMoscowISO, trimStrings } from '@/shared/lib/formatters';
 import {
 	extractImageUrls,
 	handleApiError,
@@ -45,6 +45,7 @@ export const useCreateEventForm = () => {
 
 			const event = await createEvent({
 				...trimmed,
+				eventDate: toMoscowISO(trimmed.eventDate),
 				image: trimmed.image || null,
 			}).unwrap();
 
