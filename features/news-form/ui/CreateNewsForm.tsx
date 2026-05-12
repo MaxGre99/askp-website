@@ -77,7 +77,7 @@ export const CreateNewsForm = () => {
 
 					<ImageInput
 						name='image'
-						label={t('labels.cover')}
+						label={`${t('labels.cover')} (${t('labels.aspectRatio4by3')})`}
 						onUpload={handleUploadCover}
 						onDelete={handleDeleteCover}
 					/>
