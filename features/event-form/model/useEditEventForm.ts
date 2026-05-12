@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import { useGetEventQuery, useUpdateEventMutation } from '@/entities/events';
 import {
-	// formatForDatetimeLocal,
 	formatForMoscowInput,
 	toMoscowISO,
 	trimStrings,

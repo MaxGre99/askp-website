@@ -7,11 +7,7 @@ import {
 	useUpdateProfileMutation,
 } from '@/entities/profiles';
 import { useDeleteProfileBioImageMutation } from '@/features/profile';
-import {
-	formatDateForInput,
-	// localDateToISO,
-	trimStrings,
-} from '@/shared/lib/formatters';
+import { formatDateForInput, trimStrings } from '@/shared/lib/formatters';
 import { extractImageUrls, handleApiError } from '@/shared/lib/helpers';
 
 import { editProfileSchema } from './schema';

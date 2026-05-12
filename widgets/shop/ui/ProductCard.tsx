@@ -47,9 +47,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
 						)}
 					</div>
 					<div className='p-4 flex flex-col flex-1 gap-2'>
-						<h3 className='font-semibold line-clamp-2 break-all'>
-							{product.name}
-						</h3>
+						<h3 className='font-semibold line-clamp-2'>{product.name}</h3>
 						<p className='text-sm text-gray-600 line-clamp-3'>
 							{stripHtml(product.description)}
 						</p>

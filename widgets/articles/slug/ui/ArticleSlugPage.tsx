@@ -37,7 +37,7 @@ export const ArticleSlugPage = () => {
 				</div>
 			)}
 			<div className='flex flex-col gap-6 p-6 flex-1 w-full'>
-				<h3 className='text-3xl text-center break-all'>{data?.title}</h3>
+				<h3 className='text-3xl text-center'>{data?.title}</h3>
 				<TipTapReadOnly content={data?.content ?? ''} noBorder />
 				<div className='flex items-end flex-col gap-1 italic text-gray-700'>
 					{data?.author && (

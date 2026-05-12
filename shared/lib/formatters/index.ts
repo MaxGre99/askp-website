@@ -1,9 +1,7 @@
 export { formatDateForInput } from './formatDateForInput';
-// export { formatForDatetimeLocal } from './formatForDatetimeLocal';
 export { formatForMoscowInput } from './formatForMoscowInput';
-export { getAuthorName } from './getAuthorName';
-// export { localDateToISO } from './localDateToISO';
 export { formatUTCDateOnly } from './formatUTCDateOnly';
+export { getAuthorName } from './getAuthorName';
 export { slugify } from './slugify';
 export { stripHtml } from './stripHtml';
 export { toMoscowISO } from './toMoscowISO';

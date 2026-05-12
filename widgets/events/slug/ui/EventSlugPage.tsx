@@ -38,7 +38,7 @@ export const EventSlugPage = () => {
 				</div>
 			)}
 			<div className='flex flex-col gap-6 p-6 pb-0 flex-1 w-full'>
-				<h3 className='text-3xl text-center break-all'>{data?.title}</h3>
+				<h3 className='text-3xl text-center'>{data?.title}</h3>
 				<TipTapReadOnly content={data?.description ?? ''} noBorder />
 				<div className='flex justify-center items-center text-center italic text-lg text-gray-700'>
 					{data?.eventDate && (
