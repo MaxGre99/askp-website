@@ -38,11 +38,14 @@ export const GET = async (req: Request) => {
 		const total = await prisma.profile.count({ where });
 		const profiles = await prisma.profile.findMany({
 			where,
-			orderBy: {
-				user: {
-					membershipRank: 'asc',
+			orderBy: [
+				{
+					user: {
+						membershipRank: 'asc',
+					},
 				},
-			},
+				{ userId: 'asc' },
+			],
 			skip: (page - 1) * pageSize,
 			take: pageSize,
 			select: {
